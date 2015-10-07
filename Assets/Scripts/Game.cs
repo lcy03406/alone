@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class Game : MonoBehaviour, World.View {
 
@@ -58,6 +59,10 @@ public class Game : MonoBehaviour, World.View {
 			if (dx != 0 || dy != 0) {
 				Direction to = new Coord (dx, dy).ToDirection ();
 				wp.CmdMove (to);
+				return;
+			}
+			if (Input.GetKeyDown (KeyCode.Period)) {
+				//wp.CmdWait ();
 			}
 		}
 	}
@@ -105,22 +110,30 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void World.View.OnAddEntity (WorldEntity ent) {
+		ulong g = ent.d.id.value / 1024;
+		string gname = "GameEntityGroup_" + g;
+		GameObject go = GameObject.Find (gname);
+		if (go == null) {
+			go = new GameObject (gname);
+			go.transform.SetParent (root);
+		}
 		GameObject o = Instantiate(playerPrefab);
 		o.name = "GameEntity_" + ent.d.id;
+		o.transform.SetParent (go.transform);
 		GameEntity ge = o.GetComponent<GameEntity> ();
 		ge.Init (this, ent);
 	}
 
 	void World.View.OnDelEntity (WorldEntity ent) {
-		string gname = "GameEntity_" + ent.d.id;
-		GameObject o = GameObject.Find (gname);
+		ulong g = ent.d.id.value / 1024;
+		string gname = "GameEntityGroup_" + g;
+		GameObject go = GameObject.Find (gname);
+		if (go == null)
+			return;
+		string name = "GameEntity_" + ent.d.id;
+		GameObject o = GameObject.Find (name);
 		Destroy (o);
-	}
-
-	void World.View.OnMoveEntity (WorldEntity ent) {
-		string gname = "GameEntity_" + ent.d.id;
-		GameObject o = GameObject.Find (gname);
-		GameEntity ge = o.GetComponent<GameEntity> ();
-		ge.OnMove ();
+		if (go.transform.childCount == 0)
+			Destroy (go);
 	}
 }

@@ -18,19 +18,39 @@ public abstract class PlayAct {
 }
 
 [Serializable]
-public class PlayActMove : PlayAct {
-	public Coord to;
-	public PlayActMove (Coord to) {
-		this.to = to;
+public class PlayActWait : PlayAct {
+	public PlayActWait () {
 	}
 	public override bool Can (WorldEntity ent) {
-		WorldEntity e = ent.world.SearchEntity (to);
-		if (e != null)
-			return false;
 		return true;
 	}
 	private class Step1 : PlayAct.Step {
 		void PlayAct.Step.Do (WorldEntity ent) {
+		}
+		int PlayAct.Step.Time (WorldEntity ent) {
+			return 1;
+		}
+	}
+	private static Step[] steps = new Step[] {new Step1()};
+	public override PlayAct.Step GetStep (int i) {
+		return GetStep (i, steps);
+	}
+}
+
+[Serializable]
+public class PlayActMove : PlayAct {
+	public Direction to;
+	public PlayActMove (Direction to) {
+		this.to = to;
+	}
+	public override bool Can (WorldEntity ent) {
+		return ent.world.CanMoveTo (ent.d.c.Step (to));
+	}
+	private class Step1 : PlayAct.Step {
+		void PlayAct.Step.Do (WorldEntity ent) {
+			PlayActMove act = (PlayActMove) ent.d.act;
+			Direction to = act.to;
+			ent.d.dir = to;
 		}
 		int PlayAct.Step.Time (WorldEntity ent) {
 			return 5;
@@ -39,9 +59,12 @@ public class PlayActMove : PlayAct {
 	private class Step2 : PlayAct.Step {
 		void PlayAct.Step.Do (WorldEntity ent) {
 			PlayActMove act = (PlayActMove) ent.d.act;
-			Coord to = act.to;
+			Direction to = act.to;
+			Coord tc = ent.d.c.Step (to);
 			World world = ent.world;
-			world.MoveEntity (ent, to);
+			if (world.CanMoveTo (tc)) {
+				world.MoveEntity (ent, tc);
+			}
 		}
 		int PlayAct.Step.Time (WorldEntity ent) {
 			return 5;

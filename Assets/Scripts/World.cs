@@ -1,8 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
-using Formater = System.Runtime.Serialization.Formatters.Binary.BinaryFormatter;
-
+using System.Diagnostics;
 
 public class World {
 	public interface View {
@@ -11,7 +9,6 @@ public class World {
 		void OnLoadPlayer (WorldEntity player);
 		void OnAddEntity (WorldEntity ent);
 		void OnDelEntity (WorldEntity ent);
-		void OnMoveEntity (WorldEntity ent);
 	}
 	public const int GRID_SIZE = 32; //must be power of 2
 	public const int GRID_MASK = GRID_SIZE - 1;
@@ -22,17 +19,17 @@ public class World {
 	
 	public Scheme scheme;
 	public View view;
-	string path;
-	string name;
-	string pathBackup;
-	string pathCurrent;
-	string pathName;
-	Dictionary<Coord, WorldGrid> grids = new Dictionary<Coord, WorldGrid>();
-	Dictionary<WUID, WorldEntity> entities = new Dictionary<WUID, WorldEntity>();
-	WUID maxid;
-	WorldEntity player;
-	public int time;
+	WorldFile file;
 	Random rand;
+	SortedList<Coord, WorldGrid> grids = new SortedList<Coord, WorldGrid>();
+	SortedList<WUID, WorldEntity> entities = new SortedList<WUID, WorldEntity>();
+	WorldEntity player;
+	[Serializable]
+	public class Param {
+		public WUID maxid;
+		public int time;
+	};
+	public Param param;
 
 	public World ()
 	{
@@ -46,36 +43,38 @@ public class World {
 	public void LoadWorld (string path, string name) {
 		scheme = new Scheme ();
 		scheme.LoadAll ();
-		this.path = path;
-		this.name = name;
-		pathBackup = path + ".backup/";
-		pathCurrent = path + ".current/";
-		pathName = path + name + "/";
-		grids.Clear ();
 		rand = new Random ();
-		LoadPlayer ();
+		grids.Clear ();
+		file = new WorldFile ();
+		file.LoadWorld (path, name);
+		param = file.LoadParam ();
+		if (param == null) {
+			param = new Param ();
+		}
+		WorldEntity.Data e = file.LoadPlayer ();
+		if (e == null) {
+			e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
+			e.ai = null;
+		}
+		player = new WorldEntity (this, e);
+		view.OnLoadPlayer (player);
 		Anchor (player.d.c);
 	}
 
 	public void SaveWorld () {
-		SavePlayer ();
+		file.SaveParam (param);
+		file.SavePlayer (player);
 		foreach (KeyValuePair<Coord, WorldGrid> pair in grids) {
-			SaveGrid (pair.Key, pair.Value);
+			file.SaveGrid (pair.Key, pair.Value);
 		}
-		Directory.CreateDirectory (path + name);
-		if (Directory.Exists (pathBackup)) {
-			Directory.Delete (pathBackup, true);
-		}
-		Directory.CreateDirectory (pathBackup);
-		string[] names = Directory.GetFiles (pathCurrent);
-		foreach (string fullname in names) {
-			string filename = Path.GetFileName (fullname);
-			string namefile = pathName + filename;
-			if (File.Exists (namefile)) {
-				File.Move (namefile, pathBackup + filename);
-			}
-			File.Move (pathCurrent + filename, namefile);
-		}
+		file.SaveWorld ();
+	}
+
+	WorldGrid GetGrid (Coord g) {
+		WorldGrid grid = FindGrid (g);
+		if (grid == null)
+			grid = LoadGrid (g);
+		return grid;
 	}
 
 	WorldGrid FindGrid (Coord g) {
@@ -87,18 +86,11 @@ public class World {
 	}
 
 	WorldGrid LoadGrid (Coord g) {
-
-		WorldGrid grid;
-		string filename = pathName + string.Format ("/grid_" + g + ".bin");
-		if (File.Exists (filename)) {
-			FileStream fs = File.Open (filename, FileMode.Open);
-			Formater f = new Formater();
-			WorldGrid.Data data = f.Deserialize (fs) as WorldGrid.Data;
-			fs.Close ();
-			grid = new WorldGrid (this, g, data);
-		} else {
-			grid = CreateGrid (g);
+		WorldGrid.Data d = file.LoadGrid (g);
+		if (d == null) {
+			d = CreateGrid (g);
 		}
+		WorldGrid grid = new WorldGrid (this, g, d);
 		grids.Add (g, grid);
 		if (view != null) {
 			view.OnLoadGrid (g, grid);
@@ -106,12 +98,12 @@ public class World {
 		return grid;
 	}
 
-	WorldGrid CreateGrid (Coord g) {
+	WorldGrid.Data CreateGrid (Coord g) {
 		WorldGrid.Data grid = new WorldGrid.Data ();
 		for (int x = 0; x < GRID_SIZE; ++x) {
 			for (int y = 0; y < GRID_SIZE; ++y) {
 				grid.tiles [x,y] = rand.Next (1, (int)Scheme.Floor.ID.Size);
-				if (rand.Next (0, 100) < 20) {
+				if (rand.Next (0, 100) < 10) {
 					WorldEntity.Data e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
 					e.c = g.Add (x, y);
 					e.dir = 0;
@@ -119,17 +111,7 @@ public class World {
 				}
 			}
 		}
-		return new WorldGrid (this, g, grid);
-	}
-	
-	void SaveGrid (Coord g, WorldGrid grid) {
-		Directory.CreateDirectory (pathCurrent);
-		string filename = pathCurrent + string.Format ("/grid_" + g + ".bin");
-		FileStream fs = File.Open (filename, FileMode.Create);
-		Formater f = new Formater ();
-		WorldGrid.Data data = grid.Save ();
-		f.Serialize (fs, data);
-		fs.Close ();
+		return grid;
 	}
 
 	public void Anchor (Coord anchor) {
@@ -149,7 +131,7 @@ public class World {
 				if (!pair.Key.In (saver)) {
 					Coord g = pair.Key;
 					WorldGrid grid = pair.Value;
-					SaveGrid (g, grid);
+					file.SaveGrid (g, grid);
 					grid.Unload();
 					if (view != null) {
 						view.OnUnloadGrid (g);
@@ -164,42 +146,9 @@ public class World {
 		}
 	}
 
-	void LoadPlayer () {
-		string filename = pathName + string.Format ("/player.bin");
-		if (File.Exists (filename)) {
-			FileStream fs = File.Open (filename, FileMode.Open);
-			Formater f = new Formater();
-			time = (int) f.Deserialize (fs);
-			maxid = (WUID) f.Deserialize (fs);
-			WorldEntity.Data e = f.Deserialize (fs) as WorldEntity.Data;
-			fs.Close ();
-			player = new WorldEntity (this, e);
-		} else {
-			time = 0;
-			maxid = (WUID) 0;
-			WorldEntity.Data e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
-			player = new WorldEntity (this, e);
-		}
-		if (view != null) {
-			view.OnLoadPlayer (player);
-		}
-	}
-
-	void SavePlayer () {
-		Directory.CreateDirectory (pathCurrent);
-		string filename = pathCurrent + string.Format ("/player.bin");
-		FileStream fs = File.Open (filename, FileMode.Create);
-		Formater f = new Formater ();
-		WorldEntity.Data data = player.Save ();
-		f.Serialize (fs, time);
-		f.Serialize (fs, maxid);
-		f.Serialize (fs, data);
-		fs.Close ();
-	}
-
 	public WUID NextWUID () {
-		maxid = new WUID (maxid.value + 1);
-		return maxid;
+		param.maxid = param.maxid.Next ();
+		return param.maxid;
 	}
 
 	public WorldEntity FindEntity (WUID id) {
@@ -221,6 +170,8 @@ public class World {
 		if (view != null) {
 			view.OnDelEntity (ent);
 		}
+		Debug.Assert (ent.world == this);
+		ent.world = null;
 		entities.Remove (ent.d.id);
 	}
 
@@ -236,17 +187,25 @@ public class World {
 				MoveCrossGrid (ent, fg, tg);
 			}
 		}
-		if (view != null) {
-			view.OnMoveEntity (ent);
-		}
 	}
 	
 	public void Update () {
-		while (time < player.d.actime) {
-			time ++;
-			player.Update(time);
+		while (param.time < player.d.actime) {
+			param.time ++;
+			player.Update(param.time);
+			int i = 0;
+			WUID id = new WUID();
+			while (i < entities.Count) {
+				id = entities.Keys[i];
+				WorldEntity ent = entities.Values[i];
+				ent.Update (param.time);
+				while (i < entities.Count && entities.Keys[i] < id) {
+					i++;
+				}
+				i++;
+			}
 			foreach (KeyValuePair<Coord, WorldGrid> pair in grids) {
-				pair.Value.Update (time);
+				pair.Value.Update (param.time);
 			}
 		}
 
@@ -259,6 +218,12 @@ public class World {
 		tg.MoveIn (entity);
 	}
 
+	public bool CanMoveTo (Coord to) {
+		WorldGrid tg = FindGrid (to.Grid());
+		if (tg == null)
+			return false;
+		return tg.FindEntity (to) == null;
+	}
 	public WorldEntity SearchEntity (Coord to) {
 		WorldGrid tg = FindGrid (to.Grid());
 		if (tg == null)

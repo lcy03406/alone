@@ -12,6 +12,7 @@ public class WorldEntity {
 		public PlayStat stat;
 		public PlayInventory inv;
 		public PlayAct act;
+		public PlayAI ai;
 	}
 
 	public static Data Create(World world, Scheme.Creature.ID race) {
@@ -21,6 +22,7 @@ public class WorldEntity {
 		d.stat.hp = 3;
 		d.inv = new PlayInventory ();
 		d.act = null;
+		d.ai = new PlayAIHuman ();
 		return d;
 	}
 
@@ -31,16 +33,17 @@ public class WorldEntity {
 
 	public bool isPlayer = false;
 	
-	public WorldEntity (World w, Data d) {
-		this.world = w;
+	public WorldEntity (World world_, Data d_) {
+		world = world_;
 		//this.grid = null;
-		this.d = d;
+		d = d_;
 		isPlayer = true;
 	}
 
-	public WorldEntity (World w, WorldGrid g, Data d) : this(w, d) {
+	public WorldEntity (World world_, WorldGrid g_, Data d_) : this(world_, d_) {
 		//this.grid = g;
 		isPlayer = false;
+		d.ai.ent = this;
 	}
 
 
@@ -58,8 +61,21 @@ public class WorldEntity {
 		UpdateAct (time);
 	}
 
+	public int NextUpdateTime () {
+		return d.actime;
+	}
+
 	public void UpdateAct (int time) {
-		while (time >= d.actime && d.act != null) {
+		while (time >= d.actime) {
+			if (d.act == null && d.ai != null) {
+				PlayAct act = d.ai.NextAct ();
+				if (act.Can (this)) {
+					d.act = act;
+					d.acstep = -1;
+				}
+			}
+			if (d.act == null)
+				break;
 			d.acstep++;
 			PlayAct.Step step = d.act.GetStep(d.acstep);
 			if (step == null) {
@@ -70,7 +86,7 @@ public class WorldEntity {
 			}
 		}
 	}
-
+	
 	public bool TryAct(PlayAct act) {
 		if (d.act != null)
 			return false;
@@ -94,15 +110,14 @@ public class WorldEntity {
 			return false;
 		PlayAct act;
 		if (to == d.dir) {
-			Coord t = d.c.Step (to);
-			act = new PlayActMove (t);
+			act = new PlayActMove (to);
 		} else {
 			act = new PlayActDir (to);
 		}
 		if (!TryAct (act))
 			return false;
 		//TODO
-		UpdateAct (world.time);
+		UpdateAct (world.param.time);
 		return true;
 	}
 
@@ -116,7 +131,7 @@ public class WorldEntity {
 		if (!TryAct (act))
 			return false;
 		//TODO
-		UpdateAct (world.time);
+		UpdateAct (world.param.time);
 		return true;
 	}
 
@@ -124,9 +139,6 @@ public class WorldEntity {
 		if (d.stat == null)
 			return;
 		d.stat.hp --;
-		if (world.view != null) {
-			world.view.OnMoveEntity(this);
-		}
 	}
 }
 	

@@ -16,7 +16,7 @@ public enum Direction {
 }
 
 [Serializable] 
-public struct Coord {
+public struct Coord : IComparable<Coord> {
 	public readonly int x;
 	public readonly int y;
 	
@@ -52,6 +52,7 @@ public struct Coord {
 	public override int GetHashCode () {
 		return x + y << 5;
 	}
+
 	public override bool Equals (Object ob) {
 		if (ob is Coord) {
 			Coord b = (Coord) ob;
@@ -59,6 +60,19 @@ public struct Coord {
 		}
 		return false;
 	}
+	public int CompareTo (Coord b) {
+		if (x < b.x)
+			return -2;
+		else if (x > b.x)
+			return 2;
+		else if (y < b.y)
+			return -1;
+		else if (y > b.y)
+			return 1;
+		else
+			return 0;
+	}
+
 	static public bool operator == (Coord a, Coord b)  {
 		return a.x == b.x && a.y == b.y;
 	}

@@ -3,8 +3,7 @@ using System;
 using T = System.UInt64;
 
 [Serializable]
-public struct WUID
-{
+public struct WUID : IComparable<WUID> {
 	public readonly T value;
 
 	public WUID(ulong value)
@@ -12,6 +11,26 @@ public struct WUID
 		this.value = value;
 	}
 
+	//public static explicit operator WUID(ulong v)
+	//{
+	//	return new WUID(v);
+	//}
+
+	public WUID Next()
+	{
+		return new WUID (value + 1);
+	}
+
+	public override int GetHashCode()
+	{
+		return this.value.GetHashCode();
+	}
+	
+	public override string ToString()
+	{
+		return this.value.ToString();
+	}
+	
 	public override bool Equals(object obj)
 	{
 		if (obj == null)
@@ -28,19 +47,13 @@ public struct WUID
 		return this.value == b.value;
 	}
 
-	public override int GetHashCode()
-	{
-		return this.value.GetHashCode();
-	}
-	
-	public override string ToString()
-	{
-		return this.value.ToString();
-	}
-
-	public static explicit operator WUID(ulong v)
-	{
-		return new WUID(v);
+	public int CompareTo(WUID b) {
+		if (value < b.value)
+			return -1;
+		else if (value > b.value)
+			return 1;
+		else
+			return 0;
 	}
 
 	public static bool operator ==(WUID a, WUID b)
@@ -51,6 +64,16 @@ public struct WUID
 	public static bool operator !=(WUID a, WUID b)
 	{
 		return a.value != b.value;
+	}
+
+	public static bool operator <(WUID a, WUID b)
+	{
+		return a.value < b.value;
+	}
+
+	public static bool operator >(WUID a, WUID b)
+	{
+		return a.value > b.value;
 	}
 }
 
