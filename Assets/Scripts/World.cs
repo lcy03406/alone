@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using UnityEngine.Assertions;
 
 public class World {
 	public interface View {
@@ -41,6 +41,7 @@ public class World {
 	}
 
 	public void LoadWorld (string path, string name) {
+
 		scheme = new Scheme ();
 		scheme.LoadAll ();
 		rand = new Random ();
@@ -54,7 +55,7 @@ public class World {
 		WorldEntity.Data e = file.LoadPlayer ();
 		if (e == null) {
 			e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
-			e.ai = null;
+			e.ai = new PlayCtrl ();
 		}
 		player = new WorldEntity (this, e);
 		view.OnLoadPlayer (player);
@@ -170,7 +171,7 @@ public class World {
 		if (view != null) {
 			view.OnDelEntity (ent);
 		}
-		Debug.Assert (ent.world == this);
+		Assert.AreEqual (ent.world, this);
 		ent.world = null;
 		entities.Remove (ent.d.id);
 	}
@@ -178,6 +179,7 @@ public class World {
 	public void MoveEntity (WorldEntity ent, Coord to) {
 		Coord from = ent.d.c;
 		ent.d.c = to;
+		Assert.AreNotEqual (from, to, ent.isPlayer.ToString());
 		if (ent.isPlayer) {
 			Anchor (to);
 		} else {
@@ -190,9 +192,10 @@ public class World {
 	}
 	
 	public void Update () {
+		player.Update (param.time);
 		while (param.time < player.d.actime) {
 			param.time ++;
-			player.Update(param.time);
+			player.Update (param.time);
 			int i = 0;
 			WUID id = new WUID();
 			while (i < entities.Count) {

@@ -77,7 +77,7 @@ public struct Coord : IComparable<Coord> {
 		return a.x == b.x && a.y == b.y;
 	}
 	static public bool operator != (Coord a, Coord b)  {
-		return a.x != b.x && a.y != b.y;
+		return a.x != b.x || a.y != b.y;
 	}
 
 	public Coord Grid () {

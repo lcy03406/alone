@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using UnityEngine.Assertions;
 
 public class WorldGrid {
 
@@ -25,7 +25,7 @@ public class WorldGrid {
 		this.d = d;
 		foreach (WorldEntity.Data ed in d.entities) {
 			WorldEntity e = new WorldEntity (world, this, ed);
-			Debug.Assert (e.d.c.Grid () == c);
+			Assert.AreEqual (c, e.d.c.Grid (), string.Format ("c={0}, e={1}", c, e.d.c));
 			entities.Add (e);
 			world.AddEntity (e);
 		}
@@ -35,7 +35,7 @@ public class WorldGrid {
 	public Data Save () {
 		d.entities.Clear ();
 		foreach (WorldEntity e in entities) {
-			Debug.Assert (e.d.c.Grid () == c);
+			Assert.AreEqual (c, e.d.c.Grid (), string.Format ("c={0}, e={1}", c, e.d.c));
 			WorldEntity.Data ed = e.Save ();
 			d.entities.Add (ed);
 		}
@@ -52,9 +52,11 @@ public class WorldGrid {
 	}
 
 	public bool MoveOut (WorldEntity e) {
+		Assert.AreNotEqual (c, e.d.c.Grid (), string.Format ("c={0}, e={1}", c, e.d.c));
 		return entities.Remove (e);
 	}
 	public void MoveIn (WorldEntity e) {
+		Assert.AreEqual (c, e.d.c.Grid (), string.Format ("c={0}, e={1}", c, e.d.c));
 		entities.Add (e);
 	}
 

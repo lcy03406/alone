@@ -13,8 +13,10 @@ public abstract class PlayAI {
 public class PlayAIHuman : PlayAI{
 	static Random random = new Random();
 	public override PlayAct NextAct () {
-		int r = random.Next (9);
-		return new PlayActMove ((Direction)r);
+		Direction r = (Direction)random.Next (9);
+		if (r == Direction.None || r == Direction.Center)
+			return new PlayActWait ();
+		return new PlayActMove (r);
 		//TODO
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using UnityEngine.Assertions;
 
 public class Game : MonoBehaviour, World.View {
 
@@ -13,11 +13,12 @@ public class Game : MonoBehaviour, World.View {
 	public World world;
 	public Transform root;
 
-	WorldEntity wp;
+	PlayCtrl ctrl;
 	Coord offset = new Coord();
 
 	// Use this for initialization
 	void Start () {
+		Assert.raiseExceptions = true;
 		root = new GameObject ("GameRoot").transform;
 		world = new World ();
 		world.SetView (this);
@@ -35,11 +36,11 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void UpdateInput () {
-		if (wp == null)
+		if (ctrl == null)
 			return;
 		if (Input.anyKeyDown) {
 			if (Input.GetKeyDown (KeyCode.LeftControl)) {
-				wp.CmdAttack ();
+				ctrl.CmdAttack ();
 				return;
 			}
 			int dx = 0;
@@ -58,11 +59,11 @@ public class Game : MonoBehaviour, World.View {
 			}
 			if (dx != 0 || dy != 0) {
 				Direction to = new Coord (dx, dy).ToDirection ();
-				wp.CmdMove (to);
+				ctrl.CmdMove (to);
 				return;
 			}
 			if (Input.GetKeyDown (KeyCode.Period)) {
-				//wp.CmdWait ();
+				//ctrl.CmdWait ();
 			}
 		}
 	}
@@ -101,7 +102,7 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void World.View.OnLoadPlayer (WorldEntity wp) {
-		this.wp = wp;
+		this.ctrl = (PlayCtrl) wp.d.ai;
 		GameObject player = Instantiate(playerPrefab);
 		player.name = "GameEntity_" + wp.d.id;
 		GameObject.Find ("Main Camera").transform.SetParent (player.transform);

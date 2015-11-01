@@ -37,13 +37,13 @@ public class WorldEntity {
 		world = world_;
 		//this.grid = null;
 		d = d_;
+		d.ai.ent = this;
 		isPlayer = true;
 	}
 
 	public WorldEntity (World world_, WorldGrid g_, Data d_) : this(world_, d_) {
 		//this.grid = g;
 		isPlayer = false;
-		d.ai.ent = this;
 	}
 
 
@@ -69,7 +69,7 @@ public class WorldEntity {
 		while (time >= d.actime) {
 			if (d.act == null && d.ai != null) {
 				PlayAct act = d.ai.NextAct ();
-				if (act.Can (this)) {
+				if (act != null && act.Can (this)) {
 					d.act = act;
 					d.acstep = -1;
 				}
@@ -85,54 +85,6 @@ public class WorldEntity {
 				step.Do(this);
 			}
 		}
-	}
-	
-	public bool TryAct(PlayAct act) {
-		if (d.act != null)
-			return false;
-		if (!act.Can(this))
-			return false;
-		d.act = act;
-		d.acstep = -1;
-		return true;
-	}
-
-	private bool Can () {
-		//TODO
-		return d.act == null;
-	}
-
-	public bool CmdMove (Direction to) {
-		if (to == Direction.None || to == Direction.Center) {
-			return false;
-		}
-		if (!Can ())
-			return false;
-		PlayAct act;
-		if (to == d.dir) {
-			act = new PlayActMove (to);
-		} else {
-			act = new PlayActDir (to);
-		}
-		if (!TryAct (act))
-			return false;
-		//TODO
-		UpdateAct (world.param.time);
-		return true;
-	}
-
-	public bool CmdAttack () {
-		if (d.dir == Direction.None || d.dir == Direction.Center) {
-			return false;
-		}
-		if (!Can ())
-			return false;
-		PlayAct act = new PlayActAttack ();
-		if (!TryAct (act))
-			return false;
-		//TODO
-		UpdateAct (world.param.time);
-		return true;
 	}
 
 	public void BeAttack () {
