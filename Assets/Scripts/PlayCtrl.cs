@@ -4,9 +4,9 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayCtrl : PlayAI{
 	
-	Queue<PlayAct> next = new Queue<PlayAct>();
+	Queue<EntityAct> next = new Queue<EntityAct>();
 
-	public override PlayAct NextAct () {
+	public override EntityAct NextAct () {
 		if (next.Count <= 0)
 			return null;
 		return next.Dequeue ();
@@ -16,7 +16,7 @@ public class PlayCtrl : PlayAI{
 		if (to == Direction.None || to == Direction.Center) {
 			return false;
 		}
-		PlayAct act;
+		EntityAct act;
 		if (to == ent.d.dir) {
 			act = new PlayActMove (to);
 		} else {
@@ -30,7 +30,7 @@ public class PlayCtrl : PlayAI{
 		if (ent.d.dir == Direction.None || ent.d.dir == Direction.Center) {
 			return false;
 		}
-		PlayAct act = new PlayActAttack ();
+		EntityAct act = new PlayActAttack ();
 		next.Enqueue (act);
 		return true;
 	}

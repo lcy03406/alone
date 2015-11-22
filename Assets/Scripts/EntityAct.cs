@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public abstract class PlayAct {
+public abstract class EntityAct {
 	public interface Step {
 		void Do (WorldEntity ent);
 		int Time (WorldEntity ent);
@@ -18,27 +18,27 @@ public abstract class PlayAct {
 }
 
 [Serializable]
-public class PlayActWait : PlayAct {
+public class PlayActWait : EntityAct {
 	public PlayActWait () {
 	}
 	public override bool Can (WorldEntity ent) {
 		return true;
 	}
-	private class Step1 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step1 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 1;
 		}
 	}
 	private static Step[] steps = new Step[] {new Step1()};
-	public override PlayAct.Step GetStep (int i) {
+	public override EntityAct.Step GetStep (int i) {
 		return GetStep (i, steps);
 	}
 }
 
 [Serializable]
-public class PlayActMove : PlayAct {
+public class PlayActMove : EntityAct {
 	public Direction to;
 	public PlayActMove (Direction to) {
 		this.to = to;
@@ -46,18 +46,18 @@ public class PlayActMove : PlayAct {
 	public override bool Can (WorldEntity ent) {
 		return ent.world.CanMoveTo (ent.d.c.Step (to));
 	}
-	private class Step1 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step1 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 			PlayActMove act = (PlayActMove) ent.d.act;
 			Direction to = act.to;
 			ent.d.dir = to;
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 5;
 		}
 	}
-	private class Step2 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step2 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 			PlayActMove act = (PlayActMove) ent.d.act;
 			Direction to = act.to;
 			Coord tc = ent.d.c.Step (to);
@@ -66,18 +66,18 @@ public class PlayActMove : PlayAct {
 				world.MoveEntity (ent, tc);
 			}
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 5;
 		}
 	}
 	private static Step[] steps = new Step[] {new Step1(), new Step2() };
-	public override PlayAct.Step GetStep (int i) {
+	public override EntityAct.Step GetStep (int i) {
 		return GetStep (i, steps);
 	}
 }
 
 [Serializable]
-public class PlayActDir : PlayAct {
+public class PlayActDir : EntityAct {
 	public Direction to;
 	public PlayActDir (Direction to) {
 		this.to = to;
@@ -85,23 +85,23 @@ public class PlayActDir : PlayAct {
 	public override bool Can (WorldEntity ent) {
 		return true;
 	}
-	private class Step1 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step1 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 			PlayActDir act = (PlayActDir) ent.d.act;
 			ent.d.dir = act.to;
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 0;
 		}
 	}
 	private static Step[] steps = new Step[] {new Step1()};
-	public override PlayAct.Step GetStep (int i) {
+	public override EntityAct.Step GetStep (int i) {
 		return GetStep (i, steps);
 	}
 }
 
 [Serializable]
-public class PlayActAttack : PlayAct {
+public class PlayActAttack : EntityAct {
 	public WUID target;
 	public PlayActAttack () {
 	}
@@ -113,27 +113,27 @@ public class PlayActAttack : PlayAct {
 		target = e.d.id;
 		return true;
 	}
-	private class Step1 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step1 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 3;
 		}
 	}
-	private class Step2 : PlayAct.Step {
-		void PlayAct.Step.Do (WorldEntity ent) {
+	private class Step2 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
 			PlayActAttack act = (PlayActAttack) ent.d.act;
 			WorldEntity target = ent.world.FindEntity(act.target);
 			//TODO
 			if (target != null)
 				target.BeAttack();
 		}
-		int PlayAct.Step.Time (WorldEntity ent) {
+		int EntityAct.Step.Time (WorldEntity ent) {
 			return 3;
 		}
 	}
 	private static Step[] steps = new Step[] {new Step1(), new Step2() };
-	public override PlayAct.Step GetStep (int i) {
+	public override EntityAct.Step GetStep (int i) {
 		return GetStep (i, steps);
 	}
 }

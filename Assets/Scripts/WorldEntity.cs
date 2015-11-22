@@ -9,16 +9,17 @@ public class WorldEntity {
 		public Direction dir;
 		public int acstep;
 		public int actime;
-		public PlayStat stat;
+		public EntityStage stage;
+		public EntityStat stat;
 		public PlayInventory inv;
-		public PlayAct act;
+		public EntityAct act;
 		public PlayAI ai;
 	}
 
 	public static Data Create(World world, Scheme.Creature.ID race) {
 		Data d = new Data ();
 		d.id = world.NextWUID ();
-		d.stat = new PlayStat ();
+		d.stat = new EntityStat ();
 		d.stat.hp = 3;
 		d.inv = new PlayInventory ();
 		d.act = null;
@@ -68,7 +69,7 @@ public class WorldEntity {
 	public void UpdateAct (int time) {
 		while (time >= d.actime) {
 			if (d.act == null && d.ai != null) {
-				PlayAct act = d.ai.NextAct ();
+				EntityAct act = d.ai.NextAct ();
 				if (act != null && act.Can (this)) {
 					d.act = act;
 					d.acstep = -1;
@@ -77,7 +78,7 @@ public class WorldEntity {
 			if (d.act == null)
 				break;
 			d.acstep++;
-			PlayAct.Step step = d.act.GetStep(d.acstep);
+			EntityAct.Step step = d.act.GetStep(d.acstep);
 			if (step == null) {
 				d.act = null;
 			} else {

@@ -1,7 +1,6 @@
 using System;
 using Vector2 = UnityEngine.Vector2;
 
-[Flags]
 public enum Direction {
 	None = 0,
 	SouthWest = 1,

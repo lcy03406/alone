@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class PlayStat {
+public class EntityStat {
 	private int[] meters = new int[(int)Scheme.StatMeter.Size];
 	private int[] stats = new int[(int)Scheme.StatPoint.Size];
 
