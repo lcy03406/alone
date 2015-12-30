@@ -17,7 +17,6 @@ public class World {
 	const int UNLOAD_SIZE = 20; //
 	public static World singleton;
 	
-	public Scheme scheme;
 	public View view;
 	WorldFile file;
 	Random rand;
@@ -41,9 +40,7 @@ public class World {
 	}
 
 	public void LoadWorld (string path, string name) {
-
-		scheme = new Scheme ();
-		scheme.LoadAll ();
+		Schema.All.Init ();
 		rand = new Random ();
 		grids.Clear ();
 		file = new WorldFile ();
@@ -54,7 +51,7 @@ public class World {
 		}
 		WorldEntity.Data e = file.LoadPlayer ();
 		if (e == null) {
-			e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
+			e = WorldEntity.Create (this, Schema.Spec.ID.Human);
 			e.ai = new PlayCtrl ();
 		}
 		player = new WorldEntity (this, e);
@@ -103,9 +100,9 @@ public class World {
 		WorldGrid.Data grid = new WorldGrid.Data ();
 		for (int x = 0; x < GRID_SIZE; ++x) {
 			for (int y = 0; y < GRID_SIZE; ++y) {
-				grid.tiles [x,y] = rand.Next (1, (int)Scheme.Floor.ID.Size);
+				grid.tiles [x,y] = Schema.Floor.GetA ((Schema.Floor.ID)rand.Next (1, 3)); //TODO
 				if (rand.Next (0, 100) < 10) {
-					WorldEntity.Data e = WorldEntity.Create (this, Scheme.Creature.ID.Human);
+					WorldEntity.Data e = WorldEntity.Create (this, Schema.Spec.ID.Human);
 					e.c = g.Add (x, y);
 					e.dir = 0;
 					grid.entities.Add (e);

@@ -9,6 +9,7 @@ public class WorldEntity {
 		public Direction dir;
 		public int acstep;
 		public int actime;
+		public Schema.Spec.A spec;
 		public EntityStage stage;
 		public EntityStat stat;
 		public PlayInventory inv;
@@ -16,14 +17,16 @@ public class WorldEntity {
 		public PlayAI ai;
 	}
 
-	public static Data Create(World world, Scheme.Creature.ID race) {
+	public static Data Create(World world, Schema.Spec.ID race) {
+		//TODO
 		Data d = new Data ();
+		d.spec = Schema.Spec.GetA (race);
 		d.id = world.NextWUID ();
 		d.stat = new EntityStat ();
 		d.stat.hp = 3;
 		d.inv = new PlayInventory ();
 		d.act = null;
-		d.ai = new PlayAIHuman ();
+		d.ai = (PlayAI) Activator.CreateInstance (d.spec.s.ai);
 		return d;
 	}
 

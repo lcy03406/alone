@@ -2,5 +2,5 @@ using System;
 
 [Serializable]
 public class PlayItem {
-	public Scheme.Item.ID id;
+	public Schema.Item.A a;
 }

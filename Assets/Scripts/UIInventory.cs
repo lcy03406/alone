@@ -26,16 +26,15 @@ public class UIInventory : MonoBehaviour {
 
 	public void AddItem () {
 		PlayItem item = new PlayItem ();
-		item.id = Scheme.Item.ID.Armor;
+		item.a = Schema.Item.GetA (Schema.Item.ID.Armor);
 		inv.items.Add(item);
 
 		GameObject go = Instantiate(itemPrefab);
 		Toggle toggle = go.GetComponent<Toggle>();
 		Image image = toggle.targetGraphic as Image;
-		Scheme.Item si = game.world.scheme.GetItem(item.id);
-		go.transform.FindChild ("Label").GetComponent<Text>().text = si.name;
-		itemPrefab.transform.FindChild ("Label").GetComponent<Text>().text = si.name;
-		image.sprite = si.sprite;
+		go.transform.FindChild ("Label").GetComponent<Text>().text = item.a.s.name;
+		//itemPrefab.transform.FindChild ("Label").GetComponent<Text>().text = item.a.s.name;
+		image.sprite = item.a.s.sprite.s.sprite;
 		go.transform.SetParent (panel);
 	}
 }

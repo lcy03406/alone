@@ -82,10 +82,10 @@ public class Game : MonoBehaviour, World.View {
 			got.localPosition = Pos (g);
 			for (int x = 0; x < grid.d.tiles.GetLength(0); ++x) {
 				for (int y = 0; y < grid.d.tiles.GetLength(1); ++y) {
-					int tid = grid.d.tiles[x,y];
+					Schema.Floor.A t = grid.d.tiles[x,y];
 					GameObject o = Instantiate(tilePrefab);
 					o.name = string.Format ("GameTile_{0}_{1}", g.x + x, g.y + y);
-					o.GetComponent<SpriteRenderer>().sprite = world.scheme.GetFloor((Scheme.Floor.ID)tid).sprite;
+                    o.GetComponent<SpriteRenderer> ().sprite = t.s.sprite.s.sprite;
 					o.transform.SetParent(got);
 					o.transform.localPosition = new Vector3(x, y, 0);
 				}

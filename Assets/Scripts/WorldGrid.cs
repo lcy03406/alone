@@ -7,7 +7,7 @@ public class WorldGrid {
 	[Serializable]
 	public class Data {
 		public int time;
-		public int[,] tiles = new int[World.GRID_SIZE, World.GRID_SIZE];
+		public Schema.Floor.A[,] tiles = new Schema.Floor.A[World.GRID_SIZE, World.GRID_SIZE];
 		public List<WorldEntity.Data> entities = new List<WorldEntity.Data>();
 	}
 	
