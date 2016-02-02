@@ -43,10 +43,13 @@ namespace Schema {
 		public enum ID {
 			None,
 			Human,
+			Tree_Pine,
+
 		}
 		static public void Init () {
 			Add (ID.Human, new Spec (Schema.SpriteID.c_human_young, "Human"));
-		}
+			Add (ID.Tree_Pine, new Spec (Schema.SpriteID.b_tree_pine, "Tree"));
+        }
 	}
 }
 
