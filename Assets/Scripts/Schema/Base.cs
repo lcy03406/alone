@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -22,10 +22,7 @@ namespace Schema {
 			public readonly ID id;
 			[NonSerialized]
 			private Data data;
-			public A (ID id) {
-				this.id = id;
-				this.data = null;
-			}
+			
 			public Data s {
 				get {
 					if (data == null) {
@@ -34,6 +31,10 @@ namespace Schema {
 					}
 					return data;
 				}
+			}
+			public A (ID id) {
+				this.id = id;
+				this.data = null;
 			}
 		}
 

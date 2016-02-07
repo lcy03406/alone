@@ -10,7 +10,6 @@ public class WorldEntity {
 		public int acstep;
 		public int actime;
 		public Schema.Spec.A spec;
-		public EntityStage stage;
 		public EntityStat stat;
 		public PlayInventory inv;
 		public EntityAct act;

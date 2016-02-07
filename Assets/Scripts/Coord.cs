@@ -14,7 +14,7 @@ public enum Direction {
 	NorthEast = 9,
 }
 
-[Serializable] 
+[Serializable]
 public struct Coord : IComparable<Coord> {
 	public readonly int x;
 	public readonly int y;

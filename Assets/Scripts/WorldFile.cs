@@ -1,7 +1,25 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
-using Formater = System.Runtime.Serialization.Formatters.Binary.BinaryFormatter;
+using System.Runtime.Serialization.Formatters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using UnityEngine.Assertions;
+
+class Resolver : DefaultContractResolver {
+	public Resolver () {
+		IgnoreSerializableAttribute = false;
+		IgnoreSerializableInterface = false;
+		//SerializeCompilerGeneratedMembers = true;
+	}
+	protected override JsonContract CreateContract (Type objectType) {
+		//Assert.IsTrue (objectType.IsSealed, string.Format ("Not Sealed! {0}", objectType));
+		Assert.IsTrue (objectType.IsSerializable, string.Format ("Not Serializable! {0}", objectType));
+		JsonContract c = base.CreateContract (objectType);
+		Assert.IsNotNull (c, string.Format ("No Contract! {0}", objectType));
+		return c;
+    }
+}
 
 
 public class WorldFile {
@@ -9,13 +27,51 @@ public class WorldFile {
 	string pathBackup;
 	string pathCurrent;
 	string pathData;
+	JsonSerializer ser;
+
+	public WorldFile () {
+		ser = new JsonSerializer ();
+		ser.Converters.Add (new StringEnumConverter ());
+		ser.ContractResolver = new Resolver ();
+		ser.TypeNameHandling = TypeNameHandling.Auto;
+		ser.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+		ser.Formatting = Formatting.Indented;
+		ser.Error += Ser_Error;
+	}
+
+	private void Ser_Error (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) {
+		throw e.ErrorContext.Error;
+	}
+
+	protected void SaveSome<T>(string name, T value) {
+		string filename = pathCurrent + name + ".json";
+		using (StreamWriter sw = new StreamWriter (filename))
+		using (JsonWriter w = new JsonTextWriter (sw)/* { QuoteName = false }*/) {
+			ser.Serialize (w, value);
+		}
+	}
+
+	protected T LoadSome<T>(string name) {
+		string filename = pathCurrent + name + ".json";
+		if (!File.Exists (filename)) {
+			filename = pathData + name + ".json";
+			if (!File.Exists (filename))
+				return default (T);
+		}
+		using (StreamReader sr = new StreamReader (filename))
+		using (JsonReader r = new JsonTextReader (sr)) {
+			T e = ser.Deserialize<T> (r);
+			return e;
+		}
+	}
 
 	public void LoadWorld (string path, string name) {
 		pathBase = path + name + "/";
 		pathBackup = pathBase + ".backup/";
 		pathCurrent = pathBase + ".current/";
 		pathData = pathBase + "data/";
-	}
+   }
+
 
 	public void SaveWorld () {
 		Directory.CreateDirectory (pathData);
@@ -35,70 +91,28 @@ public class WorldFile {
 	}
 
 	public WorldGrid.Data LoadGrid (Coord g) {
-		string binname = string.Format ("/grid_" + g + ".bin");
-		string filename = pathCurrent + binname;
-		if (!File.Exists (filename)) {
-			filename = pathData + binname;
-			if (!File.Exists (filename)) {
-				return null;
-			}
-		}
-		FileStream fs = File.Open (filename, FileMode.Open);
-		Formater f = new Formater();
-		WorldGrid.Data data = f.Deserialize (fs) as WorldGrid.Data;
-		fs.Close ();
-		return data;
+		string name = "grid_" + g;
+		return LoadSome<WorldGrid.Data> (name);
 	}
 
 	public void SaveGrid (Coord g, WorldGrid grid) {
-		string binname = string.Format ("/grid_" + g + ".bin");
-		Directory.CreateDirectory (pathCurrent);
-		string filename = pathCurrent + binname;
-		FileStream fs = File.Open (filename, FileMode.Create);
-		Formater f = new Formater ();
-		WorldGrid.Data data = grid.Save ();
-		f.Serialize (fs, data);
-		fs.Close ();
+		string name = "grid_" + g;
+		SaveSome (name, grid.Save ());
 	}
 
 	public WorldEntity.Data LoadPlayer () {
-		string filename = pathData + string.Format ("/player.bin");
-		if (!File.Exists (filename))
-			return null;
-		FileStream fs = File.Open (filename, FileMode.Open);
-		Formater f = new Formater();
-		WorldEntity.Data e = f.Deserialize (fs) as WorldEntity.Data;
-		fs.Close ();
-		return e;
+		return LoadSome<WorldEntity.Data> ("player");
 	}
-	
+
 	public void SavePlayer (WorldEntity player) {
-		Directory.CreateDirectory (pathCurrent);
-		string filename = pathCurrent + string.Format ("/player.bin");
-		FileStream fs = File.Open (filename, FileMode.Create);
-		Formater f = new Formater ();
-		WorldEntity.Data data = player.Save ();
-		f.Serialize (fs, data);
-		fs.Close ();
+		SaveSome ("player", player.Save ());
 	}
 
 	public World.Param LoadParam () {
-		string filename = pathData + string.Format ("/param.bin");
-		if (!File.Exists (filename))
-			return null;
-		FileStream fs = File.Open (filename, FileMode.Open);
-		Formater f = new Formater();
-		World.Param param = f.Deserialize (fs) as World.Param;
-		fs.Close ();
-		return param;
+		return LoadSome<World.Param> ("param");
 	}
 
 	public void SaveParam (World.Param param) {
-		Directory.CreateDirectory (pathCurrent);
-		string filename = pathCurrent + string.Format ("/param.bin");
-		FileStream fs = File.Open (filename, FileMode.Create);
-		Formater f = new Formater ();
-		f.Serialize (fs, param);
-		fs.Close ();
+		SaveSome ("param", param);
 	}
 }
