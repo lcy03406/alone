@@ -137,3 +137,40 @@ public class PlayActAttack : EntityAct {
 		return GetStep (i, steps);
 	}
 }
+
+[Serializable]
+public class PlayActIact : EntityAct {
+	public IactDst iad;
+	public PlayActIact (IactDst iad) {
+		this.iad = iad;
+	}
+	public override bool Can (WorldEntity ent) {
+		WorldEntity e = ent.world.FindEntity (iad.dst);
+		if (e == null)
+			return false;
+		return e.d.core.CanIact (ent, iad.ia);
+	}
+	private class Step1 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
+		}
+		int EntityAct.Step.Time (WorldEntity ent) {
+			return 3;
+		}
+	}
+	private class Step2 : EntityAct.Step {
+		void EntityAct.Step.Do (WorldEntity ent) {
+			PlayActAttack act = (PlayActAttack)ent.d.act;
+			WorldEntity target = ent.world.FindEntity (act.target);
+			//TODO
+			if (target != null)
+				target.BeAttack ();
+		}
+		int EntityAct.Step.Time (WorldEntity ent) {
+			return 3;
+		}
+	}
+	private static Step[] steps = new Step[] { new Step1 (), new Step2 () };
+	public override EntityAct.Step GetStep (int i) {
+		return GetStep (i, steps);
+	}
+}

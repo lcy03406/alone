@@ -10,6 +10,7 @@ public class WorldEntity {
 		public int acstep;
 		public int actime;
 		public Schema.Spec.A spec;
+		public EntityCore core;
 		public EntityStat stat;
 		public PlayInventory inv;
 		public EntityAct act;
@@ -61,6 +62,7 @@ public class WorldEntity {
 	}
 
 	public void Update (int time) {
+		//d.core.Update (time);
 		UpdateAct (time);
 	}
 

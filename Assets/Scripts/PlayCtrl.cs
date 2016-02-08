@@ -34,6 +34,14 @@ public class PlayCtrl : PlayAI{
 		next.Enqueue (act);
 		return true;
 	}
+
+	public bool CmdInteract(IactDst to) {
+		EntityAct act = new PlayActIact (to);
+		next.Enqueue (act);
+		return true;
+	}
+
+	public 
 	
 }
 

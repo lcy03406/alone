@@ -65,6 +65,9 @@ public class Game : MonoBehaviour, World.View {
 			if (Input.GetKeyDown (KeyCode.Period)) {
 				//ctrl.CmdWait ();
 			}
+			if (Input.GetKeyDown (KeyCode.Return)) {
+				ctrl.ListCanDo ();
+			}
 		}
 	}
 
