@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Schema {
-	public class Item : SchemaBase<Item.ID, Item> {
+	public sealed class Item : SchemaBase<Item.ID, Item> {
 		public readonly Sprite.A sprite;
 		public readonly string name;
 		private Item (Schema.SpriteID spid, string name) {

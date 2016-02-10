@@ -66,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 174554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f0b5c73c062f904e903fd69af9f5968, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b127eeed7948e5488d11dcacd0618ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21220502
@@ -87,14 +87,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 175158869
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300070, guid: 20f83ea5093b16946997b3c7de0b62d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21245268
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,14 +117,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 175158869
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300100, guid: 20f83ea5093b16946997b3c7de0b62d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

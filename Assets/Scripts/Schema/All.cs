@@ -5,7 +5,11 @@ namespace Schema {
 		static public void Init () {
 			Sprite.Init ();
 			Floor.Init ();
-			Spec.Init ();
+			Creature.Init ();
+			Tree.Init ();
+			Iact.Init ();
+			Attack.Init ();
+			Item.Init ();
 		}
 	}
 }

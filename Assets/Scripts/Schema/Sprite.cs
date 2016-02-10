@@ -1,7 +1,7 @@
 using System;
 
 namespace Schema {
-	public class Sprite : SchemaBase<SpriteID, Sprite> {
+	public sealed class Sprite : SchemaBase<SpriteID, Sprite> {
 		public readonly UnityEngine.Sprite sprite;
 
 		private Sprite (UnityEngine.Sprite sprite) {

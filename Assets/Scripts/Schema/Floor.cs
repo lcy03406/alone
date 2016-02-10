@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Schema {
-	public class Floor : SchemaBase<Floor.ID, Floor> {
+	public sealed class Floor : SchemaBase<Floor.ID, Floor> {
 		public readonly Sprite.A sprite;
         private Floor (Schema.SpriteID spid) {
 			this.sprite = Sprite.GetA (spid);
