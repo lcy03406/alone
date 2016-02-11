@@ -3,28 +3,36 @@ using System;
 
 namespace Play.Tree {
 	public class PickBranch : Iact {
-		public override bool Can (Entity src, Entity dst) {
-			Core dstcore = dst.GetAttr<Core> ();
-			if (dstcore == null)
-				return false;
-			return true;
-		}
-
-		public override void Interact (Entity src, Entity dst) {
-			throw new NotImplementedException ();
+		public PickBranch() {
+			eff = new Effect[] {
+				new DecStat<Tree.Stat.ID> (new Dst(), Tree.Stat.ID.Branch, 1),
+                new DecStat<Creature.Stat.ID> (new Src(), Creature.Stat.ID.Stamina, 1),
+                new Play.AddItem (
+					ent : new Src(),
+					item : new CalcPartItem(
+						ent : new Play.Dst(),
+						part : Schema.Tree.Part.Branch
+					),
+					count : new Play.Const<int>(1)
+				)
+			};
 		}
 	}
 
 	public class PickFruit : Iact {
-		public override bool Can (Entity src, Entity dst) {
-			Core dstcore = dst.GetAttr<Core> ();
-			if (dstcore == null)
-				return false;
-			return true;
-		}
-
-		public override void Interact (Entity src, Entity dst) {
-			throw new NotImplementedException ();
+		public PickFruit() {
+			eff = new Effect[] {
+				new DecStat<Tree.Stat.ID> (new Dst(), Tree.Stat.ID.Fruit, 1),
+				new DecStat<Creature.Stat.ID> (new Src(), Creature.Stat.ID.Stamina, 1),
+				new Play.AddItem (
+					ent : new Src(),
+					item : new CalcPartItem(
+						ent : new Play.Dst(),
+						part : Schema.Tree.Part.Fruit
+					),
+					count : new Play.Const<int>(1)
+				)
+			};
 		}
 	}
 }

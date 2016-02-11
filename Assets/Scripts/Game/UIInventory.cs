@@ -13,7 +13,7 @@ public class UIInventory : MonoBehaviour {
 	private List<GameObject> items = new List<GameObject>();
 
 	void Awake () {
-		panel = transform.FindChild("ItemPanel");
+		panel = transform.FindChild("ItemPanel").FindChild("ItemList");
 	}
 
 	// Use this for initialization
@@ -24,11 +24,11 @@ public class UIInventory : MonoBehaviour {
 	void Update () {
 	}
 
-	public void Open (Inventory inv) {
+	public void Open (Inv inv) {
+		gameObject.SetActive(true);
 		foreach (Item item in inv.items) {
 			AddItem (item);
 		}
-		gameObject.SetActive(true);
 	}
 
 	void AddItem (Item item) {

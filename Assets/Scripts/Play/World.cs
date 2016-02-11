@@ -54,7 +54,6 @@ namespace Play {
 			if (e == null) {
 				Schema.Creature.A human = Schema.Creature.GetA (Schema.Creature.ID.Human);
 				e = Play.Creature.Core.CreateEntity (this, human);
-				Play.Creature.Core core = e.GetAttr<Play.Creature.Core> ();
 				e.SetAttr (new Play.Creature.Ctrl ());
 			}
 			e.SetWorld (this);

@@ -28,50 +28,53 @@ public class UIGame : MonoBehaviour {
 		if (ctrl == null)
 			return;
 		if (Input.anyKeyDown) {
-			if (Input.GetKeyDown (KeyCode.LeftControl)) {
-				ctrl.CmdAttack ();
-				return;
-			}
-			int dx = 0;
-			int dy = 0;
-			if (Input.GetKeyDown (KeyCode.A)) {
-				dx--;
-			}
-			if (Input.GetKeyDown (KeyCode.S)) {
-				dy--;
-			}
-			if (Input.GetKeyDown (KeyCode.D)) {
-				dx++;
-			}
-			if (Input.GetKeyDown (KeyCode.W)) {
-				dy++;
-			}
-			if (dx != 0 || dy != 0) {
-				Direction to = new Coord (dx, dy).ToDirection ();
-				ctrl.CmdMove (to);
-				return;
-			}
-			if (Input.GetKeyDown (KeyCode.Period)) {
-				//ctrl.CmdWait ();
-			}
-			if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
 				if (menu.isActiveAndEnabled)
 					menu.Close();
 				else if (inv.isActiveAndEnabled)
 					inv.Close();
-			}
-			if (Input.GetKeyDown (KeyCode.I)) {
-				Inventory i = player.GetAttr<Inventory>();
-				inv.Open(i);
-			}
-			if (Input.GetKeyDown (KeyCode.Return)) {
-				Play.Entity dst = ctrl.ListDst ();
-				List<Schema.Iact.A> iacts = ctrl.ListIact (dst);
-				List<string> opts = iacts.ConvertAll (iact => iact.id.ToString ());
-				menu.Open (opts.ToArray (), delegate (int idx, string name) {
-					Schema.Iact.A iact = iacts[idx];
-					ctrl.CmdIact (iact, dst.id);
-				});
+			} else if (Input.GetKeyDown(KeyCode.I)) {
+				if (!inv.isActiveAndEnabled) {
+					Inv i = player.GetAttr<Inv>();
+					inv.Open(i);
+				}
+			} else if (menu.isActiveAndEnabled) {
+
+			} else if (Input.GetKeyDown(KeyCode.LeftControl)) {
+				ctrl.CmdAttack();
+				return;
+			} else if (Input.GetKeyDown(KeyCode.Period)) {
+				//ctrl.CmdWait ();
+			} else if (Input.GetKeyDown(KeyCode.Return)) {
+				if (!menu.isActiveAndEnabled) {
+					Play.Entity dst = ctrl.ListDst();
+					List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
+					List<string> opts = iacts.ConvertAll(iact => iact.id.ToString());
+					menu.Open(opts.ToArray(), delegate (int idx, string name) {
+						Schema.Iact.A iact = iacts[idx];
+						ctrl.CmdIact(iact, dst.id);
+					});
+				}
+			} else {
+				int dx = 0;
+				int dy = 0;
+				if (Input.GetKeyDown(KeyCode.A)) {
+					dx--;
+				}
+				if (Input.GetKeyDown(KeyCode.S)) {
+					dy--;
+				}
+				if (Input.GetKeyDown(KeyCode.D)) {
+					dx++;
+				}
+				if (Input.GetKeyDown(KeyCode.W)) {
+					dy++;
+				}
+				if (dx != 0 || dy != 0) {
+					Direction to = new Coord(dx, dy).ToDirection();
+					ctrl.CmdMove(to);
+					return;
+				}
 			}
 		}
 	}

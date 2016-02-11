@@ -30,6 +30,7 @@ public class UIMenu : MonoBehaviour {
 	}
 
 	public void Open (string[] texts, UnityAction<int, string> action) {
+		gameObject.SetActive (true);
 		for (int i = 0; i < texts.Length; ++i) {
 			int idx = i;
 			string text = texts[i];
@@ -41,7 +42,6 @@ public class UIMenu : MonoBehaviour {
 		AddButton ("Cancel").onClick.AddListener (delegate () {
 			Close ();
 		});
-		gameObject.SetActive (true);
 	}
 
     public void Close () {

@@ -43,7 +43,7 @@ namespace Play {
 			return n;
 		}
 
-		private Type AttribClass(Type cls) {
+		private static Type AttribClass(Type cls) {
 			Assert.IsTrue (cls.IsSubclassOf (typeof (Attrib)));
 			while (true) {
 				if (cls.BaseType == typeof (Attrib)) {
@@ -55,7 +55,13 @@ namespace Play {
 
 		public void SetAttr(Attrib a) {
 			Type cls = AttribClass (a.GetType ());
-			attr[cls] = a;
+			Attrib aa;
+			if (attr.TryGetValue(cls, out aa)) {
+				aa.SetEntity(null);
+				attr.Remove(cls);
+			}
+			attr.Add(cls, a);
+			a.SetEntity(this);
 		}
 
 		public T GetAttr<T> () where T : Attrib {

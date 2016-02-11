@@ -11,9 +11,13 @@ namespace Schema {
 		public enum ID {
 			None,
 			Armor,
+			Branch,
+			Apple,
 		}
 		static public void Init () {
-			Add (ID.Armor, new Item (Schema.SpriteID.d_armor, "Armor"));
+			Add(ID.Armor, new Item(Schema.SpriteID.d_armor, "Armor"));
+			Add(ID.Branch, new Item(Schema.SpriteID.b_tree_pine_winter, "Branch")); //TODO
+			Add(ID.Apple, new Item(Schema.SpriteID.d_gauntlets, "Apple")); //TODO
 		}
 	}
 }

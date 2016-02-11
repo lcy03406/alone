@@ -22,10 +22,8 @@ namespace Play.Creature {
 			};
 			e.SetAttr (core);
 			e.SetAttr (new Show ());
-			Stat stat = new Stat ();
-			stat.hp = 3;
-			e.SetAttr (stat);
-			e.SetAttr (new Inventory ());
+			e.SetAttr(new Stat(race.s.born_stat));
+			e.SetAttr (new Inv ());
 			AI ai = (AI)Activator.CreateInstance (race.s.ai);
 			e.SetAttr (ai);
 			e.SetWorld (world);

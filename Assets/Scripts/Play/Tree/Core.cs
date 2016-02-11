@@ -16,6 +16,7 @@ namespace Play.Tree {
 			};
 			e.SetAttr (core);
 			e.SetAttr (new Show ());
+			e.SetAttr(new Stat(race.s.born_stat));
 			e.SetWorld (world);
 			return e;
 		}

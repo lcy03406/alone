@@ -35,9 +35,20 @@ namespace Schema {
 
 	public sealed class Creature : SchemaBase<Creature.ID, Creature> {
 		public readonly Sprite.A sprite;
+		public readonly Play.Creature.Stat born_stat;
+		public readonly Play.Creature.Stat renew_stat;
+		public readonly Play.Creature.Stat full_stat;
 		public readonly Type ai;
-		private Creature (Schema.SpriteID spid, Type ai) {
-			this.sprite = Sprite.GetA (spid);
+		private Creature (Schema.SpriteID sprite,
+			Play.Creature.Stat born_stat,
+			Play.Creature.Stat renew_stat,
+			Play.Creature.Stat full_stat,
+			Type ai)
+		{
+			this.sprite = Sprite.GetA (sprite);
+			this.born_stat = born_stat;
+			this.renew_stat = renew_stat;
+			this.full_stat = full_stat;
 			this.ai = ai;
         }
 		public enum ID {
@@ -47,7 +58,27 @@ namespace Schema {
 
 		}
 		static public void Init () {
-			Add (ID.Human, new Creature (Schema.SpriteID.c_human_young, typeof(Play.Creature.AIHuman)));
+			Add (ID.Human, new Creature (
+				sprite: Schema.SpriteID.c_human_young,
+				born_stat: new Play.Creature.Stat {
+					ints = {
+						{ Play.Creature.Stat.ID.HitPoint, 5 },
+						{ Play.Creature.Stat.ID.Stamina, 5 },
+					}
+				},
+				renew_stat: new Play.Creature.Stat {
+					ints = {
+						{ Play.Creature.Stat.ID.HitPoint, 1 },
+						{ Play.Creature.Stat.ID.Stamina, 1 },
+					}
+				},
+				full_stat: new Play.Creature.Stat {
+					ints = {
+						{ Play.Creature.Stat.ID.HitPoint, 5 },
+						{ Play.Creature.Stat.ID.Stamina, 5 },
+					}
+				},
+				ai: typeof(Play.Creature.AIHuman)));
         }
 	}
 }
