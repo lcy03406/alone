@@ -70,5 +70,11 @@ namespace Play.Creature {
 				}
 			}
 		}
+
+		public List<Schema.Make.A> ListMake() {
+			foreach (Schema.Make.A a in race.s.know_make) {
+			}
+			return new List<Schema.Make.A>(race.s.know_make);
+		}
 	}
 }

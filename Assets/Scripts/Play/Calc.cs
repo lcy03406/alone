@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace Play {
 	public sealed class Ctx {
-		public Entity src;
-		public Entity dst;
+		public Entity src = null;
+		public Entity dst = null;
+		public List<List<Item>> items = new List<List<Item>>();
 	}
 
 	public interface Calc<T> {

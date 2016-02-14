@@ -14,13 +14,15 @@ namespace Play.Creature {
 			Play.Creature.Act act = core.act;
 			if (act != null) {
 				//TODO
+#if false
 				if (act is Play.Creature.ActMove) {
-					return Schema.Sprite.GetA (Schema.SpriteID.d_boots);
+					return Schema.Sprite.GetA(Schema.SpriteID.d_boots);
 				} else if (act is Play.Creature.ActAttack) {
-					return Schema.Sprite.GetA (Schema.SpriteID.d_gauntlets);
+					return Schema.Sprite.GetA(Schema.SpriteID.d_gauntlets);
 				} else {
-					return Schema.Sprite.GetA (Schema.SpriteID.d_helm);
+					return Schema.Sprite.GetA(Schema.SpriteID.d_helm);
 				}
+#endif			
 			}
 			return core.race.s.sprite;
 		}

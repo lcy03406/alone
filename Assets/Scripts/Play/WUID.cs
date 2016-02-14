@@ -52,15 +52,15 @@ namespace Play {
 				return 0;
 		}
 
-		public static bool operator ==(WUID a, WUID b) {
+		public static bool operator == (WUID a, WUID b) {
 			return a.value == b.value;
 		}
 
-		public static bool operator !=(WUID a, WUID b) {
+		public static bool operator != (WUID a, WUID b) {
 			return a.value != b.value;
 		}
 
-		public static bool operator <(WUID a, WUID b) {
+		public static bool operator < (WUID a, WUID b) {
 			return a.value < b.value;
 		}
 

@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using Schema;
 
 namespace Play.Creature {
 	[Serializable]
@@ -58,6 +59,19 @@ namespace Play.Creature {
 			if (core == null)
 				return null;
 			return core.ListIact (ent);
+		}
+
+		public bool CmdMake(Schema.Make.A make) {
+			Act act = new ActMake(make);
+			next.Enqueue(act);
+			return true;
+		}
+
+		public List<Schema.Make.A> ListMake() {
+			Core core = ent.GetAttr<Core>();
+			if (core == null)
+				return null;
+			return core.ListMake();
 		}
 	}
 }

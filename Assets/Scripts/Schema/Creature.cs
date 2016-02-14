@@ -39,17 +39,20 @@ namespace Schema {
 		public readonly Play.Creature.Stat renew_stat;
 		public readonly Play.Creature.Stat full_stat;
 		public readonly Type ai;
+		public readonly Make.A[] know_make;
 		private Creature (Schema.SpriteID sprite,
 			Play.Creature.Stat born_stat,
 			Play.Creature.Stat renew_stat,
 			Play.Creature.Stat full_stat,
-			Type ai)
+			Type ai,
+			Make.A[] know_make)
 		{
 			this.sprite = Sprite.GetA (sprite);
 			this.born_stat = born_stat;
 			this.renew_stat = renew_stat;
 			this.full_stat = full_stat;
 			this.ai = ai;
+			this.know_make = know_make;
         }
 		public enum ID {
 			None,
@@ -78,7 +81,11 @@ namespace Schema {
 						{ Play.Creature.Stat.ID.Stamina, 5 },
 					}
 				},
-				ai: typeof(Play.Creature.AIHuman)));
+				ai: typeof(Play.Creature.AIHuman),
+				know_make: new Make.A[] {
+					Make.GetA(Make.ID.Yeah),
+				}
+			));
         }
 	}
 }

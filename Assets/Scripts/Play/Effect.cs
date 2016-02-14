@@ -7,12 +7,32 @@ namespace Play {
 		void Do(Ctx ctx);
 	}
 
-	public class DecStat<StatID> : Play.Effect where StatID: struct {
+	public class EffMulti : Effect {
+		public Effect[] eff;
+		public EffMulti(Effect[] eff) {
+			this.eff = eff;
+		}
+		public bool Can(Ctx ctx) {
+			foreach (Effect ef in eff) {
+				if (!ef.Can(ctx))
+					return false;
+			}
+			return true;
+		}
+
+		public void Do(Ctx ctx) {
+			foreach (Effect ef in eff) {
+				ef.Do(ctx);
+			}
+		}
+	}
+
+	public class EffDecStat<StatID> : Effect where StatID: struct {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		int value;
 
-		public DecStat(Calc<Entity> ent, StatID id, int value) {
+		public EffDecStat(Calc<Entity> ent, StatID id, int value) {
 			c_ent = ent;
 			this.id = id;
 			this.value = value;
@@ -37,12 +57,12 @@ namespace Play {
 		}
 	}
 
-	public class AddItem : Play.Effect {
+	public class EffAddItem : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly Calc<Schema.Item.A> c_item;
 		public readonly Calc<int> c_count;
 
-		public AddItem(Calc<Entity> ent, Calc<Schema.Item.A> item, Calc<int> count) {
+		public EffAddItem(Calc<Entity> ent, Calc<Schema.Item.A> item, Calc<int> count) {
 			c_ent = ent;
 			c_item = item;
 			c_count = count;
@@ -64,11 +84,16 @@ namespace Play {
 			return true;
 		}
 		public void Do(Ctx ctx) {
+			//TODO
 			Entity ent = c_ent.Get(ctx);
 			Inv inv = ent.GetAttr<Inv>();
-			Schema.Item.A item = c_item.Get(ctx);
+			Schema.Item.A a = c_item.Get(ctx);
 			int count = c_count.Get(ctx);
-			inv.AddItem(item, count);
+			ItemCreate cre = new ItemCreate(a: a,
+				q_base: 10, q_from: null, q_rand: 0,
+				cap_from: null,
+				count: count);
+			inv.AddItem(cre.Create(ctx));
 		}
 	}
 }
