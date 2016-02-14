@@ -1,5 +1,5 @@
 //utf-8。
-using System;
+using System.Collections.Generic;
 
 namespace Play {
 	public interface Effect {
@@ -57,15 +57,13 @@ namespace Play {
 		}
 	}
 
-	public class EffAddItem : Effect {
+	public class EffUseItem : Effect {
 		public readonly Calc<Entity> c_ent;
-		public readonly Calc<Schema.Item.A> c_item;
-		public readonly Calc<int> c_count;
+		public readonly Calc<ItemSelect> c_sel;
 
-		public EffAddItem(Calc<Entity> ent, Calc<Schema.Item.A> item, Calc<int> count) {
+		public EffUseItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
 			c_ent = ent;
-			c_item = item;
-			c_count = count;
+			c_sel = sel;
 		}
 
 		public bool Can(Ctx ctx) {
@@ -75,11 +73,72 @@ namespace Play {
 			Inv inv = ent.GetAttr<Inv>();
 			if (inv == null)
 				return false;
-			bool item = c_item.Can(ctx);
-			if (!item)
+			if (!c_sel.Can(ctx))
 				return false;
-			bool count = c_count.Can(ctx);
-			if (!count)
+			ItemSelect sel = c_sel.Get(ctx);
+			Ctx.InvCtx invx = ctx.GetInv(inv);
+			List<Item> to = inv.SelectItem(sel, invx.use);
+			if (to == null)
+				return false;
+			invx.use.AddRange(to);
+			return true;
+		}
+		public void Do(Ctx ctx) {
+		}
+	}
+
+	public class EffDelItem : Effect {
+		public readonly Calc<Entity> c_ent;
+		public readonly Calc<ItemSelect> c_sel;
+
+		public EffDelItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
+			c_ent = ent;
+			c_sel = sel;
+		}
+
+		public bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Inv inv = ent.GetAttr<Inv>();
+			if (inv == null)
+				return false;
+			if (!c_sel.Can(ctx))
+				return false;
+			ItemSelect sel = c_sel.Get(ctx);
+			Ctx.InvCtx invx = ctx.GetInv(inv);
+			List<Item> to = inv.SelectItem(sel, invx.use);
+			if (to == null)
+				return false;
+			invx.use.AddRange(to);
+			invx.del.AddRange(to);
+			return true;
+		}
+		public void Do(Ctx ctx) {
+		}
+	}
+
+	public class EffAddItem : Effect {
+		public readonly Calc<Entity> c_ent;
+		public readonly Calc<ItemCreate> c_cre;
+
+		public EffAddItem(Calc<Entity> ent, Calc<ItemCreate> cre) {
+			c_ent = ent;
+			c_cre = cre;
+		}
+
+		public bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Inv inv = ent.GetAttr<Inv>();
+			if (inv == null)
+				return false;
+			if (!c_cre.Can(ctx))
+				return false;
+			ItemCreate cre = c_cre.Get(ctx);
+			List<Item> to = cre.Create(ctx);
+			if (to == null)
 				return false;
 			return true;
 		}
@@ -87,13 +146,9 @@ namespace Play {
 			//TODO
 			Entity ent = c_ent.Get(ctx);
 			Inv inv = ent.GetAttr<Inv>();
-			Schema.Item.A a = c_item.Get(ctx);
-			int count = c_count.Get(ctx);
-			ItemCreate cre = new ItemCreate(a: a,
-				q_base: 10, q_from: null, q_rand: 0,
-				cap_from: null,
-				count: count);
-			inv.AddItem(cre.Create(ctx));
+			ItemCreate cre = c_cre.Get(ctx);
+			List<Item> to = cre.Create(ctx);
+			inv.AddItem(to);
 		}
 	}
 }

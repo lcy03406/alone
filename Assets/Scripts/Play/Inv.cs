@@ -8,8 +8,9 @@ namespace Play {
 	public class Inv : Attrib{
 		public List<Item> items = new List<Item> ();
 
-		public bool SelectItem(List<Item> to, List<Item> all, ItemSelect sel) {
-			int has = 0;
+		public List<Item> SelectItem(ItemSelect sel, List<Item> all) {
+			List<Item> to = new List<Item>();
+            int has = 0;
 			for (int i = 0; i < items.Count; i++) {
 				Item item = items[i];
 				if (all.Contains(item))
@@ -18,10 +19,10 @@ namespace Play {
 					has += 1;
 					to.Add(item);
 					if (has >= sel.count)
-						return true;
+						return to;
 				}
 			}
-			return false;
+			return null;
 		}
 
 		public void DelItem(List<Item> list) {

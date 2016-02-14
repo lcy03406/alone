@@ -4,9 +4,23 @@ using System.Collections.Generic;
 
 namespace Play {
 	public sealed class Ctx {
+		public class InvCtx {
+			public List<Item> use = new List<Item>();
+			public List<Item> del = new List<Item>();
+		}
 		public Entity src = null;
 		public Entity dst = null;
+		public Dictionary<Inv, InvCtx> invs = new Dictionary<Inv, InvCtx>(); 
 		public List<List<Item>> items = new List<List<Item>>();
+
+		public InvCtx GetInv(Inv inv) {
+			InvCtx invx;
+			if (invs.TryGetValue(inv, out invx))
+				return invx;
+			invx = new InvCtx();
+			invs.Add(inv, invx);
+			return invx;
+		}
 	}
 
 	public interface Calc<T> {

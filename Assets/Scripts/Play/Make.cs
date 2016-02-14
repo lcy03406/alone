@@ -1,12 +1,14 @@
 //utf-8。
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Play {
 	public class Make {
 
 		public readonly int time1;
 		public readonly int time2;
-		public readonly int sta;
+		public readonly Effect eff;
+		public readonly EffDecStat<Creature.Stat.ID> sta;
 		public readonly ItemSelect[] tools;
 		public readonly ItemSelect[] reagents;
 		public readonly ItemCreate[] products;
@@ -18,12 +20,31 @@ namespace Play {
 		{
 			this.time1 = time1;
 			this.time2 = time2;
-			this.sta = sta;
+			this.ef = new EffMulti(eff: new Effect[] {
+					new EffDecStat<Creature.Stat.ID> (new Src(), Creature.Stat.ID.Stamina, sta),
+					new EffUseItem(new Src(), tools)
+					new Play.EffAddItem (
+						ent : new Src(),
+						item : new CalcPartItem(
+							ent : new Play.Dst(),
+							part : part
+						),
+						count : new Play.Const<int>(count)
+					)
+				}
+
+			this.sta = new EffDecStat<Creature.Stat.ID>(new Src(), Creature.Stat.ID.Stamina, sta);
 			this.tools = tools;
 			this.reagents = reagents;
 			this.products = products;
 		}
 		public bool Can (Entity src) {
+			Ctx ctx = new Ctx {
+				src = src,
+				dst = null,
+			};
+			if (!sta.Can(ctx))
+				return false;
 			Inv inv = src.GetAttr<Inv>();
 			if (inv == null)
 				return false;
