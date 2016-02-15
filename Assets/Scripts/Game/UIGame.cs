@@ -57,11 +57,11 @@ public class UIGame : MonoBehaviour {
 				}
 			} else if (Input.GetKeyDown(KeyCode.M)) {
 				if (!menu.isActiveAndEnabled) {
-					List<Schema.Make.A> makes = ctrl.ListMake();
+					List<Schema.Iact.A> makes = ctrl.ListMake();
 					List<string> opts = makes.ConvertAll(make => make.id.ToString());
 					menu.Open(opts.ToArray(), delegate (int idx, string name) {
-						Schema.Make.A make = makes[idx];
-						ctrl.CmdMake(make);
+						Schema.Iact.A make = makes[idx];
+						ctrl.CmdIact(make, new WUID());
 					});
 				}
 			} else {

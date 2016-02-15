@@ -34,11 +34,11 @@ namespace Play.Creature {
 				return false;
 			}
 			//TODO
-			Schema.Attack.A atk = Schema.Attack.GetA (Schema.Attack.ID.Punch);
+			Schema.Iact.A atk = Schema.Iact.GetA (Schema.Iact.ID.Attack_Punch);
 			Entity dst = ent.world.SearchEntity (ent.c.Step (ent.dir));
 			if (dst == null)
 				return false;
-			Act act = new ActAttack (atk, dst.id);
+			Act act = new ActIact (atk, dst.id);
 			next.Enqueue (act);
 			return true;
 		}
@@ -61,13 +61,7 @@ namespace Play.Creature {
 			return core.ListIact (ent);
 		}
 
-		public bool CmdMake(Schema.Make.A make) {
-			Act act = new ActMake(make);
-			next.Enqueue(act);
-			return true;
-		}
-
-		public List<Schema.Make.A> ListMake() {
+		public List<Schema.Iact.A> ListMake() {
 			Core core = ent.GetAttr<Core>();
 			if (core == null)
 				return null;

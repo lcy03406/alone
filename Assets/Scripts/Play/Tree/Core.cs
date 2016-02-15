@@ -29,7 +29,11 @@ namespace Play.Tree {
 		public override List<Schema.Iact.A> ListIact (Entity src) {
 			List<Schema.Iact.A> list = new List<Schema.Iact.A> ();
 			foreach (Schema.Iact.A iact in iacts) {
-				if (iact.s.i.Can(src, ent)) {
+				Ctx ctx = new Ctx() {
+					src = src,
+					dst = ent,
+				};
+				if (iact.s.i.Can(ctx)) {
 					list.Add (iact);
 				}
 			}

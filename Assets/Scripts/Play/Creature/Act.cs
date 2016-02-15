@@ -105,48 +105,6 @@ namespace Play.Creature {
 	}
 
 	[Serializable]
-	public class ActAttack : Act {
-		public Schema.Attack.A atk;
-		public WUID dst;
-		public ActAttack (Schema.Attack.A atk, WUID dst) {
-			this.atk = atk;
-			this.dst = dst;
-		}
-		public override bool Can (Entity ent) {
-			Entity e = ent.world.FindEntity (dst);
-			if (e == null)
-				return false;
-			return atk.s.i.Can (ent, e);
-		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-			}
-			int Act.Step.Time (Entity ent) {
-				return 3;
-			}
-		}
-		private class Step2 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-				ActAttack act = (ActAttack) Act.EntAct (ent);
-				Entity dst = ent.world.FindEntity (act.dst);
-				//TODO
-				if (dst == null)
-					return;
-				if (ent.c.Manhattan (dst.c) > 1)
-					return;
-				act.atk.s.i.Damage (ent, dst);
-			}
-			int Act.Step.Time (Entity ent) {
-				return 3;
-			}
-		}
-		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };
-		public override Act.Step GetStep (int i) {
-			return GetStep (i, steps);
-		}
-	}
-
-	[Serializable]
 	public class ActIact : Act {
 		public Schema.Iact.A iact;
 		public WUID dst;
@@ -155,10 +113,11 @@ namespace Play.Creature {
 			this.dst = dst;
 		}
 		public override bool Can (Entity ent) {
-			Entity e = ent.world.FindEntity (dst);
-			if (e == null)
-				return false;
-			return iact.s.i.Can (ent, e);
+			Ctx ctx = new Ctx() {
+				src = ent,
+				dst = ent.world.FindEntity(dst)
+			};
+			return iact.s.i.Can (ctx);
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
@@ -171,12 +130,11 @@ namespace Play.Creature {
 		private class Step2 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActIact act = (ActIact) Act.EntAct (ent);
-				Entity dst = ent.world.FindEntity (act.dst);
-				if (dst == null)
-					return;
-				if (ent.c.Manhattan (dst.c) > 1)
-					return;
-				act.iact.s.i.Interact (ent, dst);
+				Ctx ctx = new Ctx() {
+					src = ent,
+					dst = ent.world.FindEntity(act.dst)
+				};
+				act.iact.s.i.Do (ctx);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
@@ -186,39 +144,6 @@ namespace Play.Creature {
 		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };
 		public override Act.Step GetStep (int i) {
 			return GetStep (i, steps);
-		}
-	}
-
-	[Serializable]
-	public class ActMake : Act {
-		public Schema.Make.A make;
-		public ActMake(Schema.Make.A make) {
-			this.make = make;
-		}
-		public override bool Can(Entity ent) {
-			return make.s.i.Can(ent);
-		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do(Entity ent) {
-			}
-			int Act.Step.Time(Entity ent) {
-				ActMake act = (ActMake)Act.EntAct(ent);
-				return act.make.s.i.time1;
-			}
-		}
-		private class Step2 : Act.Step {
-			void Act.Step.Do(Entity ent) {
-				ActMake act = (ActMake)Act.EntAct(ent);
-				act.make.s.i.Do(ent);
-			}
-			int Act.Step.Time(Entity ent) {
-				ActMake act = (ActMake)Act.EntAct(ent);
-				return act.make.s.i.time2;
-			}
-		}
-		private static Step[] steps = new Step[] { new Step1(), new Step2() };
-		public override Act.Step GetStep(int i) {
-			return GetStep(i, steps);
 		}
 	}
 }

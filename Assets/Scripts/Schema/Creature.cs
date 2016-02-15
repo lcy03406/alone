@@ -39,13 +39,13 @@ namespace Schema {
 		public readonly Play.Creature.Stat renew_stat;
 		public readonly Play.Creature.Stat full_stat;
 		public readonly Type ai;
-		public readonly Make.A[] know_make;
+		public readonly Iact.A[] know_make;
 		private Creature (Schema.SpriteID sprite,
 			Play.Creature.Stat born_stat,
 			Play.Creature.Stat renew_stat,
 			Play.Creature.Stat full_stat,
 			Type ai,
-			Make.A[] know_make)
+			Iact.A[] know_make)
 		{
 			this.sprite = Sprite.GetA (sprite);
 			this.born_stat = born_stat;
@@ -82,8 +82,8 @@ namespace Schema {
 					}
 				},
 				ai: typeof(Play.Creature.AIHuman),
-				know_make: new Make.A[] {
-					Make.GetA(Make.ID.Yeah),
+				know_make: new Iact.A[] {
+					Iact.GetA(Iact.ID.Make_Yeah),
 				}
 			));
         }
@@ -105,12 +105,3 @@ public class Gait {
 	int timeRecover;
 	int stamina;
 }
-
-public class Attack {
-	int timePrepare;
-	int timeRecover;
-	int stamina;
-	int tohit;
-	int damage;
-}
-

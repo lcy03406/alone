@@ -6,9 +6,7 @@ namespace Schema {
 			Sprite.Init();
 			Floor.Init();
 			Iact.Init();
-			Attack.Init();
 			Item.Init();
-			Make.Init();
 			Creature.Init();
 			Tree.Init();
 		}

@@ -30,12 +30,12 @@ namespace Play {
 	public class EffDecStat<StatID> : Effect where StatID: struct {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
-		int value;
+		Calc<int> c_value;
 
-		public EffDecStat(Calc<Entity> ent, StatID id, int value) {
+		public EffDecStat(Calc<Entity> ent, StatID id, Calc<int> value) {
 			c_ent = ent;
 			this.id = id;
-			this.value = value;
+			this.c_value = value;
 		}
 
 		public bool Can(Ctx ctx) {
@@ -45,7 +45,12 @@ namespace Play {
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			if (stat == null)
 				return false;
-			if (stat.ints[id] < value)
+			if (!stat.Has(id))
+				return false;
+			if (!c_value.Can(ctx))
+				return false;
+			int value = c_value.Get(ctx);
+			if (stat.Get(id) < value)
 				return false;
 			return true;
 		}
@@ -53,6 +58,7 @@ namespace Play {
 		public void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			int value = c_value.Get(ctx);
 			stat.ints[id] -= value;
 		}
 	}
@@ -76,7 +82,7 @@ namespace Play {
 			if (!c_sel.Can(ctx))
 				return false;
 			ItemSelect sel = c_sel.Get(ctx);
-			Ctx.InvCtx invx = ctx.GetInv(inv);
+			Ctx.Invx invx = ctx.GetInv(inv);
 			List<Item> to = inv.SelectItem(sel, invx.use);
 			if (to == null)
 				return false;
@@ -106,7 +112,7 @@ namespace Play {
 			if (!c_sel.Can(ctx))
 				return false;
 			ItemSelect sel = c_sel.Get(ctx);
-			Ctx.InvCtx invx = ctx.GetInv(inv);
+			Ctx.Invx invx = ctx.GetInv(inv);
 			List<Item> to = inv.SelectItem(sel, invx.use);
 			if (to == null)
 				return false;

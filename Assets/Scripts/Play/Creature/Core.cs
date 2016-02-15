@@ -37,7 +37,11 @@ namespace Play.Creature {
 		public override List<Schema.Iact.A> ListIact (Entity src) {
 			List<Schema.Iact.A> list = new List<Schema.Iact.A> ();
 			foreach (Schema.Iact.A iact in iacts) {
-				if (iact.s.i.Can (src, ent)) {
+				Ctx ctx = new Ctx() {
+					src = src,
+					dst = ent,
+				};
+				if (iact.s.i.Can (ctx)) {
 					list.Add (iact);
 				}
 			}
@@ -71,10 +75,10 @@ namespace Play.Creature {
 			}
 		}
 
-		public List<Schema.Make.A> ListMake() {
-			foreach (Schema.Make.A a in race.s.know_make) {
+		public List<Schema.Iact.A> ListMake() {
+			foreach (Schema.Iact.A a in race.s.know_make) {
 			}
-			return new List<Schema.Make.A>(race.s.know_make);
+			return new List<Schema.Iact.A>(race.s.know_make);
 		}
 	}
 }

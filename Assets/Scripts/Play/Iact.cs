@@ -1,31 +1,95 @@
 //utf-8。
-using System;
+using System.Collections.Generic;
 
 namespace Play {
 	public class Iact {
 		public int time1;
 		public int time2;
+		public bool has_dst;
+		public int distance;
 		public Effect ef;
-		public Iact(int time1, int time2, Effect[] eff) {
+		public Iact(int time1, int time2, bool has_dst, int distance, Effect[] eff) {
 			this.time1 = time1;
 			this.time2 = time2;
+			this.has_dst = has_dst;
+			this.distance = distance;
 			this.ef = new EffMulti(eff);
 		}
-		public bool Can (Entity src, Entity dst) {
-			Ctx ctx = new Ctx {
-				src = src,
-				dst = dst,
-			};
-			if (src.c.Manhattan(dst.c) > 1)
+		public bool Can (Ctx ctx) {
+			if (has_dst && ctx.dst == null)
+				return false;
+			if (ctx.src.c.Manhattan(ctx.dst.c) > distance)
 				return false;
 			return ef.Can(ctx);
 		}
-		public void Interact (Entity src, Entity dst) {
-			Ctx ctx = new Ctx {
-				src = src,
-				dst = dst,
+		public void Do (Ctx ctx) {
+			if (Can(ctx))
+				ef.Do(ctx);
+		}
+	}
+	
+	public class Iacts {
+		public static Iact Attack(int time1, int time2, int sta,
+			Calc<int> damage) {
+			Effect[] eff = new Effect[] {
+				new EffDecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new EffDecStat<Creature.Stat.ID> (new Calcs.Dst(), Creature.Stat.ID.HitPoint, damage),
 			};
-			ef.Do(ctx);
+			return new Iact(
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
+		}
+
+		public static Iact Pick(int time1, int time2, int sta,
+			Tree.Stat.ID st, Schema.Tree.Part part, int count)
+		{
+			Effect[] eff = new Effect[] {
+				new EffDecStat<Tree.Stat.ID> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
+				new EffDecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new Play.EffAddItem (
+					ent: new Calcs.Src(),
+					cre: new Calcs.TreePart(
+						ent: new Calcs.Dst(),
+						part: part
+					)
+				)
+			};
+            return new Iact(
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
+		}
+
+		public static Iact Make(int time1, int time2, int sta,
+			ItemSelect[] tools,
+			ItemSelect[] reagents,
+			ItemCreate[] products)
+		{
+			List<Effect> eff = new List<Effect>();
+			eff.Add(new EffDecStat<Creature.Stat.ID>(new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)));
+			foreach (ItemSelect sel in tools) {
+				eff.Add(new EffUseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+			}
+			foreach (ItemSelect sel in reagents) {
+				eff.Add(new EffDelItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+			}
+			foreach (ItemCreate cre in products) {
+				eff.Add(new EffAddItem(new Calcs.Src(), new Calcs.Const<ItemCreate>(cre)));
+			}
+			return new Iact(
+				time1: time1,
+				time2: time2,
+				has_dst: false,
+				distance: 0,
+				eff: eff.ToArray()
+			);
 		}
 	}
 }
