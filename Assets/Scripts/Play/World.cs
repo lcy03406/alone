@@ -212,9 +212,8 @@ namespace Play {
 				param.time++;
 				player.Tick (param.time);
 				int i = 0;
-				WUID id = new WUID ();
 				while (i < entities.Count) {
-					id = entities.Keys[i];
+					WUID id = entities.Keys[i];
 					Entity ent = entities.Values[i];
 					ent.Tick (param.time);
 					while (i < entities.Count && entities.Keys[i] < id) {

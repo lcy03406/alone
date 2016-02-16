@@ -44,7 +44,8 @@ public class UIGame : MonoBehaviour {
 				ctrl.CmdAttack();
 				return;
 			} else if (Input.GetKeyDown(KeyCode.Period)) {
-				//ctrl.CmdWait ();
+				Schema.Iact.A iact = Schema.Iact.GetA(Schema.Iact.ID.Rest);
+				ctrl.CmdIact(iact, WUID.None);
 			} else if (Input.GetKeyDown(KeyCode.Return)) {
 				if (!menu.isActiveAndEnabled) {
 					Play.Entity dst = ctrl.ListDst();
@@ -61,7 +62,7 @@ public class UIGame : MonoBehaviour {
 					List<string> opts = makes.ConvertAll(make => make.id.ToString());
 					menu.Open(opts.ToArray(), delegate (int idx, string name) {
 						Schema.Iact.A make = makes[idx];
-						ctrl.CmdIact(make, new WUID());
+						ctrl.CmdIact(make, WUID.None);
 					});
 				}
 			} else {

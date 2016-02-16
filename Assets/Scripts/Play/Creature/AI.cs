@@ -13,7 +13,7 @@ namespace Play.Creature {
 		public override Act NextAct () {
 			Direction r = (Direction)random.Next (9);
 			if (r == Direction.None || r == Direction.Center)
-				return new ActWait ();
+				return new ActIact(Schema.Iact.GetA(Schema.Iact.ID.Rest), WUID.None);
 			return new ActMove (r);
 			//TODO
 		}

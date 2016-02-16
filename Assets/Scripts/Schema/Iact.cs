@@ -10,15 +10,24 @@ namespace Schema {
 
 		public enum ID {
 			None,
+			Rest,
 			Attack_Punch,
 			Tree_PickBranch,
 			Tree_PickFruit,
 			Make_Yeah,
 		}
 		static public void Init() {
+			InitCommon();
 			InitAttack();
 			InitTree();
 			InitMake();
+		}
+
+		static private void InitCommon() {
+			Add(ID.Rest, new Iact(Play.Iacts.Rest(
+				time1: 1,
+				sta: 1
+			)));
 		}
 
 		static private void InitAttack() {

@@ -6,6 +6,8 @@ using T = System.UInt64;
 namespace Play {
 	[Serializable]
 	public struct WUID : IComparable<WUID> {
+		public static readonly WUID None = new WUID();
+
 		public readonly T value;
 
 		public WUID(ulong value) {

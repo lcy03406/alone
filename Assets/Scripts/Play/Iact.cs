@@ -13,13 +13,15 @@ namespace Play {
 			this.time2 = time2;
 			this.has_dst = has_dst;
 			this.distance = distance;
-			this.ef = new EffMulti(eff);
+			this.ef = new Eff.Multi(eff);
 		}
 		public bool Can (Ctx ctx) {
-			if (has_dst && ctx.dst == null)
-				return false;
-			if (ctx.src.c.Manhattan(ctx.dst.c) > distance)
-				return false;
+			if (has_dst) {
+				if (ctx.dst == null)
+					return false;
+				if (ctx.src.c.Manhattan(ctx.dst.c) > distance)
+					return false;
+			}
 			return ef.Can(ctx);
 		}
 		public void Do (Ctx ctx) {
@@ -29,11 +31,24 @@ namespace Play {
 	}
 	
 	public class Iacts {
+		public static Iact Rest(int time1, int sta) {
+			Effect[] eff = new Effect[] {
+				new Eff.IncStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+			};
+			return new Iact(
+				time1: time1,
+				time2: 0,
+				has_dst: false,
+				distance: 0,
+				eff: eff
+			);
+		}
+
 		public static Iact Attack(int time1, int time2, int sta,
 			Calc<int> damage) {
 			Effect[] eff = new Effect[] {
-				new EffDecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
-				new EffDecStat<Creature.Stat.ID> (new Calcs.Dst(), Creature.Stat.ID.HitPoint, damage),
+				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Dst(), Creature.Stat.ID.HitPoint, damage),
 			};
 			return new Iact(
 				time1: time1,
@@ -48,9 +63,9 @@ namespace Play {
 			Tree.Stat.ID st, Schema.Tree.Part part, int count)
 		{
 			Effect[] eff = new Effect[] {
-				new EffDecStat<Tree.Stat.ID> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
-				new EffDecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
-				new Play.EffAddItem (
+				new Eff.DecStat<Tree.Stat.ID> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
+				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new Play.Eff.AddItem (
 					ent: new Calcs.Src(),
 					cre: new Calcs.TreePart(
 						ent: new Calcs.Dst(),
@@ -73,15 +88,15 @@ namespace Play {
 			ItemCreate[] products)
 		{
 			List<Effect> eff = new List<Effect>();
-			eff.Add(new EffDecStat<Creature.Stat.ID>(new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)));
+			eff.Add(new Eff.DecStat<Creature.Stat.ID>(new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)));
 			foreach (ItemSelect sel in tools) {
-				eff.Add(new EffUseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+				eff.Add(new Eff.UseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
 			}
 			foreach (ItemSelect sel in reagents) {
-				eff.Add(new EffDelItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+				eff.Add(new Eff.DelItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
 			}
 			foreach (ItemCreate cre in products) {
-				eff.Add(new EffAddItem(new Calcs.Src(), new Calcs.Const<ItemCreate>(cre)));
+				eff.Add(new Eff.AddItem(new Calcs.Src(), new Calcs.Const<ItemCreate>(cre)));
 			}
 			return new Iact(
 				time1: time1,

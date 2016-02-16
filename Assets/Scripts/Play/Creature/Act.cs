@@ -22,26 +22,6 @@ namespace Play.Creature {
 	}
 
 	[Serializable]
-	public class ActWait : Act {
-		public ActWait () {
-		}
-		public override bool Can (Entity ent) {
-			return true;
-		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-			}
-			int Act.Step.Time (Entity ent) {
-				return 1;
-			}
-		}
-		private static Step[] steps = new Step[] { new Step1 () };
-		public override Act.Step GetStep (int i) {
-			return GetStep (i, steps);
-		}
-	}
-
-	[Serializable]
 	public class ActMove : Act {
 		public Direction to;
 		public ActMove (Direction to) {

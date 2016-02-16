@@ -6,10 +6,12 @@ namespace Play {
 		bool Can(Ctx ctx);
 		void Do(Ctx ctx);
 	}
+}
 
-	public class EffMulti : Effect {
+namespace Play.Eff {
+	public class Multi : Effect {
 		public Effect[] eff;
-		public EffMulti(Effect[] eff) {
+		public Multi(Effect[] eff) {
 			this.eff = eff;
 		}
 		public bool Can(Ctx ctx) {
@@ -27,12 +29,12 @@ namespace Play {
 		}
 	}
 
-	public class EffDecStat<StatID> : Effect where StatID: struct {
+	public class IncStat<StatID> : Effect where StatID : struct {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
 
-		public EffDecStat(Calc<Entity> ent, StatID id, Calc<int> value) {
+		public IncStat(Calc<Entity> ent, StatID id, Calc<int> value) {
 			c_ent = ent;
 			this.id = id;
 			this.c_value = value;
@@ -50,7 +52,7 @@ namespace Play {
 			if (!c_value.Can(ctx))
 				return false;
 			int value = c_value.Get(ctx);
-			if (stat.Get(id) < value)
+			if (value > 0 && stat.Get(id) + value > stat.Cap(id))
 				return false;
 			return true;
 		}
@@ -59,15 +61,53 @@ namespace Play {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			int value = c_value.Get(ctx);
-			stat.ints[id] -= value;
+			stat.ints[id] += value;
 		}
 	}
 
-	public class EffUseItem : Effect {
+	public class DecStat<StatID> : Effect where StatID: struct {
+		public readonly Calc<Entity> c_ent;
+		StatID id;
+		Calc<int> c_value;
+
+		public DecStat(Calc<Entity> ent, StatID id, Calc<int> value) {
+			c_ent = ent;
+			this.id = id;
+			this.c_value = value;
+		}
+
+		public bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			if (stat == null)
+				return false;
+			if (!stat.Has(id))
+				return false;
+			if (!c_value.Can(ctx))
+				return false;
+			int value = c_value.Get(ctx);
+			if (value > 0 && stat.Get(id) < value)
+				return false;
+			return true;
+		}
+
+		public void Do(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			int value = c_value.Get(ctx);
+			if (value > 0) {
+				stat.ints[id] -= value;
+			}
+		}
+	}
+
+	public class UseItem : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly Calc<ItemSelect> c_sel;
 
-		public EffUseItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
+		public UseItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
 			c_ent = ent;
 			c_sel = sel;
 		}
@@ -93,11 +133,11 @@ namespace Play {
 		}
 	}
 
-	public class EffDelItem : Effect {
+	public class DelItem : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly Calc<ItemSelect> c_sel;
 
-		public EffDelItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
+		public DelItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
 			c_ent = ent;
 			c_sel = sel;
 		}
@@ -124,11 +164,11 @@ namespace Play {
 		}
 	}
 
-	public class EffAddItem : Effect {
+	public class AddItem : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly Calc<ItemCreate> c_cre;
 
-		public EffAddItem(Calc<Entity> ent, Calc<ItemCreate> cre) {
+		public AddItem(Calc<Entity> ent, Calc<ItemCreate> cre) {
 			c_ent = ent;
 			c_cre = cre;
 		}

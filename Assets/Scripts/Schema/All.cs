@@ -5,8 +5,8 @@ namespace Schema {
 		static public void Init() {
 			Sprite.Init();
 			Floor.Init();
-			Iact.Init();
 			Item.Init();
+			Iact.Init();
 			Creature.Init();
 			Tree.Init();
 		}
