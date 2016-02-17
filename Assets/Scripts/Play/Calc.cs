@@ -21,6 +21,12 @@ namespace Play {
 			invs.Add(inv, invx);
 			return invx;
 		}
+
+		public void Do() {
+			foreach (KeyValuePair<Inv, Invx> pair in invs) {
+				pair.Key.DelItem(pair.Value.del);
+			}
+        }
 	}
 
 	public interface Calc<T> {

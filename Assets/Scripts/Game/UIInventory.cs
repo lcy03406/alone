@@ -9,6 +9,8 @@ public class UIInventory : MonoBehaviour {
 
 	public GameObject itemPrefab;
 
+	private int update_time = 0;
+	private Inv inv = null;
 	private Transform panel;
 	private List<GameObject> items = new List<GameObject>();
 
@@ -19,13 +21,20 @@ public class UIInventory : MonoBehaviour {
 	// Use this for initialization
 	void Start () {		
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	void Update() {
+		if (update_time < Game.game.world.param.time) {
+			Inv i = inv;
+			Close();
+			Open(i);
+		}
 	}
 
 	public void Open (Inv inv) {
-		gameObject.SetActive(true);
+		this.inv = inv;
+		update_time = Game.game.world.param.time;
+        gameObject.SetActive(true);
 		foreach (Item item in inv.items) {
 			AddItem (item);
 		}
@@ -47,5 +56,6 @@ public class UIInventory : MonoBehaviour {
 			Destroy(go);
 		}
 		items.Clear();
+		inv = null;
 	}
 }

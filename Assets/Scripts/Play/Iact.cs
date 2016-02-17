@@ -25,8 +25,10 @@ namespace Play {
 			return ef.Can(ctx);
 		}
 		public void Do (Ctx ctx) {
-			if (Can(ctx))
+			if (Can(ctx)) {
 				ef.Do(ctx);
+				ctx.Do();
+			}
 		}
 	}
 	

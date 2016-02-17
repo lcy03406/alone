@@ -7,17 +7,24 @@ using System.Collections.Generic;
 public class UISheet : MonoBehaviour {
 	public Dropdown dropdown;
 	public Text text;
+
+	private int update_time = 0;
+	private int show_tab = 0;
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (update_time < Game.game.world.param.time) {
+			Menu();
+		}
 	}
 
 	public void Menu() {
-		switch (dropdown.value) {
+		update_time = Game.game.world.param.time;
+		int cur_tab = dropdown.value;
+        switch (cur_tab) {
 			case 0:
 				Hide();
 				break;
@@ -31,10 +38,12 @@ public class UISheet : MonoBehaviour {
 				ShowChar();
 				break;
 			case 4:
-				ShowSkill();
-				break;
+				ShowInventory();
+				dropdown.value = show_tab;
+                return;
 		}
-	}
+		show_tab = cur_tab;
+    }
 
 	public void Hide() {
 		text.text = "";
@@ -69,13 +78,7 @@ I = Inventory
         text.text = t;
 		gameObject.SetActive(true);
 	}
-	public void ShowSkill() {
-		text.text = "";
-		gameObject.SetActive(true);
+	public void ShowInventory() {
+		UIGame.ui.OnKeyDown(KeyCode.I); //TODO
 	}
-
-	public void Open (string[] texts, UnityAction<int, string> action) {
-		gameObject.SetActive (true);
-	}
-
 }

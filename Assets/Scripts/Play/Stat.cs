@@ -6,8 +6,8 @@ using UnityEngine.Assertions;
 namespace Play {
 	[Serializable]
 	public class Stat<ID> : Play.Attrib where ID: struct {
-		public Dictionary<ID, int> ints;
-		public Dictionary<ID, int> caps;
+		public Dictionary<ID, int> ints = new Dictionary<ID, int>();
+		public Dictionary<ID, int> caps = new Dictionary<ID, int>();
 
 		public Stat() {
 			ints = new Dictionary<ID, int>();
@@ -15,6 +15,7 @@ namespace Play {
 
 		public Stat(Stat<ID> b) {
 			ints = new Dictionary<ID, int>(b.ints);
+			caps = new Dictionary<ID, int>(b.caps);
 		}
 
 		public int Get(ID id) {

@@ -12,21 +12,18 @@ namespace Schema {
 		public readonly Dictionary<Part, Item.A> items;
 		public readonly Play.Tree.Stat born_stat;
 		public readonly Play.Tree.Stat renew_stat;
-		public readonly Play.Tree.Stat full_stat;
 
 		Tree(SpriteID sprite,
 			string name, 
 			Dictionary<Part, Item.A> items,
 			Play.Tree.Stat born_stat,
-			Play.Tree.Stat renew_stat,
-			Play.Tree.Stat full_stat)
+			Play.Tree.Stat renew_stat)
 		{
 			this.sprite = Sprite.GetA(SpriteID.b_tree_pine);
 			this.name = "Pine Tree";
 			this.items = items;
 			this.born_stat = born_stat;
 			this.renew_stat = renew_stat;
-			this.full_stat = full_stat;
 		}
 
 		public enum ID {
@@ -45,17 +42,15 @@ namespace Schema {
 					ints = {
 						{ Play.Tree.Stat.ID.Branch, 5 },
 						{ Play.Tree.Stat.ID.Fruit, 0 },
+					},
+                    caps = {
+						{ Play.Tree.Stat.ID.Branch, 5 },
+						{ Play.Tree.Stat.ID.Fruit, 10 },
 					}
 				},
 				renew_stat: new Play.Tree.Stat {
 					ints = {
 						{ Play.Tree.Stat.ID.Branch, 2 },
-						{ Play.Tree.Stat.ID.Fruit, 10 },
-					}
-				},
-				full_stat: new Play.Tree.Stat {
-					ints = {
-						{ Play.Tree.Stat.ID.Branch, 5 },
 						{ Play.Tree.Stat.ID.Fruit, 10 },
 					}
 				}
