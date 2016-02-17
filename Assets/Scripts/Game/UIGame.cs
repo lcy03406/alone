@@ -9,11 +9,14 @@ using Play;
 public class UIGame : MonoBehaviour {
 	public static UIGame ui;
 
+	public static UISheet sheet;
 	public static UIMenu menu;
 	public static UIInventory inv;
 
 	void Awake () {
 		ui = this;
+		sheet = this.GetComponentInChildren<UISheet>(true);
+		sheet.gameObject.SetActive(false);
 		menu = this.GetComponentInChildren<UIMenu>(true);
 		menu.gameObject.SetActive(false);
 		inv = this.GetComponentInChildren<UIInventory>(true);

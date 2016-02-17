@@ -47,12 +47,7 @@ namespace Play.Eff {
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			if (stat == null)
 				return false;
-			if (!stat.Has(id))
-				return false;
 			if (!c_value.Can(ctx))
-				return false;
-			int value = c_value.Get(ctx);
-			if (value > 0 && stat.Get(id) + value > stat.Cap(id))
 				return false;
 			return true;
 		}
@@ -61,7 +56,7 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			int value = c_value.Get(ctx);
-			stat.ints[id] += value;
+			stat.Set(id, stat.Get(id) + value);
 		}
 	}
 
@@ -83,8 +78,6 @@ namespace Play.Eff {
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			if (stat == null)
 				return false;
-			if (!stat.Has(id))
-				return false;
 			if (!c_value.Can(ctx))
 				return false;
 			int value = c_value.Get(ctx);
@@ -98,7 +91,7 @@ namespace Play.Eff {
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			int value = c_value.Get(ctx);
 			if (value > 0) {
-				stat.ints[id] -= value;
+				stat.Set(id, stat.Get(id) - value);
 			}
 		}
 	}

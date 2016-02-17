@@ -75,8 +75,6 @@ namespace Play.Calcs {
 			Play.Stat<StatID> stat = ent.GetAttr<Play.Stat<StatID>>();
 			if (stat == null)
 				return false;
-			if (!stat.Has(id))
-				return false;
 			return true;
 		}
 
