@@ -183,12 +183,35 @@ namespace Play.Eff {
 			return true;
 		}
 		public void Do(Ctx ctx) {
-			//TODO
 			Entity ent = c_ent.Get(ctx);
 			Inv inv = ent.GetAttr<Inv>();
 			ItemCreate cre = c_cre.Get(ctx);
 			List<Item> to = cre.Create(ctx);
 			inv.AddItem(to);
+		}
+	}
+	public class AddEntity : Effect {
+		public readonly Calc<EntityCreate> c_cre;
+
+		public AddEntity(Calc<EntityCreate> cre) {
+			c_cre = cre;
+		}
+
+		public bool Can(Ctx ctx) {
+			Coord c = ctx.src.c.Step(ctx.src.dir);
+			if (ctx.world.SearchEntity(c) != null)
+				return false;
+			if (!c_cre.Can(ctx))
+				return false;
+			return true;
+		}
+		public void Do(Ctx ctx) {
+			//TODO
+			Coord c = ctx.src.c.Step(ctx.src.dir);
+			EntityCreate cre = c_cre.Get(ctx);
+			Entity e = cre.Create(ctx);
+			e.c = c;
+			ctx.world.AddEntity(e);
 		}
 	}
 }

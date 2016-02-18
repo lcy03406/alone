@@ -15,13 +15,15 @@ namespace Schema {
 			Attack_Punch,
 			Tree_PickBranch,
 			Tree_PickFruit,
-			Make_Yeah,
+			Make_Cross,
+			Build_Campfire,
 		}
 		static public void Init() {
 			InitCommon();
 			InitAttack();
 			InitTree();
 			InitMake();
+			InitBuild();
 		}
 
 		static private void InitCommon() {
@@ -60,7 +62,7 @@ namespace Schema {
 		}
 
 		static private void InitMake() {
-			Add(ID.Make_Yeah, new Iact("make a cross", Play.Iacts.Make(
+			Add(ID.Make_Cross, new Iact("make a cross", Play.Iacts.Make(
 				time1: 3,
 				time2: 0,
 				sta: 3, //TODO
@@ -76,7 +78,23 @@ namespace Schema {
 					q_rand: 1,
 					cap_from: null,
 					count: 1)
-				}
+				},
+				build: null
+			)));
+		}
+
+		static private void InitBuild() {
+			Add(ID.Build_Campfire, new Iact("build a campfire", Play.Iacts.Make(
+				time1: 0,
+				time2: 10,
+				sta: 3, //TODO
+				tools: new Play.ItemSelect[] {
+				},
+				reagents: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 5)
+				},
+				products: null,
+				build: new Play.Ents.Workshop(a: Entity.GetA(Entity.ID.Workshop_Campfire))
 			)));
 		}
 	}

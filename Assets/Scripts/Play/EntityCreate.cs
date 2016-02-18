@@ -40,6 +40,7 @@ namespace Play.Ents {
 			ent.SetAttr(new Attrs.AIHuman());
 		}
 	}
+
 	public class Tree : EntityCreate {
 		Schema.Entity.A a;
 		Attrs.Stat<Stats.Tree> stat;
@@ -58,6 +59,18 @@ namespace Play.Ents {
 			ent.SetAttr(new Attrs.Core(a));
 			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
 			ent.SetAttr(new Attrs.Part<Parts.Tree>(part));
+		}
+	}
+
+	public class Workshop : EntityCreate {
+		Schema.Entity.A a;
+
+		public Workshop(Schema.Entity.A a) {
+			this.a = a;
+		}
+
+		public override void CreateAttrs(Ctx ctx, Entity ent) {
+			ent.SetAttr(new Attrs.Core(a));
 		}
 	}
 }

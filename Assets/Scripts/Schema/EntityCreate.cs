@@ -12,9 +12,15 @@ namespace Schema {
 		public enum ID {
 			Human,
 			Tree_Pine,
-
+			Workshop_Campfire
 		}
-		static public void Init () {
+		static public void Init() {
+			InitHuman();
+			InitTree();
+			InitWorkshop();
+		}
+
+		static void InitHuman() {
 			Add(ID.Human, new EntityCreate(new Play.Ents.Creature(
 				a: Entity.GetA(Entity.ID.Human),
 				stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
@@ -22,12 +28,15 @@ namespace Schema {
 						{ Play.Stats.Creature.HitPoint, 10 },
 						{ Play.Stats.Creature.Stamina, 10 },
 					},
-                    caps = {
+					caps = {
 						{ Play.Stats.Creature.HitPoint, 10 },
 						{ Play.Stats.Creature.Stamina, 10 },
 					}
 				}
 			)));
+		}
+
+		static void InitTree() {
 			Add(ID.Tree_Pine, new EntityCreate(new Play.Ents.Tree(
 				a: Entity.GetA(Entity.ID.Tree_Pine),
 				stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
@@ -46,6 +55,11 @@ namespace Schema {
                         { Play.Parts.Tree.Fruit, Item.GetA(Item.ID.Apple) } //TODO
 					}
 				}
+			)));
+		}
+		static void InitWorkshop() {
+			Add(ID.Workshop_Campfire, new EntityCreate(new Play.Ents.Workshop(
+				a: Entity.GetA(Entity.ID.Workshop_Campfire)
 			)));
 		}
 	}

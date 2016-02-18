@@ -22,14 +22,17 @@ namespace Schema {
 		public enum ID {
 			Human,
 			Tree_Pine,
+			Workshop_Campfire,
 		}
 		static public void Init() {
 			InitHuman();
 			InitTree();
+			InitWorkshop();
 		}
 
 		static Iact.A[] human_makes = {
-			Iact.GetA(Iact.ID.Make_Yeah),
+			Iact.GetA(Iact.ID.Make_Cross),
+			Iact.GetA(Iact.ID.Build_Campfire),
 		};
 		static Iact.A[] human_iacts = {
 		};
@@ -54,6 +57,19 @@ namespace Schema {
 				name: "Pine Tree",
 				makes: tree_makes,
 				iacts: tree_iacts
+			));
+		}
+
+		static Iact.A[] workshop_makes = {
+		};
+		static Iact.A[] workshop_iacts = {
+		};
+		static void InitWorkshop() {
+			Add(ID.Workshop_Campfire, new Entity(
+				sprite: SpriteID.b_volcano,
+				name: "Campfire",
+				makes: workshop_makes,
+				iacts: workshop_iacts
 			));
 		}
 	}

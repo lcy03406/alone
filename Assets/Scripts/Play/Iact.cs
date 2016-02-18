@@ -87,18 +87,30 @@ namespace Play {
 		public static Iact Make(int time1, int time2, int sta,
 			ItemSelect[] tools,
 			ItemSelect[] reagents,
-			ItemCreate[] products)
+			ItemCreate[] products,
+			EntityCreate build)
 		{
 			List<Effect> eff = new List<Effect>();
-			eff.Add(new Eff.DecStat<Stats.Creature>(new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)));
-			foreach (ItemSelect sel in tools) {
-				eff.Add(new Eff.UseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+			if (sta > 0) {
+				eff.Add(new Eff.DecStat<Stats.Creature>(new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)));
 			}
-			foreach (ItemSelect sel in reagents) {
-				eff.Add(new Eff.DelItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+			if (tools != null) {
+				foreach (ItemSelect sel in tools) {
+					eff.Add(new Eff.UseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+				}
 			}
-			foreach (ItemCreate cre in products) {
-				eff.Add(new Eff.AddItem(new Calcs.Src(), new Calcs.Const<ItemCreate>(cre)));
+			if (reagents != null) {
+				foreach (ItemSelect sel in reagents) {
+					eff.Add(new Eff.DelItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
+				}
+			}
+			if (products != null) {
+				foreach (ItemCreate cre in products) {
+					eff.Add(new Eff.AddItem(new Calcs.Src(), new Calcs.Const<ItemCreate>(cre)));
+				}
+			}
+			if (build != null) {
+				eff.Add(new Eff.AddEntity(new Calcs.Const<EntityCreate>(build)));
 			}
 			return new Iact(
 				time1: time1,

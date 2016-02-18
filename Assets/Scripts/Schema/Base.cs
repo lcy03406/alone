@@ -10,7 +10,6 @@ namespace Schema {
 		static private Data Get (ID id) {
 			Data datum = null;
 			bool ret = data.TryGetValue (id, out datum);
-			Assert.IsTrue (ret, id.ToString());
 			return datum;
 		}
 
@@ -35,7 +34,6 @@ namespace Schema {
 				get {
 					if (data == null) {
 						data = Get (id);
-						Assert.IsNotNull (data);
 					}
 					return data;
 				}
