@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace Play {
+namespace Play.Attrs {
 	[Serializable]
 	public class Stat<ID> : Play.Attrib where ID: struct {
-		public Dictionary<ID, int> ints = new Dictionary<ID, int>();
-		public Dictionary<ID, int> caps = new Dictionary<ID, int>();
+		public Dictionary<ID, int> ints;
+		public Dictionary<ID, int> caps;
 
 		public Stat() {
 			ints = new Dictionary<ID, int>();
+			caps = new Dictionary<ID, int>();
 		}
 
 		public Stat(Stat<ID> b) {
@@ -39,5 +40,17 @@ namespace Play {
 				set = cap;
 			ints[id] = set;
 		}
+	}
+}
+
+namespace Play.Stats {
+	public enum Creature {
+		HitPoint,
+		Stamina,
+		Damage,
+	}
+	public enum Tree {
+		Branch,
+		Fruit,
 	}
 }

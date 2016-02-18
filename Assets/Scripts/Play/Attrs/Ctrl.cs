@@ -1,9 +1,9 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
-using Schema;
+using Play.Acts;
 
-namespace Play.Creature {
+namespace Play.Attrs {
 	[Serializable]
 	public class Ctrl : AI {
 
@@ -55,7 +55,7 @@ namespace Play.Creature {
 		}
 
 		public List<Schema.Iact.A> ListIact (Entity dst) {
-			Play.Core core = dst.GetAttr<Play.Core> ();
+			Core core = dst.GetAttr<Core> ();
 			if (core == null)
 				return null;
 			return core.ListIact (ent);

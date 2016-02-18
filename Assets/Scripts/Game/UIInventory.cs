@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 using Play;
+using Play.Attrs;
 
 public class UIInventory : MonoBehaviour {
 

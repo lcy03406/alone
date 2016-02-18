@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 using Play;
 
@@ -12,7 +13,7 @@ public class UIGame : MonoBehaviour {
 	public static UIMenu menu;
 	public static UIInventory inv;
 
-	void Awake () {
+	void Awake() {
 		ui = this;
 		sheet = this.GetComponentInChildren<UISheet>(true);
 		sheet.gameObject.SetActive(false);
@@ -26,7 +27,7 @@ public class UIGame : MonoBehaviour {
 		KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
 		KeyCode.Period, KeyCode.LeftControl };
 
-	public void Update () {
+	public void Update() {
 		if (Input.anyKeyDown) {
 			foreach (KeyCode key in keys) {
 				if (Input.GetKeyDown(key)) {
@@ -42,11 +43,7 @@ public class UIGame : MonoBehaviour {
 	}
 
 	public void OnKeyDown(KeyCode key) {
-		Play.Entity player = Game.game.player;
-		if (player == null)
-			return;
-		Play.Creature.Ctrl ctrl = player.GetAttr<Play.Creature.Ctrl>();
-		if (ctrl == null)
+		if (GetCtrl() == null)
 			return;
 		if (key == KeyCode.Escape) {
 			if (menu.isActiveAndEnabled)
@@ -54,38 +51,81 @@ public class UIGame : MonoBehaviour {
 			else if (inv.isActiveAndEnabled)
 				inv.Close();
 		} else if (key == KeyCode.I) {
-			if (!inv.isActiveAndEnabled) {
-				Inv i = player.GetAttr<Inv>();
+			if (inv.isActiveAndEnabled) {
+				inv.Close();
+			} else {
+				Play.Attrs.Inv i = Game.game.player.GetAttr<Play.Attrs.Inv>();
 				inv.Open(i);
 			}
 		} else if (menu.isActiveAndEnabled) {
 
-		} else if (key == KeyCode.LeftControl) {
-			ctrl.CmdAttack();
-			return;
+		} else if (key == KeyCode.Tab) {
+			string[] acts = { "Rest", "Make", "Interact", "Attack" };
+			UnityAction[] actions = { Rest, Make, Interact, Attack };
+			menu.Open(acts, delegate (int idx, string name) {
+				actions[idx]();
+			});
 		} else if (key == KeyCode.Period) {
+			Rest();
+		} else if (key == KeyCode.M) {
+			Make();
+		} else if (key == KeyCode.Return) {
+			Interact();
+		} else if (key == KeyCode.LeftControl) {
+			Attack();
+		} else {
+			Move(key);
+		}
+	}
+
+	private Play.Attrs.Ctrl GetCtrl() {
+		Entity player = Game.game.player;
+		if (player == null)
+			return null;
+		Play.Attrs.Ctrl ctrl = player.GetAttr<Play.Attrs.Ctrl>();
+		return ctrl;
+	}
+
+	public void Rest() {
+		Play.Attrs.Ctrl ctrl = GetCtrl();
+		if (!menu.isActiveAndEnabled) {
 			Schema.Iact.A iact = Schema.Iact.GetA(Schema.Iact.ID.Rest);
 			ctrl.CmdIact(iact, WUID.None);
-		} else if (key == KeyCode.Return) {
-			if (!menu.isActiveAndEnabled) {
-				Play.Entity dst = ctrl.ListDst();
-				List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
-				List<string> opts = iacts.ConvertAll(iact => iact.id.ToString());
-				menu.Open(opts.ToArray(), delegate (int idx, string name) {
-					Schema.Iact.A iact = iacts[idx];
-					ctrl.CmdIact(iact, dst.id);
-				});
-			}
-		} else if (key == KeyCode.M) {
-			if (!menu.isActiveAndEnabled) {
-				List<Schema.Iact.A> makes = ctrl.ListMake();
-				List<string> opts = makes.ConvertAll(make => make.id.ToString());
-				menu.Open(opts.ToArray(), delegate (int idx, string name) {
-					Schema.Iact.A make = makes[idx];
-					ctrl.CmdIact(make, WUID.None);
-				});
-			}
-		} else {
+		}
+	}
+
+	public void Make() {
+		Play.Attrs.Ctrl ctrl = GetCtrl();
+		if (!menu.isActiveAndEnabled) {
+			List<Schema.Iact.A> makes = ctrl.ListMake();
+			List<string> opts = makes.ConvertAll(make => make.s.name);
+			menu.Open(opts.ToArray(), delegate (int idx, string name) {
+				Schema.Iact.A make = makes[idx];
+				ctrl.CmdIact(make, WUID.None);
+			});
+		}
+	}
+	public void Interact() {
+		Play.Attrs.Ctrl ctrl = GetCtrl();
+		if (!menu.isActiveAndEnabled) {
+			Play.Entity dst = ctrl.ListDst();
+			List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
+			List<string> opts = iacts.ConvertAll(iact => iact.s.name);
+			menu.Open(opts.ToArray(), delegate (int idx, string name) {
+				Schema.Iact.A iact = iacts[idx];
+				ctrl.CmdIact(iact, dst.id);
+			});
+		}
+	}
+	public void Attack() {
+		Play.Attrs.Ctrl ctrl = GetCtrl();
+		if (!menu.isActiveAndEnabled) {
+			ctrl.CmdAttack();
+		}
+	}
+	public void Move(KeyCode key) {
+		Play.Attrs.Ctrl ctrl = GetCtrl();
+		if (!menu.isActiveAndEnabled) {
 			int dx = 0;
 			int dy = 0;
 			if (key == KeyCode.A) {
@@ -103,7 +143,6 @@ public class UIGame : MonoBehaviour {
 			if (dx != 0 || dy != 0) {
 				Direction to = new Coord(dx, dy).ToDirection();
 				ctrl.CmdMove(to);
-				return;
 			}
 		}
 	}

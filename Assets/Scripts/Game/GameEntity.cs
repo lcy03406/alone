@@ -5,7 +5,7 @@ using Play;
 
 public class GameEntity : MonoBehaviour {
 
-	Game game;
+	private int update_time = -1;
 	Entity ent;
 
 	void Start () {
@@ -14,21 +14,27 @@ public class GameEntity : MonoBehaviour {
 	void Update () {
 		if (ent == null)
 			return;
+		int cur_time = Game.game.world.param.time;
+		//if (update_time >= cur_time)
+		//	return;
+		update_time = cur_time;
 		Debug.Assert (ent.world != null);
-		transform.localPosition = game.Pos (ent.c);
+		transform.localPosition = Game.game.Pos (ent.c);
 		Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)ent.dir);
 		transform.FindChild ("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA (dirs).s.sprite;
-		if (ent.isPlayer)
+		if (ent.isPlayer) {
+			//TODO
+			GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(Schema.SpriteID.c_human_strong).s.sprite;
 			return;
-		Play.Show show = ent.GetAttr<Play.Show> ();
+		}
+		Play.Attrs.Core show = ent.GetAttr<Play.Attrs.Core> ();
 		if (show == null)
 			return;
-		GetComponent<SpriteRenderer> ().sprite = show.Sprite ().s.sprite;
+		GetComponent<SpriteRenderer>().sprite = show.GetSprite().s.sprite;
 	}
 	
 	public void Init (Game game, Entity ent) {
-		this.game = game;
-		this.ent = ent;
+        this.ent = ent;
 	}
 
 	public void OnMove () {

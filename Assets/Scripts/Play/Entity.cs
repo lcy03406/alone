@@ -25,19 +25,21 @@ namespace Play {
 		}
 
 		public void Tick (int time) {
-			foreach (Attrib a in attr.Values) {
-				a.Tick (time);
-			}
+			Attrs.Actor actor = GetAttr<Attrs.Actor>();
+			if (actor == null)
+				return;
+			actor.Tick(time);
 		}
 
 		public int NextTick () {
+			Attrs.Actor actor = GetAttr<Attrs.Actor>();
+			if (actor == null)
+				return 0;
 			int n = 0;
-			foreach (Attrib a in attr.Values) {
-				int t = a.NextTick ();
-				if (t > 0) {
-					if (n == 0 || t < n) {
-						n = t;
-					}
+			int t = actor.NextTick ();
+			if (t > 0) {
+				if (n == 0 || t < n) {
+					n = t;
 				}
 			}
 			return n;
@@ -73,4 +75,3 @@ namespace Play {
 		}
 	}
 }
-	

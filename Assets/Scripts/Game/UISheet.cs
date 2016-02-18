@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
+using Stat = Play.Attrs.Stat<Play.Stats.Creature>;
+
 public class UISheet : MonoBehaviour {
 	public Dropdown dropdown;
 	public Text text;
@@ -52,10 +54,11 @@ public class UISheet : MonoBehaviour {
 	public void ShowHelp() {
 		text.text =
 @"WASD = Move
+Tab = Menu
 . = Rest
+M = Make
 Enter = Interact
 Ctrl = Attack
-M = Make
 I = Inventory
 ";
 		gameObject.SetActive(true);
@@ -67,8 +70,8 @@ I = Inventory
 	}
 	public void ShowChar() {
 		string t = "";
-		Play.Creature.Stat stat = Game.game.player.GetAttr<Play.Creature.Stat>();
-		foreach (KeyValuePair<Play.Creature.Stat.ID, int> pair in stat.ints) {
+		Stat stat = Game.game.player.GetAttr<Stat>();
+		foreach (KeyValuePair<Play.Stats.Creature, int> pair in stat.ints) {
 			t += pair.Key.ToString() + ": " + pair.Value;
 			int cap = stat.Cap(pair.Key);
 			if (cap > 0)

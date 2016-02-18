@@ -10,12 +10,12 @@ namespace Schema {
 		static private Data Get (ID id) {
 			Data datum = null;
 			bool ret = data.TryGetValue (id, out datum);
-			Assert.IsTrue (ret);
+			Assert.IsTrue (ret, id.ToString());
 			return datum;
 		}
 
 		static protected void Add (ID id, Data datum) {
-			Assert.IsFalse (data.ContainsKey (id));
+			Assert.IsFalse (data.ContainsKey (id), id.ToString());
 			data.Add (id, datum);
 		}
 

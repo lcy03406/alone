@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace Play {
+namespace Play.Attrs {
 	[Serializable]
 	public class Inv : Attrib{
 		public List<Item> items = new List<Item> ();

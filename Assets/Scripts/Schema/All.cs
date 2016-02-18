@@ -7,8 +7,8 @@ namespace Schema {
 			Floor.Init();
 			Item.Init();
 			Iact.Init();
-			Creature.Init();
-			Tree.Init();
+			Entity.Init();
+			EntityCreate.Init();
 		}
 	}
 }

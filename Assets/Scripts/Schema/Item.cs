@@ -9,17 +9,16 @@ namespace Schema {
 			this.name = name;
 		}
 		public enum ID {
-			None,
 			Armor,
 			Branch,
 			Apple,
-			Yeah,
+			Cross,
 		}
 		static public void Init () {
 			Add(ID.Armor, new Item(Schema.SpriteID.d_armor, "Armor"));
 			Add(ID.Branch, new Item(Schema.SpriteID.b_tree_pine_winter, "Branch")); //TODO
 			Add(ID.Apple, new Item(Schema.SpriteID.b_tree_pine_winter, "Apple")); //TODO
-			Add(ID.Yeah, new Item(Schema.SpriteID.d_gauntlets, "Yeah")); //TODO
+			Add(ID.Cross, new Item(Schema.SpriteID.d_gauntlets, "Cross")); //TODO
 		}
 	}
 }

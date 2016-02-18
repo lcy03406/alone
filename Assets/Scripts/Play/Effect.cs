@@ -1,5 +1,6 @@
 //utf-8。
 using System.Collections.Generic;
+using Play.Attrs;
 
 namespace Play {
 	public interface Effect {

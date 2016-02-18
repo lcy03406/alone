@@ -35,7 +35,7 @@ namespace Play {
 	public class Iacts {
 		public static Iact Rest(int time1, int sta) {
 			Effect[] eff = new Effect[] {
-				new Eff.IncStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new Eff.IncStat<Stats.Creature> (new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)),
 			};
 			return new Iact(
 				time1: time1,
@@ -49,8 +49,8 @@ namespace Play {
 		public static Iact Attack(int time1, int time2, int sta,
 			Calc<int> damage) {
 			Effect[] eff = new Effect[] {
-				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
-				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Dst(), Creature.Stat.ID.HitPoint, damage),
+				new Eff.DecStat<Stats.Creature> (new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)),
+				new Eff.DecStat<Stats.Creature> (new Calcs.Dst(), Stats.Creature.HitPoint, damage),
 			};
 			return new Iact(
 				time1: time1,
@@ -62,11 +62,11 @@ namespace Play {
 		}
 
 		public static Iact Pick(int time1, int time2, int sta,
-			Tree.Stat.ID st, Schema.Tree.Part part, int count)
+			Stats.Tree st, Parts.Tree part, int count)
 		{
 			Effect[] eff = new Effect[] {
-				new Eff.DecStat<Tree.Stat.ID> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
-				new Eff.DecStat<Creature.Stat.ID> (new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)),
+				new Eff.DecStat<Stats.Tree> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
+				new Eff.DecStat<Stats.Creature> (new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)),
 				new Play.Eff.AddItem (
 					ent: new Calcs.Src(),
 					cre: new Calcs.TreePart(
@@ -90,7 +90,7 @@ namespace Play {
 			ItemCreate[] products)
 		{
 			List<Effect> eff = new List<Effect>();
-			eff.Add(new Eff.DecStat<Creature.Stat.ID>(new Calcs.Src(), Creature.Stat.ID.Stamina, new Calcs.Const<int>(sta)));
+			eff.Add(new Eff.DecStat<Stats.Creature>(new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)));
 			foreach (ItemSelect sel in tools) {
 				eff.Add(new Eff.UseItem(new Calcs.Src(), new Calcs.Const<ItemSelect>(sel)));
 			}

@@ -9,10 +9,5 @@ namespace Play {
 		public virtual void SetEntity (Entity ent) {
 			this.ent = ent;
 		}
-		public virtual int NextTick () {
-			return 0;
-		}
-		public virtual void Tick (int time) {
-		}
 	}
 }

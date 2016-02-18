@@ -1,25 +1,29 @@
 //utf-8。
 using System;
+using UnityEngine.Assertions;
 
-namespace Play.Creature {
+namespace Play {
 	[Serializable]
 	public abstract class Act {
 		public interface Step {
-			void Do (Entity ent);
-			int Time (Entity ent);
+			void Do(Entity ent);
+			int Time(Entity ent);
 		}
-		public abstract bool Can (Entity ent);
-		public abstract Step GetStep (int i);
-		static protected Step GetStep (int i, Step[] steps) {
+		public abstract bool Can(Entity ent);
+		public abstract Step GetStep(int i);
+		static protected Step GetStep(int i, Step[] steps) {
 			if (i >= 0 && i < steps.Length)
 				return steps[i];
 			return null;
 		}
-		static public Act EntAct (Entity ent) {
-			Core core = ent.GetAttr<Core> ();
-			return core.act;
-        }
+		static public Act EntAct(Entity ent) {
+			Attrs.Actor actor = ent.GetAttr<Attrs.Actor>();
+			return actor.act;
+		}
 	}
+}
+
+namespace Play.Acts {
 
 	[Serializable]
 	public class ActMove : Act {
@@ -86,39 +90,36 @@ namespace Play.Creature {
 
 	[Serializable]
 	public class ActIact : Act {
-		public Schema.Iact.A iact;
+		public Schema.Iact.A a;
 		public WUID dst;
 		public ActIact (Schema.Iact.A iact, WUID dst) {
-			this.iact = iact;
+			this.a = iact;
 			this.dst = dst;
 		}
 		public override bool Can (Entity ent) {
-			Ctx ctx = new Ctx() {
-				src = ent,
-				dst = ent.world.FindEntity(dst)
-			};
-			return iact.s.i.Can (ctx);
+			Entity ent_dst = ent.world.FindEntity(dst);
+            Ctx ctx = new Ctx(ent.world, ent, ent_dst);
+			return a.s.i.Can (ctx);
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
+				ActIact act = (ActIact)Act.EntAct(ent);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
-				return act.iact.s.i.time1;
+				return act.a.s.i.time1;
 			}
 		}
 		private class Step2 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActIact act = (ActIact) Act.EntAct (ent);
-				Ctx ctx = new Ctx() {
-					src = ent,
-					dst = ent.world.FindEntity(act.dst)
-				};
-				act.iact.s.i.Do (ctx);
+				Entity ent_dst = ent.world.FindEntity(act.dst);
+				Ctx ctx = new Ctx(ent.world, ent, ent_dst);
+				act.a.s.i.Do (ctx);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
-				return act.iact.s.i.time2;
+				return act.a.s.i.time2;
 			}
 		}
 		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };

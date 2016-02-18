@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using Play.Attrs;
 
 namespace Play {
 	public sealed class Ctx {
@@ -8,10 +9,18 @@ namespace Play {
 			public List<Item> use = new List<Item>();
 			public List<Item> del = new List<Item>();
 		}
+		public World world = null;
 		public Entity src = null;
 		public Entity dst = null;
+		public List<Entity> use_ent = new List<Entity>();
 		public Dictionary<Inv, Invx> invs = new Dictionary<Inv, Invx>();
 		public List<List<Item>> items = new List<List<Item>>();
+
+		public Ctx(World world, Entity src, Entity dst) {
+			this.world = world;
+			this.src = src;
+			this.dst = dst;
+		}
 
 		public Invx GetInv(Inv inv) {
 			Invx invx;
@@ -66,10 +75,10 @@ namespace Play.Calcs {
 		}
 	}
 
-	public class Stat<StatID> : Calc<int> where StatID : struct {
+	public class GetStat<StatID> : Calc<int> where StatID : struct {
 		public readonly Calc<Entity> c_ent;
 		public readonly StatID id;
-		public Stat(Calc<Entity> ent, StatID id) {
+		public GetStat(Calc<Entity> ent, StatID id) {
 			this.c_ent = ent;
 			this.id = id;
 		}
@@ -78,7 +87,7 @@ namespace Play.Calcs {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Play.Stat<StatID> stat = ent.GetAttr<Play.Stat<StatID>>();
+			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			if (stat == null)
 				return false;
 			return true;
@@ -86,15 +95,15 @@ namespace Play.Calcs {
 
 		public int Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Play.Stat<StatID> stat = ent.GetAttr<Play.Stat<StatID>>();
+			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			return stat.Get(id);
 		}
 	}
 
 	public class TreePart : Calc<ItemCreate> {
 		public readonly Calc<Entity> c_ent;
-		public readonly Schema.Tree.Part part;
-		public TreePart(Calc<Entity> ent, Schema.Tree.Part part) {
+		public readonly Parts.Tree part;
+		public TreePart(Calc<Entity> ent, Parts.Tree part) {
 			this.c_ent = ent;
 			this.part = part;
 		}
@@ -103,16 +112,16 @@ namespace Play.Calcs {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Tree.Core core = ent.GetAttr<Tree.Core>();
-			if (core == null)
+			Part<Parts.Tree> parts = ent.GetAttr<Part<Parts.Tree>>();
+			if (parts == null)
 				return false;
 			return true;
 		}
 
 		public ItemCreate Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Tree.Core core = ent.GetAttr<Tree.Core>();
-			ItemCreate cre = new ItemCreate(a: core.race.s.items[part],
+			Part<Parts.Tree> parts = ent.GetAttr<Part<Parts.Tree>>();
+			ItemCreate cre = new ItemCreate(parts.Get(part),
 				q_base: 10, //TODO
 				q_from: null,
 				q_rand: 0,
