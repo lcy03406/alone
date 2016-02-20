@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 using Play.Attrs;
 
 namespace Play {
@@ -57,6 +58,59 @@ namespace Play.Calcs {
 			return t;
 		}
 	}
+
+	public class Rand<T> : Calc<T> {
+		public Dictionary<Calc<T>, int> choices;
+		public Rand(Dictionary<Calc<T>, int> choices) {
+			this.choices = choices;
+		}
+		public bool Can(Ctx ctx) {
+			foreach (Calc<T> key in choices.Keys) {
+				if (!key.Can(ctx)) {
+					return false;
+				}
+			}
+            return true;
+		}
+		public T Get(Ctx ctx) {
+			int total = 0;
+			foreach (int value in choices.Values) {
+				total += value;
+			}
+			int rand = ctx.world.rand.Next(0, total);
+			foreach (KeyValuePair<Calc<T>, int> pair in choices) {
+				rand -= pair.Value;
+				if (rand < 0)
+					return pair.Key.Get(ctx);
+			}
+			Assert.IsTrue(false);
+			return default(T);
+		}
+	}
+	public class RandConst<T> : Calc<T> {
+		public Dictionary<T, int> choices;
+		public RandConst(Dictionary<T, int> choices) {
+			this.choices = choices;
+		}
+		public bool Can(Ctx ctx) {
+			return true;
+		}
+		public T Get(Ctx ctx) {
+			int total = 0;
+			foreach (int value in choices.Values) {
+				total += value;
+			}
+			int rand = ctx.world.rand.Next(0, total);
+			foreach (KeyValuePair<T, int> pair in choices) {
+				rand -= pair.Value;
+				if (rand < 0)
+					return pair.Key;
+			}
+			Assert.IsTrue(false);
+			return default(T);
+		}
+	}
+
 	public class Src : Calc<Entity> {
 		public bool Can(Ctx ctx) {
 			return true;
@@ -100,33 +154,51 @@ namespace Play.Calcs {
 		}
 	}
 
-	public class TreePart : Calc<ItemCreate> {
+	public class Part : Calc<ItemCreate> {
 		public readonly Calc<Entity> c_ent;
-		public readonly Parts.Tree part;
-		public TreePart(Calc<Entity> ent, Parts.Tree part) {
+		public readonly Schema.PartID id;
+		public Part(Calc<Entity> ent, Schema.PartID id) {
 			this.c_ent = ent;
-			this.part = part;
+			this.id = id;
 		}
 
 		public bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Part<Parts.Tree> parts = ent.GetAttr<Part<Parts.Tree>>();
-			if (parts == null)
+			Grow grow = ent.GetAttr<Grow>();
+			if (grow == null)
+				return false;
+			Grow.Part part = grow.Get(id);
+			if (part == null)
 				return false;
 			return true;
 		}
 
 		public ItemCreate Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Part<Parts.Tree> parts = ent.GetAttr<Part<Parts.Tree>>();
-			ItemCreate cre = new ItemCreate(parts.Get(part),
-				q_base: 10, //TODO
-				q_from: null,
-				q_rand: 0,
-				cap_from: null,
-				count: 1);
+			Grow grow = ent.GetAttr<Grow>();
+			ItemCreate cre = grow.Get(id).GetItem();
+			return cre;
+		}
+	}
+
+	public class ItemCount : Calc<ItemCreate> {
+		Calc<ItemCreate> c_cre;
+		Calc<int> c_count;
+
+		public ItemCount(Calc<ItemCreate> cre, Calc<int> count) {
+			c_cre = cre;
+			c_count = count;
+		}
+
+		public bool Can(Ctx ctx) {
+			return c_cre.Can(ctx) && c_count.Can(ctx);
+		}
+
+		public ItemCreate Get(Ctx ctx) {
+			ItemCreate cre = c_cre.Get(ctx);
+			cre.count = c_count.Get(ctx);
 			return cre;
 		}
 	}

@@ -62,20 +62,68 @@ namespace Play {
 		}
 
 		public static Iact Pick(int time1, int time2, int sta,
-			Stats.Tree st, Parts.Tree part, int count)
+			Schema.PartID part, int count)
 		{
 			Effect[] eff = new Effect[] {
-				new Eff.DecStat<Stats.Tree> (new Calcs.Dst(), st, new Calcs.Const<int>(count)),
-				new Eff.DecStat<Stats.Creature> (new Calcs.Src(), Stats.Creature.Stamina, new Calcs.Const<int>(sta)),
-				new Play.Eff.AddItem (
-					ent: new Calcs.Src(),
-					cre: new Calcs.TreePart(
-						ent: new Calcs.Dst(),
-						part: part
+				new Eff.DecPart(ent: new Calcs.Dst(),
+					id: part,
+					value: new Calcs.Const<int>(count)
+				),
+				new Eff.DecStat<Stats.Creature> (ent: new Calcs.Src(),
+					id: Stats.Creature.Stamina,
+					value: new Calcs.Const<int>(sta)),
+				new Eff.AddItem ( ent: new Calcs.Src(),
+					cre: new Calcs.ItemCount(
+						cre: new Calcs.Part(
+							ent: new Calcs.Dst(),
+							id: part
+						),
+						count: new Calcs.Const<int>(count)
 					)
 				)
 			};
             return new Iact(
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
+		}
+
+		public static Iact Butcher(int time1, int time2, int sta,
+			Schema.PartID part, int count)
+		{
+			Effect[] eff = new Effect[] {
+				new Eff.UseStage(ent: new Calcs.Dst(),
+					stage: typeof(Attrs.Stages.Creature.Dead)
+				),
+				new Eff.UseItem(ent: new Calcs.Src(),
+					sel: new Calcs.Const<ItemSelect>(
+						new ItemSelect(
+							a: Schema.Item.GetA(Schema.Item.ID.Knife),
+							count: 1
+						)
+					)
+				),
+				new Eff.DecPart(ent: new Calcs.Dst(),
+					id: part,
+					value: new Calcs.Const<int>(count)
+				),
+				new Eff.DecStat<Stats.Creature> (ent: new Calcs.Src(),
+					id: Stats.Creature.Stamina,
+					value: new Calcs.Const<int>(sta)),
+				new Eff.AddItem ( ent: new Calcs.Src(),
+					cre: new Calcs.ItemCount(
+						cre: new Calcs.Part(
+							ent: new Calcs.Dst(),
+							id: part
+						),
+						count: new Calcs.Const<int>(count)
+					)
+				)
+			};
+			return new Iact(
 				time1: time1,
 				time2: time2,
 				has_dst: true,

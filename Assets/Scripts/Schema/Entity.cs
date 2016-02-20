@@ -13,47 +13,60 @@ namespace Schema {
 			string name,
 			Iact.A[] makes,
 			Iact.A[] iacts,
-			Play.AttrCreate attr)
-		{
+			Play.AttrCreate attr) {
 			this.sprite = Sprite.GetA(sprite);
 			this.name = name;
 			this.makes = makes;
 			this.iacts = iacts;
 			this.attr = attr;
-        }
+		}
 
 		public enum ID {
+			None,
 			Human,
+			Boulder,
 			Tree_Pine,
+			Tree_Oak,
 			Workshop_Campfire,
 		}
 		static public void Init() {
-			InitHuman();
+			Add(ID.None, null);
+			InitBoulder();
 			InitTree();
+			InitCreature();
 			InitWorkshop();
 		}
 
-		static Iact.A[] human_makes = {
-			Iact.GetA(Iact.ID.Make_Cross),
-			Iact.GetA(Iact.ID.Build_Campfire),
+		static Iact.A[] boulder_makes = {
 		};
-		static Iact.A[] human_iacts = {
+		static Iact.A[] boulder_iacts = {
+			Iact.GetA (Iact.ID.Chip_Stone),
 		};
-		static void InitHuman() {
-			Add(ID.Human, new Entity(
-				sprite: SpriteID.c_human_young,
-				name: "Human",
-				makes: human_makes,
-				iacts: human_iacts,
-				attr: new Play.Ents.Creature(
-					stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
+		static void InitBoulder() {
+			Add(ID.Boulder, new Entity(
+				sprite: SpriteID.b_tree_pine,
+				name: "Boulder",
+				makes: boulder_makes,
+				iacts: boulder_iacts,
+				attr: new Play.Ents.Tree(
+					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
 						ints = {
-							{ Play.Stats.Creature.HitPoint, 10 },
-							{ Play.Stats.Creature.Stamina, 10 },
+							{ Play.Stats.Tree.Grouth, 0 },
 						},
 						caps = {
-							{ Play.Stats.Creature.HitPoint, 10 },
-							{ Play.Stats.Creature.Stamina, 10 },
+							{ Play.Stats.Tree.Grouth, 0 },
+						}
+					},
+					part: new Play.Attrs.Grow() {
+						items = {
+							{ PartID.Boulder_Stone, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.Stone),
+								count: 100,
+								cap: 100,
+								q: 10,
+								grow_span: 0,
+								grow_count: 0
+							)},
 						}
 					}
 				)
@@ -75,18 +88,107 @@ namespace Schema {
                 attr: new Play.Ents.Tree(
 					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
 						ints = {
-							{ Play.Stats.Tree.Branch, 5 },
-							{ Play.Stats.Tree.Fruit, 0 },
+							{ Play.Stats.Tree.Grouth, 0 },
 						},
 						caps = {
-							{ Play.Stats.Tree.Branch, 5 },
-							{ Play.Stats.Tree.Fruit, 10 },
+							{ Play.Stats.Tree.Grouth, 100 },
 						}
 					},
-					part: new Play.Attrs.Part<Play.Parts.Tree>() {
+					part: new Play.Attrs.Grow() {
 						items = {
-							{ Play.Parts.Tree.Branch, Item.GetA(Item.ID.Branch) },
-							{ Play.Parts.Tree.Fruit, Item.GetA(Item.ID.Apple) } //TODO
+							{ PartID.Tree_Branch, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.Branch),
+								count: 10,
+								cap: 10,
+								q: 10,
+								grow_span: 10,
+								grow_count: 1
+							)},
+						}
+					}
+				)
+			));
+			Add(ID.Tree_Oak, new Entity(
+				sprite: SpriteID.b_tree_oak,
+				name: "Oak Tree",
+				makes: tree_makes,
+				iacts: tree_iacts,
+				attr: new Play.Ents.Tree(
+					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
+						ints = {
+							{ Play.Stats.Tree.Grouth, 0 },
+						},
+						caps = {
+							{ Play.Stats.Tree.Grouth, 100 },
+						}
+					},
+					part: new Play.Attrs.Grow() {
+						items = {
+							{ PartID.Tree_Branch, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.Branch),
+								count: 10,
+								cap: 10,
+								q: 10,
+								grow_span: 10,
+								grow_count: 1
+							)},
+							{ PartID.Tree_Fruit, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.OakNut),
+								count: 10,
+								cap: 10,
+								q: 10,
+								grow_span: 100,
+								grow_count: 10
+							)},
+						}
+					}
+				)
+			));
+		}
+
+		static Iact.A[] human_makes = {
+			Iact.GetA(Iact.ID.Make_Cross),
+			Iact.GetA(Iact.ID.Build_Campfire),
+		};
+		static Iact.A[] creature_iacts = {
+			Iact.GetA(Iact.ID.Butcher_Meat),
+			Iact.GetA(Iact.ID.Butcher_Bone),
+		};
+		static void InitCreature() {
+			Add(ID.Human, new Entity(
+				sprite: SpriteID.c_human_young,
+				name: "Human",
+				makes: human_makes,
+				iacts: creature_iacts,
+				attr: new Play.Ents.Creature(
+					stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
+						ints = {
+							{ Play.Stats.Creature.HitPoint, 10 },
+							{ Play.Stats.Creature.Stamina, 10 },
+						},
+						caps = {
+							{ Play.Stats.Creature.HitPoint, 10 },
+							{ Play.Stats.Creature.Stamina, 10 },
+						}
+					},
+					part: new Play.Attrs.Grow() {
+						items = {
+							{ PartID.Creature_Bone, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.Branch), //TODO
+								count: 10,
+								cap: 10,
+								q: 10,
+								grow_span: 0,
+								grow_count: 0
+							)},
+							{ PartID.Creature_Meat, new Play.Attrs.Grow.Part(
+								a: Item.GetA(Item.ID.Branch), //TODO
+								count: 10,
+								cap: 10,
+								q: 10,
+								grow_span: 0,
+								grow_count: 0
+							)},
 						}
 					}
 				)

@@ -39,9 +39,14 @@ namespace Play {
 
 		public void Tick (int time) {
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
-			if (actor == null)
-				return;
-			actor.Tick(time);
+			if (actor != null)
+				actor.Tick(time);
+			Attrs.Grow grow = GetAttr<Attrs.Grow>();
+			if (grow != null)
+				grow.Tick(time);
+			Attrs.Stage stage = GetAttr<Attrs.Stage>();
+			if (stage != null)
+				stage.Tick(time);
 		}
 
 		public int NextTick () {
@@ -58,7 +63,7 @@ namespace Play {
 			return n;
 		}
 
-		public void SetAttr(Attrib a) {
+		public void SetAttr<T>(T a) where T : Attrib {
 			Type cls = a.AttribClass();
 			Attrib aa;
 			if (attr.TryGetValue(cls, out aa)) {
@@ -67,6 +72,15 @@ namespace Play {
 			}
 			attr.Add(cls, a);
 			a.SetEntity(this);
+		}
+
+		public void DelAttr<T>() {
+			Type cls = Attrib.AttribClass(typeof(T));
+			Attrib aa;
+			if (attr.TryGetValue(cls, out aa)) {
+				aa.SetEntity(null);
+				attr.Remove(cls);
+			}
 		}
 
 		public T GetAttr<T> () where T : Attrib {

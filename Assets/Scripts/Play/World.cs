@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace Play {
 	public class World {
 		public interface View {
-			void OnLoadGrid (Coord g, WorldGrid grid);
+			void OnLoadGrid (Coord g, Grid grid);
 			void OnUnloadGrid (Coord g);
 			void OnLoadPlayer (Entity player);
 			void OnAddEntity (Entity ent);
@@ -21,8 +21,8 @@ namespace Play {
 
 		public View view;
 		WorldFile file;
-		Random rand;
-		SortedList<Coord, WorldGrid> grids = new SortedList<Coord, WorldGrid> ();
+		public Random rand;
+		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
 		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
 		Entity player;
 		[Serializable]
@@ -67,33 +67,33 @@ namespace Play {
 		public void SaveWorld () {
 			file.SaveParam (param);
 			file.SavePlayer (player);
-			foreach (KeyValuePair<Coord, WorldGrid> pair in grids) {
+			foreach (KeyValuePair<Coord, Grid> pair in grids) {
 				file.SaveGrid (pair.Key, pair.Value);
 			}
 			file.SaveWorld ();
 		}
 
-		WorldGrid GetGrid (Coord g) {
-			WorldGrid grid = FindGrid (g);
+		Grid GetGrid (Coord g) {
+			Grid grid = FindGrid (g);
 			if (grid == null)
 				grid = LoadGrid (g);
 			return grid;
 		}
 
-		WorldGrid FindGrid (Coord g) {
-			WorldGrid grid;
+		Grid FindGrid (Coord g) {
+			Grid grid;
 			if (grids.TryGetValue (g, out grid)) {
 				return grid;
 			}
 			return null;
 		}
 
-		WorldGrid LoadGrid (Coord g) {
-			WorldGrid.Data d = file.LoadGrid (g);
+		Grid LoadGrid (Coord g) {
+			Grid.Data d = file.LoadGrid (g);
 			if (d == null) {
 				d = CreateGrid (g);
 			}
-			WorldGrid grid = new WorldGrid (this, g, d);
+			Grid grid = new Grid (this, g, d);
 			grids.Add (g, grid);
 			if (view != null) {
 				view.OnLoadGrid (g, grid);
@@ -101,8 +101,9 @@ namespace Play {
 			return grid;
 		}
 
-		WorldGrid.Data CreateGrid (Coord g) {
-			WorldGrid.Data grid = new WorldGrid.Data ();
+		Grid.Data CreateGrid (Coord g) {
+
+			Grid.Data grid = new Grid.Data ();
 			Schema.Entity.A tree = Schema.Entity.GetA (Schema.Entity.ID.Tree_Pine);
 			Schema.Entity.A human = Schema.Entity.GetA (Schema.Entity.ID.Human);
 			Schema.Floor.A[] floors = {
@@ -141,10 +142,10 @@ namespace Play {
 			if (grids.Count > UNLOAD_SIZE) {
 				Rect saver = anchor.Area (SAVE_RADIUS).Grid ();
 				List<Coord> del = new List<Coord> ();
-				foreach (KeyValuePair<Coord, WorldGrid> pair in grids) {
+				foreach (KeyValuePair<Coord, Grid> pair in grids) {
 					if (!pair.Key.In (saver)) {
 						Coord g = pair.Key;
-						WorldGrid grid = pair.Value;
+						Grid grid = pair.Value;
 						file.SaveGrid (g, grid);
 						grid.Unload ();
 						if (view != null) {
@@ -219,7 +220,7 @@ namespace Play {
 					}
 					i++;
 				}
-				foreach (KeyValuePair<Coord, WorldGrid> pair in grids) {
+				foreach (KeyValuePair<Coord, Grid> pair in grids) {
 					pair.Value.Update (param.time);
 				}
 			}
@@ -227,20 +228,20 @@ namespace Play {
 		}
 
 		public void MoveCrossGrid (Entity entity, Coord from, Coord to) {
-			WorldGrid fg = FindGrid (from);
-			WorldGrid tg = FindGrid (to);
+			Grid fg = FindGrid (from);
+			Grid tg = FindGrid (to);
 			fg.MoveOut (entity);
 			tg.MoveIn (entity);
 		}
 
 		public bool CanMoveTo (Coord to) {
-			WorldGrid tg = FindGrid (to.Grid ());
+			Grid tg = FindGrid (to.Grid ());
 			if (tg == null)
 				return false;
 			return tg.FindEntity (to) == null;
 		}
 		public Entity SearchEntity (Coord to) {
-			WorldGrid tg = FindGrid (to.Grid ());
+			Grid tg = FindGrid (to.Grid ());
 			if (tg == null)
 				return null;
 			return tg.FindEntity (to);

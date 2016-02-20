@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Play.Attrs {
 	[Serializable]
-	public class Stat<ID> : Play.Attrib where ID: struct {
+	public class Stat<ID> : Attrib where ID: struct {
 		public Dictionary<ID, int> ints;
 		public Dictionary<ID, int> caps;
 
@@ -50,7 +50,6 @@ namespace Play.Stats {
 		Damage,
 	}
 	public enum Tree {
-		Branch,
-		Fruit,
+		Grouth,
 	}
 }

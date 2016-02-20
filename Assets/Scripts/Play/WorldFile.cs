@@ -96,12 +96,12 @@ namespace Play {
 			}
 		}
 
-		public WorldGrid.Data LoadGrid (Coord g) {
+		public Grid.Data LoadGrid (Coord g) {
 			string name = "grid_" + g;
-			return LoadSome<WorldGrid.Data> (name);
+			return LoadSome<Grid.Data> (name);
 		}
 
-		public void SaveGrid (Coord g, WorldGrid grid) {
+		public void SaveGrid (Coord g, Grid grid) {
 			string name = "grid_" + g;
 			SaveSome (name, grid.Save ());
 		}

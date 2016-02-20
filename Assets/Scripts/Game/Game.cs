@@ -45,7 +45,7 @@ public class Game : MonoBehaviour, World.View {
 		return new Vector3 (c.x - offset.x, c.y - offset.y, 0);
 	}
 
-	void World.View.OnLoadGrid (Coord g, WorldGrid grid) {
+	void World.View.OnLoadGrid (Coord g, Grid grid) {
 		string gname = "GameGrid_" + g;
 		GameObject go = GameObject.Find (gname);
 		if (go == null) {

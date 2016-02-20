@@ -13,15 +13,20 @@ namespace Schema {
 		public enum ID {
 			Rest,
 			Attack_Punch,
+			Chip_Stone,
 			Tree_PickBranch,
 			Tree_PickFruit,
+			Butcher_Meat,
+			Butcher_Bone,
 			Make_Cross,
 			Build_Campfire,
 		}
 		static public void Init() {
 			InitCommon();
 			InitAttack();
+			InitBoulder();
 			InitTree();
+			InitCreature();
 			InitMake();
 			InitBuild();
 		}
@@ -42,21 +47,46 @@ namespace Schema {
 			)));
 		}
 
+		static private void InitBoulder() {
+			Add(ID.Chip_Stone, new Iact("chip stone", Play.Iacts.Pick(
+				time1: 5,
+				time2: 0,
+				sta: 1,
+				part: PartID.Boulder_Stone,
+				count: 1
+			)));
+		}
+
 		static private void InitTree() {
 			Add(ID.Tree_PickBranch, new Iact("pick branch", Play.Iacts.Pick(
 				time1: 3,
 				time2: 0,
 				sta: 1,
-				st: Play.Stats.Tree.Branch,
-				part: Play.Parts.Tree.Branch,
+				part: PartID.Tree_Branch,
 				count: 1
 			)));
 			Add(ID.Tree_PickFruit, new Iact("pick fruit", Play.Iacts.Pick(
 				time1: 5,
 				time2: 0,
 				sta: 1,
-				st: Play.Stats.Tree.Fruit,
-				part: Play.Parts.Tree.Fruit,
+				part: PartID.Tree_Fruit,
+				count: 1
+			)));
+		}
+
+		static private void InitCreature() {
+			Add(ID.Butcher_Meat, new Iact("cut meat", Play.Iacts.Butcher(
+				time1: 3,
+				time2: 0,
+				sta: 1,
+				part: PartID.Creature_Meat,
+				count: 1
+			)));
+			Add(ID.Butcher_Bone, new Iact("cut bone", Play.Iacts.Butcher(
+				time1: 5,
+				time2: 0,
+				sta: 1,
+				part: PartID.Creature_Bone,
 				count: 1
 			)));
 		}

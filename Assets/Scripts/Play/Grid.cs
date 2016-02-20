@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace Play {
-	public class WorldGrid {
+	public class Grid {
 
 		[Serializable]
 		public class Data {
@@ -21,7 +21,7 @@ namespace Play {
 
 		public List<Entity> entities = new List<Entity> ();
 
-		public WorldGrid (World w, Coord c, Data d) {
+		public Grid (World w, Coord c, Data d) {
 			this.world = w;
 			this.c = c;
 			this.d = d;

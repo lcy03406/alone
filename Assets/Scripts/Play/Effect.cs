@@ -1,4 +1,5 @@
 //utf-8。
+using System;
 using System.Collections.Generic;
 using Play.Attrs;
 
@@ -97,6 +98,46 @@ namespace Play.Eff {
 		}
 	}
 
+	public class DecPart : Effect {
+		public readonly Calc<Entity> c_ent;
+		Schema.PartID id;
+		Calc<int> c_value;
+
+		public DecPart(Calc<Entity> ent, Schema.PartID id, Calc<int> value) {
+			c_ent = ent;
+			this.id = id;
+			this.c_value = value;
+		}
+
+		public bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Grow grow = ent.GetAttr<Grow>();
+			if (grow == null)
+				return false;
+			Grow.Part part = grow.Get(id);
+			if (part == null)
+				return false;
+			if (!c_value.Can(ctx))
+				return false;
+			int value = c_value.Get(ctx);
+			if (value > 0 && part.count < value)
+				return false;
+			return true;
+		}
+
+		public void Do(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			Grow grow = ent.GetAttr<Grow>();
+			Grow.Part part = grow.Get(id);
+			int value = c_value.Get(ctx);
+			if (value > 0) {
+				grow.Set(id, part.count - value);
+			}
+		}
+	}
+
 	public class UseItem : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly Calc<ItemSelect> c_sel;
@@ -190,6 +231,7 @@ namespace Play.Eff {
 			inv.AddItem(to);
 		}
 	}
+
 	public class AddEntity : Effect {
 		public readonly Calc<EntityCreate> c_cre;
 
@@ -212,6 +254,28 @@ namespace Play.Eff {
 			Entity e = cre.Create(ctx);
 			e.c = c;
 			ctx.world.AddEntity(e);
+		}
+	}
+
+	public class UseStage : Effect {
+		public readonly Calc<Entity> c_ent;
+		public readonly Type t_stage;
+
+		public UseStage(Calc<Entity> ent, Type stage) {
+			this.c_ent = ent;
+			this.t_stage = stage;
+		}
+
+		public bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Stage stage = ent.GetAttr<Stage>();
+			if (stage == null || stage.GetType() != t_stage)
+				return false;
+			return true;
+		}
+		public void Do(Ctx ctx) {
 		}
 	}
 }
