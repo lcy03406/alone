@@ -8,7 +8,6 @@ namespace Schema {
 			Item.Init();
 			Iact.Init();
 			Entity.Init();
-			EntityCreate.Init();
 		}
 	}
 }

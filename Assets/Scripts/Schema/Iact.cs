@@ -94,7 +94,7 @@ namespace Schema {
 					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 5)
 				},
 				products: null,
-				build: new Play.Ents.Workshop(a: Entity.GetA(Entity.ID.Workshop_Campfire))
+				build: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Workshop_Campfire))
 			)));
 		}
 	}

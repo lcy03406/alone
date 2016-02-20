@@ -52,8 +52,9 @@ namespace Play {
 			}
 			Entity e = file.LoadPlayer ();
 			if (e == null) {
-				Schema.EntityCreate.A human = Schema.EntityCreate.GetA (Schema.EntityCreate.ID.Human);
-				e = human.s.cre.Create(new Ctx(this, null, null));
+				Ctx ctx = new Ctx(this, null, null);
+                Schema.Entity.A human = Schema.Entity.GetA (Schema.Entity.ID.Human);
+				e = Entity.Create(ctx, human);
 				e.SetAttr (new Attrs.Ctrl ());
 			}
 			e.SetWorld (this);
@@ -102,8 +103,8 @@ namespace Play {
 
 		WorldGrid.Data CreateGrid (Coord g) {
 			WorldGrid.Data grid = new WorldGrid.Data ();
-			Schema.EntityCreate.A tree = Schema.EntityCreate.GetA (Schema.EntityCreate.ID.Tree_Pine);
-			Schema.EntityCreate.A human = Schema.EntityCreate.GetA (Schema.EntityCreate.ID.Human);
+			Schema.Entity.A tree = Schema.Entity.GetA (Schema.Entity.ID.Tree_Pine);
+			Schema.Entity.A human = Schema.Entity.GetA (Schema.Entity.ID.Human);
 			Schema.Floor.A[] floors = {
 				Schema.Floor.GetA (Schema.Floor.ID.Dirt),
 				Schema.Floor.GetA (Schema.Floor.ID.Grass),
@@ -114,11 +115,11 @@ namespace Play {
 					grid.tiles[x, y] = floors[rand.Next (0, floors.Length)];
 					int rr = rand.Next (0, 100);
 					if (rr < 10) {
-						Entity e = human.s.cre.Create(ctx);
+						Entity e = Entity.Create(ctx, human);
 						e.c = g.Add (x, y);
 						grid.entities.Add (e);
 					} else if (rr < 30) {
-						Entity e = tree.s.cre.Create(ctx);
+						Entity e = Entity.Create(ctx, tree);
 						e.c = g.Add (x, y);
 						grid.entities.Add (e);
 					}

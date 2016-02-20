@@ -17,6 +17,19 @@ namespace Play {
 		[NonSerialized]
 		public bool isPlayer = false;
 
+		public static Entity Create(Ctx ctx, Schema.Entity.A a) {
+			Entity ent = new Entity();
+			ent.id = ctx.world.NextWUID();
+			ent.SetAttr(new Attrs.Core(a));
+			AttrCreate attr = a.s.attr;
+			if (attr != null)
+				attr.Create(ctx, ent);
+			ent.dir = Direction.None;
+			ent.SetWorld(ctx.world);
+			return ent;
+		}
+
+
 		public void SetWorld (World world) {
 			this.world = world;
 			foreach (Attrib a in attr.Values) {
@@ -45,18 +58,8 @@ namespace Play {
 			return n;
 		}
 
-		private static Type AttribClass(Type cls) {
-			Assert.IsTrue (cls.IsSubclassOf (typeof (Attrib)));
-			while (true) {
-				if (cls.BaseType == typeof (Attrib)) {
-					return cls;
-				}
-				cls = cls.BaseType;
-			}
-		}
-
 		public void SetAttr(Attrib a) {
-			Type cls = AttribClass (a.GetType ());
+			Type cls = a.AttribClass();
 			Attrib aa;
 			if (attr.TryGetValue(cls, out aa)) {
 				aa.SetEntity(null);
@@ -67,7 +70,7 @@ namespace Play {
 		}
 
 		public T GetAttr<T> () where T : Attrib {
-			Type cls = AttribClass (typeof(T));
+			Type cls = Attrib.AttribClass(typeof(T));
 			Attrib a;
 			if (!attr.TryGetValue(cls, out a))
 				return null;

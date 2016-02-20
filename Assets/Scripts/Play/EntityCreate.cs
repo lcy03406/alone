@@ -4,36 +4,34 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace Play {
-	public abstract class EntityCreate {
+	public sealed class EntityCreate {
 		Schema.Entity.A a;
 
-		public Entity Create(Ctx ctx) {
-			Entity ent = new Entity();
-			ent.id = ctx.world.NextWUID();
-			CreateAttrs(ctx, ent);
-			ent.dir = Direction.None;
-			ent.SetWorld(ctx.world);
-			return ent;
+		public EntityCreate(Schema.Entity.A a) {
+			this.a = a;
 		}
 
-		public abstract void CreateAttrs(Ctx ctx, Entity ent);
+		public Entity Create(Ctx ctx) {
+			Entity ent = Entity.Create(ctx, a);
+			return ent;
+		}
+	}
+
+	public abstract class AttrCreate {
+		public abstract void Create(Ctx ctx, Entity ent);
 	}
 }
 
 namespace Play.Ents {
-	public class Creature : EntityCreate {
-		Schema.Entity.A a;
+	public class Creature : AttrCreate {
 		Attrs.Stat<Stats.Creature> stat;
 
-		public Creature(Schema.Entity.A a,
-			Attrs.Stat<Stats.Creature> stat)
+		public Creature(Attrs.Stat<Stats.Creature> stat)
 		{
-			this.a = a;
 			this.stat = stat;
 		}
 
-		public override void CreateAttrs(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Core(a));
+		public override void Create(Ctx ctx, Entity ent) {
 			ent.SetAttr(new Attrs.Stat<Stats.Creature>(stat));
 			ent.SetAttr(new Attrs.Actor());
 			ent.SetAttr(new Attrs.Inv());
@@ -41,36 +39,29 @@ namespace Play.Ents {
 		}
 	}
 
-	public class Tree : EntityCreate {
-		Schema.Entity.A a;
+	public class Tree : AttrCreate {
 		Attrs.Stat<Stats.Tree> stat;
 		Attrs.Part<Parts.Tree> part;
 
-		public Tree(Schema.Entity.A a,
-			Attrs.Stat<Stats.Tree> stat,
+		public Tree(Attrs.Stat<Stats.Tree> stat,
 			Attrs.Part<Parts.Tree> part)
 		{
-			this.a = a;
 			this.stat = stat;
 			this.part = part;
 		}
 
-		public override void CreateAttrs(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Core(a));
+		public override void Create(Ctx ctx, Entity ent) {
 			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
 			ent.SetAttr(new Attrs.Part<Parts.Tree>(part));
 		}
 	}
 
-	public class Workshop : EntityCreate {
-		Schema.Entity.A a;
+	public class Workshop : AttrCreate {
 
-		public Workshop(Schema.Entity.A a) {
-			this.a = a;
+		public Workshop() {
 		}
 
-		public override void CreateAttrs(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Core(a));
+		public override void Create(Ctx ctx, Entity ent) {
 		}
 	}
 }
