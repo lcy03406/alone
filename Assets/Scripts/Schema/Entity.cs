@@ -22,7 +22,6 @@ namespace Schema {
 		}
 
 		public enum ID {
-			None,
 			Human,
 			Boulder,
 			Tree_Pine,
@@ -30,7 +29,6 @@ namespace Schema {
 			Workshop_Campfire,
 		}
 		static public void Init() {
-			Add(ID.None, null);
 			InitBoulder();
 			InitTree();
 			InitCreature();
@@ -44,19 +42,12 @@ namespace Schema {
 		};
 		static void InitBoulder() {
 			Add(ID.Boulder, new Entity(
-				sprite: SpriteID.b_tree_pine,
+				sprite: SpriteID.b_mountain,
 				name: "Boulder",
 				makes: boulder_makes,
 				iacts: boulder_iacts,
 				attr: new Play.Ents.Tree(
-					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
-						ints = {
-							{ Play.Stats.Tree.Grouth, 0 },
-						},
-						caps = {
-							{ Play.Stats.Tree.Grouth, 0 },
-						}
-					},
+					stat: null,
 					part: new Play.Attrs.Grow() {
 						items = {
 							{ PartID.Boulder_Stone, new Play.Attrs.Grow.Part(

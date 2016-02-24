@@ -3,29 +3,52 @@ using System.Collections.Generic;
 
 namespace Schema {
 	public sealed class Grid : SchemaBase<Grid.ID, Grid> {
-		public readonly Dictionary<Floor.ID, int> floors;
-		public readonly Dictionary<Entity.ID, int> entities;
-		private Grid(Dictionary<Floor.ID, int> floors, Dictionary<Entity.ID, int> entities) {
-			this.floors = floors;
-			this.entities = entities;
+		public readonly Play.GridCreate cre;
+		private Grid(Play.GridCreate cre) {
+			this.cre = cre;
 		}
 		public enum ID {
 			Plain,
 		}
 		static public void Init () {
-			Add(ID.Plain, new Grid(
-				floors: new Dictionary<Floor.ID, int>() {
-					{ Floor.ID.Dirt, 60 },
-					{ Floor.ID.Grass, 40 },
-				},
-				entities: new Dictionary<Entity.ID, int>() {
-					{ Entity.ID.Boulder, 10 },
-					{ Entity.ID.Human, 10 },
-					{ Entity.ID.Tree_Oak, 10 },
-					{ Entity.ID.Tree_Pine, 10 },
-					{ Entity.ID.None, 60 },
-				}
-			));
+			Add(ID.Plain, new Grid(cre: new Play.GridCreate(
+				floors: new Play.Calcs.RandConst<Floor.A>(
+					choices: new List<Play.Choice<Floor.A>> {
+						new Play.Choice<Floor.A>(
+							value: Floor.GetA(Floor.ID.Dirt), 
+							prob: 60
+						),
+						new Play.Choice<Floor.A>(
+							value: Floor.GetA(Floor.ID.Grass),
+							prob: 40
+						),
+					}
+				),
+				entities: new Play.Calcs.RandConst<Play.EntityCreate>(
+					choices: new List<Play.Choice<Play.EntityCreate>> {
+						new Play.Choice<Play.EntityCreate>(
+							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Boulder)),
+							prob: 10
+						),
+						new Play.Choice<Play.EntityCreate>(
+							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Human)),
+							prob: 10
+						),
+						new Play.Choice<Play.EntityCreate>(
+							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Tree_Oak)),
+							prob: 10
+						),
+						new Play.Choice<Play.EntityCreate>(
+							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Tree_Pine)),
+							prob: 10
+						),
+						new Play.Choice<Play.EntityCreate>(
+							value: null,
+							prob: 60
+						),
+					}
+				)
+			)));
 		}
 	}
 }

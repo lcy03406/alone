@@ -21,14 +21,15 @@ namespace Play {
 
 		public List<Entity> entities = new List<Entity> ();
 
-		public Grid (World w, Coord c, Data d) {
+		public Grid(World w, Coord c) {
 			this.world = w;
 			this.c = c;
+		}
+
+		public void Load(Data d) {
 			this.d = d;
 			foreach (Entity e in d.entities) {
-				e.SetWorld (w);
 				Assert.AreEqual (c, e.c.Grid (), string.Format ("c={0}, e={1}", c, e.c));
-				entities.Add (e);
 				world.AddEntity (e);
 			}
 			d.entities.Clear ();
@@ -44,7 +45,8 @@ namespace Play {
 		}
 
 		public void Unload () {
-			foreach (Entity e in entities) {
+			List<Entity> unload = new List<Entity>(entities);
+			foreach (Entity e in unload) {
 				world.DelEntity (e);
 			}
 		}

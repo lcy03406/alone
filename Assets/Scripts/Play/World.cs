@@ -89,12 +89,13 @@ namespace Play {
 		}
 
 		Grid LoadGrid (Coord g) {
+			Grid grid = new Grid (this, g);
+			grids.Add (g, grid);
 			Grid.Data d = file.LoadGrid (g);
 			if (d == null) {
 				d = CreateGrid (g);
 			}
-			Grid grid = new Grid (this, g, d);
-			grids.Add (g, grid);
+			grid.Load(d);
 			if (view != null) {
 				view.OnLoadGrid (g, grid);
 			}
@@ -102,30 +103,9 @@ namespace Play {
 		}
 
 		Grid.Data CreateGrid (Coord g) {
-
-			Grid.Data grid = new Grid.Data ();
-			Schema.Entity.A tree = Schema.Entity.GetA (Schema.Entity.ID.Tree_Pine);
-			Schema.Entity.A human = Schema.Entity.GetA (Schema.Entity.ID.Human);
-			Schema.Floor.A[] floors = {
-				Schema.Floor.GetA (Schema.Floor.ID.Dirt),
-				Schema.Floor.GetA (Schema.Floor.ID.Grass),
-			};
 			Ctx ctx = new Ctx(this, null, null);
-            for (int x = 0; x < GRID_SIZE; ++x) {
-				for (int y = 0; y < GRID_SIZE; ++y) {
-					grid.tiles[x, y] = floors[rand.Next (0, floors.Length)];
-					int rr = rand.Next (0, 100);
-					if (rr < 10) {
-						Entity e = Entity.Create(ctx, human);
-						e.c = g.Add (x, y);
-						grid.entities.Add (e);
-					} else if (rr < 30) {
-						Entity e = Entity.Create(ctx, tree);
-						e.c = g.Add (x, y);
-						grid.entities.Add (e);
-					}
-				}
-			}
+			GridCreate cre = Schema.Grid.GetA(Schema.Grid.ID.Plain).s.cre;
+			Grid.Data grid = cre.Create(ctx, g);
 			return grid;
 		}
 
@@ -176,6 +156,10 @@ namespace Play {
 
 		public void AddEntity (Entity ent) {
 			entities.Add (ent.id, ent);
+			Coord to = ent.c.Grid();
+			Grid tg = FindGrid(to);
+			tg.MoveIn(ent);
+			ent.SetWorld(this);
 			if (view != null) {
 				view.OnAddEntity (ent);
 			}
@@ -186,7 +170,10 @@ namespace Play {
 				view.OnDelEntity (ent);
 			}
 			Assert.AreEqual (ent.world, this);
-			ent.world = null;
+			ent.SetWorld(null);
+			Coord from = ent.c.Grid();
+			Grid fg = FindGrid(from);
+			fg.MoveOut(ent);
 			entities.Remove (ent.id);
 		}
 

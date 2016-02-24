@@ -59,7 +59,7 @@ namespace Play.Calcs {
 		}
 	}
 
-	public class Rand<T> : Calc<T> {
+/*	public class Rand<T> : Calc<T> {
 		public Dictionary<Calc<T>, int> choices;
 		public Rand(Dictionary<Calc<T>, int> choices) {
 			this.choices = choices;
@@ -86,28 +86,18 @@ namespace Play.Calcs {
 			Assert.IsTrue(false);
 			return default(T);
 		}
-	}
+	}*/
+
 	public class RandConst<T> : Calc<T> {
-		public Dictionary<T, int> choices;
-		public RandConst(Dictionary<T, int> choices) {
+		public List<Choice<T>> choices;
+        public RandConst(List<Choice<T>> choices) {
 			this.choices = choices;
 		}
 		public bool Can(Ctx ctx) {
 			return true;
 		}
 		public T Get(Ctx ctx) {
-			int total = 0;
-			foreach (int value in choices.Values) {
-				total += value;
-			}
-			int rand = ctx.world.rand.Next(0, total);
-			foreach (KeyValuePair<T, int> pair in choices) {
-				rand -= pair.Value;
-				if (rand < 0)
-					return pair.Key;
-			}
-			Assert.IsTrue(false);
-			return default(T);
+			return Choice<T>.Choose(choices);
 		}
 	}
 

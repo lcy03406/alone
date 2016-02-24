@@ -8,6 +8,7 @@ using ID = Schema.PartID;
 namespace Play.Attrs {
 	[Serializable]
 	public class Grow : Attrib {
+		[Serializable]
 		public class Part {
 			public Schema.Item.A a;
 			public int count;
@@ -70,10 +71,12 @@ namespace Play.Attrs {
 		}
 
 		public override void SetEntity(Entity ent) {
-			base.SetEntity(ent);
-			foreach (Part part in items.Values) {
-				part.grow_time += ent.world.param.time;
+			if (this.ent == null && ent != null) {
+				foreach (Part part in items.Values) {
+					part.grow_time += ent.world.param.time;
+				}
 			}
+			base.SetEntity(ent);
 		}
 
 		public void Tick(int time) {

@@ -20,12 +20,12 @@ namespace Play {
 		public static Entity Create(Ctx ctx, Schema.Entity.A a) {
 			Entity ent = new Entity();
 			ent.id = ctx.world.NextWUID();
+			ent.SetWorld(ctx.world);
 			ent.SetAttr(new Attrs.Core(a));
 			AttrCreate attr = a.s.attr;
 			if (attr != null)
 				attr.Create(ctx, ent);
 			ent.dir = Direction.None;
-			ent.SetWorld(ctx.world);
 			return ent;
 		}
 

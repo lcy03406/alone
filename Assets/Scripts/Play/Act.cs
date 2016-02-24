@@ -103,7 +103,6 @@ namespace Play.Acts {
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
-				ActIact act = (ActIact)Act.EntAct(ent);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);

@@ -8,6 +8,7 @@ namespace Schema {
 			Item.Init();
 			Iact.Init();
 			Entity.Init();
+			Grid.Init();
 		}
 	}
 }
