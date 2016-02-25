@@ -60,6 +60,7 @@ namespace Play {
 			Attrs.Pos pos = e.GetAttr<Attrs.Pos>();
 			e.world = this;
 			e.isPlayer = true;
+			e.Load();
 			player = e;
 			view.OnLoadPlayer (player);
 			Anchor (pos.c);
@@ -198,7 +199,7 @@ namespace Play {
 
 		public void Update () {
 			player.Tick (param.time);
-			while (param.time < player.NextTick ()) {
+			if (param.time < player.NextTick ()) {
 				param.time++;
 				player.Tick (param.time);
 				int i = 0;

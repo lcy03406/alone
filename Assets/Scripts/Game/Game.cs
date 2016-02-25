@@ -36,8 +36,7 @@ public class Game : MonoBehaviour, World.View {
 		world.SaveWorld ();
 	}
 
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		world.Update ();
 	}
 

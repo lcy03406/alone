@@ -30,6 +30,8 @@ namespace Play {
 			this.d = d;
 			foreach (Entity e in d.entities) {
 				Assert.AreEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
+				e.world = world;
+				e.Load();
 				world.AddEntity (e);
 			}
 			d.entities.Clear ();

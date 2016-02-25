@@ -14,6 +14,11 @@ namespace Play {
 		[NonSerialized]
 		public bool isPlayer = false;
 
+		public void Load() {
+			foreach (Attrib at in attr.Values) {
+				at.SetEntity(this);
+			}
+		}
 
 		public void SetAttr<T>(T a) where T : Attrib {
 			Type cls = a.AttribClass();

@@ -12,12 +12,13 @@ namespace Play.Attrs {
 			ent.SetAttr(to);
 		}
 		public override void SetEntity(Entity ent) {
-			int time = ent.world.param.time;
 			Entity old_ent = this.ent;
 			if (old_ent == null && ent != null) {
 				base.SetEntity(ent);
+				int time = ent.world.param.time;
 				Start(time);
 			} else if (old_ent != null && ent == null) {
+				int time = old_ent.world.param.time;
 				Stop(time);
 				base.SetEntity(ent);
 			} else {
