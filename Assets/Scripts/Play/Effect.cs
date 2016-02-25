@@ -240,7 +240,10 @@ namespace Play.Eff {
 		}
 
 		public bool Can(Ctx ctx) {
-			Coord c = ctx.src.c.Step(ctx.src.dir);
+			Pos pos = ctx.src.GetAttr<Pos>();
+			if (pos == null)
+				return false;
+			Coord c = pos.c.Step(pos.dir);
 			if (ctx.world.SearchEntity(c) != null)
 				return false;
 			if (!c_cre.Can(ctx))
@@ -248,11 +251,12 @@ namespace Play.Eff {
 			return true;
 		}
 		public void Do(Ctx ctx) {
+			Pos pos = ctx.src.GetAttr<Pos>();
 			//TODO
-			Coord c = ctx.src.c.Step(ctx.src.dir);
+			Coord c = pos.c.Step(pos.dir);
 			EntityCreate cre = c_cre.Get(ctx);
 			Entity e = cre.Create(ctx);
-			e.c = c;
+			pos.c = c;
 			ctx.world.AddEntity(e);
 		}
 	}

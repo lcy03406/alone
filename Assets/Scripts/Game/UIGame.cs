@@ -98,6 +98,8 @@ public class UIGame : MonoBehaviour {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
 			List<Schema.Iact.A> makes = ctrl.ListMake();
+			if (makes == null)
+				return;
 			List<string> opts = makes.ConvertAll(make => make.s.name);
 			menu.Open(opts.ToArray(), delegate (int idx, string name) {
 				Schema.Iact.A make = makes[idx];
@@ -110,6 +112,8 @@ public class UIGame : MonoBehaviour {
 		if (!menu.isActiveAndEnabled) {
 			Play.Entity dst = ctrl.ListDst();
 			List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
+			if (iacts == null)
+				return;
 			List<string> opts = iacts.ConvertAll(iact => iact.s.name);
 			menu.Open(opts.ToArray(), delegate (int idx, string name) {
 				Schema.Iact.A iact = iacts[idx];

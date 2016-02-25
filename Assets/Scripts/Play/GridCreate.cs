@@ -22,7 +22,7 @@ namespace Play {
 					if (cre != null) {
 						Entity e = cre.Create(ctx);
 						if (e != null) {
-							e.c = g.Add(x, y);
+							e.GetAttr<Attrs.Pos>().c = g.Add(x, y);
 							grid.entities.Add(e);
 						}
 					}

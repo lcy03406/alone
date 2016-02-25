@@ -25,6 +25,35 @@ namespace Play {
 }
 
 namespace Play.Ents {
+	public class Static : AttrCreate {
+		Attrs.Grow part;
+
+		public Static(Attrs.Grow part) {
+			this.part = part;
+		}
+
+		public override void Create(Ctx ctx, Entity ent) {
+			ent.SetAttr(new Attrs.Grow(part));
+			ent.SetAttr(new Attrs.Stages.Static.Static());
+		}
+	}
+
+	public class Tree : AttrCreate {
+		Attrs.Stat<Stats.Tree> stat;
+		Attrs.Grow part;
+
+		public Tree(Attrs.Stat<Stats.Tree> stat, Attrs.Grow part) {
+			this.stat = stat;
+			this.part = part;
+		}
+
+		public override void Create(Ctx ctx, Entity ent) {
+			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
+			ent.SetAttr(new Attrs.Grow(part));
+			ent.SetAttr(new Attrs.Stages.Tree.Young());
+		}
+	}
+
 	public class Creature : AttrCreate {
 		Attrs.Stat<Stats.Creature> stat;
 		Attrs.Grow part;
@@ -41,22 +70,7 @@ namespace Play.Ents {
 			ent.SetAttr(new Attrs.Actor());
 			ent.SetAttr(new Attrs.Inv());
 			ent.SetAttr(new Attrs.AIHuman());
-		}
-	}
-
-	public class Tree : AttrCreate {
-		Attrs.Stat<Stats.Tree> stat;
-		Attrs.Grow part;
-
-		public Tree(Attrs.Stat<Stats.Tree> stat, Attrs.Grow part)
-		{
-			this.stat = stat;
-			this.part = part;
-		}
-
-		public override void Create(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
-			ent.SetAttr(new Attrs.Grow(part));
+			ent.SetAttr(new Attrs.Stages.Creature.Alive());
 		}
 	}
 
@@ -66,6 +80,7 @@ namespace Play.Ents {
 		}
 
 		public override void Create(Ctx ctx, Entity ent) {
+			ent.SetAttr(new Attrs.Stages.Workshop.Off());
 		}
 	}
 }

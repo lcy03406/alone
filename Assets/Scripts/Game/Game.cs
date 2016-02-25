@@ -77,7 +77,7 @@ public class Game : MonoBehaviour, World.View {
 	void World.View.OnLoadPlayer (Entity wp) {
 		player = wp;
 		GameObject go = Instantiate(playerPrefab);
-		go.name = "GameEntity_" + wp.id;
+		go.name = "GameEntity_" + player.id;
 		GameObject.Find ("Main Camera").transform.SetParent (go.transform);
 		GameEntity ge = go.GetComponent<GameEntity> ();
 		ge.Init (this, wp);

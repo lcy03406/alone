@@ -1,23 +1,32 @@
 //utf-8。
+using System;
 using System.Collections.Generic;
 
 namespace Schema {
+	public class Stage {
+		public readonly Iact.A[] make;
+		public readonly Iact.A[] iact;
+		public readonly Play.Attrs.Stat<UsageID> usage;
+
+		public Stage(Iact.A[] make, Iact.A[] iact, Play.Attrs.Stat<UsageID> usage) {
+			this.make = make;
+			this.iact = iact;
+			this.usage = usage;
+		}
+	}
 	public sealed class Entity : SchemaBase<Entity.ID, Entity> {
 		public readonly Sprite.A sprite;
 		public readonly string name;
-		public readonly Iact.A[] makes;
-		public readonly Iact.A[] iacts;
+		public readonly Dictionary<Type, Stage> stages;
 		public readonly Play.AttrCreate attr;
 
 		Entity(SpriteID sprite,
 			string name,
-			Iact.A[] makes,
-			Iact.A[] iacts,
+			Dictionary<Type, Stage> stages,
 			Play.AttrCreate attr) {
 			this.sprite = Sprite.GetA(sprite);
 			this.name = name;
-			this.makes = makes;
-			this.iacts = iacts;
+			this.stages = stages;
 			this.attr = attr;
 		}
 
@@ -35,19 +44,24 @@ namespace Schema {
 			InitWorkshop();
 		}
 
-		static Iact.A[] boulder_makes = {
-		};
-		static Iact.A[] boulder_iacts = {
-			Iact.GetA (Iact.ID.Chip_Stone),
+		static Dictionary<Type, Stage> boulder_stages = new Dictionary<Type, Stage> {
+			{
+				typeof(Play.Attrs.Stages.Static.Static),
+				new Stage (
+					make: null,
+					iact: new Iact.A[] {
+						Iact.GetA (Iact.ID.Chip_Stone),
+					},
+					usage: null
+				)
+			}
 		};
 		static void InitBoulder() {
 			Add(ID.Boulder, new Entity(
 				sprite: SpriteID.b_mountain,
 				name: "Boulder",
-				makes: boulder_makes,
-				iacts: boulder_iacts,
-				attr: new Play.Ents.Tree(
-					stat: null,
+				stages: boulder_stages,
+				attr: new Play.Ents.Static(
 					part: new Play.Attrs.Grow() {
 						items = {
 							{ PartID.Boulder_Stone, new Play.Attrs.Grow.Part(
@@ -64,18 +78,35 @@ namespace Schema {
 			));
 		}
 
-		static Iact.A[] tree_makes = {
-		};
-		static Iact.A[] tree_iacts = {
-			Iact.GetA (Iact.ID.Tree_PickBranch),
-			Iact.GetA (Iact.ID.Tree_PickFruit),
+		static Dictionary<Type, Stage> tree_stages = new Dictionary<Type, Stage> {
+			{
+				typeof(Play.Attrs.Stages.Tree.Young),
+				new Stage (
+					make: null,
+					iact: new Iact.A[] {
+						Iact.GetA (Iact.ID.Tree_PickBranch),
+						Iact.GetA (Iact.ID.Tree_PickFruit),
+					},
+					usage: null
+				)
+			},
+            {
+				typeof(Play.Attrs.Stages.Tree.Grown),
+				new Stage (
+					make: null,
+					iact: new Iact.A[] {
+						Iact.GetA (Iact.ID.Tree_PickBranch),
+						Iact.GetA (Iact.ID.Tree_PickFruit),
+					},
+					usage: null
+				)
+			}
 		};
 		static void InitTree() {
 			Add(ID.Tree_Pine, new Entity(
 				sprite: SpriteID.b_tree_pine,
 				name: "Pine Tree",
-				makes: tree_makes,
-				iacts: tree_iacts,
+				stages: tree_stages,
                 attr: new Play.Ents.Tree(
 					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
 						ints = {
@@ -102,8 +133,7 @@ namespace Schema {
 			Add(ID.Tree_Oak, new Entity(
 				sprite: SpriteID.b_tree_oak,
 				name: "Oak Tree",
-				makes: tree_makes,
-				iacts: tree_iacts,
+				stages: tree_stages,
 				attr: new Play.Ents.Tree(
 					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
 						ints = {
@@ -137,20 +167,35 @@ namespace Schema {
 			));
 		}
 
-		static Iact.A[] human_makes = {
-			Iact.GetA(Iact.ID.Make_Cross),
-			Iact.GetA(Iact.ID.Build_Campfire),
-		};
-		static Iact.A[] creature_iacts = {
-			Iact.GetA(Iact.ID.Butcher_Meat),
-			Iact.GetA(Iact.ID.Butcher_Bone),
+		static Dictionary<Type, Stage> human_stages = new Dictionary<Type, Stage> {
+			{
+				typeof(Play.Attrs.Stages.Creature.Alive),
+				new Stage (
+					make: new Iact.A[] {
+						Iact.GetA(Iact.ID.Make_Cross),
+						Iact.GetA(Iact.ID.Build_Campfire),
+					},
+					iact: null,
+					usage: null
+				)
+			},
+			{
+				typeof(Play.Attrs.Stages.Creature.Dead),
+				new Stage (
+					make: null,
+					iact: new Iact.A[] {
+						Iact.GetA(Iact.ID.Butcher_Meat),
+						Iact.GetA(Iact.ID.Butcher_Bone),
+					},
+					usage: null
+				)
+			}
 		};
 		static void InitCreature() {
 			Add(ID.Human, new Entity(
 				sprite: SpriteID.c_human_young,
 				name: "Human",
-				makes: human_makes,
-				iacts: creature_iacts,
+				stages: human_stages,
 				attr: new Play.Ents.Creature(
 					stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
 						ints = {
@@ -186,16 +231,25 @@ namespace Schema {
 			));
 		}
 
-		static Iact.A[] workshop_makes = {
-		};
-		static Iact.A[] workshop_iacts = {
+		static Dictionary<Type, Stage> campfire_stages = new Dictionary<Type, Stage> {
+			{
+				typeof(Play.Attrs.Stages.Static.Static),
+				new Stage (
+					make: null,
+					iact: null,
+					usage: new Play.Attrs.Stat<UsageID>() {
+						ints = {
+							{ UsageID.Workshop_Cookfire, 1 }
+						}
+					}
+				)
+			}
 		};
 		static void InitWorkshop() {
 			Add(ID.Workshop_Campfire, new Entity(
 				sprite: SpriteID.b_volcano,
 				name: "Campfire",
-				makes: workshop_makes,
-				iacts: workshop_iacts,
+				stages: campfire_stages,
 				attr: new Play.Ents.Workshop()
 			));
 		}

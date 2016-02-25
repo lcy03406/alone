@@ -30,21 +30,9 @@ namespace Play.Attrs {
 	}
 }
 
-namespace Play.Attrs.Stages.Creature {
+namespace Play.Attrs.Stages.Static {
 	[Serializable]
-	public class Alive : Stage {
-		public override void Tick(int time) {
-			Stat<Stats.Creature> stat = ent.GetAttr<Stat<Stats.Creature>>();
-			int hp = stat.Get(Stats.Creature.HitPoint);
-			if (hp <= 0) {
-				Transit(new Dead(), time);
-			}
-		}
-	}
-	public class Dead : Stage {
-		public override void Start(int time) {
-			ent.DelAttr<Actor>();
-		}
+	public class Static : Stage {
 	}
 }
 
@@ -70,6 +58,40 @@ namespace Play.Attrs.Stages.Tree {
 		}
 	}
 
+	[Serializable]
 	public class Grown : Stage {
+	}
+}
+
+namespace Play.Attrs.Stages.Creature {
+	[Serializable]
+	public class Alive : Stage {
+		public override void Tick(int time) {
+			Stat<Stats.Creature> stat = ent.GetAttr<Stat<Stats.Creature>>();
+			int hp = stat.Get(Stats.Creature.HitPoint);
+			if (hp <= 0) {
+				Transit(new Dead(), time);
+			}
+		}
+	}
+
+	[Serializable]
+	public class Dead : Stage {
+		public override void Start(int time) {
+			ent.DelAttr<Actor>();
+		}
+	}
+}
+
+namespace Play.Attrs.Stages.Workshop {
+	[Serializable]
+	public class Off : Stage {
+		public override void Tick(int time) {
+			Transit(new On(), time);
+		}
+	}
+
+	[Serializable]
+	public class On : Stage {
 	}
 }

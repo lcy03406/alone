@@ -57,11 +57,12 @@ namespace Play {
 				e = Entity.Create(ctx, human);
 				e.SetAttr (new Attrs.Ctrl ());
 			}
-			e.SetWorld (this);
+			Attrs.Pos pos = e.GetAttr<Attrs.Pos>();
+			e.world = this;
 			e.isPlayer = true;
 			player = e;
 			view.OnLoadPlayer (player);
-			Anchor (player.c);
+			Anchor (pos.c);
 		}
 
 		public void SaveWorld () {
@@ -155,11 +156,12 @@ namespace Play {
 		}
 
 		public void AddEntity (Entity ent) {
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			entities.Add (ent.id, ent);
-			Coord to = ent.c.Grid();
+			Coord to = pos.c.Grid();
 			Grid tg = FindGrid(to);
 			tg.MoveIn(ent);
-			ent.SetWorld(this);
+			ent.world = this;
 			if (view != null) {
 				view.OnAddEntity (ent);
 			}
@@ -169,17 +171,19 @@ namespace Play {
 			if (view != null) {
 				view.OnDelEntity (ent);
 			}
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			Assert.AreEqual (ent.world, this);
-			ent.SetWorld(null);
-			Coord from = ent.c.Grid();
+			ent.world = null;
+			Coord from = pos.c.Grid();
 			Grid fg = FindGrid(from);
 			fg.MoveOut(ent);
 			entities.Remove (ent.id);
 		}
 
 		public void MoveEntity (Entity ent, Coord to) {
-			Coord from = ent.c;
-			ent.c = to;
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			Coord from = pos.c;
+			pos.c = to;
 			Assert.AreNotEqual (from, to, ent.isPlayer.ToString ());
 			if (ent.isPlayer) {
 				Anchor (to);

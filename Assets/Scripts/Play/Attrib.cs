@@ -1,5 +1,6 @@
 //utf-8。
 using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace Play {
@@ -7,12 +8,12 @@ namespace Play {
 	public abstract class Attrib {
 		[NonSerialized]
 		public Entity ent;
-		public virtual void SetEntity (Entity ent) {
+		public virtual void SetEntity(Entity ent) {
 			this.ent = ent;
 		}
 		public static Type AttribClass(Type cls) {
 			Assert.IsTrue(cls.IsSubclassOf(typeof(Attrib)));
-            while (true) {
+			while (true) {
 				if (cls.BaseType == typeof(Attrib)) {
 					return cls;
 				}
@@ -21,6 +22,6 @@ namespace Play {
 		}
 		public Type AttribClass() {
 			return AttribClass(this.GetType());
-        }
-    }
+		}
+	}
 }

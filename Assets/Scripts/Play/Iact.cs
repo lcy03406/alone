@@ -19,8 +19,14 @@ namespace Play {
 			if (has_dst) {
 				if (ctx.dst == null)
 					return false;
-				if (ctx.src.c.Manhattan(ctx.dst.c) > distance)
-					return false;
+				if (distance >= 0) {
+					Attrs.Pos sp = ctx.src.GetAttr<Attrs.Pos>();
+					Attrs.Pos dp = ctx.dst.GetAttr<Attrs.Pos>();
+					if (sp == null || dp == null)
+						return false;
+					if (sp.c.Manhattan(dp.c) > distance)
+						return false;
+				}
 			}
 			return ef.Can(ctx);
 		}

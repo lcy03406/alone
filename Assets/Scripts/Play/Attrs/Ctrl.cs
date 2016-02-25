@@ -19,8 +19,9 @@ namespace Play.Attrs {
 			if (to == Direction.None || to == Direction.Center) {
 				return false;
 			}
+			Pos pos = ent.GetAttr<Pos>();
 			Act act;
-			if (to == ent.dir) {
+			if (to == pos.dir) {
 				act = new ActMove (to);
 			} else {
 				act = new ActDir (to);
@@ -30,12 +31,13 @@ namespace Play.Attrs {
 		}
 
 		public bool CmdAttack () {
-			if (ent.dir == Direction.None || ent.dir == Direction.Center) {
+			Pos pos = ent.GetAttr<Pos>();
+			if (pos.dir == Direction.None || pos.dir == Direction.Center) {
 				return false;
 			}
 			//TODO
 			Schema.Iact.A atk = Schema.Iact.GetA (Schema.Iact.ID.Attack_Punch);
-			Entity dst = ent.world.SearchEntity (ent.c.Step (ent.dir));
+			Entity dst = ent.world.SearchEntity (pos.c.Step (pos.dir));
 			if (dst == null)
 				return false;
 			Act act = new ActIact (atk, dst.id);
@@ -50,7 +52,8 @@ namespace Play.Attrs {
 		}
 
 		public Entity ListDst () {
-			Entity dst = ent.world.SearchEntity (ent.c.Step (ent.dir));
+			Pos pos = ent.GetAttr<Pos>();
+			Entity dst = ent.world.SearchEntity (pos.c.Step (pos.dir));
 			return dst;
 		}
 

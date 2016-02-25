@@ -32,13 +32,17 @@ namespace Play.Acts {
 			this.to = to;
 		}
 		public override bool Can (Entity ent) {
-			return ent.world.CanMoveTo (ent.c.Step (to));
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			if (pos == null)
+				return false;
+			return ent.world.CanMoveTo (pos.c.Step (to));
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActMove act = (ActMove) Act.EntAct (ent);
 				Direction to = act.to;
-				ent.dir = to;
+				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+				pos.dir = to;
 			}
 			int Act.Step.Time (Entity ent) {
 				return 5;
@@ -48,7 +52,8 @@ namespace Play.Acts {
 			void Act.Step.Do (Entity ent) {
 				ActMove act = (ActMove) Act.EntAct (ent);
 				Direction to = act.to;
-				Coord tc = ent.c.Step (to);
+				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+				Coord tc = pos.c.Step (to);
 				World world = ent.world;
 				if (world.CanMoveTo (tc)) {
 					world.MoveEntity (ent, tc);
@@ -76,7 +81,8 @@ namespace Play.Acts {
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActDir act = (ActDir) Act.EntAct (ent);
-				ent.dir = act.to;
+				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+				pos.dir = act.to;
 			}
 			int Act.Step.Time (Entity ent) {
 				return 0;
