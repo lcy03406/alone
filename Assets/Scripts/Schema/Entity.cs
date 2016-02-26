@@ -201,10 +201,12 @@ namespace Schema {
 						ints = {
 							{ Play.Stats.Creature.HitPoint, 10 },
 							{ Play.Stats.Creature.Stamina, 10 },
+							{ Play.Stats.Creature.Damage, 5 },
 						},
 						caps = {
 							{ Play.Stats.Creature.HitPoint, 10 },
 							{ Play.Stats.Creature.Stamina, 10 },
+							{ Play.Stats.Creature.Damage, 5 },
 						}
 					},
 					part: new Play.Attrs.Grow() {
