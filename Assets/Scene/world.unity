@@ -414,8 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 174554, guid: a31a8f5ca2fc6914bbc656eb8522ca72, type: 2}
   tilePrefab: {fileID: 171554, guid: 1ff0018f186730349b2bad46de4c01e1, type: 2}
-  player:
-    dir: 0
+  player: {}
   root: {fileID: 0}
 --- !u!1 &231422104
 GameObject:
@@ -681,6 +680,18 @@ Prefab:
     - target: {fileID: 22418132, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438192, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
+      propertyPath: m_Color.r
+      value: 0.6325692
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438192, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
+      propertyPath: m_Color.g
+      value: 0.9558824
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438192, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
+      propertyPath: m_Color.b
+      value: 0.8220976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
@@ -2788,6 +2799,14 @@ Prefab:
     - target: {fileID: 11469190, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: LeftControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438192, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
+      propertyPath: m_Color.r
+      value: 0.9670386
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438192, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
+      propertyPath: m_Color.b
+      value: 0.8161765
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9398a8a19e453d4ab5f27855b623cdf, type: 2}
