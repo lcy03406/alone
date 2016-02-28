@@ -25,7 +25,7 @@ namespace Schema {
 		}
 
 		[Serializable]
-		public struct A {
+		public class A {
 			public readonly ID id;
 			[NonSerialized]
 			private Data data;

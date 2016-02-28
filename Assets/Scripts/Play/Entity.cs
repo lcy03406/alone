@@ -63,7 +63,14 @@ namespace Play {
 		}
 
 
-		public void Tick(int time) {
+		public void SetWorld (World world) {
+			this.world = world;
+			foreach (Attrib a in attr.Values) {
+				a.OnBorn();
+			}
+		}
+
+		public void Tick (int time) {
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
 			if (actor != null)
 				actor.Tick(time);
@@ -87,6 +94,36 @@ namespace Play {
 				}
 			}
 			return n;
+		}
+
+		public void SetAttr<T>(T a) where T : Attrib {
+			DelAttr<T>();
+			Type cls = a.AttribClass();
+			attr.Add(cls, a);
+			a.ent = this;
+			if (world != null) {
+				a.OnAttach();
+			}
+		}
+
+		public void DelAttr<T>() {
+			Type cls = Attrib.AttribClass(typeof(T));
+			Attrib aa;
+			if (attr.TryGetValue(cls, out aa)) {
+				if (world != null) {
+					aa.OnDetach();
+				}
+				aa.ent = null;
+				attr.Remove(cls);
+			}
+		}
+
+		public T GetAttr<T> () where T : Attrib {
+			Type cls = Attrib.AttribClass(typeof(T));
+			Attrib a;
+			if (!attr.TryGetValue(cls, out a))
+				return null;
+			return a as T;
 		}
 	}
 }

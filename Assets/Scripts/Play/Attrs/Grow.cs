@@ -55,6 +55,14 @@ namespace Play.Attrs {
 			items = new Dictionary<ID, Part>(b.items);
 		}
 
+		public override void OnBorn() {
+			base.OnBorn();
+			int time = ent.world.param.time;
+			foreach (Part part in items.Values) {
+				part.grow_time += time;
+			}
+		}
+
 		public Part Get(ID id) {
 			Part part = null;
 			items.TryGetValue(id, out part);
@@ -68,15 +76,6 @@ namespace Play.Attrs {
 			else if (count > part.cap)
 				count = part.cap;
 			items[id].count = count;
-		}
-
-		public override void SetEntity(Entity ent) {
-			if (this.ent == null && ent != null) {
-				foreach (Part part in items.Values) {
-					part.grow_time += ent.world.param.time;
-				}
-			}
-			base.SetEntity(ent);
 		}
 
 		public void Tick(int time) {

@@ -11,20 +11,25 @@ namespace Play.Attrs {
 			to.start_time = time;
 			ent.SetAttr(to);
 		}
-		public override void SetEntity(Entity ent) {
-			Entity old_ent = this.ent;
-			if (old_ent == null && ent != null) {
-				base.SetEntity(ent);
-				int time = ent.world.param.time;
-				Start(time);
-			} else if (old_ent != null && ent == null) {
-				int time = old_ent.world.param.time;
-				Stop(time);
-				base.SetEntity(ent);
-			} else {
-				Assert.IsTrue(old_ent == ent);
-            }
+
+		public override void OnBorn() {
+			base.OnBorn();
+			int time = ent.world.param.time;
+			Start(time);
 		}
+
+		public override void OnAttach() {
+			base.OnAttach();
+			int time = ent.world.param.time;
+			Start(time);
+		}
+
+		public override void OnDetach() {
+			base.OnDetach();
+			int time = ent.world.param.time;
+			Stop(time);
+		}
+
 		public virtual void Start(int time) { }
 		public virtual void Tick(int time) { }
 		public virtual void Stop(int time) { }

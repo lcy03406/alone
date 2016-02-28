@@ -12,6 +12,7 @@ public class UIGame : MonoBehaviour {
 	public static UISheet sheet;
 	public static UIMenu menu;
 	public static UIInventory inv;
+	public static UIMsg msg;
 
 	void Awake() {
 		ui = this;
@@ -21,6 +22,8 @@ public class UIGame : MonoBehaviour {
 		menu.gameObject.SetActive(false);
 		inv = this.GetComponentInChildren<UIInventory>(true);
 		inv.gameObject.SetActive(false);
+		msg = this.GetComponentInChildren<UIMsg>(true);
+		msg.gameObject.SetActive(false);
 	}
 
 	private static KeyCode[] keys = { KeyCode.Escape, KeyCode.Return, KeyCode.I, KeyCode.M,
@@ -46,10 +49,14 @@ public class UIGame : MonoBehaviour {
 		if (GetCtrl() == null)
 			return;
 		if (key == KeyCode.Escape) {
+			if (msg.isActiveAndEnabled)
+				msg.No();
 			if (menu.isActiveAndEnabled)
 				menu.Close();
 			else if (inv.isActiveAndEnabled)
 				inv.Close();
+		} else if (key == KeyCode.Return && msg.isActiveAndEnabled) {
+			msg.Yes();
 		} else if (key == KeyCode.I) {
 			if (inv.isActiveAndEnabled) {
 				inv.Close();
@@ -94,17 +101,32 @@ public class UIGame : MonoBehaviour {
 		}
 	}
 
+	class MakeMenu {
+		public List<Schema.Iact.A> makes;
+		int idx;
+		public void MenuCall(int idx, string name) {
+			this.idx = idx;
+			Schema.Iact.A make = makes[idx];
+			msg.Open(make.ToString(), MsgCall);
+		}
+		public void MsgCall(bool yes) {
+			Schema.Iact.A make = makes[idx];
+			if (yes) {
+				ui.GetCtrl().CmdIact(make, WUID.None);
+			}
+		}
+		public void Open() {
+			List<string> opts = makes.ConvertAll(make => make.s.name);
+			menu.Open(opts.ToArray(), MenuCall);
+		}
+	}
+	
 	public void Make() {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
-			List<Schema.Iact.A> makes = ctrl.ListMake();
-			if (makes == null)
-				return;
-			List<string> opts = makes.ConvertAll(make => make.s.name);
-			menu.Open(opts.ToArray(), delegate (int idx, string name) {
-				Schema.Iact.A make = makes[idx];
-				ctrl.CmdIact(make, WUID.None);
-			});
+			MakeMenu makeMenu = new MakeMenu();
+			makeMenu.makes = ctrl.ListMake();
+			makeMenu.Open();
 		}
 	}
 	public void Interact() {
@@ -112,8 +134,6 @@ public class UIGame : MonoBehaviour {
 		if (!menu.isActiveAndEnabled) {
 			Play.Entity dst = ctrl.ListDst();
 			List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
-			if (iacts == null)
-				return;
 			List<string> opts = iacts.ConvertAll(iact => iact.s.name);
 			menu.Open(opts.ToArray(), delegate (int idx, string name) {
 				Schema.Iact.A iact = iacts[idx];
@@ -121,6 +141,7 @@ public class UIGame : MonoBehaviour {
 			});
 		}
 	}
+
 	public void Attack() {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {

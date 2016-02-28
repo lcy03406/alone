@@ -19,6 +19,9 @@ namespace Schema {
 			Butcher_Meat,
 			Butcher_Bone,
 			Make_Cross,
+			Make_Knife_Stone,
+			Make_Axe_Stone,
+			Make_Knife_Bone,
 			Build_Campfire,
 		}
 		static public void Init() {
@@ -95,7 +98,7 @@ namespace Schema {
 			Add(ID.Make_Cross, new Iact("make a cross", Play.Iacts.Make(
 				time1: 3,
 				time2: 0,
-				sta: 3, //TODO
+				sta: 3,
 				tools: new Play.ItemSelect[] {
 				},
 				reagents: new Play.ItemSelect[] {
@@ -105,6 +108,68 @@ namespace Schema {
 					new Play.ItemCreate(a: Item.GetA(Item.ID.Cross),
 					q_base: 0,
 					q_from: new int[] {0},
+					q_rand: 1,
+					cap_from: null,
+					count: 1)
+				},
+				build: null
+			)));
+			Add(ID.Make_Knife_Stone, new Iact("make a stone knife", Play.Iacts.Make(
+				time1: 3,
+				time2: 0,
+				sta: 3,
+				tools: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
+				},
+				reagents: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
+				},
+				products: new Play.ItemCreate[] {
+					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
+					q_base: 0,
+					q_from: new int[] {0, 1},
+					q_rand: 1,
+					cap_from: null,
+					count: 1)
+				},
+				build: null
+			)));
+			Add(ID.Make_Axe_Stone, new Iact("make a stone axe", Play.Iacts.Make(
+				time1: 3,
+				time2: 0,
+				sta: 3,
+				tools: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
+				},
+				reagents: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1),
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
+				},
+				products: new Play.ItemCreate[] {
+					new Play.ItemCreate(a: Item.GetA(Item.ID.Axe),
+					q_base: 0,
+					q_from: new int[] {0, 1},
+					q_rand: 1,
+					cap_from: null,
+					count: 1)
+				},
+				build: null
+			)));
+			Add(ID.Make_Knife_Bone, new Iact("make a bone knife", Play.Iacts.Make(
+				time1: 3,
+				time2: 0,
+				sta: 3,
+				tools: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
+				},
+				reagents: new Play.ItemSelect[] {
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Bone), count: 1),
+					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
+				},
+				products: new Play.ItemCreate[] {
+					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
+					q_base: 10,
+					q_from: new int[] {0, 1},
 					q_rand: 1,
 					cap_from: null,
 					count: 1)

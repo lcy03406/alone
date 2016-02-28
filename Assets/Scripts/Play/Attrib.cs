@@ -8,9 +8,11 @@ namespace Play {
 	public abstract class Attrib {
 		[NonSerialized]
 		public Entity ent;
-		public virtual void SetEntity(Entity ent) {
-			this.ent = ent;
-		}
+
+		public virtual void OnBorn() { }
+		public virtual void OnAttach() { }
+		public virtual void OnDetach() { }
+
 		public static Type AttribClass(Type cls) {
 			Assert.IsTrue(cls.IsSubclassOf(typeof(Attrib)));
 			while (true) {
