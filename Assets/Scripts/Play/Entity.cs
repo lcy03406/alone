@@ -16,36 +16,8 @@ namespace Play {
 
 		public void Load() {
 			foreach (Attrib at in attr.Values) {
-				at.SetEntity(this);
+				at.ent = this;
 			}
-		}
-
-		public void SetAttr<T>(T a) where T : Attrib {
-			Type cls = a.AttribClass();
-			Attrib aa;
-			if (attr.TryGetValue(cls, out aa)) {
-				aa.SetEntity(null);
-				attr.Remove(cls);
-			}
-			attr.Add(cls, a);
-			a.SetEntity(this);
-		}
-
-		public void DelAttr<T>() {
-			Type cls = Attrib.AttribClass(typeof(T));
-			Attrib aa;
-			if (attr.TryGetValue(cls, out aa)) {
-				aa.SetEntity(null);
-				attr.Remove(cls);
-			}
-		}
-
-		public T GetAttr<T>() where T : Attrib {
-			Type cls = Attrib.AttribClass(typeof(T));
-			Attrib a;
-			if (!attr.TryGetValue(cls, out a))
-				return null;
-			return a as T;
 		}
 
 		public static Entity Create(Ctx ctx, Schema.Entity.A a) {

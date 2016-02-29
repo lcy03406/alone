@@ -55,10 +55,10 @@ namespace Play.Attrs {
 				return null;
             List<Schema.Iact.A> list = new List<Schema.Iact.A>();
 			foreach (Schema.Iact.A iact in ss.make) {
-				Ctx ctx = new Ctx(ent.world, ent, null);
-				if (iact.s.i.Can(ctx)) {
+				//Ctx ctx = new Ctx(ent.world, ent, null);
+				//if (iact.s.i.Can(ctx)) {
 					list.Add(iact);
-				}
+				//}
 			}
 			return list;
 		}

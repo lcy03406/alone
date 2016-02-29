@@ -20,15 +20,15 @@ namespace Schema {
 			Armor,
 		}
 		static public void Init () {
-			Add(ID.Stone, new Item(SpriteID.b_stone, "Stone"));
-			Add(ID.Branch, new Item(SpriteID.b_tree_pine_winter, "Branch"));
-			Add(ID.OakNut, new Item(SpriteID.b_tree_oak_winter, "Oak Nut"));
-			Add(ID.Meat, new Item(SpriteID.b_stone, "Meat"));
-			Add(ID.Bone, new Item(SpriteID.b_stone, "Bone"));
-			Add(ID.Cross, new Item(SpriteID.d_gauntlets, "Cross"));
-			Add(ID.Knife, new Item(SpriteID.d_pick, "Knife"));
-			Add(ID.Axe, new Item(SpriteID.d_pick, "Axe"));
-			Add(ID.Armor, new Item(SpriteID.d_armor, "Armor"));
+			Add(ID.Stone, new Item(SpriteID.b_stone, "stone"));
+			Add(ID.Branch, new Item(SpriteID.b_tree_pine_winter, "branch"));
+			Add(ID.OakNut, new Item(SpriteID.b_tree_oak_winter, "oak nut"));
+			Add(ID.Meat, new Item(SpriteID.b_stone, "meat"));
+			Add(ID.Bone, new Item(SpriteID.b_stone, "bone"));
+			Add(ID.Cross, new Item(SpriteID.d_gauntlets, "cross"));
+			Add(ID.Knife, new Item(SpriteID.d_pick, "knife"));
+			Add(ID.Axe, new Item(SpriteID.d_pick, "axe"));
+			Add(ID.Armor, new Item(SpriteID.d_armor, "armor"));
 		}
 	}
 }

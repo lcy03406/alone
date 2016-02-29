@@ -19,6 +19,15 @@ namespace Play {
 			this.a = a;
 			this.count = count;
 		}
+		public override string ToString() {
+			return Display();
+		}
+		public string Display() {
+			if (count == 0)
+				return a.s.name;
+			else
+				return a.s.name + " x" + count;
+		}
 		public bool Select(Item item) {
 			return item.a == a;
 		}
@@ -37,6 +46,15 @@ namespace Play {
 			this.q_rand = q_rand;
 			this.cap_from = cap_from;
 			this.count = count;
+		}
+		public override string ToString() {
+			return Display();
+		}
+		public string Display() {
+			if (count == 0)
+				return a.s.name;
+			else
+				return a.s.name + " x" + count;
 		}
 		public List<Item> Create(Ctx ctx) {
 			List<Item> to = new List<Item>();

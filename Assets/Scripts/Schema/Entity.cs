@@ -173,6 +173,9 @@ namespace Schema {
 				new Stage (
 					make: new Iact.A[] {
 						Iact.GetA(Iact.ID.Make_Cross),
+						Iact.GetA(Iact.ID.Make_Knife_Stone),
+						Iact.GetA(Iact.ID.Make_Axe_Stone),
+						Iact.GetA(Iact.ID.Make_Knife_Bone),
 						Iact.GetA(Iact.ID.Build_Campfire),
 					},
 					iact: null,

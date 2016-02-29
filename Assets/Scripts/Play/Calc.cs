@@ -39,9 +39,14 @@ namespace Play {
         }
 	}
 
-	public interface Calc<T> {
-		bool Can(Ctx ctx);
-		T Get(Ctx ctx);
+	public abstract class Calc<T> {
+		public abstract string Display();
+		public abstract bool Can(Ctx ctx);
+		public abstract T Get(Ctx ctx);
+
+		public override string ToString() {
+			return Display();
+		}
 	}
 }
 
@@ -51,70 +56,59 @@ namespace Play.Calcs {
 		public Const(T t) {
 			this.t = t;
 		}
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return t.ToString();
+		}
+		public override bool Can(Ctx ctx) {
 			return true;
 		}
-		public T Get(Ctx ctx) {
+		public override T Get(Ctx ctx) {
 			return t;
 		}
 	}
-
-/*	public class Rand<T> : Calc<T> {
-		public Dictionary<Calc<T>, int> choices;
-		public Rand(Dictionary<Calc<T>, int> choices) {
-			this.choices = choices;
-		}
-		public bool Can(Ctx ctx) {
-			foreach (Calc<T> key in choices.Keys) {
-				if (!key.Can(ctx)) {
-					return false;
-				}
-			}
-            return true;
-		}
-		public T Get(Ctx ctx) {
-			int total = 0;
-			foreach (int value in choices.Values) {
-				total += value;
-			}
-			int rand = ctx.world.rand.Next(0, total);
-			foreach (KeyValuePair<Calc<T>, int> pair in choices) {
-				rand -= pair.Value;
-				if (rand < 0)
-					return pair.Key.Get(ctx);
-			}
-			Assert.IsTrue(false);
-			return default(T);
-		}
-	}*/
 
 	public class RandConst<T> : Calc<T> {
 		public List<Choice<T>> choices;
         public RandConst(List<Choice<T>> choices) {
 			this.choices = choices;
 		}
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			string disp = "any of { ";
+			foreach (Choice<T> choice in choices) {
+				disp += choice.value;
+				disp += ", ";
+			}
+			disp += "}";
+			return disp;
+		}
+		public override bool Can(Ctx ctx) {
 			return true;
 		}
-		public T Get(Ctx ctx) {
+		public override T Get(Ctx ctx) {
 			return Choice<T>.Choose(choices);
 		}
 	}
 
 	public class Src : Calc<Entity> {
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return "yourself";
+		}
+        public override bool Can(Ctx ctx) {
 			return true;
 		}
-		public Entity Get(Ctx ctx) {
+		public override Entity Get(Ctx ctx) {
 			return ctx.src;
 		}
 	}
 
 	public class Dst : Calc<Entity> {
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return "the target";
+		}
+		public override bool Can(Ctx ctx) {
 			return true;
 		}
-		public Entity Get(Ctx ctx) {
+		public override Entity Get(Ctx ctx) {
 			return ctx.dst;
 		}
 	}
@@ -127,7 +121,10 @@ namespace Play.Calcs {
 			this.id = id;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return id.ToString() + " of " + c_ent.Display();
+		}
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -137,7 +134,7 @@ namespace Play.Calcs {
 			return true;
 		}
 
-		public int Get(Ctx ctx) {
+		public override int Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			return stat.Get(id);
@@ -152,7 +149,10 @@ namespace Play.Calcs {
 			this.id = id;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return id.ToString() + " of " + c_ent.Display();
+		}
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -165,7 +165,7 @@ namespace Play.Calcs {
 			return true;
 		}
 
-		public ItemCreate Get(Ctx ctx) {
+		public override ItemCreate Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Grow grow = ent.GetAttr<Grow>();
 			ItemCreate cre = grow.Get(id).GetItem();
@@ -182,11 +182,13 @@ namespace Play.Calcs {
 			c_count = count;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_cre.Display() + " x " + c_count.Display();
+		}
+		public override bool Can(Ctx ctx) {
 			return c_cre.Can(ctx) && c_count.Can(ctx);
 		}
-
-		public ItemCreate Get(Ctx ctx) {
+		public override ItemCreate Get(Ctx ctx) {
 			ItemCreate cre = c_cre.Get(ctx);
 			cre.count = c_count.Get(ctx);
 			return cre;

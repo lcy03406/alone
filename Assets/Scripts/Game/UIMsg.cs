@@ -1,24 +1,33 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 
 public class UIMsg : MonoBehaviour {
 
-	Text text;
-	Button left;
-	Button right;
+	public Text text;
+	public Button left;
+	public Button right;
 
 	UnityAction<bool> action;
 
 	void Start() {
-		text = transform.FindChild("Text").GetComponent<Text>();
-		left = transform.FindChild("ButtonLeft").GetComponent<Button>();
-		right = transform.FindChild("ButtonRight").GetComponent<Button>();
+		//text = transform.FindChild("Text").GetComponent<Text>();
+		//left = transform.FindChild("ButtonLeft").GetComponent<Button>();
+		//right = transform.FindChild("ButtonRight").GetComponent<Button>();
 	}
 
-	public void Open(string text, UnityAction<bool> action) {
+	public enum Style {
+		Ok = 1,
+		Cancel = 2,
+		OkCancel = 3,
+	}
+
+	public void Open(string text, Style style, UnityAction<bool> action) {
 		this.text.text = text;
 		this.action = action;
+		left.gameObject.SetActive((style & Style.Cancel) != 0);
+		right.gameObject.SetActive((style & Style.Ok) != 0);
 		gameObject.SetActive(true);
 		left.onClick.AddListener(No);
 		right.onClick.AddListener(Yes);

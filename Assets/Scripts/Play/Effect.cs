@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using Play.Attrs;
 
 namespace Play {
-	public interface Effect {
-		bool Can(Ctx ctx);
-		void Do(Ctx ctx);
+	public abstract class Effect {
+		public abstract string Display();
+		public abstract bool Can(Ctx ctx);
+		public abstract void Do(Ctx ctx);
+
+		public override string ToString() {
+			return Display();
+		}
 	}
 }
 
@@ -16,7 +21,14 @@ namespace Play.Eff {
 		public Multi(Effect[] eff) {
 			this.eff = eff;
 		}
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			string disp = "";
+			foreach (Effect ef in eff) {
+				disp += ef.Display();
+			}
+			return disp;
+		}
+		public override bool Can(Ctx ctx) {
 			foreach (Effect ef in eff) {
 				if (!ef.Can(ctx))
 					return false;
@@ -24,7 +36,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 			foreach (Effect ef in eff) {
 				ef.Do(ctx);
 			}
@@ -42,7 +54,14 @@ namespace Play.Eff {
 			this.c_value = value;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "increase " + id.ToString()
+				+ " by " + c_value.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -54,7 +73,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			int value = c_value.Get(ctx);
@@ -73,7 +92,14 @@ namespace Play.Eff {
 			this.c_value = value;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "decrease " + id.ToString()
+				+ " by " + c_value.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -88,7 +114,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
 			int value = c_value.Get(ctx);
@@ -109,7 +135,14 @@ namespace Play.Eff {
 			this.c_value = value;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "consume " + id.ToString()
+				+ " by " + c_value.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -127,7 +160,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Grow grow = ent.GetAttr<Grow>();
 			Grow.Part part = grow.Get(id);
@@ -147,7 +180,13 @@ namespace Play.Eff {
 			c_sel = sel;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "use " + c_sel.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -164,7 +203,7 @@ namespace Play.Eff {
 			invx.use.AddRange(to);
 			return true;
 		}
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 		}
 	}
 
@@ -177,7 +216,13 @@ namespace Play.Eff {
 			c_sel = sel;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "consume " + c_sel.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -195,7 +240,7 @@ namespace Play.Eff {
 			invx.del.AddRange(to);
 			return true;
 		}
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 		}
 	}
 
@@ -208,7 +253,13 @@ namespace Play.Eff {
 			c_cre = cre;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return c_ent.Display() + ": "
+				+ "make " + c_cre.Display()
+				+ ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
@@ -223,7 +274,7 @@ namespace Play.Eff {
 				return false;
 			return true;
 		}
-		public void Do(Ctx ctx) {
+		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
 			Inv inv = ent.GetAttr<Inv>();
 			ItemCreate cre = c_cre.Get(ctx);
@@ -239,7 +290,11 @@ namespace Play.Eff {
 			c_cre = cre;
 		}
 
-		public bool Can(Ctx ctx) {
+		public override string Display() {
+			return "build " + c_cre.Display() + ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
 			Pos pos = ctx.src.GetAttr<Pos>();
 			if (pos == null)
 				return false;
@@ -250,7 +305,8 @@ namespace Play.Eff {
 				return false;
 			return true;
 		}
-		public void Do(Ctx ctx) {
+
+		public override void Do(Ctx ctx) {
 			Pos pos = ctx.src.GetAttr<Pos>();
 			//TODO
 			Coord c = pos.c.Step(pos.dir);
@@ -258,28 +314,6 @@ namespace Play.Eff {
 			Entity e = cre.Create(ctx);
 			pos.c = c;
 			ctx.world.AddEntity(e);
-		}
-	}
-
-	public class UseStage : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly Type t_stage;
-
-		public UseStage(Calc<Entity> ent, Type stage) {
-			this.c_ent = ent;
-			this.t_stage = stage;
-		}
-
-		public bool Can(Ctx ctx) {
-			Entity ent = c_ent.Get(ctx);
-			if (ent == null)
-				return false;
-			Stage stage = ent.GetAttr<Stage>();
-			if (stage == null || stage.GetType() != t_stage)
-				return false;
-			return true;
-		}
-		public void Do(Ctx ctx) {
 		}
 	}
 }

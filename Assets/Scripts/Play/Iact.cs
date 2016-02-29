@@ -15,6 +15,12 @@ namespace Play {
 			this.distance = distance;
 			this.ef = new Eff.Multi(eff);
 		}
+		public override string ToString() {
+			return Display();
+		}
+		public string Display() {
+			return ef.Display();
+		}
 		public bool Can (Ctx ctx) {
 			if (has_dst) {
 				if (ctx.dst == null)
@@ -101,9 +107,6 @@ namespace Play {
 			Schema.PartID part, int count)
 		{
 			Effect[] eff = new Effect[] {
-				new Eff.UseStage(ent: new Calcs.Dst(),
-					stage: typeof(Attrs.Stages.Creature.Dead)
-				),
 				new Eff.UseItem(ent: new Calcs.Src(),
 					sel: new Calcs.Const<ItemSelect>(
 						new ItemSelect(
