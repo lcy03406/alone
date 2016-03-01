@@ -35,7 +35,7 @@ namespace Play.Acts {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			if (pos == null)
 				return false;
-			return ent.world.CanMoveTo (pos.c.Step (to));
+			return ent.layer.CanMoveTo (pos.c.Step (to));
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
@@ -54,9 +54,9 @@ namespace Play.Acts {
 				Direction to = act.to;
 				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 				Coord tc = pos.c.Step (to);
-				World world = ent.world;
-				if (world.CanMoveTo (tc)) {
-					world.MoveEntity (ent, tc);
+				Layer layer = ent.layer;
+				if (layer.CanMoveTo (tc)) {
+					layer.MoveEntity (ent, tc);
 				}
 			}
 			int Act.Step.Time (Entity ent) {
@@ -103,8 +103,8 @@ namespace Play.Acts {
 			this.dst = dst;
 		}
 		public override bool Can (Entity ent) {
-			Entity ent_dst = ent.world.FindEntity(dst);
-            Ctx ctx = new Ctx(ent.world, ent, ent_dst);
+			Entity ent_dst = ent.layer.FindEntity(dst);
+            Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
 			return a.Can (ctx);
 		}
 		private class Step1 : Act.Step {
@@ -118,8 +118,8 @@ namespace Play.Acts {
 		private class Step2 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActIact act = (ActIact) Act.EntAct (ent);
-				Entity ent_dst = ent.world.FindEntity(act.dst);
-				Ctx ctx = new Ctx(ent.world, ent, ent_dst);
+				Entity ent_dst = ent.layer.FindEntity(act.dst);
+				Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
 				act.a.Do (ctx);
 			}
 			int Act.Step.Time (Entity ent) {

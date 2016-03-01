@@ -69,7 +69,7 @@ namespace Play.Attrs {
 				return null;
 			List<Schema.Iact.A> list = new List<Schema.Iact.A>();
 			foreach (Schema.Iact.A a in ss.iact) {
-				Ctx ctx = new Ctx(src.world, src, ent);
+				Ctx ctx = new Ctx(src.layer, src, ent);
 				if (a.Can(ctx)) {
 					list.Add(a);
 				}

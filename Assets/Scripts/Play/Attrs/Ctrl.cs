@@ -37,7 +37,7 @@ namespace Play.Attrs {
 			}
 			//TODO
 			Schema.Iact.A atk = Schema.Iact.GetA (Schema.Iact.ID.Attack_Punch);
-			Entity dst = ent.world.SearchEntity (pos.c.Step (pos.dir));
+			Entity dst = ent.layer.SearchEntity (pos.c.Step (pos.dir));
 			if (dst == null)
 				return false;
 			Act act = new ActIact (atk, dst.id);
@@ -53,7 +53,7 @@ namespace Play.Attrs {
 
 		public Entity ListDst () {
 			Pos pos = ent.GetAttr<Pos>();
-			Entity dst = ent.world.SearchEntity (pos.c.Step (pos.dir));
+			Entity dst = ent.layer.SearchEntity (pos.c.Step (pos.dir));
 			return dst;
 		}
 

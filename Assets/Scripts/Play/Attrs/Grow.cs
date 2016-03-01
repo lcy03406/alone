@@ -57,7 +57,7 @@ namespace Play.Attrs {
 
 		public override void OnBorn() {
 			base.OnBorn();
-			int time = ent.world.param.time;
+			int time = ent.layer.world.param.time;
 			foreach (Part part in items.Values) {
 				part.grow_time += time;
 			}

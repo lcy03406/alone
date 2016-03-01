@@ -19,7 +19,7 @@ public class GameEntity : MonoBehaviour {
 		//if (update_time >= cur_time)
 		//	return;
 		update_time = cur_time;
-		Debug.Assert (ent.world != null);
+		Debug.Assert (ent.layer != null);
 		transform.localPosition = Game.game.Pos (pos.c);
 		Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)pos.dir);
 		transform.FindChild ("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA (dirs).s.sprite;

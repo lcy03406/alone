@@ -13,7 +13,7 @@ namespace Play {
 			public List<Entity> entities = new List<Entity> ();
 		}
 
-		public World world;
+		public Layer layer;
 
 		public Coord c;
 
@@ -21,8 +21,8 @@ namespace Play {
 
 		public List<Entity> entities = new List<Entity> ();
 
-		public Grid(World w, Coord c) {
-			this.world = w;
+		public Grid(Layer layer, Coord c) {
+			this.layer = layer;
 			this.c = c;
 		}
 
@@ -30,9 +30,9 @@ namespace Play {
 			this.d = d;
 			foreach (Entity e in d.entities) {
 				Assert.AreEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
-				e.world = world;
+				e.layer = layer;
 				e.Load();
-				world.AddEntity (e);
+				layer.AddEntity (e);
 			}
 			d.entities.Clear ();
 		}
@@ -49,7 +49,7 @@ namespace Play {
 		public void Unload () {
 			List<Entity> unload = new List<Entity>(entities);
 			foreach (Entity e in unload) {
-				world.DelEntity (e);
+				layer.DelEntity (e);
 			}
 		}
 

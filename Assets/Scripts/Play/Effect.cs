@@ -299,7 +299,7 @@ namespace Play.Eff {
 			if (pos == null)
 				return false;
 			Coord c = pos.c.Step(pos.dir);
-			if (ctx.world.SearchEntity(c) != null)
+			if (ctx.layer.SearchEntity(c) != null)
 				return false;
 			if (!c_cre.Can(ctx))
 				return false;
@@ -313,7 +313,7 @@ namespace Play.Eff {
 			EntityCreate cre = c_cre.Get(ctx);
 			Entity e = cre.Create(ctx);
 			pos.c = c;
-			ctx.world.AddEntity(e);
+			ctx.layer.AddEntity(e);
 		}
 	}
 }

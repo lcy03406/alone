@@ -10,7 +10,7 @@ namespace Play {
 		Dictionary<Type, Attrib> attr = new Dictionary<Type, Attrib>();
 
 		[NonSerialized]
-		public World world;
+		public Layer layer;
 		[NonSerialized]
 		public bool isPlayer = false;
 
@@ -22,8 +22,8 @@ namespace Play {
 
 		public static Entity Create(Ctx ctx, Schema.Entity.A a) {
 			Entity ent = new Entity();
-			ent.id = ctx.world.NextWUID();
-			ent.world = ctx.world;
+			ent.id = ctx.layer.world.NextWUID();
+			ent.layer = ctx.layer;
 			Attrs.Pos pos = new Attrs.Pos();
 			pos.dir = Direction.None;
 			ent.SetAttr(pos);
@@ -32,14 +32,6 @@ namespace Play {
 			if (attr != null)
 				attr.Create(ctx, ent);
 			return ent;
-		}
-
-
-		public void SetWorld (World world) {
-			this.world = world;
-			foreach (Attrib a in attr.Values) {
-				a.OnBorn();
-			}
 		}
 
 		public void Tick (int time) {
@@ -73,7 +65,7 @@ namespace Play {
 			Type cls = a.AttribClass();
 			attr.Add(cls, a);
 			a.ent = this;
-			if (world != null) {
+			if (layer != null) {
 				a.OnAttach();
 			}
 		}
@@ -82,7 +74,7 @@ namespace Play {
 			Type cls = Attrib.AttribClass(typeof(T));
 			Attrib aa;
 			if (attr.TryGetValue(cls, out aa)) {
-				if (world != null) {
+				if (layer != null) {
 					aa.OnDetach();
 				}
 				aa.ent = null;

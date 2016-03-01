@@ -10,15 +10,15 @@ namespace Play {
 			public List<Item> use = new List<Item>();
 			public List<Item> del = new List<Item>();
 		}
-		public World world = null;
+		public Layer layer = null;
 		public Entity src = null;
 		public Entity dst = null;
 		public List<Entity> use_ent = new List<Entity>();
 		public Dictionary<Inv, Invx> invs = new Dictionary<Inv, Invx>();
 		public List<List<Item>> items = new List<List<Item>>();
 
-		public Ctx(World world, Entity src, Entity dst) {
-			this.world = world;
+		public Ctx(Layer layer, Entity src, Entity dst) {
+			this.layer = layer;
 			this.src = src;
 			this.dst = dst;
 		}

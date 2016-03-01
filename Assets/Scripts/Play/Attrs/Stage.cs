@@ -14,19 +14,19 @@ namespace Play.Attrs {
 
 		public override void OnBorn() {
 			base.OnBorn();
-			int time = ent.world.param.time;
+			int time = ent.layer.world.param.time;
 			Start(time);
 		}
 
 		public override void OnAttach() {
 			base.OnAttach();
-			int time = ent.world.param.time;
+			int time = ent.layer.world.param.time;
 			Start(time);
 		}
 
 		public override void OnDetach() {
 			base.OnDetach();
-			int time = ent.world.param.time;
+			int time = ent.layer.world.param.time;
 			Stop(time);
 		}
 
