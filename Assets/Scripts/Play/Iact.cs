@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 
 namespace Play {
-	public class Iact {
-		Schema.Iact.A a;
-		public Iact(Schema.Iact.A a) {
-			this.a = a;
+	public static class Iact {
+		public static string Display(this Schema.Iact iact) {
+			return iact.ef.Display();
 		}
-		public override string ToString() {
-			return Display();
+		public static string Display(this Schema.Iact.A a) {
+			return a.s.Display();
 		}
-		public string Display() {
-			return a.s.ef.Display();
-		}
-		public bool Can (Ctx ctx) {
+		public static bool Can (this Schema.Iact.A a, Ctx ctx) {
 			if (a.s.has_dst) {
 				if (ctx.dst == null)
 					return false;
@@ -28,8 +24,8 @@ namespace Play {
 			}
 			return a.s.ef.Can(ctx);
 		}
-		public void Do (Ctx ctx) {
-			if (Can(ctx)) {
+		public static void Do (this Schema.Iact.A a, Ctx ctx) {
+			if (a.Can(ctx)) {
 				a.s.ef.Do(ctx);
 				ctx.Do();
 			}

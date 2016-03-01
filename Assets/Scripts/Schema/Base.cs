@@ -38,10 +38,16 @@ namespace Schema {
 					return data;
 				}
 			}
+
 			public A (ID id) {
 				this.id = id;
 				this.data = null;
 			}
+
+			public override string ToString() {
+				return s.ToString();
+			}
+
 			public override bool Equals(object obj) {
 				if (obj == null)
 					return false;

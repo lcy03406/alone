@@ -108,9 +108,8 @@ public class UIGame : MonoBehaviour {
 			this.idx = idx;
 			Schema.Iact.A make = makes[idx];
 			Ctx ctx = new Ctx(Game.game.player.world, Game.game.player, null);
-			Iact iact = new Iact(make);
-			UIMsg.Style st = iact.Can(ctx) ? UIMsg.Style.OkCancel : UIMsg.Style.Cancel;
-			msg.Open(iact.Display(), st, MsgCall);
+			UIMsg.Style st = make.Can(ctx) ? UIMsg.Style.OkCancel : UIMsg.Style.Cancel;
+			msg.Open(make.Display(), st, MsgCall);
 		}
 		public void MsgCall(bool yes) {
 			Schema.Iact.A make = makes[idx];

@@ -11,6 +11,10 @@ namespace Schema {
 		public readonly int distance;
 		public readonly Play.Effect ef;
 
+		public override string ToString() {
+			return Play.Iact.Display(this);
+		}
+
 		private Iact(string name, int time1, int time2, bool has_dst, int distance, Play.Effect[] eff) {
 			this.name = name;
 			this.time1 = time1;
