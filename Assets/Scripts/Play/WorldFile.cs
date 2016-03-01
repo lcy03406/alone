@@ -96,13 +96,13 @@ namespace Play {
 			}
 		}
 
-		public Grid.Data LoadGrid (Coord g) {
-			string name = "grid_" + g;
+		public Grid.Data LoadGrid(int l, Coord g) {
+			string name = "layer_" + l + "_grid_" + g;
 			return LoadSome<Grid.Data> (name);
 		}
 
-		public void SaveGrid (Coord g, Grid grid) {
-			string name = "grid_" + g;
+		public void SaveGrid (int l, Coord g, Grid grid) {
+			string name = "layer_" + l + "_grid_" + g;
 			SaveSome (name, grid.Save ());
 		}
 

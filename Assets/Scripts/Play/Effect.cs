@@ -42,6 +42,37 @@ namespace Play.Eff {
 			}
 		}
 	}
+	public class GoLayer : Effect {
+		public readonly Calc<Entity> c_ent;
+		public readonly int to;
+
+		public GoLayer(Calc<Entity> ent, int to) {
+			c_ent = ent;
+			this.to = to;
+		}
+
+		public override bool Can(Ctx ctx) {
+			return true;
+		}
+
+		public override string Display() {
+			string disp = c_ent.Display() + ": ";
+			if (to == 1)
+				disp += "go up";
+			else if (to == -1)
+				disp += "go down";
+			else if (to > 1)
+				disp += "go " + to + " layers up";
+			else if (to < -1)
+				disp += "go " + -to + " layers down";
+			return disp + ".\n";
+		}
+
+		public override void Do(Ctx ctx) {
+			throw new NotImplementedException();
+		}
+	}
+
 
 	public class IncStat<StatID> : Effect where StatID : struct {
 		public readonly Calc<Entity> c_ent;

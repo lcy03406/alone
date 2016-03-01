@@ -6,11 +6,10 @@ using UnityEngine.Assertions;
 namespace Play {
 	public class World {
 		public interface View {
-			void OnLoadGrid (Coord g, Grid grid);
-			void OnUnloadGrid (Coord g);
-			void OnLoadPlayer (Entity player);
-			void OnAddEntity (Entity ent);
-			void OnDelEntity (Entity ent);
+			void OnLoadGrid(Coord g, Grid grid);
+			void OnUnloadGrid(Coord g);
+			void OnAddEntity(Entity ent);
+			void OnDelEntity(Entity ent);
 		}
 		public const int GRID_SIZE = 32; //must be power of 2
 		public const int GRID_MASK = GRID_SIZE - 1;
@@ -29,77 +28,86 @@ namespace Play {
 			public WUID maxid;
 			public int time;
 			public int layer;
-			public List<int> layers = new List<int>();
 		};
 		public Param param;
 
-		public void SetView (View view) {
+		public void SetView(View view) {
 			this.view = view;
 		}
 
-		public void LoadWorld (string path, string name) {
-			Schema.All.Init ();
-			rand = new Random ();
-			layers.Clear ();
-			file = new WorldFile ();
-			file.LoadWorld (path, name);
-			param = file.LoadParam ();
+		public void LoadWorld(string path, string name) {
+			Schema.All.Init();
+			rand = new Random();
+			layers.Clear();
+			file = new WorldFile();
+			file.LoadWorld(path, name);
+			param = file.LoadParam();
 			if (param == null) {
 				param = new Param();
-				param.layers.Add(0);
 			}
-			foreach (int ld in param.layers) {
-				Layer l = new Layer();
-				l.world = this;
-				layers.Add(ld, l);
-			}
-			Layer layer = layers[param.layer];
-			Entity e = file.LoadPlayer ();
+			Layer layer = new Layer();
+			layer.world = this;
+			layer.id = param.layer;
+			layers.Add(param.layer, layer);
+			Entity e = file.LoadPlayer();
 			if (e == null) {
 				Ctx ctx = new Ctx(layer, null, null);
-                Schema.Entity.A human = Schema.Entity.GetA (Schema.Entity.ID.Human);
+				Schema.Entity.A human = Schema.Entity.GetA(Schema.Entity.ID.Human);
 				e = Entity.Create(ctx, human);
-				e.SetAttr (new Attrs.Ctrl ());
+				e.SetAttr(new Attrs.Ctrl());
 			}
 			Attrs.Pos pos = e.GetAttr<Attrs.Pos>();
 			e.layer = layer;
 			e.isPlayer = true;
 			e.Load();
 			player = e;
-			view.OnLoadPlayer (player);
-			layer.Anchor (pos.c);
+			layer.AddEntity(e);
 		}
 
-		public void SaveWorld () {
-			file.SaveParam (param);
-			file.SavePlayer (player);
+		public void SaveWorld() {
+			file.SaveParam(param);
+			file.SavePlayer(player);
 			foreach (KeyValuePair<int, Layer> pair in layers) {
 				pair.Value.Save();
 			}
-			file.SaveWorld ();
+			file.SaveWorld();
 		}
 
-		public WUID NextWUID () {
-			param.maxid = param.maxid.Next ();
+		public WUID NextWUID() {
+			param.maxid = param.maxid.Next();
 			return param.maxid;
 		}
 
-		public void Update () {
-			player.Tick (param.time);
-			if (param.time < player.NextTick ()) {
+		public void Update() {
+			player.Tick(param.time);
+			if (param.time < player.NextTick()) {
 				param.time++;
-				player.Tick (param.time);
+				player.Tick(param.time);
 				int i = 0;
 				while (i < layers.Count) {
 					int id = layers.Keys[i];
 					Layer layer = layers.Values[i];
-					layer.Tick (param.time);
+					layer.Tick(param.time);
 					while (i < layers.Count && layers.Keys[i] < id) {
 						i++;
 					}
 					i++;
 				}
 			}
+		}
+
+		public void GoLayer(Entity ent, int to) {
+			int toid = param.layer + to;
+			Layer tolayer;
+			if (!layers.TryGetValue(toid, out tolayer)) {
+				tolayer = new Layer();
+				tolayer.world = this;
+				tolayer.id = toid;
+			}
+			Layer fromlayer = ent.layer;
+			fromlayer.MoveOut(ent);
+			ent.layer = tolayer;
+			tolayer.MoveIn(ent);
 		}
 	}
 }

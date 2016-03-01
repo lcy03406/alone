@@ -12,14 +12,14 @@ namespace Play {
 		const int UNLOAD_SIZE = 20; //
 
 		public World world;
+		public int id;
 
-		public Random rand;
 		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
 		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
 
 		public void Save () {
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
-				world.file.SaveGrid (pair.Key, pair.Value);
+				world.file.SaveGrid (id, pair.Key, pair.Value);
 			}
 		}
 
@@ -41,12 +41,12 @@ namespace Play {
 		Grid LoadGrid (Coord g) {
 			Grid grid = new Grid (this, g);
 			grids.Add (g, grid);
-			Grid.Data d = world.file.LoadGrid (g);
+			Grid.Data d = world.file.LoadGrid (id, g);
 			if (d == null) {
 				d = CreateGrid (g);
 			}
 			grid.Load(d);
-			if (world.view != null) {
+			if (world.view != null && world.param.layer == id) {
 				world.view.OnLoadGrid (g, grid);
 			}
 			return grid;
@@ -59,7 +59,7 @@ namespace Play {
 			return grid;
 		}
 
-		public void Anchor (Coord anchor) {
+		void Anchor (Coord anchor) {
 			Rect loadr = anchor.Area (LOAD_RADIUS).Grid ();
 			for (int gx = loadr.bl.x; gx <= loadr.tr.x; gx += GRID_SIZE) {
 				for (int gy = loadr.bl.y; gy <= loadr.tr.y; gy += GRID_SIZE) {
@@ -76,9 +76,9 @@ namespace Play {
 					if (!pair.Key.In (saver)) {
 						Coord g = pair.Key;
 						Grid grid = pair.Value;
-						world.file.SaveGrid (g, grid);
+						world.file.SaveGrid (id, g, grid);
 						grid.Unload ();
-						if (world.view != null) {
+						if (world.view != null && world.param.layer == id) {
 							world.view.OnUnloadGrid (g);
 						}
 						del.Add (g);
@@ -87,7 +87,23 @@ namespace Play {
 				foreach (Coord g in del) {
 					grids.Remove (g); ;
 				}
+			}
+		}
 
+		void UnloadAllGrids() {
+			List<Coord> del = new List<Coord>();
+			foreach (KeyValuePair<Coord, Grid> pair in grids) {
+				Coord g = pair.Key;
+				Grid grid = pair.Value;
+				world.file.SaveGrid(id, g, grid);
+				grid.Unload();
+				if (world.view != null && world.param.layer == id) {
+					world.view.OnUnloadGrid(g);
+				}
+				del.Add(g);
+			}
+			foreach (Coord g in del) {
+				grids.Remove(g); ;
 			}
 		}
 
@@ -101,27 +117,43 @@ namespace Play {
 
 		public void AddEntity (Entity ent) {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-			entities.Add (ent.id, ent);
-			Coord to = pos.c.Grid();
-			Grid tg = FindGrid(to);
-			tg.MoveIn(ent);
+			if (ent.isPlayer) {
+				Anchor(pos.c);
+			} else {
+				entities.Add(ent.id, ent);
+				Coord to = pos.c.Grid();
+				Grid tg = FindGrid(to);
+				tg.MoveIn(ent);
+			}
 			ent.layer = this;
-			if (world.view != null) {
+			if (world.view != null && world.param.layer == id) {
 				world.view.OnAddEntity (ent);
 			}
 		}
 
 		public void DelEntity (Entity ent) {
-			if (world.view != null) {
+			if (world.view != null && world.param.layer == id) {
 				world.view.OnDelEntity (ent);
 			}
-			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			Assert.AreEqual (ent.layer, this);
+			if (ent.isPlayer) {
+				UnloadAllGrids();
+			} else {
+				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+				Coord from = pos.c.Grid();
+				Grid fg = FindGrid(from);
+				fg.MoveOut(ent);
+				entities.Remove(ent.id);
+			}
 			ent.layer = null;
-			Coord from = pos.c.Grid();
-			Grid fg = FindGrid(from);
-			fg.MoveOut(ent);
-			entities.Remove (ent.id);
+		}
+
+		public void MoveOut(Entity ent) {
+			AddEntity(ent);
+		}
+
+		public void MoveIn(Entity ent) {
+			DelEntity(ent);
 		}
 
 		public void MoveEntity (Entity ent, Coord to) {

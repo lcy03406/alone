@@ -73,40 +73,49 @@ public class Game : MonoBehaviour, World.View {
 		}
 	}
 
-	void World.View.OnLoadPlayer (Entity wp) {
-		player = wp;
-		GameObject go = Instantiate(playerPrefab);
-		go.name = "GameEntity_" + player.id;
-		GameObject.Find ("Main Camera").transform.SetParent (go.transform);
-		GameEntity ge = go.GetComponent<GameEntity> ();
-		ge.Init (this, wp);
-	}
-
 	void World.View.OnAddEntity (Entity ent) {
-		ulong g = ent.id.value / 1024;
-		string gname = "GameEntityGroup_" + g;
-		GameObject go = GameObject.Find (gname);
-		if (go == null) {
-			go = new GameObject (gname);
-			go.transform.SetParent (root);
+		if (ent.isPlayer) {
+			player = ent;
+			GameObject go = Instantiate(playerPrefab);
+			go.name = "GameEntity_" + player.id;
+			GameObject.Find("Main Camera").transform.SetParent(go.transform);
+			GameEntity ge = go.GetComponent<GameEntity>();
+			ge.Init(this, ent);
+		} else {
+			ulong g = ent.id.value / 1024;
+			string gname = "GameEntityGroup_" + g;
+			GameObject go = GameObject.Find(gname);
+			if (go == null) {
+				go = new GameObject(gname);
+				go.transform.SetParent(root);
+			}
+			GameObject o = Instantiate(playerPrefab);
+			o.name = "GameEntity_" + ent.id;
+			o.transform.SetParent(go.transform);
+			GameEntity ge = o.GetComponent<GameEntity>();
+			ge.Init(this, ent);
 		}
-		GameObject o = Instantiate(playerPrefab);
-		o.name = "GameEntity_" + ent.id;
-		o.transform.SetParent (go.transform);
-		GameEntity ge = o.GetComponent<GameEntity> ();
-		ge.Init (this, ent);
 	}
 
 	void World.View.OnDelEntity (Entity ent) {
-		ulong g = ent.id.value / 1024;
-		string gname = "GameEntityGroup_" + g;
-		GameObject go = GameObject.Find (gname);
-		if (go == null)
-			return;
-		string name = "GameEntity_" + ent.id;
-		GameObject o = GameObject.Find (name);
-		Destroy (o);
-		if (go.transform.childCount == 0)
-			Destroy (go);
+		if (ent.isPlayer) {
+			player = null;
+			GameObject go = Instantiate(playerPrefab);
+			string name = "GameEntity_" + player.id;
+			GameObject.Find("Main Camera").transform.SetParent(root.transform);
+			GameObject o = GameObject.Find(name);
+			Destroy(o);
+		} else {
+			ulong g = ent.id.value / 1024;
+			string gname = "GameEntityGroup_" + g;
+			GameObject go = GameObject.Find(gname);
+			if (go == null)
+				return;
+			string name = "GameEntity_" + ent.id;
+			GameObject o = GameObject.Find(name);
+			Destroy(o);
+			if (go.transform.childCount == 0)
+				Destroy(go);
+		}
 	}
 }

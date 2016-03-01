@@ -56,9 +56,10 @@ namespace Play {
 		public void Update (int time) {
 		}
 
-		public bool MoveOut (Entity e) {
+		public void MoveOut (Entity e) {
 			Assert.AreNotEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
-			return entities.Remove (e);
+			bool re = entities.Remove (e);
+			Assert.IsTrue(re);
 		}
 		public void MoveIn (Entity e) {
 			Assert.AreEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
