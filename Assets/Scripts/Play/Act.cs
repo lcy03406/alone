@@ -105,14 +105,15 @@ namespace Play.Acts {
 		public override bool Can (Entity ent) {
 			Entity ent_dst = ent.world.FindEntity(dst);
             Ctx ctx = new Ctx(ent.world, ent, ent_dst);
-			return a.s.i.Can (ctx);
+			Iact iact = new Iact(a);
+			return iact.Can (ctx);
 		}
 		private class Step1 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
-				return act.a.s.i.time1;
+				return act.a.s.time1;
 			}
 		}
 		private class Step2 : Act.Step {
@@ -120,11 +121,12 @@ namespace Play.Acts {
 				ActIact act = (ActIact) Act.EntAct (ent);
 				Entity ent_dst = ent.world.FindEntity(act.dst);
 				Ctx ctx = new Ctx(ent.world, ent, ent_dst);
-				act.a.s.i.Do (ctx);
+				Iact iact = new Iact(act.a);
+				iact.Do (ctx);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
-				return act.a.s.i.time2;
+				return act.a.s.time2;
 			}
 		}
 		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };

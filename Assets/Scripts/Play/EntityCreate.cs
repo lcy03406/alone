@@ -11,6 +11,13 @@ namespace Play {
 			this.a = a;
 		}
 
+		public override string ToString() {
+			return Display();
+		}
+		public string Display() {
+			return a.s.name;
+		}
+
 		public Entity Create(Ctx ctx) {
 			if (a.s == null)
 				return null;

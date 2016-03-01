@@ -1,196 +1,165 @@
 //utf-8。
 
+using System.Collections.Generic;
+
 namespace Schema {
-	public sealed class Iact : SchemaBase<Iact.ID, Iact> {
+	public sealed partial class Iact : SchemaBase<Iact.ID, Iact> {
 		public readonly string name;
-		public readonly Play.Iact i;
+		public readonly int time1;
+		public readonly int time2;
+		public readonly bool has_dst;
+		public readonly int distance;
+		public readonly Play.Effect ef;
 
-		private Iact(string name, Play.Iact i) {
+		private Iact(string name, int time1, int time2, bool has_dst, int distance, Play.Effect[] eff) {
 			this.name = name;
-			this.i = i;
+			this.time1 = time1;
+			this.time2 = time2;
+			this.has_dst = has_dst;
+			this.distance = distance;
+			this.ef = new Play.Eff.Multi(eff);
 		}
 
-		public enum ID {
-			Rest,
-			Attack_Punch,
-			Chip_Stone,
-			Tree_PickBranch,
-			Tree_PickFruit,
-			Butcher_Meat,
-			Butcher_Bone,
-			Make_Cross,
-			Make_Knife_Stone,
-			Make_Axe_Stone,
-			Make_Knife_Bone,
-			Build_Campfire,
-		}
-		static public void Init() {
-			InitCommon();
-			InitAttack();
-			InitBoulder();
-			InitTree();
-			InitCreature();
-			InitMake();
-			InitBuild();
+		private static Iact Rest(string name, int time1, int sta) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.IncStat<Play.Stats.Creature> (new Play.Calcs.Src(),
+					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta)),
+			};
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: 0,
+				has_dst: false,
+				distance: 0,
+				eff: eff
+			);
 		}
 
-		static private void InitCommon() {
-			Add(ID.Rest, new Iact("rest", Play.Iacts.Rest(
-				time1: 1,
-				sta: 1
-			)));
+		public static Iact Attack(string name, int time1, int time2, int sta,
+			Play.Calc<int> damage) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.DecStat<Play.Stats.Creature> (new Play.Calcs.Src(),
+					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.DecStat<Play.Stats.Creature> (new Play.Calcs.Dst(),
+					Play.Stats.Creature.HitPoint, damage),
+			};
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
 		}
 
-		static private void InitAttack() {
-			Add(ID.Attack_Punch, new Iact("punch", Play.Iacts.Attack(
-				time1: 3,
-				time2: 0,
-				sta: 1,
-				damage: new Play.Calcs.GetStat<Play.Stats.Creature>(new Play.Calcs.Src(), Play.Stats.Creature.Damage)
-			)));
+		public static Iact Pick(string name, int time1, int time2, int sta,
+			Schema.PartID part, int count) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
+					id: part,
+					value: new Play.Calcs.Const<int>(count)
+				),
+				new Play.Eff.DecStat<Play.Stats.Creature> (ent: new Play.Calcs.Src(),
+					id: Play.Stats.Creature.Stamina,
+					value: new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
+					cre: new Play.Calcs.ItemCount(
+						cre: new Play.Calcs.Part(
+							ent: new Play.Calcs.Dst(),
+							id: part
+						),
+						count: new Play.Calcs.Const<int>(count)
+					)
+				)
+			};
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
 		}
 
-		static private void InitBoulder() {
-			Add(ID.Chip_Stone, new Iact("chip stone", Play.Iacts.Pick(
-				time1: 5,
-				time2: 0,
-				sta: 1,
-				part: PartID.Boulder_Stone,
-				count: 1
-			)));
+		public static Iact Butcher(string name, int time1, int time2, int sta,
+			Schema.PartID part, int count) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.UseItem(ent: new Play.Calcs.Src(),
+					sel: new Play.Calcs.Const<Play.ItemSelect>(
+						new Play.ItemSelect(
+							a: Schema.Item.GetA(Schema.Item.ID.Knife),
+							count: 1
+						)
+					)
+				),
+				new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
+					id: part,
+					value: new Play.Calcs.Const<int>(count)
+				),
+				new Play.Eff.DecStat<Play.Stats.Creature> (ent: new Play.Calcs.Src(),
+					id: Play.Stats.Creature.Stamina,
+					value: new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
+					cre: new Play.Calcs.ItemCount(
+						cre: new Play.Calcs.Part(
+							ent: new Play.Calcs.Dst(),
+							id: part
+						),
+						count: new Play.Calcs.Const<int>(count)
+					)
+				)
+			};
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				eff: eff
+			);
 		}
 
-		static private void InitTree() {
-			Add(ID.Tree_PickBranch, new Iact("pick branch", Play.Iacts.Pick(
-				time1: 3,
-				time2: 0,
-				sta: 1,
-				part: PartID.Tree_Branch,
-				count: 1
-			)));
-			Add(ID.Tree_PickFruit, new Iact("pick fruit", Play.Iacts.Pick(
-				time1: 5,
-				time2: 0,
-				sta: 1,
-				part: PartID.Tree_Fruit,
-				count: 1
-			)));
-		}
-
-		static private void InitCreature() {
-			Add(ID.Butcher_Meat, new Iact("cut meat", Play.Iacts.Butcher(
-				time1: 3,
-				time2: 0,
-				sta: 1,
-				part: PartID.Creature_Meat,
-				count: 1
-			)));
-			Add(ID.Butcher_Bone, new Iact("cut bone", Play.Iacts.Butcher(
-				time1: 5,
-				time2: 0,
-				sta: 1,
-				part: PartID.Creature_Bone,
-				count: 1
-			)));
-		}
-
-		static private void InitMake() {
-			Add(ID.Make_Cross, new Iact("make a cross", Play.Iacts.Make(
-				time1: 3,
-				time2: 0,
-				sta: 3,
-				tools: new Play.ItemSelect[] {
-				},
-				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 2)
-				},
-				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Cross),
-					q_base: 0,
-					q_from: new int[] {0},
-					q_rand: 1,
-					cap_from: null,
-					count: 1)
-				},
-				build: null
-			)));
-			Add(ID.Make_Knife_Stone, new Iact("make a stone knife", Play.Iacts.Make(
-				time1: 3,
-				time2: 0,
-				sta: 3,
-				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
-				},
-				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
-				},
-				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
-					q_base: 0,
-					q_from: new int[] {0, 1},
-					q_rand: 1,
-					cap_from: null,
-					count: 1)
-				},
-				build: null
-			)));
-			Add(ID.Make_Axe_Stone, new Iact("make a stone axe", Play.Iacts.Make(
-				time1: 3,
-				time2: 0,
-				sta: 3,
-				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
-				},
-				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1),
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
-				},
-				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Axe),
-					q_base: 0,
-					q_from: new int[] {0, 1},
-					q_rand: 1,
-					cap_from: null,
-					count: 1)
-				},
-				build: null
-			)));
-			Add(ID.Make_Knife_Bone, new Iact("make a bone knife", Play.Iacts.Make(
-				time1: 3,
-				time2: 0,
-				sta: 3,
-				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
-				},
-				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Bone), count: 1),
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
-				},
-				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
-					q_base: 10,
-					q_from: new int[] {0, 1},
-					q_rand: 1,
-					cap_from: null,
-					count: 1)
-				},
-				build: null
-			)));
-		}
-
-		static private void InitBuild() {
-			Add(ID.Build_Campfire, new Iact("build a campfire", Play.Iacts.Make(
-				time1: 0,
-				time2: 10,
-				sta: 3, //TODO
-				tools: new Play.ItemSelect[] {
-				},
-				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 5)
-				},
-				products: null,
-				build: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Workshop_Campfire))
-			)));
+		public static Iact Make(string name, int time1, int time2, int sta,
+			Play.ItemSelect[] tools,
+			Play.ItemSelect[] reagents,
+			Play.ItemCreate[] products,
+			Play.EntityCreate build) {
+			List<Play.Effect> eff = new List<Play.Effect>();
+			if (sta > 0) {
+				eff.Add(new Play.Eff.DecStat<Play.Stats.Creature>(new Play.Calcs.Src(),
+					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta)));
+			}
+			if (tools != null) {
+				foreach (Play.ItemSelect sel in tools) {
+					eff.Add(new Play.Eff.UseItem(new Play.Calcs.Src(),
+						new Play.Calcs.Const<Play.ItemSelect>(sel)));
+				}
+			}
+			if (reagents != null) {
+				foreach (Play.ItemSelect sel in reagents) {
+					eff.Add(new Play.Eff.DelItem(new Play.Calcs.Src(),
+						new Play.Calcs.Const<Play.ItemSelect>(sel)));
+				}
+			}
+			if (products != null) {
+				foreach (Play.ItemCreate cre in products) {
+					eff.Add(new Play.Eff.AddItem(new Play.Calcs.Src(),
+						new Play.Calcs.Const<Play.ItemCreate>(cre)));
+				}
+			}
+			if (build != null) {
+				eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Play.EntityCreate>(build)));
+			}
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: time2,
+				has_dst: false,
+				distance: 0,
+				eff: eff.ToArray()
+			);
 		}
 	}
 }

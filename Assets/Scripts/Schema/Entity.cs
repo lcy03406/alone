@@ -59,7 +59,7 @@ namespace Schema {
 		static void InitBoulder() {
 			Add(ID.Boulder, new Entity(
 				sprite: SpriteID.b_mountain,
-				name: "Boulder",
+				name: "boulder",
 				stages: boulder_stages,
 				attr: new Play.Ents.Static(
 					part: new Play.Attrs.Grow() {
@@ -105,7 +105,7 @@ namespace Schema {
 		static void InitTree() {
 			Add(ID.Tree_Pine, new Entity(
 				sprite: SpriteID.b_tree_pine,
-				name: "Pine Tree",
+				name: "pine tree",
 				stages: tree_stages,
                 attr: new Play.Ents.Tree(
 					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
@@ -132,7 +132,7 @@ namespace Schema {
 			));
 			Add(ID.Tree_Oak, new Entity(
 				sprite: SpriteID.b_tree_oak,
-				name: "Oak Tree",
+				name: "oak tree",
 				stages: tree_stages,
 				attr: new Play.Ents.Tree(
 					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
@@ -197,7 +197,7 @@ namespace Schema {
 		static void InitCreature() {
 			Add(ID.Human, new Entity(
 				sprite: SpriteID.c_human_young,
-				name: "Human",
+				name: "human",
 				stages: human_stages,
 				attr: new Play.Ents.Creature(
 					stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
@@ -253,7 +253,7 @@ namespace Schema {
 		static void InitWorkshop() {
 			Add(ID.Workshop_Campfire, new Entity(
 				sprite: SpriteID.b_volcano,
-				name: "Campfire",
+				name: "campfire",
 				stages: campfire_stages,
 				attr: new Play.Ents.Workshop()
 			));

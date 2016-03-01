@@ -68,10 +68,11 @@ namespace Play.Attrs {
 			if (ss == null || ss.iact == null)
 				return null;
 			List<Schema.Iact.A> list = new List<Schema.Iact.A>();
-			foreach (Schema.Iact.A iact in ss.iact) {
+			foreach (Schema.Iact.A a in ss.iact) {
 				Ctx ctx = new Ctx(src.world, src, ent);
-				if (iact.s.i.Can(ctx)) {
-					list.Add(iact);
+				Iact iact = new Iact(a);
+				if (iact.Can(ctx)) {
+					list.Add(a);
 				}
 			}
 			return list;
