@@ -1,4 +1,5 @@
 //utf-8。
+using System;
 using System.Collections.Generic;
 
 namespace Play {
@@ -13,6 +14,9 @@ namespace Play {
 			if (a.s.has_dst) {
 				if (ctx.dst == null)
 					return false;
+				Schema.EntityStage dst_es = ctx.dst.GetAttr<Attrs.Core>().GetStage();
+				if (dst_es == null || !dst_es.HasIactDst(a))
+					return false;
 				if (a.s.distance >= 0) {
 					Attrs.Pos sp = ctx.src.GetAttr<Attrs.Pos>();
 					Attrs.Pos dp = ctx.dst.GetAttr<Attrs.Pos>();
@@ -22,6 +26,9 @@ namespace Play {
 						return false;
 				}
 			}
+			Schema.EntityStage src_es = ctx.src.GetAttr<Attrs.Core>().GetStage();
+			if (src_es == null || !src_es.HasIactSrc(a))
+				return false;
 			return a.s.ef.Can(ctx);
 		}
 		public static void Do (this Schema.Iact.A a, Ctx ctx) {

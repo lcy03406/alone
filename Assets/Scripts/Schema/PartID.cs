@@ -7,6 +7,7 @@ namespace Schema {
 		Tree_Bough,
 		Tree_Fruit,
 		Tree_Bark,
+		Creature_Skin,
 		Creature_Meat,
 		Creature_Bone,
 	}

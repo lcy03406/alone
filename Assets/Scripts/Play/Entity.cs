@@ -28,9 +28,13 @@ namespace Play {
 			pos.dir = Direction.None;
 			ent.SetAttr(pos);
 			ent.SetAttr(new Attrs.Core(a));
+			Attrs.Stage stage = new Attrs.Stage();
+			stage.a = a.s.start_stage; //TODO
+			ent.SetAttr(stage);
 			AttrCreate attr = a.s.attr;
 			if (attr != null)
 				attr.Create(ctx, ent);
+
 			return ent;
 		}
 

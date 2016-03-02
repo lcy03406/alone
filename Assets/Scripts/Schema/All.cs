@@ -7,6 +7,7 @@ namespace Schema {
 			Floor.Init();
 			Item.Init();
 			Iact.Init();
+			Stage.Init();
 			Entity.Init();
 			Grid.Init();
 		}

@@ -135,6 +135,8 @@ public class UIGame : MonoBehaviour {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
 			Play.Entity dst = ctrl.ListDst();
+			if (dst == null)
+				return;
 			List<Schema.Iact.A> iacts = ctrl.ListIact(dst);
 			List<string> opts = iacts.ConvertAll(iact => iact.s.name);
 			menu.Open(opts.ToArray(), delegate (int idx, string name) {

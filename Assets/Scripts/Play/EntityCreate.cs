@@ -41,7 +41,6 @@ namespace Play.Ents {
 
 		public override void Create(Ctx ctx, Entity ent) {
 			ent.SetAttr(new Attrs.Grow(part));
-			ent.SetAttr(new Attrs.Stages.Static.Static());
 		}
 	}
 
@@ -57,7 +56,6 @@ namespace Play.Ents {
 		public override void Create(Ctx ctx, Entity ent) {
 			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
 			ent.SetAttr(new Attrs.Grow(part));
-			ent.SetAttr(new Attrs.Stages.Tree.Young());
 		}
 	}
 
@@ -77,7 +75,6 @@ namespace Play.Ents {
 			ent.SetAttr(new Attrs.Actor());
 			ent.SetAttr(new Attrs.Inv());
 			ent.SetAttr(new Attrs.AIHuman());
-			ent.SetAttr(new Attrs.Stages.Creature.Alive());
 		}
 	}
 
@@ -87,7 +84,6 @@ namespace Play.Ents {
 		}
 
 		public override void Create(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Stages.Workshop.Off());
 		}
 	}
 }

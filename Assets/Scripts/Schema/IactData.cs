@@ -27,7 +27,7 @@ namespace Schema {
 		}
 
 		static private void InitCommon() {
-			Add(ID.Rest, Rest("rest",
+			Add(ID.Rest, Rest(name: "rest",
 				time1: 1,
 				sta: 1
 			));

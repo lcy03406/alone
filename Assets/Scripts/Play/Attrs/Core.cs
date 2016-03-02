@@ -11,14 +11,14 @@ namespace Play.Attrs {
 			this.a = a;
 		}
 
-		Schema.Stage GetStage() {
+		public Schema.EntityStage GetStage() {
 			Stage stage = ent.GetAttr<Stage>();
 			if (stage == null)
 				return null;
-			Schema.Stage sstage;
-			if (!a.s.stages.TryGetValue(stage.GetType(), out sstage))
+			Schema.EntityStage estage;
+			if (!a.s.stages.TryGetValue(stage.a.id, out estage))
 				return null;
-			return sstage;
+			return estage;
 		}
 
 		public Schema.Sprite.A GetSprite() {
@@ -50,11 +50,11 @@ namespace Play.Attrs {
 		}
 
 		public List<Schema.Iact.A> ListMake() {
-			Schema.Stage ss = GetStage();
-			if (ss == null || ss.make == null)
+			Schema.EntityStage es = GetStage();
+			if (es == null || es.make == null)
 				return null;
             List<Schema.Iact.A> list = new List<Schema.Iact.A>();
-			foreach (Schema.Iact.A iact in ss.make) {
+			foreach (Schema.Iact.A iact in es.make) {
 				//Ctx ctx = new Ctx(ent.world, ent, null);
 				//if (iact.s.i.Can(ctx)) {
 					list.Add(iact);
@@ -64,11 +64,11 @@ namespace Play.Attrs {
 		}
 
 		public List<Schema.Iact.A> ListIact(Entity src) {
-			Schema.Stage ss = GetStage();
-			if (ss == null || ss.iact == null)
+			Schema.EntityStage es = GetStage();
+			if (es == null || es.iact_dst == null)
 				return null;
 			List<Schema.Iact.A> list = new List<Schema.Iact.A>();
-			foreach (Schema.Iact.A a in ss.iact) {
+			foreach (Schema.Iact.A a in es.iact_dst) {
 				Ctx ctx = new Ctx(src.layer, src, ent);
 				if (a.Can(ctx)) {
 					list.Add(a);

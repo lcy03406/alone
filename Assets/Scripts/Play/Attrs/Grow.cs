@@ -35,6 +35,16 @@ namespace Play.Attrs {
 				this.grow_count = grow_count;
 			}
 
+			public Part(Part b) {
+				this.a = b.a;
+				this.count = b.count;
+				this.cap = b.cap;
+				this.q = b.q;
+				this.grow_time = b.grow_time;
+				this.grow_span = b.grow_span;
+				this.grow_count = b.grow_count;
+			}
+
 			public ItemCreate GetItem() {
 				return new ItemCreate(a: a,
 					q_base: q,
@@ -52,7 +62,10 @@ namespace Play.Attrs {
 		}
 
 		public Grow(Grow b) {
-			items = new Dictionary<ID, Part>(b.items);
+			items = new Dictionary<ID, Part>();
+			foreach (KeyValuePair<ID, Part> pair in b.items) {
+				items.Add(pair.Key, new Part(pair.Value));
+			}
 		}
 
 		public override void OnBorn() {

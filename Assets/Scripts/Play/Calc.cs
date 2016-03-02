@@ -51,6 +51,21 @@ namespace Play {
 }
 
 namespace Play.Calcs {
+	public class None<T> : Calc<T> {
+		public None() {
+		}
+		public override string Display() {
+			return "null";
+		}
+		public override bool Can(Ctx ctx) {
+			return false;
+		}
+		public override T Get(Ctx ctx) {
+			Assert.IsTrue(false);
+			return default(T);
+		}
+	}
+
 	public class Const<T> : Calc<T> {
 		public T t;
 		public Const(T t) {

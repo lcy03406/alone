@@ -5,43 +5,37 @@ using UnityEngine.Assertions;
 
 namespace Play.Attrs {
 	[Serializable]
-	public abstract class Stage : Attrib {
+	public sealed class Stage : Attrib {
+		public Schema.Stage.A a;
 		public int start_time = 0;
-		public void Transit(Stage to, int time) {
-			to.start_time = time;
-			ent.SetAttr(to);
+		public int tick_time = 0;
+		public void Transit(Schema.Stage.A to) {
+			if (ent != null && ent.layer != null) {
+				Ctx ctx = new Ctx(ent.layer, ent, null);
+				Effect ef = a.s.finish_ef;
+				if (ef != null && ef.Can(ctx))
+					ef.Do(ctx);
+			}
+			a = to;
+			start_time = tick_time;
+			if (ent != null && ent.layer != null) {
+				Ctx ctx = new Ctx(ent.layer, ent, null);
+				Effect ef = a.s.start_ef;
+				if (ef != null && ef.Can(ctx))
+					ef.Do(ctx);
+			}
 		}
 
-		public override void OnBorn() {
-			base.OnBorn();
-			int time = ent.layer.world.param.time;
-			Start(time);
+		public void Tick(int time) {
+			tick_time = time;
+			Ctx ctx = new Ctx(ent.layer, ent, null);
+			Effect ef = a.s.tick_ef;
+			if (ef != null && ef.Can(ctx))
+				ef.Do(ctx);
 		}
-
-		public override void OnAttach() {
-			base.OnAttach();
-			int time = ent.layer.world.param.time;
-			Start(time);
-		}
-
-		public override void OnDetach() {
-			base.OnDetach();
-			int time = ent.layer.world.param.time;
-			Stop(time);
-		}
-
-		public virtual void Start(int time) { }
-		public virtual void Tick(int time) { }
-		public virtual void Stop(int time) { }
 	}
 }
-
-namespace Play.Attrs.Stages.Static {
-	[Serializable]
-	public class Static : Stage {
-	}
-}
-
+/*
 namespace Play.Attrs.Stages.Tree {
 	[Serializable]
 	public class Young : Stage {
@@ -101,3 +95,4 @@ namespace Play.Attrs.Stages.Workshop {
 	public class On : Stage {
 	}
 }
+*/
