@@ -22,7 +22,7 @@ namespace Play.Eff {
 			this.eff = eff;
 		}
 		public override string Display() {
-			string disp = "";
+			string disp = "all of: \n";
 			foreach (Effect ef in eff) {
 				disp += ef.Display();
 			}
@@ -42,6 +42,49 @@ namespace Play.Eff {
 			}
 		}
 	}
+
+	public class Any : Effect {
+		public Effect[] eff;
+		public Any(Effect[] eff) {
+			this.eff = eff;
+		}
+		public override string Display() {
+			string disp = "any of: \n";
+			foreach (Effect ef in eff) {
+				disp += ef.Display();
+			}
+			return disp;
+		}
+		public override bool Can(Ctx ctx) {
+			return true;
+		}
+
+		public override void Do(Ctx ctx) {
+			foreach (Effect ef in eff) {
+				if (ef.Can(ctx))
+					ef.Do(ctx);
+			}
+		}
+	}
+
+	public class Must : Effect {
+		public readonly Calc<bool> cond;
+		public Must(Calc<bool> cond) {
+			this.cond = cond;
+		}
+
+		public override string Display() {
+			return "must: " + cond.Display() + ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
+			return cond.Can(ctx);
+		}
+
+		public override void Do(Ctx ctx) {
+		}
+	}
+
 	public class GoLayer : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly int to;
@@ -49,10 +92,6 @@ namespace Play.Eff {
 		public GoLayer(Calc<Entity> ent, int to) {
 			c_ent = ent;
 			this.to = to;
-		}
-
-		public override bool Can(Ctx ctx) {
-			return true;
 		}
 
 		public override string Display() {
@@ -68,8 +107,16 @@ namespace Play.Eff {
 			return disp + ".\n";
 		}
 
+		public override bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			return true;
+		}
+
 		public override void Do(Ctx ctx) {
-			throw new NotImplementedException();
+			Entity ent = c_ent.Get(ctx);
+			ctx.layer.world.GoLayer(ent, to);
 		}
 	}
 

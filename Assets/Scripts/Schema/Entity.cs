@@ -3,30 +3,19 @@ using System;
 using System.Collections.Generic;
 
 namespace Schema {
-	public class Stage {
-		public readonly Iact.A[] make;
-		public readonly Iact.A[] iact;
-		public readonly Play.Attrs.Stat<UsageID> usage;
-
-		public Stage(Iact.A[] make, Iact.A[] iact, Play.Attrs.Stat<UsageID> usage) {
-			this.make = make;
-			this.iact = iact;
-			this.usage = usage;
-		}
-	}
 	public sealed class Entity : SchemaBase<Entity.ID, Entity> {
 		public readonly Sprite.A sprite;
 		public readonly string name;
-		public readonly Dictionary<Type, Stage> stages;
+		public readonly Stage.A stage;
 		public readonly Play.AttrCreate attr;
 
 		Entity(SpriteID sprite,
 			string name,
-			Dictionary<Type, Stage> stages,
+			Stage.A stage,
 			Play.AttrCreate attr) {
 			this.sprite = Sprite.GetA(sprite);
 			this.name = name;
-			this.stages = stages;
+			this.stage = stage;
 			this.attr = attr;
 		}
 
@@ -44,23 +33,11 @@ namespace Schema {
 			InitWorkshop();
 		}
 
-		static Dictionary<Type, Stage> boulder_stages = new Dictionary<Type, Stage> {
-			{
-				typeof(Play.Attrs.Stages.Static.Static),
-				new Stage (
-					make: null,
-					iact: new Iact.A[] {
-						Iact.GetA (Iact.ID.Chip_Stone),
-					},
-					usage: null
-				)
-			}
-		};
 		static void InitBoulder() {
 			Add(ID.Boulder, new Entity(
 				sprite: SpriteID.b_mountain,
 				name: "boulder",
-				stages: boulder_stages,
+				stage: Stage.GetA(Stage.ID.Boulder_Static),
 				attr: new Play.Ents.Static(
 					part: new Play.Attrs.Grow() {
 						items = {
