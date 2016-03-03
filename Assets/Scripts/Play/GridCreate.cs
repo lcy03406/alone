@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Play {
 	public class GridCreate {
@@ -17,7 +18,13 @@ namespace Play {
 			Grid.Data grid = new Grid.Data();
 			for (int x = 0; x < World.GRID_SIZE; ++x) {
 				for (int y = 0; y < World.GRID_SIZE; ++y) {
-					grid.tiles[x, y] = floors.Get(ctx);
+					//grid.tiles[x, y] = floors.Get(ctx);
+					float per = Mathf.PerlinNoise((float)x / (float)World.GRID_SIZE * 2, (float)y / (float)World.GRID_SIZE) * 2;
+					if (per >= 0.3)
+						grid.tiles[x, y] = Schema.Floor.GetA(Schema.Floor.ID.Grass);
+					else
+						grid.tiles[x, y] = Schema.Floor.GetA(Schema.Floor.ID.Ocean);
+
 					EntityCreate cre = entities.Get(ctx);
 					if (cre != null) {
 						Entity e = cre.Create(ctx);
