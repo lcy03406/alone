@@ -25,6 +25,7 @@ namespace Play {
 
 		[Serializable]
 		public class Param {
+			public int seed = (int)DateTime.Now.Ticks;
 			public WUID maxid;
 			public int time;
 			public int layer;
@@ -45,9 +46,7 @@ namespace Play {
 			if (param == null) {
 				param = new Param();
 			}
-			Layer layer = new Layer();
-			layer.world = this;
-			layer.id = param.layer;
+			Layer layer = new Layer(this, param.layer);
 			layers.Add(param.layer, layer);
 			Entity e = file.LoadPlayer();
 			if (e == null) {
@@ -97,12 +96,10 @@ namespace Play {
 		}
 
 		public void GoLayer(Entity ent, int to) {
-			int toid = param.layer + to;
+			int toz = param.layer + to;
 			Layer tolayer;
-			if (!layers.TryGetValue(toid, out tolayer)) {
-				tolayer = new Layer();
-				tolayer.world = this;
-				tolayer.id = toid;
+			if (!layers.TryGetValue(toz, out tolayer)) {
+				tolayer = new Layer(this, toz);
 			}
 			Layer fromlayer = ent.layer;
 			fromlayer.MoveOut(ent);

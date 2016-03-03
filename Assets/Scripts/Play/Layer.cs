@@ -12,14 +12,31 @@ namespace Play {
 		const int UNLOAD_SIZE = 20; //
 
 		public World world;
-		public int id;
+		public int z;
+		public Rect rect;
+		public int seed;
 
 		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
 		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
 
+		public Layer(World world, int z) {
+			this.world = world;
+			this.z = z;
+			Random random = new Random(world.param.seed);
+			int zig = z >= 0 ? z * 2 : -z * 2 - 1;
+			for (int i = 0; i < zig; i++) {
+				random.Next();
+			}
+			seed = random.Next();
+			if (z < 0) {
+				int r = 10 + z;
+				rect = new Rect(new Coord(-r, -r), new Coord(r-1, r-1));
+			}
+		}
+
 		public void Save () {
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
-				world.file.SaveGrid (id, pair.Key, pair.Value);
+				world.file.SaveGrid (z, pair.Key, pair.Value);
 			}
 		}
 
@@ -41,12 +58,12 @@ namespace Play {
 		Grid LoadGrid (Coord g) {
 			Grid grid = new Grid (this, g);
 			grids.Add (g, grid);
-			Grid.Data d = world.file.LoadGrid (id, g);
+			Grid.Data d = world.file.LoadGrid (z, g);
 			if (d == null) {
 				d = CreateGrid (g);
 			}
 			grid.Load(d);
-			if (world.view != null && world.param.layer == id) {
+			if (world.view != null && world.param.layer == z) {
 				world.view.OnLoadGrid (g, grid);
 			}
 			return grid;
@@ -76,9 +93,9 @@ namespace Play {
 					if (!pair.Key.In (saver)) {
 						Coord g = pair.Key;
 						Grid grid = pair.Value;
-						world.file.SaveGrid (id, g, grid);
+						world.file.SaveGrid (z, g, grid);
 						grid.Unload ();
-						if (world.view != null && world.param.layer == id) {
+						if (world.view != null && world.param.layer == z) {
 							world.view.OnUnloadGrid (g);
 						}
 						del.Add (g);
@@ -95,9 +112,9 @@ namespace Play {
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
 				Coord g = pair.Key;
 				Grid grid = pair.Value;
-				world.file.SaveGrid(id, g, grid);
+				world.file.SaveGrid(z, g, grid);
 				grid.Unload();
-				if (world.view != null && world.param.layer == id) {
+				if (world.view != null && world.param.layer == z) {
 					world.view.OnUnloadGrid(g);
 				}
 				del.Add(g);
@@ -126,13 +143,13 @@ namespace Play {
 				tg.MoveIn(ent);
 			}
 			ent.layer = this;
-			if (world.view != null && world.param.layer == id) {
+			if (world.view != null && world.param.layer == z) {
 				world.view.OnAddEntity (ent);
 			}
 		}
 
 		public void DelEntity (Entity ent) {
-			if (world.view != null && world.param.layer == id) {
+			if (world.view != null && world.param.layer == z) {
 				world.view.OnDelEntity (ent);
 			}
 			Assert.AreEqual (ent.layer, this);
