@@ -20,29 +20,11 @@ namespace Play {
 			}
 		}
 
-		public static Entity Create(Ctx ctx, Schema.Entity.A a) {
-			Entity ent = new Entity();
-			ent.id = ctx.layer.world.NextWUID();
-			ent.layer = ctx.layer;
-			Attrs.Pos pos = new Attrs.Pos();
-			pos.dir = Direction.None;
-			ent.SetAttr(pos);
-			ent.SetAttr(new Attrs.Core(a));
-			Attrs.Stage stage = new Attrs.Stage();
-			stage.a = a.s.start_stage; //TODO
-			ent.SetAttr(stage);
-			AttrCreate attr = a.s.attr;
-			if (attr != null)
-				attr.Create(ctx, ent);
-
-			return ent;
-		}
-
 		public void Tick (int time) {
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
 			if (actor != null)
 				actor.Tick(time);
-			Attrs.Grow grow = GetAttr<Attrs.Grow>();
+			Attrs.Part grow = GetAttr<Attrs.Part>();
 			if (grow != null)
 				grow.Tick(time);
 			Attrs.Stage stage = GetAttr<Attrs.Stage>();

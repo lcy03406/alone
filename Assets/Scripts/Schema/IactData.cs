@@ -38,7 +38,7 @@ namespace Schema {
 				time1: 3,
 				time2: 0,
 				sta: 1,
-				damage: new Play.Calcs.GetStat<Play.Stats.Creature>(new Play.Calcs.Src(), Play.Stats.Creature.Damage)
+				damage: new Play.Calcs.GetStat(new Play.Calcs.Src(), StatID.Creature_Damage)
 			));
 		}
 
@@ -181,7 +181,7 @@ namespace Schema {
 					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 5)
 				},
 				products: null,
-				build: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Workshop_Campfire))
+				build: Entity.GetA(Entity.ID.Workshop_Campfire)
 			));
 		}
 	}

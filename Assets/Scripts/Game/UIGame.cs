@@ -107,7 +107,7 @@ public class UIGame : MonoBehaviour {
 		public void MenuCall(int idx, string name) {
 			this.idx = idx;
 			Schema.Iact.A make = makes[idx];
-			Ctx ctx = new Ctx(Game.game.player.layer, Game.game.player, null);
+			Ctx ctx = new Ctx(Game.game.player.layer, Game.game.player);
 			UIMsg.Style st = make.Can(ctx) ? UIMsg.Style.OkCancel : UIMsg.Style.Cancel;
 			msg.Open(make.Display(), st, MsgCall);
 		}

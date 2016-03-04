@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using Play.Attrs;
 
+using StatID = Schema.StatID;
+
 namespace Play.Eff {
-	public class UseStat<StatID> : Effect where StatID : struct {
+	public class UseStat : Effect {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_min;
@@ -33,7 +35,7 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			if (stat == null)
 				return false;
 			int value = stat.Get(id);
@@ -58,7 +60,7 @@ namespace Play.Eff {
 		}
 	}
 
-	public class IncStat<StatID> : Effect where StatID : struct {
+	public class IncStat : Effect {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
@@ -80,7 +82,7 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			if (stat == null)
 				return false;
 			if (!c_value.Can(ctx))
@@ -90,13 +92,13 @@ namespace Play.Eff {
 
 		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			int value = c_value.Get(ctx);
 			stat.Set(id, stat.Get(id) + value);
 		}
 	}
 
-	public class DecStat<StatID> : Effect where StatID: struct {
+	public class DecStat : Effect {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
@@ -118,7 +120,7 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			if (stat == null)
 				return false;
 			if (!c_value.Can(ctx))
@@ -131,7 +133,7 @@ namespace Play.Eff {
 
 		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			int value = c_value.Get(ctx);
 			if (value > 0) {
 				stat.Set(id, stat.Get(id) - value);

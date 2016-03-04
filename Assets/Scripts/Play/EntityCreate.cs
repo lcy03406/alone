@@ -4,24 +4,33 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace Play {
-	public class EntityCreate {
-		Schema.Entity.A a;
-
-		public EntityCreate(Schema.Entity.A a) {
-			this.a = a;
-		}
-
-		public override string ToString() {
-			return Display();
-		}
-		public string Display() {
-			return a.s.name;
-		}
-
-		public Entity Create(Ctx ctx) {
+	public static class EntityCreate {
+		public static Entity CreateEntity(this Schema.Entity.A a, Ctx ctx) {
 			if (a.s == null)
 				return null;
-			Entity ent = Entity.Create(ctx, a);
+			Entity ent = new Entity();
+			ent.id = ctx.layer.world.NextWUID();
+			ent.layer = ctx.layer;
+			Attrs.Pos pos = new Attrs.Pos();
+			pos.c = ctx.dstc;
+			pos.dir = Direction.None;
+			ent.SetAttr(pos);
+			ent.SetAttr(new Attrs.Core(a));
+			Schema.Entity s = a.s;
+			if (s.start_stage != null) {
+				Attrs.Stage stage = new Attrs.Stage();
+				stage.a = a.s.start_stage; //TODO
+				ent.SetAttr(stage);
+			}
+			if (s.stat != null) {
+				ent.SetAttr(new Attrs.Stat(s.stat));
+			}
+			if (s.part != null) {
+				ent.SetAttr(new Attrs.Part(s.part));
+			}
+			if (s.attr != null) {
+				s.attr.Create(ctx, ent);
+			}
 			return ent;
 		}
 	}
@@ -32,58 +41,11 @@ namespace Play {
 }
 
 namespace Play.Ents {
-	public class Static : AttrCreate {
-		Attrs.Grow part;
-
-		public Static(Attrs.Grow part) {
-			this.part = part;
-		}
-
-		public override void Create(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Grow(part));
-		}
-	}
-
-	public class Tree : AttrCreate {
-		Attrs.Stat<Stats.Tree> stat;
-		Attrs.Grow part;
-
-		public Tree(Attrs.Stat<Stats.Tree> stat, Attrs.Grow part) {
-			this.stat = stat;
-			this.part = part;
-		}
-
-		public override void Create(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Stat<Stats.Tree>(stat));
-			ent.SetAttr(new Attrs.Grow(part));
-		}
-	}
-
 	public class Creature : AttrCreate {
-		Attrs.Stat<Stats.Creature> stat;
-		Attrs.Grow part;
-
-		public Creature(Attrs.Stat<Stats.Creature> stat, Attrs.Grow part)
-		{
-			this.stat = stat;
-			this.part = part;
-		}
-
 		public override void Create(Ctx ctx, Entity ent) {
-			ent.SetAttr(new Attrs.Stat<Stats.Creature>(stat));
-			ent.SetAttr(new Attrs.Grow(part));
 			ent.SetAttr(new Attrs.Actor());
 			ent.SetAttr(new Attrs.Inv());
 			ent.SetAttr(new Attrs.AIHuman());
-		}
-	}
-
-	public class Workshop : AttrCreate {
-
-		public Workshop() {
-		}
-
-		public override void Create(Ctx ctx, Entity ent) {
 		}
 	}
 }

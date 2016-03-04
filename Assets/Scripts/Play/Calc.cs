@@ -13,14 +13,32 @@ namespace Play {
 		public Layer layer = null;
 		public Entity src = null;
 		public Entity dst = null;
+		public Coord dstc;
 		public List<Entity> use_ent = new List<Entity>();
 		public Dictionary<Inv, Invx> invs = new Dictionary<Inv, Invx>();
 		public List<List<Item>> items = new List<List<Item>>();
 
-		public Ctx(Layer layer, Entity src, Entity dst) {
+		public Ctx(Layer layer, Entity src, Entity dst, Coord dstc) {
 			this.layer = layer;
 			this.src = src;
 			this.dst = dst;
+			this.dstc = dstc;
+			if (dst != null)
+				dstc = dst.GetAttr<Pos>().c;
+			else if (src != null)
+				dstc = src.GetAttr<Pos>().c;
+			else
+				Assert.IsTrue(false);
+		}
+
+		public Ctx(Layer layer, Coord dstc)
+			: this(layer, null, null, dstc) {
+		}
+		public Ctx(Layer layer, Entity src)
+			: this(layer, src, null, src.GetAttr<Pos>().c) {
+		}
+		public Ctx(Layer layer, Entity src, Entity dst)
+			: this(layer, src, dst, dst.GetAttr<Pos>().c) {
 		}
 
 		public Invx GetInv(Inv inv) {
@@ -128,10 +146,10 @@ namespace Play.Calcs {
 		}
 	}
 
-	public class GetStat<StatID> : Calc<int> where StatID : struct {
+	public class GetStat : Calc<int> {
 		public readonly Calc<Entity> c_ent;
-		public readonly StatID id;
-		public GetStat(Calc<Entity> ent, StatID id) {
+		public readonly Schema.StatID id;
+		public GetStat(Calc<Entity> ent, Schema.StatID id) {
 			this.c_ent = ent;
 			this.id = id;
 		}
@@ -143,7 +161,7 @@ namespace Play.Calcs {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			if (stat == null)
 				return false;
 			return true;
@@ -151,7 +169,7 @@ namespace Play.Calcs {
 
 		public override int Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Stat<StatID> stat = ent.GetAttr<Stat<StatID>>();
+			Stat stat = ent.GetAttr<Stat>();
 			return stat.Get(id);
 		}
 	}
@@ -171,10 +189,10 @@ namespace Play.Calcs {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Grow grow = ent.GetAttr<Grow>();
+			Attrs.Part grow = ent.GetAttr<Attrs.Part>();
 			if (grow == null)
 				return false;
-			Grow.Part part = grow.Get(id);
+			Attrs.Part.PartItem part = grow.Get(this.id);
 			if (part == null)
 				return false;
 			return true;
@@ -182,7 +200,7 @@ namespace Play.Calcs {
 
 		public override ItemCreate Get(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Grow grow = ent.GetAttr<Grow>();
+			Attrs.Part grow = ent.GetAttr<Attrs.Part>();
 			ItemCreate cre = grow.Get(id).GetItem();
 			return cre;
 		}

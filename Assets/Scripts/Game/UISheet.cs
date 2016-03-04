@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
-using Stat = Play.Attrs.Stat<Play.Stats.Creature>;
+using Stat = Play.Attrs.Stat;
 
 public class UISheet : MonoBehaviour {
 	public Dropdown dropdown;
@@ -71,7 +71,7 @@ I = Inventory
 	public void ShowChar() {
 		string t = "";
 		Stat stat = Game.game.player.GetAttr<Stat>();
-		foreach (KeyValuePair<Play.Stats.Creature, int> pair in stat.ints) {
+		foreach (KeyValuePair<Schema.StatID, int> pair in stat.ints) {
 			t += pair.Key.ToString() + ": " + pair.Value;
 			int cap = stat.Cap(pair.Key);
 			if (cap > 0)

@@ -5,9 +5,9 @@ using Play.Attrs;
 
 namespace Play.Eff {
 	public class AddEntity : Effect {
-		public readonly Calc<EntityCreate> c_cre;
+		public readonly Calc<Schema.Entity.A> c_cre;
 
-		public AddEntity(Calc<EntityCreate> cre) {
+		public AddEntity(Calc<Schema.Entity.A> cre) {
 			c_cre = cre;
 		}
 
@@ -31,8 +31,8 @@ namespace Play.Eff {
 			Pos pos = ctx.src.GetAttr<Pos>();
 			//TODO
 			Coord c = pos.c.Step(pos.dir);
-			EntityCreate cre = c_cre.Get(ctx);
-			Entity e = cre.Create(ctx);
+			Schema.Entity.A cre = c_cre.Get(ctx);
+			Entity e = cre.CreateEntity(ctx);
 			pos.c = c;
 			ctx.layer.AddEntity(e);
 		}

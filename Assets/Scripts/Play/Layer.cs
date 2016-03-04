@@ -53,7 +53,7 @@ namespace Play {
 		}
 
 		Grid.Data CreateGrid (Coord g) {
-			Ctx ctx = new Ctx(this, null, null);
+			Ctx ctx = new Ctx(this, g);
 			GridCreate cre = Schema.Grid.GetA(Schema.Grid.ID.Plain).s.cre;
 			Grid.Data grid = cre.Create(ctx, g);
 			return grid;

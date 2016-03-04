@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Play {
 	public class GridCreate {
 		Calcs.RandConst<Schema.Floor.A> floors;
-		Calcs.RandConst<EntityCreate> entities;
+		Calcs.RandConst<Schema.Entity.A> entities;
 		public GridCreate(Calcs.RandConst<Schema.Floor.A> floors,
-			Calcs.RandConst<EntityCreate> entities)
+			Calcs.RandConst<Schema.Entity.A> entities)
 		{
             this.floors = floors;
 			this.entities = entities;
@@ -25,9 +25,9 @@ namespace Play {
 					else
 						grid.tiles[x, y] = Schema.Floor.GetA(Schema.Floor.ID.Ocean);
 
-					EntityCreate cre = entities.Get(ctx);
+					Schema.Entity.A cre = entities.Get(ctx);
 					if (cre != null) {
-						Entity e = cre.Create(ctx);
+						Entity e = cre.CreateEntity(ctx);
 						if (e != null) {
 							e.GetAttr<Attrs.Pos>().c = g.Add(x, y);
 							grid.entities.Add(e);

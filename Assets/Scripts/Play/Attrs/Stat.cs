@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
+using ID = Schema.StatID;
+
 namespace Play.Attrs {
 	[Serializable]
-	public class Stat<ID> : Attrib where ID: struct {
+	public class Stat : Attrib {
 		public Dictionary<ID, int> ints;
 		public Dictionary<ID, int> caps;
 
@@ -14,7 +16,7 @@ namespace Play.Attrs {
 			caps = new Dictionary<ID, int>();
 		}
 
-		public Stat(Stat<ID> b) {
+		public Stat(Stat b) {
 			ints = new Dictionary<ID, int>(b.ints);
 			caps = new Dictionary<ID, int>(b.caps);
 		}
@@ -32,6 +34,13 @@ namespace Play.Attrs {
 			return 0;
 		}
 		public void Set(ID id, int value) {
+			if (!ints.ContainsKey(id)) {
+				return;
+			}
+			if (!caps.ContainsKey(id)) {
+				ints[id] = value;
+				return;
+			}
 			int cap = Cap(id);
 			int set = value;
             if (value < 0)
@@ -40,16 +49,5 @@ namespace Play.Attrs {
 				set = cap;
 			ints[id] = set;
 		}
-	}
-}
-
-namespace Play.Stats {
-	public enum Creature {
-		HitPoint,
-		Stamina,
-		Damage,
-	}
-	public enum Tree {
-		Grouth,
 	}
 }

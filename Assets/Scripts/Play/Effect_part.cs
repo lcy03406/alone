@@ -33,10 +33,10 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Grow grow = ent.GetAttr<Grow>();
+			Part grow = ent.GetAttr<Part>();
 			if (grow == null)
 				return false;
-			Grow.Part part = grow.Get(id);
+			Part.PartItem part = grow.Get(id);
 			if (part == null)
 				return false;
 			int value = part.count;
@@ -83,10 +83,10 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			if (ent == null)
 				return false;
-			Grow grow = ent.GetAttr<Grow>();
+			Part grow = ent.GetAttr<Part>();
 			if (grow == null)
 				return false;
-			Grow.Part part = grow.Get(id);
+			Part.PartItem part = grow.Get(id);
 			if (part == null)
 				return false;
 			if (!c_value.Can(ctx))
@@ -99,8 +99,8 @@ namespace Play.Eff {
 
 		public override void Do(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);
-			Grow grow = ent.GetAttr<Grow>();
-			Grow.Part part = grow.Get(id);
+			Part grow = ent.GetAttr<Part>();
+			Part.PartItem part = grow.Get(id);
 			int value = c_value.Get(ctx);
 			if (value > 0) {
 				grow.Set(id, part.count - value);

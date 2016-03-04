@@ -24,25 +24,25 @@ namespace Schema {
 						),
 					}
 				),
-				entities: new Play.Calcs.RandConst<Play.EntityCreate>(
-					choices: new List<Play.Choice<Play.EntityCreate>> {
-						new Play.Choice<Play.EntityCreate>(
-							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Boulder)),
+				entities: new Play.Calcs.RandConst<Entity.A>(
+					choices: new List<Play.Choice<Entity.A>> {
+						new Play.Choice<Entity.A>(
+							value: Entity.GetA(Entity.ID.Boulder),
 							prob: 10
 						),
-						new Play.Choice<Play.EntityCreate>(
-							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Human)),
+						new Play.Choice<Entity.A>(
+							value: Entity.GetA(Entity.ID.Human),
 							prob: 10
 						),
-						new Play.Choice<Play.EntityCreate>(
-							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Tree_Oak)),
+						new Play.Choice<Entity.A>(
+							value: Entity.GetA(Entity.ID.Tree_Oak),
 							prob: 10
 						),
-						new Play.Choice<Play.EntityCreate>(
-							value: new Play.EntityCreate(a: Entity.GetA(Entity.ID.Tree_Pine)),
+						new Play.Choice<Entity.A>(
+							value: Entity.GetA(Entity.ID.Tree_Pine),
 							prob: 10
 						),
-						new Play.Choice<Play.EntityCreate>(
+						new Play.Choice<Entity.A>(
 							value: null,
 							prob: 60
 						),

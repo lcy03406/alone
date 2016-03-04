@@ -51,9 +51,9 @@ namespace Play {
 			layers.Add(param.layer, layer);
 			Entity e = file.LoadPlayer();
 			if (e == null) {
-				Ctx ctx = new Ctx(layer, null, null);
+				Ctx ctx = new Ctx(layer, new Coord());
 				Schema.Entity.A human = Schema.Entity.GetA(Schema.Entity.ID.Human);
-				e = Entity.Create(ctx, human);
+				e = human.CreateEntity(ctx);
 				e.SetAttr(new Attrs.Ctrl());
 			}
 			Attrs.Pos pos = e.GetAttr<Attrs.Pos>();

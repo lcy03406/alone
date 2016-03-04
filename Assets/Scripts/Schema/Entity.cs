@@ -9,10 +9,10 @@ namespace Schema {
 		public readonly Iact.A[] iact_src;
 		public readonly Iact.A[] iact_dst;
 		public readonly Iact.A[] make;
-		public readonly Play.Attrs.Stat<UsageID> usage;
+		public readonly Play.Attrs.Stat usage;
 
 		public EntityStage(Iact.A[] iact_src, Iact.A[] iact_dst,
-			Iact.A[] make, Play.Attrs.Stat<UsageID> usage) {
+			Iact.A[] make, Play.Attrs.Stat usage) {
 			this.iact_src = iact_src;
 			this.iact_dst = iact_dst;
 			this.make = make;
@@ -45,17 +45,23 @@ namespace Schema {
 		public readonly string name;
 		public readonly Stages stages;
         public readonly Stage.A start_stage;
+		public readonly Play.Attrs.Stat stat;
+		public readonly Play.Attrs.Part part;
 		public readonly Play.AttrCreate attr;
 
 		Entity(SpriteID sprite,
 			string name,
 			Stages stages,
             Stage.A start_stage,
+			Play.Attrs.Stat stat,
+			Play.Attrs.Part part,
 			Play.AttrCreate attr) {
 			this.sprite = Sprite.GetA(sprite);
 			this.name = name;
 			this.stages = stages;
 			this.start_stage = start_stage;
+			this.stat = stat;
+			this.part = part;
 			this.attr = attr;
 		}
 
@@ -92,20 +98,20 @@ namespace Schema {
 				name: "boulder",
 				stages: boulder_stages,
                 start_stage: Stage.GetA(Stage.ID.Boulder_Static),
-				attr: new Play.Ents.Static(
-					part: new Play.Attrs.Grow() {
-						items = {
-							{ PartID.Boulder_Stone, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.Stone),
-								count: 100,
-								cap: 100,
-								q: 10,
-								grow_span: 0,
-								grow_count: 0
-							)},
-						}
+				stat: null,
+				part: new Play.Attrs.Part() {
+					items = {
+						{ PartID.Boulder_Stone, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.Stone),
+							count: 100,
+							cap: 100,
+							q: 10,
+							grow_span: 0,
+							grow_count: 0
+						)},
 					}
-				)
+				},
+				attr: null
 			));
 		}
 
@@ -139,72 +145,70 @@ namespace Schema {
 				name: "pine tree",
 				stages: tree_stages,
 				start_stage: Stage.GetA(Stage.ID.Tree_Young),
-				attr: new Play.Ents.Tree(
-					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
-						ints = {
-							{ Play.Stats.Tree.Grouth, 0 },
-						},
-						caps = {
-							{ Play.Stats.Tree.Grouth, 100 },
-						}
+				stat: new Play.Attrs.Stat() {
+					ints = {
+						{ StatID.Tree_Grouth, 0 },
 					},
-					part: new Play.Attrs.Grow() {
-						items = {
-							{ PartID.Tree_Branch, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.Branch),
-								count: 10,
-								cap: 10,
-								q: 10,
-								grow_span: 500,
-								grow_count: 1
-							)},
-							{ PartID.Tree_Fruit, new Play.Attrs.Grow.Part(
-								a: null,
-								count: 0,
-								cap: 0,
-								q: 0,
-								grow_span: 0,
-								grow_count: 0
-							)},
-						}
+					caps = {
+						{ StatID.Tree_Grouth, 100 },
 					}
-				)
+				},
+				part: new Play.Attrs.Part() {
+					items = {
+						{ PartID.Tree_Branch, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.Branch),
+							count: 10,
+							cap: 10,
+							q: 10,
+							grow_span: 500,
+							grow_count: 1
+						)},
+						{ PartID.Tree_Fruit, new Play.Attrs.Part.PartItem(
+							a: null,
+							count: 0,
+							cap: 0,
+							q: 0,
+							grow_span: 0,
+							grow_count: 0
+						)},
+					}
+				},
+				attr: null
 			));
 			Add(ID.Tree_Oak, new Entity(
 				sprite: SpriteID.b_tree_oak,
 				name: "oak tree",
 				stages: tree_stages,
 				start_stage: Stage.GetA(Stage.ID.Tree_Young),
-				attr: new Play.Ents.Tree(
-					stat: new Play.Attrs.Stat<Play.Stats.Tree>() {
-						ints = {
-							{ Play.Stats.Tree.Grouth, 0 },
-						},
-						caps = {
-							{ Play.Stats.Tree.Grouth, 100 },
-						}
+				stat: new Play.Attrs.Stat() {
+					ints = {
+						{ StatID.Tree_Grouth, 0 },
 					},
-					part: new Play.Attrs.Grow() {
-						items = {
-							{ PartID.Tree_Branch, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.Branch),
-								count: 10,
-								cap: 10,
-								q: 10,
-								grow_span: 500,
-								grow_count: 1
-							)},
-							{ PartID.Tree_Fruit, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.OakNut),
-								count: 10,
-								cap: 10,
-								q: 10,
-								grow_span: 1000,
-								grow_count: 10
-							)},
-						}
+					caps = {
+						{ StatID.Tree_Grouth, 100 },
 					}
-				)
+				},
+				part: new Play.Attrs.Part() {
+					items = {
+						{ PartID.Tree_Branch, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.Branch),
+							count: 10,
+							cap: 10,
+							q: 10,
+							grow_span: 500,
+							grow_count: 1
+						)},
+						{ PartID.Tree_Fruit, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.OakNut),
+							count: 10,
+							cap: 10,
+							q: 10,
+							grow_span: 1000,
+							grow_count: 10
+						)},
+					}
+				},
+				attr: null
 			));
 		}
 
@@ -259,39 +263,39 @@ namespace Schema {
 				name: "human",
 				stages: human_stages,
 				start_stage: Stage.GetA(Stage.ID.Creature_Alive),
-                attr: new Play.Ents.Creature(
-					stat: new Play.Attrs.Stat<Play.Stats.Creature>() {
-						ints = {
-							{ Play.Stats.Creature.HitPoint, 10 },
-							{ Play.Stats.Creature.Stamina, 10 },
-							{ Play.Stats.Creature.Damage, 5 },
-						},
-						caps = {
-							{ Play.Stats.Creature.HitPoint, 10 },
-							{ Play.Stats.Creature.Stamina, 10 },
-							{ Play.Stats.Creature.Damage, 5 },
-						}
+				stat: new Play.Attrs.Stat() {
+					ints = {
+						{ StatID.Creature_HitPoint, 10 },
+						{ StatID.Creature_Stamina, 10 },
+						{ StatID.Creature_Damage, 5 },
 					},
-					part: new Play.Attrs.Grow() {
-						items = {
-							{ PartID.Creature_Bone, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.Bone),
-								count: 10,
-								cap: 10,
-								q: 10,
-								grow_span: 0,
-								grow_count: 0
-							)},
-							{ PartID.Creature_Meat, new Play.Attrs.Grow.Part(
-								a: Item.GetA(Item.ID.Meat),
-								count: 10,
-								cap: 10,
-								q: 10,
-								grow_span: 0,
-								grow_count: 0
-							)},
-						}
+					caps = {
+						{ StatID.Creature_HitPoint, 10 },
+						{ StatID.Creature_Stamina, 10 },
+						{ StatID.Creature_Damage, 5 },
 					}
+				},
+				part: new Play.Attrs.Part() {
+					items = {
+						{ PartID.Creature_Bone, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.Bone),
+							count: 10,
+							cap: 10,
+							q: 10,
+							grow_span: 0,
+							grow_count: 0
+						)},
+						{ PartID.Creature_Meat, new Play.Attrs.Part.PartItem(
+							a: Item.GetA(Item.ID.Meat),
+							count: 10,
+							cap: 10,
+							q: 10,
+							grow_span: 0,
+							grow_count: 0
+						)},
+					}
+				},
+                attr: new Play.Ents.Creature(
 				)
 			));
 		}
@@ -313,9 +317,9 @@ namespace Schema {
 						iact_src: null,
 						iact_dst: null,
 						make: null,
-						usage: new Play.Attrs.Stat<UsageID>() {
+						usage: new Play.Attrs.Stat() {
 							ints = {
-								{ UsageID.Workshop_Cookfire, 1 }
+								{ StatID.Workshop_Cookfire, 1 }
 							}
 						}
 					)
@@ -326,7 +330,9 @@ namespace Schema {
 				name: "campfire",
 				stages: campfire_stages,
 				start_stage: Stage.GetA(Stage.ID.Workshop_On), //TODO
-				attr: new Play.Ents.Workshop()
+				stat: null,
+				part: null,
+				attr: null
 			));
 		}
 	}

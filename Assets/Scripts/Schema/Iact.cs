@@ -75,7 +75,7 @@ namespace Schema {
 			Play.ItemSelect[] tools,
 			Play.ItemSelect[] reagents,
 			Play.ItemCreate[] products,
-			Play.EntityCreate build) {
+			Schema.Entity.A build) {
 			return new Iact(
 				name: name,
 				time1: time1,

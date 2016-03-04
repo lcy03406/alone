@@ -53,8 +53,8 @@ namespace Schema {
 			};
 			Add(ID.Creature_Alive, new Stage(name: "alive",
 				start_ef: null,
-				tick_ef: Ef.DieOnZeroStat<Play.Stats.Creature>(
-					new Play.Stats.Creature[] { Play.Stats.Creature.HitPoint },
+				tick_ef: Ef.DieOnZeroStat(
+					new StatID[] { StatID.Creature_HitPoint },
 					Stage.GetA(Stage.ID.Creature_Dead)),
 				finish_ef: null
 			));

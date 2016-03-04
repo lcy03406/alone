@@ -5,16 +5,16 @@ using System.Collections.Generic;
 namespace Schema {
 	public static class Ef {
 		public static Play.Effect Rest(int sta) {
-			return new Play.Eff.IncStat<Play.Stats.Creature>(new Play.Calcs.Src(),
-					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta));
+			return new Play.Eff.IncStat(new Play.Calcs.Src(),
+					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta));
 		}
 
 		public static Play.Effect Attack(int sta, Play.Calc<int> damage) {
 			Play.Effect[] eff = new Play.Effect[] {
-				new Play.Eff.DecStat<Play.Stats.Creature> (new Play.Calcs.Src(),
-					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta)),
-				new Play.Eff.DecStat<Play.Stats.Creature> (new Play.Calcs.Dst(),
-					Play.Stats.Creature.HitPoint, damage),
+				new Play.Eff.DecStat(new Play.Calcs.Src(),
+					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.DecStat(new Play.Calcs.Dst(),
+					StatID.Creature_HitPoint, damage),
 			};
 			return new Play.Eff.Multi(eff);
 		}
@@ -25,8 +25,8 @@ namespace Schema {
 					id: part,
 					value: new Play.Calcs.Const<int>(count)
 				),
-				new Play.Eff.DecStat<Play.Stats.Creature> (ent: new Play.Calcs.Src(),
-					id: Play.Stats.Creature.Stamina,
+				new Play.Eff.DecStat(ent: new Play.Calcs.Src(),
+					id: StatID.Creature_Stamina,
 					value: new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
 					cre: new Play.Calcs.ItemCount(
@@ -55,8 +55,8 @@ namespace Schema {
 					id: part,
 					value: new Play.Calcs.Const<int>(count)
 				),
-				new Play.Eff.DecStat<Play.Stats.Creature> (ent: new Play.Calcs.Src(),
-					id: Play.Stats.Creature.Stamina,
+				new Play.Eff.DecStat(ent: new Play.Calcs.Src(),
+					id: StatID.Creature_Stamina,
 					value: new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
 					cre: new Play.Calcs.ItemCount(
@@ -75,11 +75,11 @@ namespace Schema {
 			Play.ItemSelect[] tools,
 			Play.ItemSelect[] reagents,
 			Play.ItemCreate[] products,
-			Play.EntityCreate build) {
+			Schema.Entity.A build) {
 			List<Play.Effect> eff = new List<Play.Effect>();
 			if (sta > 0) {
-				eff.Add(new Play.Eff.DecStat<Play.Stats.Creature>(new Play.Calcs.Src(),
-					Play.Stats.Creature.Stamina, new Play.Calcs.Const<int>(sta)));
+				eff.Add(new Play.Eff.DecStat(new Play.Calcs.Src(),
+					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)));
 			}
 			if (tools != null) {
 				foreach (Play.ItemSelect sel in tools) {
@@ -100,7 +100,7 @@ namespace Schema {
 				}
 			}
 			if (build != null) {
-				eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Play.EntityCreate>(build)));
+				eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Schema.Entity.A>(build)));
 			}
 			return new Play.Eff.Multi(eff.ToArray());
 		}
@@ -115,13 +115,12 @@ namespace Schema {
 			return new Play.Eff.Multi(eff.ToArray());
 		}
 
-		public static Play.Effect DieOnZeroStat<StatID>(StatID[] stats, Stage.A to)
-			where StatID : struct
+		public static Play.Effect DieOnZeroStat(Schema.StatID[] stats, Stage.A to)
 		{
 			Play.Calcs.Const<int> intzero = new Play.Calcs.Const<int>(0);
 			List<Play.Effect> eff = new List<Play.Effect>();
 			foreach (StatID stat in stats) {
-				eff.Add(new Play.Eff.UseStat<StatID>(new Play.Calcs.Src(), stat, null, intzero));
+				eff.Add(new Play.Eff.UseStat(new Play.Calcs.Src(), stat, null, intzero));
 			}
 			eff.Add(new Play.Eff.ToStage(new Play.Calcs.Src(), to));
 			return new Play.Eff.Multi(eff.ToArray());

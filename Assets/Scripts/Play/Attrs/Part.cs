@@ -7,9 +7,9 @@ using ID = Schema.PartID;
 
 namespace Play.Attrs {
 	[Serializable]
-	public class Grow : Attrib {
+	public class Part : Attrib {
 		[Serializable]
-		public class Part {
+		public class PartItem {
 			public Schema.Item.A a;
 			public int count;
 			public int cap;
@@ -18,7 +18,7 @@ namespace Play.Attrs {
 			public int grow_span;
 			public int grow_count;
 
-			public Part(
+			public PartItem(
 				Schema.Item.A a,
 				int count,
 				int cap,
@@ -35,7 +35,7 @@ namespace Play.Attrs {
 				this.grow_count = grow_count;
 			}
 
-			public Part(Part b) {
+			public PartItem(PartItem b) {
 				this.a = b.a;
 				this.count = b.count;
 				this.cap = b.cap;
@@ -55,35 +55,35 @@ namespace Play.Attrs {
 			}
 		}
 
-		public Dictionary<ID, Part> items;
+		public Dictionary<ID, PartItem> items;
 
-		public Grow() {
-			items = new Dictionary<ID, Part>();
+		public Part() {
+			items = new Dictionary<ID, PartItem>();
 		}
 
-		public Grow(Grow b) {
-			items = new Dictionary<ID, Part>();
-			foreach (KeyValuePair<ID, Part> pair in b.items) {
-				items.Add(pair.Key, new Part(pair.Value));
+		public Part(Attrs.Part b) {
+			items = new Dictionary<ID, PartItem>();
+			foreach (KeyValuePair<ID, PartItem> pair in b.items) {
+				items.Add(pair.Key, new PartItem(pair.Value));
 			}
 		}
 
 		public override void OnBorn() {
 			base.OnBorn();
 			int time = ent.layer.world.param.time;
-			foreach (Part part in items.Values) {
+			foreach (PartItem part in items.Values) {
 				part.grow_time += time;
 			}
 		}
 
-		public Part Get(ID id) {
-			Part part = null;
+		public PartItem Get(ID id) {
+			PartItem part = null;
 			items.TryGetValue(id, out part);
 			return part;
 		}
 
 		public void Set(ID id, int count) {
-			Part part = items[id];
+			PartItem part = items[id];
             if (count < 0)
 				count = 0;
 			else if (count > part.cap)
@@ -92,7 +92,7 @@ namespace Play.Attrs {
 		}
 
 		public void Tick(int time) {
-			foreach (Part part in items.Values) {
+			foreach (PartItem part in items.Values) {
 				if (part.grow_time + part.grow_span <= time) {
 					int count = part.count + part.grow_count;
 					if (count < 0)
