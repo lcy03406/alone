@@ -68,11 +68,13 @@ namespace Schema {
 			}
 
 			public static bool operator == (A a, A b) {
-				return a.id.Equals(b.id);
+				if ((object)a == null)
+					return (object)b == null;
+				return a.Equals(b);
 			}
 
 			public static bool operator != (A a, A b) {
-				return !a.id.Equals(b.id);
+				return !(a == b);
 			}
 
 		}

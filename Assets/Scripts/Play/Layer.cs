@@ -14,7 +14,6 @@ namespace Play {
 		public World world;
 		public int z;
 		public Rect rect;
-		public int seed;
 
 		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
 		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
@@ -22,12 +21,6 @@ namespace Play {
 		public Layer(World world, int z) {
 			this.world = world;
 			this.z = z;
-			Random random = new Random(world.param.seed);
-			int zig = z >= 0 ? z * 2 : -z * 2 - 1;
-			for (int i = 0; i < zig; i++) {
-				random.Next();
-			}
-			seed = random.Next();
 			if (z < 0) {
 				int r = 10 + z;
 				rect = new Rect(new Coord(-r, -r), new Coord(r-1, r-1));
@@ -71,7 +64,7 @@ namespace Play {
 
 		Grid.Data CreateGrid (Coord g) {
 			Ctx ctx = new Ctx(this, g);
-			GridCreate cre = Schema.Grid.GetA(Schema.Grid.ID.Plain).s.cre;
+			LayerCreate cre = Schema.Grid.GetA(Schema.Grid.ID.Cave).s.cre;
 			Grid.Data grid = cre.Create(ctx, g);
 			return grid;
 		}

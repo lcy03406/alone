@@ -14,7 +14,9 @@ namespace Play.Attrs {
 			public int buf;
 			public SortedList<int, Buf> bufs = new SortedList<int, Buf>();
 
-			public St() {
+			public St(int value, int cap) {
+				this.value = value;
+				this.cap = cap;
 			}
 
 			public St(St b) {

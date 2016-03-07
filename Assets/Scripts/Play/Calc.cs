@@ -23,12 +23,6 @@ namespace Play {
 			this.src = src;
 			this.dst = dst;
 			this.dstc = dstc;
-			if (dst != null)
-				dstc = dst.GetAttr<Pos>().c;
-			else if (src != null)
-				dstc = src.GetAttr<Pos>().c;
-			else
-				Assert.IsTrue(false);
 		}
 
 		public Ctx(Layer layer, Coord dstc)

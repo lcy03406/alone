@@ -4,32 +4,64 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Play {
-	public class GridCreate {
+	public abstract class LayerCreate {
+		public abstract Grid.Data Create(Ctx ctx, Coord g);
+	}
+}
+
+namespace Play.Layers {
+	public class Flat : LayerCreate {
 		Calcs.RandConst<Schema.Floor.A> floors;
 		Calcs.RandConst<Schema.Entity.A> entities;
-		public GridCreate(Calcs.RandConst<Schema.Floor.A> floors,
-			Calcs.RandConst<Schema.Entity.A> entities)
-		{
-            this.floors = floors;
+		public Flat(Calcs.RandConst<Schema.Floor.A> floors,
+			Calcs.RandConst<Schema.Entity.A> entities) {
+			this.floors = floors;
 			this.entities = entities;
 		}
 
-		public Grid.Data Create(Ctx ctx, Coord g) {
+		public override Grid.Data Create(Ctx ctx, Coord g) {
 			Grid.Data grid = new Grid.Data();
 			for (int x = 0; x < World.GRID_SIZE; ++x) {
 				for (int y = 0; y < World.GRID_SIZE; ++y) {
-					//grid.tiles[x, y] = floors.Get(ctx);
-					float per = Mathf.PerlinNoise((float)x / (float)World.GRID_SIZE * 2, (float)y / (float)World.GRID_SIZE) * 2;
-					if (per >= 0.3)
-						grid.tiles[x, y] = Schema.Floor.GetA(Schema.Floor.ID.Grass);
-					else
-						grid.tiles[x, y] = Schema.Floor.GetA(Schema.Floor.ID.Ocean);
-
+					grid.tiles[x, y] = floors.Get(ctx);
 					Schema.Entity.A cre = entities.Get(ctx);
 					if (cre != null) {
 						Entity e = cre.CreateEntity(ctx);
 						if (e != null) {
 							e.GetAttr<Attrs.Pos>().c = g.Add(x, y);
+							grid.entities.Add(e);
+						}
+					}
+				}
+			}
+			return grid;
+		}
+	}
+
+	public class Cave : LayerCreate {
+		public override Grid.Data Create(Ctx ctx, Coord g) {
+			Schema.Entity.A border = Schema.Entity.GetA(Schema.Entity.ID.Workshop_Campfire);
+			Schema.Entity.A stone = Schema.Entity.GetA(Schema.Entity.ID.Boulder);
+			Schema.Floor.A floor = Schema.Floor.GetA(Schema.Floor.ID.Dirt);
+			int z = ctx.layer.z;
+			int s = ctx.layer.world.param.seed;
+			Rect rect = ctx.layer.rect;
+			Grid.Data grid = new Grid.Data();
+			for (int x = 0; x < World.GRID_SIZE; ++x) {
+				for (int y = 0; y < World.GRID_SIZE; ++y) {
+					Coord c = g.Add(x, y);
+					grid.tiles[x, y] = floor;
+					ctx.dstc = c;
+					if (!c.In(rect)) {
+						Entity e = border.CreateEntity(ctx);
+						if (e != null) {
+							grid.entities.Add(e);
+						}
+					}
+					int room = Rand.BigCave(x + s, y + s, z + s);
+					if (room > 0) {
+						Entity e = stone.CreateEntity(ctx);
+						if (e != null) {
 							grid.entities.Add(e);
 						}
 					}

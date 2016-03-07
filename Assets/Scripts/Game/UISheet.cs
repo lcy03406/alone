@@ -71,9 +71,9 @@ I = Inventory
 	public void ShowChar() {
 		string t = "";
 		Stat stat = Game.game.player.GetAttr<Stat>();
-		foreach (KeyValuePair<Schema.StatID, int> pair in stat.ints) {
-			t += pair.Key.ToString() + ": " + pair.Value;
-			int cap = stat.Cap(pair.Key);
+		foreach (KeyValuePair<Schema.StatID, Stat.St> pair in stat.ints) {
+			t += pair.Key.ToString() + ": " + pair.Value.value;
+			int cap = pair.Value.cap;
 			if (cap > 0)
 				t += " / " + cap;
 			t += "\n";

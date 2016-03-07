@@ -147,11 +147,11 @@ namespace Schema {
 				start_stage: Stage.GetA(Stage.ID.Tree_Young),
 				stat: new Play.Attrs.Stat() {
 					ints = {
-						{ StatID.Tree_Grouth, 0 },
+						{ StatID.Tree_Grouth, new Play.Attrs.Stat.St(
+							value: 0,
+							cap: 100
+						)},
 					},
-					caps = {
-						{ StatID.Tree_Grouth, 100 },
-					}
 				},
 				part: new Play.Attrs.Part() {
 					items = {
@@ -182,11 +182,11 @@ namespace Schema {
 				start_stage: Stage.GetA(Stage.ID.Tree_Young),
 				stat: new Play.Attrs.Stat() {
 					ints = {
-						{ StatID.Tree_Grouth, 0 },
+						{ StatID.Tree_Grouth, new Play.Attrs.Stat.St(
+							value: 0,
+							cap: 100
+						)},
 					},
-					caps = {
-						{ StatID.Tree_Grouth, 100 },
-					}
 				},
 				part: new Play.Attrs.Part() {
 					items = {
@@ -265,15 +265,19 @@ namespace Schema {
 				start_stage: Stage.GetA(Stage.ID.Creature_Alive),
 				stat: new Play.Attrs.Stat() {
 					ints = {
-						{ StatID.Creature_HitPoint, 10 },
-						{ StatID.Creature_Stamina, 10 },
-						{ StatID.Creature_Damage, 5 },
+						{ StatID.Creature_HitPoint, new Play.Attrs.Stat.St(
+							value: 10,
+							cap: 10
+						)},
+						{ StatID.Creature_Stamina, new Play.Attrs.Stat.St(
+							value: 10,
+							cap: 10
+						)},
+						{ StatID.Creature_Damage, new Play.Attrs.Stat.St(
+							value: 5,
+							cap: 0
+						)},
 					},
-					caps = {
-						{ StatID.Creature_HitPoint, 10 },
-						{ StatID.Creature_Stamina, 10 },
-						{ StatID.Creature_Damage, 5 },
-					}
 				},
 				part: new Play.Attrs.Part() {
 					items = {
@@ -319,7 +323,10 @@ namespace Schema {
 						make: null,
 						usage: new Play.Attrs.Stat() {
 							ints = {
-								{ StatID.Workshop_Cookfire, 1 }
+								{ StatID.Workshop_Cookfire, new Play.Attrs.Stat.St(
+									value: 1,
+									cap: 0
+								)},
 							}
 						}
 					)

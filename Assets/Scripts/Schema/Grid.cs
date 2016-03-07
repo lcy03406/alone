@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace Schema {
 	public sealed class Grid : SchemaBase<Grid.ID, Grid> {
-		public readonly Play.GridCreate cre;
-		private Grid(Play.GridCreate cre) {
+		public readonly Play.LayerCreate cre;
+		private Grid(Play.LayerCreate cre) {
 			this.cre = cre;
 		}
 		public enum ID {
 			Plain,
+			Cave,
 		}
 		static public void Init () {
-			Add(ID.Plain, new Grid(cre: new Play.GridCreate(
+			Add(ID.Plain, new Grid(cre: new Play.Layers.Flat(
 				floors: new Play.Calcs.RandConst<Floor.A>(
 					choices: new List<Play.Choice<Floor.A>> {
 						new Play.Choice<Floor.A>(
@@ -49,6 +50,7 @@ namespace Schema {
 					}
 				)
 			)));
-		}
+			Add(ID.Cave, new Grid(cre: new Play.Layers.Cave()));
+        }
 	}
 }
