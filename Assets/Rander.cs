@@ -3,10 +3,16 @@ using System.Collections.Generic;
 
 public class Rander : MonoBehaviour {
 
-	private const int resolution = 256;
+	private const int resolution = 2048;
+	Texture2D texture;
+	int z;
+	float ztime;
 	// Use this for initialization
 	void Start() {
-		Texture2D texture = NoiseTex.FillTexture(resolution);
+		texture = new Texture2D(resolution, resolution, TextureFormat.RGB24, true);
+		z = 0;
+		ztime = Time.time;
+		NoiseTex.FillTexture(texture, z);
 		//Texture2D texture = BoxTex.FillTexture(resolution);
 		texture.name = "Procedural Texture";
 		Sprite sp = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
@@ -14,30 +20,33 @@ public class Rander : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update() {
-
+		float time = Time.time;
+		if (time - ztime > 1) {
+			ztime += 1;
+			z += 1;
+			NoiseTex.FillTexture(texture, z);
+		}
 	}
 }
 
 public static class NoiseTex {
-	public static Texture2D FillTexture(int resolution) {
-		Texture2D texture = new Texture2D(resolution, resolution, TextureFormat.RGB24, true);
-		for (int y = 0; y < resolution; y++) {
-			for (int x = 0; x < resolution; x++) {
-				int f = FillPixel(x, y);
+	public static void FillTexture(Texture2D texture, int z) {
+		for (int y = 0; y < texture.height; y++) {
+			for (int x = 0; x < texture.width; x++) {
+				int f = FillPixel(x, y, z);
 				texture.SetPixel(x, y, new Color(f, f, f));
 			}
 		}
 		texture.Apply();
-		return texture;
 	}
-	private static int FillPixel(int x, int y) {
-		int i1 = SimpleNoise(x / 20, y / 20);
-		int i2 = SimpleNoise(x / 16, y / 16);
-		int ix1 = SimpleNoise(x / 13, y / 2);
-		int ix2 = SimpleNoise(x / 33, y / 2);
-		int iy1 = SimpleNoise(x / 2, y / 13);
-		int iy2 = SimpleNoise(x / 2, y / 33);
-		int ixy1 = SimpleNoise(x / 2, y / 2);
+	private static int FillPixel(int x, int y, int z) {
+		int i1 = SimpleNoise(x / 20, y / 20, z * 19);
+		int i2 = SimpleNoise(x / 16, y / 16, z * 23);
+		int ix1 = SimpleNoise(x / 13, y / 2, z * 11);
+		int ix2 = SimpleNoise(x / 33, y / 2, z * 13);
+		int iy1 = SimpleNoise(x / 2, y / 13, z * 7);
+		int iy2 = SimpleNoise(x / 2, y / 33, z * 17);
+		int ixy1 = SimpleNoise(x / 2, y / 2, z * 5);
 		//return (i1 + i2) >= 320 || (ix + iy) >= 256 ? 1 : 0;
 		int i = (i1 + i2) / 2;
 		int ix = (ix1 + ix2) / 2;
@@ -70,8 +79,16 @@ public static class NoiseTex {
 		//float f = Mathf.PerlinNoise((float)x / resolution * 16, (float)y / resolution * 16);
 		int ix = x % hashMask;
 		int iy = y % hashMask;
-		int ixy = (hash[ix] + hash[iy]) % hashMask;
+		int ixy = (hash[ix] + iy) % hashMask;
 		return hash[ixy];
+	}
+	public static int SimpleNoise(int x, int y, int z) {
+		int ix = x % hashMask;
+		int iy = y % hashMask;
+		int iz = z % hashMask;
+		int ixy = (hash[ix] + iy) % hashMask;
+		int ixyz = (hash[ixy] + iz) % hashMask;
+		return hash[ixyz];
 	}
 }
 
