@@ -21,7 +21,7 @@ namespace Play {
 		public Layer(World world, int z) {
 			this.world = world;
 			this.z = z;
-			if (z < 0) {
+			if (z <= 0) { //TODO
 				int r = 10 + z;
 				rect = new Rect(new Coord(-r, -r), new Coord(r-1, r-1));
 			}

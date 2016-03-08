@@ -24,9 +24,9 @@ namespace Play {
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
 			if (actor != null)
 				actor.Tick(time);
-			Attrs.Part grow = GetAttr<Attrs.Part>();
-			if (grow != null)
-				grow.Tick(time);
+			Attrs.Part part = GetAttr<Attrs.Part>();
+			if (part != null)
+				part.Tick(time);
 			Attrs.Stage stage = GetAttr<Attrs.Stage>();
 			if (stage != null)
 				stage.Tick(time);

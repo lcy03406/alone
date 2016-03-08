@@ -37,20 +37,20 @@ namespace Play {
 			222,114, 67, 29, 24, 72,243,141,128,195, 78, 66,215, 61,156,180
 		};
 
-		private const int hash_size = 256;
+		private const int hashMask = 255;
 
 		public static int SimpleNoise2(int x, int y) {
-			int ix = x % hash_size;
-			int iy = y % hash_size;
-			int ixy = (hash[ix] + iy) % hash_size;
+			int ix = x & hashMask;
+			int iy = y & hashMask;
+			int ixy = (hash[ix] + iy) & hashMask;
 			return hash[ixy];
 		}
 		public static int SimpleNoise3(int x, int y, int z) {
-			int ix = x % hash_size;
-			int iy = y % hash_size;
-			int iz = z % hash_size;
-			int ixy = (hash[ix] + iy) % hash_size;
-			int ixyz = (hash[ixy] + iz) % hash_size;
+			int ix = x & hashMask;
+			int iy = y & hashMask;
+			int iz = z & hashMask;
+			int ixy = (hash[ix] + iy) & hashMask;
+			int ixyz = (hash[ixy] + iz) & hashMask;
 			return hash[ixyz];
 		}
 	}

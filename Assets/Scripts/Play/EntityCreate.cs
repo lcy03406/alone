@@ -17,16 +17,16 @@ namespace Play {
 			ent.SetAttr(pos);
 			ent.SetAttr(new Attrs.Core(a));
 			Schema.Entity s = a.s;
-			if (s.start_stage != null) {
-				Attrs.Stage stage = new Attrs.Stage();
-				stage.a = a.s.start_stage; //TODO
-				ent.SetAttr(stage);
-			}
 			if (s.stat != null) {
 				ent.SetAttr(new Attrs.Stat(s.stat));
 			}
 			if (s.part != null) {
 				ent.SetAttr(new Attrs.Part(s.part));
+			}
+			if (s.start_stage != null) {
+				Attrs.Stage stage = new Attrs.Stage();
+				stage.a = a.s.start_stage; //TODO
+				ent.SetAttr(stage);
 			}
 			if (s.attr != null) {
 				s.attr.Create(ctx, ent);

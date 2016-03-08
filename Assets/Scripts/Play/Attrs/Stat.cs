@@ -8,6 +8,7 @@ using ID = Schema.StatID;
 namespace Play.Attrs {
 	[Serializable]
 	public class Stat : Attrib {
+		[Serializable]
 		public class St {
 			public int value;
 			public int cap;
@@ -50,7 +51,7 @@ namespace Play.Attrs {
 		}
 
 		public Stat(Stat b) {
-			foreach (KeyValuePair<ID, St> pair in ints) {
+			foreach (KeyValuePair<ID, St> pair in b.ints) {
 				ID id = pair.Key;
 				St st = new St(pair.Value);
 				ints.Add(id, st);
@@ -62,7 +63,7 @@ namespace Play.Attrs {
         }
 
 		public int Get(ID id) {
-			Assert.IsTrue(Has(id));
+			Assert.IsTrue(Has(id), string.Format("no stat {0}", id));
 			St st;
 			if (ints.TryGetValue(id, out st))
 				return st.value;
