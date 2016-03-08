@@ -45,7 +45,7 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void World.View.OnLoadGrid (Coord g, Grid grid) {
-		string gname = "GameGrid_" + g;
+		string gname = string.Format("Layer_{0}_Grid_{1}", world.param.layer, g);
 		GameObject go = GameObject.Find (gname);
 		if (go == null) {
 			go = new GameObject (gname);
@@ -56,7 +56,7 @@ public class Game : MonoBehaviour, World.View {
 				for (int y = 0; y < grid.d.tiles.GetLength(1); ++y) {
 					Schema.Floor.A t = grid.d.tiles[x,y];
 					GameObject o = Instantiate(tilePrefab);
-					o.name = string.Format ("GameTile_{0}_{1}", g.x + x, g.y + y);
+					o.name = string.Format ("Layer_{0}_Tile_{1}_{2}", world.param.layer, g.x + x, g.y + y);
                     o.GetComponent<SpriteRenderer> ().sprite = t.s.sprite.s.sprite;
 					o.transform.SetParent(got);
 					o.transform.localPosition = new Vector3(x, y, 0);
@@ -66,7 +66,7 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void World.View.OnUnloadGrid (Coord g) {
-		string gname = "GameGrid_" + g;
+		string gname = string.Format("Layer_{0}_Grid_{1}", world.param.layer, g);
 		GameObject go = GameObject.Find (gname);
 		if (go != null) {
 			Destroy (go);
@@ -77,20 +77,20 @@ public class Game : MonoBehaviour, World.View {
 		if (ent.isPlayer) {
 			player = ent;
 			GameObject go = Instantiate(playerPrefab);
-			go.name = "GameEntity_" + player.id;
+			go.name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
 			GameObject.Find("Main Camera").transform.SetParent(go.transform);
 			GameEntity ge = go.GetComponent<GameEntity>();
 			ge.Init(this, ent);
 		} else {
 			ulong g = ent.id.value / 1024;
-			string gname = "GameEntityGroup_" + g;
+			string gname = string.Format("Layer_{0}_EntityGroup_{1}", world.param.layer, g);
 			GameObject go = GameObject.Find(gname);
 			if (go == null) {
 				go = new GameObject(gname);
 				go.transform.SetParent(root);
 			}
 			GameObject o = Instantiate(playerPrefab);
-			o.name = "GameEntity_" + ent.id;
+			o.name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
 			o.transform.SetParent(go.transform);
 			GameEntity ge = o.GetComponent<GameEntity>();
 			ge.Init(this, ent);
@@ -99,19 +99,18 @@ public class Game : MonoBehaviour, World.View {
 
 	void World.View.OnDelEntity (Entity ent) {
 		if (ent.isPlayer) {
-			player = null;
-			GameObject go = Instantiate(playerPrefab);
-			string name = "GameEntity_" + player.id;
 			GameObject.Find("Main Camera").transform.SetParent(root.transform);
+			string name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
 			GameObject o = GameObject.Find(name);
 			Destroy(o);
+			player = null;
 		} else {
 			ulong g = ent.id.value / 1024;
-			string gname = "GameEntityGroup_" + g;
+			string gname = string.Format("Layer_{0}_EntityGroup_{1}", world.param.layer, g);
 			GameObject go = GameObject.Find(gname);
 			if (go == null)
 				return;
-			string name = "GameEntity_" + ent.id;
+			string name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
 			GameObject o = GameObject.Find(name);
 			Destroy(o);
 			if (go.transform.childCount == 0)

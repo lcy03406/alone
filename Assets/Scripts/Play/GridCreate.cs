@@ -72,7 +72,7 @@ namespace Play.Layers {
 						}
 					}
 					if (a != null) {
-						Entity e = stone.CreateEntity(ctx);
+						Entity e = a.CreateEntity(ctx);
 						if (e != null) {
 							grid.entities.Add(e);
 						}

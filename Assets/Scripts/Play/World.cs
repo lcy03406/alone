@@ -106,6 +106,9 @@ namespace Play {
 			fromlayer.MoveOut(ent);
 			ent.layer = tolayer;
 			ent.GetAttr<Attrs.Pos>().c = tolayer.param.entr;
+			if (player == ent) {
+				param.layer = toz;
+			}
 			tolayer.MoveIn(ent);
 		}
 	}

@@ -44,8 +44,8 @@ namespace Play {
 				int r = 10 + z;
 				param.rect = new Rect(new Coord(-r, -r), new Coord(r - 1, r - 1));
 			}
-			param.entr = new Coord(1, -2);
-			param.exit = new Coord(-2, 1);
+			param.entr = new Coord(2, 1);
+			param.exit = new Coord(1, 1);
 		}
 
 		public void Save () {
@@ -109,11 +109,11 @@ namespace Play {
 					if (!pair.Key.In (saver)) {
 						Coord g = pair.Key;
 						Grid grid = pair.Value;
-						world.file.SaveGrid (z, g, grid);
-						grid.Unload ();
 						if (world.view != null && world.param.layer == z) {
 							world.view.OnUnloadGrid (g);
 						}
+						world.file.SaveGrid (z, g, grid);
+						grid.Unload ();
 						del.Add (g);
 					}
 				}
@@ -128,11 +128,11 @@ namespace Play {
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
 				Coord g = pair.Key;
 				Grid grid = pair.Value;
-				world.file.SaveGrid(z, g, grid);
-				grid.Unload();
 				if (world.view != null && world.param.layer == z) {
 					world.view.OnUnloadGrid(g);
 				}
+				world.file.SaveGrid(z, g, grid);
+				grid.Unload();
 				del.Add(g);
 			}
 			foreach (Coord g in del) {
@@ -181,11 +181,11 @@ namespace Play {
 			ent.layer = null;
 		}
 
-		public void MoveOut(Entity ent) {
+		public void MoveIn(Entity ent) {
 			AddEntity(ent);
 		}
 
-		public void MoveIn(Entity ent) {
+		public void MoveOut(Entity ent) {
 			DelEntity(ent);
 		}
 
