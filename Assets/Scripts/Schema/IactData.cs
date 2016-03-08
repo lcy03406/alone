@@ -5,6 +5,7 @@ namespace Schema {
 		public enum ID {
 			Rest,
 			Attack_Punch,
+			Travel_Down,
 			Chip_Stone,
 			Tree_PickBranch,
 			Tree_PickFruit,
@@ -19,6 +20,7 @@ namespace Schema {
 		static public void Init() {
 			InitCommon();
 			InitAttack();
+			InitTravel();
 			InitBoulder();
 			InitTree();
 			InitCreature();
@@ -39,6 +41,15 @@ namespace Schema {
 				time2: 0,
 				sta: 1,
 				damage: new Play.Calcs.GetStat(new Play.Calcs.Src(), StatID.Creature_Damage)
+			));
+		}
+
+		static private void InitTravel() {
+			Add(ID.Travel_Down, Travel("going down?",
+				time1: 5,
+				time2: 0,
+				sta: 3, //TODO
+				to: -1
 			));
 		}
 

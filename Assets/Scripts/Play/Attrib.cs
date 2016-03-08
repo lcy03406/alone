@@ -12,6 +12,7 @@ namespace Play {
 		public virtual void OnBorn() { }
 		public virtual void OnAttach() { }
 		public virtual void OnDetach() { }
+		public virtual void OnLoad() { }
 
 		public static Type AttribClass(Type cls) {
 			Assert.IsTrue(cls.IsSubclassOf(typeof(Attrib)));

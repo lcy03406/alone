@@ -47,6 +47,17 @@ namespace Schema {
 			);
 		}
 
+		public static Iact Travel(string name, int time1, int time2, int sta, int to) {
+			return new Iact(
+				name: name,
+				time1: time1,
+				time2: time2,
+				has_dst: true,
+				distance: 1,
+				ef: Ef.Travel(sta, to)
+			);
+		}
+
 		public static Iact Pick(string name, int time1, int time2, int sta,
 			Schema.PartID part, int count) {
 			return new Iact(

@@ -104,7 +104,7 @@ namespace Play.Acts {
 		}
 		public override bool Can (Entity ent) {
 			Entity ent_dst = ent.layer.FindEntity(dst);
-            Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
+			Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
 			return a.Can (ctx);
 		}
 		private class Step1 : Act.Step {

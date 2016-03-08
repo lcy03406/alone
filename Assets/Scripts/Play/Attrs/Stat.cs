@@ -32,6 +32,7 @@ namespace Play.Attrs {
             }
 		}
 
+		[Serializable]
 		public class Buf {
 			public Schema.BufID id;
 			public int value;

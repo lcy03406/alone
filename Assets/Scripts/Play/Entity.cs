@@ -14,9 +14,18 @@ namespace Play {
 		[NonSerialized]
 		public bool isPlayer = false;
 
-		public void Load() {
-			foreach (Attrib at in attr.Values) {
-				at.ent = this;
+		public void OnLoad() {
+			foreach (Attrib a in attr.Values) {
+				a.ent = this;
+			}
+			foreach (Attrib a in attr.Values) {
+				a.OnLoad();
+			}
+		}
+
+		public void OnBorn() {
+			foreach (Attrib a in attr.Values) {
+				a.OnBorn();
 			}
 		}
 

@@ -19,6 +19,15 @@ namespace Schema {
 			return new Play.Eff.Multi(eff);
 		}
 
+		public static Play.Effect Travel(int sta, int to) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.DecStat(new Play.Calcs.Src(),
+					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.GoLayer(new Play.Calcs.Src(), to),
+			};
+			return new Play.Eff.Multi(eff);
+		}
+
 		public static Play.Effect Pick(int sta, Schema.PartID part, int count) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),

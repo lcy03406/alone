@@ -96,13 +96,13 @@ namespace Play {
 			}
 		}
 
-		public Grid.Data LoadGrid(int l, Coord g) {
-			string name = "layer_" + l + "_grid_" + g;
+		public Grid.Data LoadGrid(int z, Coord g) {
+			string name = "layer_" + z + "_grid_" + g;
 			return LoadSome<Grid.Data> (name);
 		}
 
-		public void SaveGrid (int l, Coord g, Grid grid) {
-			string name = "layer_" + l + "_grid_" + g;
+		public void SaveGrid (int z, Coord g, Grid grid) {
+			string name = "layer_" + z + "_grid_" + g;
 			SaveSome (name, grid.Save ());
 		}
 
@@ -120,6 +120,16 @@ namespace Play {
 
 		public void SaveParam (World.Param param) {
 			SaveSome ("param", param);
+		}
+
+		public Layer.Param LoadLayerParam(int z) {
+			string name = "layer_" + z + "_param";
+			return LoadSome<Layer.Param>(name);
+		}
+
+		public void SaveLayerParam(int z, Layer.Param param) {
+			string name = "layer_" + z + "_param";
+			SaveSome(name, param);
 		}
 	}
 }

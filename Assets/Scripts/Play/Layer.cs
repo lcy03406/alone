@@ -11,9 +11,16 @@ namespace Play {
 		const int SAVE_RADIUS = 60;
 		const int UNLOAD_SIZE = 20; //
 
+		[Serializable]
+		public class Param {
+			public Rect rect;
+			public Coord entr;
+			public Coord exit;
+		};
+		public Param param;
+
 		public World world;
 		public int z;
-		public Rect rect;
 
 		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
 		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
@@ -21,13 +28,28 @@ namespace Play {
 		public Layer(World world, int z) {
 			this.world = world;
 			this.z = z;
-			if (z <= 0) { //TODO
-				int r = 10 + z;
-				rect = new Rect(new Coord(-r, -r), new Coord(r-1, r-1));
+		}
+
+		public void Load() {
+			param = world.file.LoadLayerParam(z);
+			if (param == null) {
+				Init();
 			}
 		}
 
+		public void Init() {
+			param = new Param();
+			//TODO
+			if (z < 0) {
+				int r = 10 + z;
+				param.rect = new Rect(new Coord(-r, -r), new Coord(r - 1, r - 1));
+			}
+			param.entr = new Coord(1, -2);
+			param.exit = new Coord(-2, 1);
+		}
+
 		public void Save () {
+			world.file.SaveLayerParam(z, param);
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
 				world.file.SaveGrid (z, pair.Key, pair.Value);
 			}
@@ -64,7 +86,8 @@ namespace Play {
 
 		Grid.Data CreateGrid (Coord g) {
 			Ctx ctx = new Ctx(this, g);
-			LayerCreate cre = Schema.Grid.GetA(Schema.Grid.ID.Cave).s.cre;
+			Schema.Grid.ID id = z >= 0 ? Schema.Grid.ID.Plain : Schema.Grid.ID.Cave;
+			LayerCreate cre = Schema.Grid.GetA(id).s.cre;
 			Grid.Data grid = cre.Create(ctx, g);
 			return grid;
 		}

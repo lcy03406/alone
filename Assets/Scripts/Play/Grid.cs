@@ -31,8 +31,8 @@ namespace Play {
 			foreach (Entity e in d.entities) {
 				Assert.AreEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
 				e.layer = layer;
-				e.Load();
 				layer.AddEntity (e);
+				e.OnLoad();
 			}
 			d.entities.Clear ();
 		}

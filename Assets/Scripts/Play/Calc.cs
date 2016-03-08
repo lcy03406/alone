@@ -32,7 +32,7 @@ namespace Play {
 			: this(layer, src, null, src.GetAttr<Pos>().c) {
 		}
 		public Ctx(Layer layer, Entity src, Entity dst)
-			: this(layer, src, dst, dst.GetAttr<Pos>().c) {
+			: this(layer, src, dst, (dst == null ? src : dst).GetAttr<Pos>().c) {
 		}
 
 		public Invx GetInv(Inv inv) {

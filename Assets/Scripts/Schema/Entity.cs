@@ -70,6 +70,7 @@ namespace Schema {
 			Boulder,
 			Tree_Pine,
 			Tree_Oak,
+			Workshop_Mine,
 			Workshop_Campfire,
 		}
 		static public void Init() {
@@ -223,6 +224,7 @@ namespace Schema {
 			Iact.A[] human_iact_src = new Iact.A[] {
 				Iact.GetA(Iact.ID.Rest),
 				Iact.GetA(Iact.ID.Attack_Punch),
+				Iact.GetA(Iact.ID.Travel_Down),
 				Iact.GetA(Iact.ID.Chip_Stone),
 				Iact.GetA(Iact.ID.Tree_PickBranch),
 				Iact.GetA(Iact.ID.Tree_PickFruit),
@@ -305,6 +307,19 @@ namespace Schema {
 		}
 
 		static void InitWorkshop() { //TODO
+			Stages mine_stages = new Stages {
+				{
+					Stage.ID.Workshop_On,
+					new EntityStage(
+						iact_src: null,
+						iact_dst: new Iact.A[] {
+							Iact.GetA(Iact.ID.Travel_Down),
+						},
+						make: null,
+						usage: null
+					)
+				},
+ 			};
 			Stages campfire_stages = new Stages {
 				{
 					Stage.ID.Workshop_Off,
@@ -332,6 +347,15 @@ namespace Schema {
 					)
 				},
  			};
+			Add(ID.Workshop_Mine, new Entity(
+				sprite: SpriteID.b_volcano_dead,
+				name: "mine entrance",
+				stages: mine_stages,
+				start_stage: Stage.GetA(Stage.ID.Workshop_On),
+				stat: null,
+				part: null,
+				attr: null
+			));
 			Add(ID.Workshop_Campfire, new Entity(
 				sprite: SpriteID.b_volcano,
 				name: "campfire",

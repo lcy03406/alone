@@ -21,7 +21,7 @@ public class Rander : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		float time = Time.time;
-		if (time - ztime > 1) {
+		if (time - ztime > 10) {
 			ztime += 1;
 			z += 1;
 			NoiseTex.FillTexture(texture, z);

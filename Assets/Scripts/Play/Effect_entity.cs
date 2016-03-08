@@ -22,19 +22,18 @@ namespace Play.Eff {
 			Coord c = pos.c.Step(pos.dir);
 			if (ctx.layer.SearchEntity(c) != null)
 				return false;
+			ctx.dstc = c; //TODO
 			if (!c_cre.Can(ctx))
 				return false;
 			return true;
 		}
 
 		public override void Do(Ctx ctx) {
-			Pos pos = ctx.src.GetAttr<Pos>();
 			//TODO
-			Coord c = pos.c.Step(pos.dir);
 			Schema.Entity.A cre = c_cre.Get(ctx);
 			Entity e = cre.CreateEntity(ctx);
-			pos.c = c;
 			ctx.layer.AddEntity(e);
+			e.OnBorn();
 		}
 	}
 
