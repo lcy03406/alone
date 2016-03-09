@@ -26,6 +26,10 @@ namespace Play.Attrs {
 			}
 		}
 
+		public int NextTick() {
+			return int.MaxValue;
+		}
+
 		public void Tick(int time) {
 			tick_time = time;
 			Ctx ctx = new Ctx(ent.layer, ent);

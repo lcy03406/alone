@@ -33,6 +33,9 @@ namespace Play {
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
 			if (actor != null)
 				actor.Tick(time);
+			Attrs.Stat stat = GetAttr<Attrs.Stat>();
+			if (stat != null)
+				stat.Tick(time);
 			Attrs.Part part = GetAttr<Attrs.Part>();
 			if (part != null)
 				part.Tick(time);
@@ -42,17 +45,20 @@ namespace Play {
 		}
 
 		public int NextTick() {
+			int next = int.MaxValue;
 			Attrs.Actor actor = GetAttr<Attrs.Actor>();
-			if (actor == null)
-				return 0;
-			int n = 0;
-			int t = actor.NextTick();
-			if (t > 0) {
-				if (n == 0 || t < n) {
-					n = t;
-				}
-			}
-			return n;
+			int t = (actor == null) ? int.MaxValue : actor.NextTick();
+			if (t < next) next = t;
+			Attrs.Stat stat = GetAttr<Attrs.Stat >();
+			t = (stat == null) ? int.MaxValue : stat.NextTick();
+			if (t < next) next = t;
+			Attrs.Part part = GetAttr<Attrs.Part>();
+			t = (part == null) ? int.MaxValue : part.NextTick();
+			if (t < next) next = t;
+			Attrs.Stage stage = GetAttr<Attrs.Stage>();
+			t = (stage == null) ? int.MaxValue : stage.NextTick();
+			if (t < next) next = t;
+			return next;
 		}
 
 		public void SetAttr<T>(T a) where T : Attrib {

@@ -6,10 +6,11 @@ using UnityEngine.Assertions;
 namespace Play {
 	public class World {
 		public interface View {
-			void OnLoadGrid(Coord g, Grid grid);
-			void OnUnloadGrid(Coord g);
-			void OnAddEntity(Entity ent);
-			void OnDelEntity(Entity ent);
+			void OnGridLoad(Coord g, Grid grid);
+			void OnGridUnload(Coord g);
+			void OnEntityAdd(Entity ent);
+			void OnEntityDel(Entity ent);
+			void OnEntityUpdate(Entity ent);
 		}
 		public const int GRID_SIZE = 32; //must be power of 2
 		public const int GRID_MASK = GRID_SIZE - 1;
@@ -78,6 +79,9 @@ namespace Play {
 
 		public void Update() {
 			player.Tick(param.time);
+			if (view != null && param.layer == player.layer.z) {
+				view.OnEntityUpdate(player);
+			}
 			if (param.time < player.NextTick()) {
 				param.time++;
 				player.Tick(param.time);

@@ -13,7 +13,7 @@ namespace Play.Attrs {
 			public int value;
 			public int cap;
 			public int buf;
-			public SortedList<int, Buf> bufs = new SortedList<int, Buf>();
+			public SortedList<Schema.BufID, Buf> bufs = new SortedList<Schema.BufID, Buf>();
 
 			public St(int value, int cap) {
 				this.value = value;
@@ -24,29 +24,30 @@ namespace Play.Attrs {
 				this.value = b.value;
 				this.cap = b.cap;
 				this.buf = b.buf;
-				foreach (KeyValuePair<int, Buf> pair in bufs) {
-					int end_time = pair.Key;
+				foreach (KeyValuePair<Schema.BufID, Buf> pair in bufs) {
+					Schema.BufID bid = pair.Key;
 					Buf buf = new Buf(pair.Value);
-					this.bufs.Add(end_time, buf);
+					this.bufs.Add(bid, buf);
 				}
             }
 		}
 
 		[Serializable]
 		public class Buf {
-			public Schema.BufID id;
 			public int value;
+			public int end_time;
 
 			public Buf() {
 			}
 
 			public Buf(Buf b) {
-				this.id = b.id;
 				this.value = b.value;
+				this.end_time = b.end_time;
 			}
 		}
 
 		public Dictionary<ID, St> ints = new Dictionary<ID, St>();
+		int next_tick = int.MaxValue;
 
 		public Stat() {
 		}
@@ -94,16 +95,66 @@ namespace Play.Attrs {
 			st.value = set;
 		}
 
-		public void AddBuff(Schema.BufID bid, int end_time, Dictionary<ID, int> stats) {
+		public void AddBuf(Schema.BufID bid, int end_time, Dictionary<ID, int> stats) {
 			foreach (KeyValuePair<ID, int> pair in stats) {
 				ID id = pair.Key;
 				int value = pair.Value;
-				if (!Has(id)) {
+				St st = null;
+				if (!ints.TryGetValue(id, out st))
 					continue;
+				Buf buf = null;
+				if (st.bufs.TryGetValue(bid, out buf)) {
+					st.buf += value - buf.value;
+					buf.value = value;
+					buf.end_time = end_time;
+				} else {
+					buf = new Buf();
+					st.buf += value;
+					buf.value = value;
+					buf.end_time = end_time;
+					st.bufs.Add(bid, buf);
 				}
-				//
 			}
-			//
+			if (next_tick > end_time)
+				next_tick = end_time;
+		}
+
+		public void DelBuf(Schema.BufID bid) {
+			foreach (KeyValuePair<ID, St> pair in ints) {
+				ID id = pair.Key;
+				St st = pair.Value;
+				Buf buf = null;
+				if (st.bufs.TryGetValue(bid, out buf)) {
+					st.buf -= buf.value;
+					st.bufs.Remove(bid);
+				}
+			}
+		}
+
+		public int NextTick() {
+			return next_tick;
+		}
+
+		public void Tick(int time) {
+			if (time < next_tick)
+				return;
+			List<Schema.BufID> del = new List<Schema.BufID>();
+			foreach (KeyValuePair<ID, St> pair in ints) {
+				ID id = pair.Key;
+				St st = pair.Value;
+				foreach (KeyValuePair<Schema.BufID, Buf> bpair in st.bufs) {
+					Schema.BufID bid = bpair.Key;
+					Buf buf = bpair.Value;
+					if (buf.end_time <= time) {
+						st.buf -= buf.value;
+						del.Add(bid);
+					}
+				}
+				foreach (Schema.BufID bid in del) {
+					st.bufs.Remove(bid);
+				}
+				del.Clear();
+			}
 		}
 	}
 }

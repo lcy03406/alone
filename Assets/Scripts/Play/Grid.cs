@@ -53,9 +53,6 @@ namespace Play {
 			}
 		}
 
-		public void Update (int time) {
-		}
-
 		public void MoveOut (Entity e) {
 			bool re = entities.Remove (e);
 			Assert.IsTrue(re);

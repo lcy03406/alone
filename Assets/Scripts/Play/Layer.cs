@@ -23,7 +23,8 @@ namespace Play {
 		public int z;
 
 		SortedList<Coord, Grid> grids = new SortedList<Coord, Grid> ();
-		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity> ();
+		SortedList<WUID, Entity> entities = new SortedList<WUID, Entity>();
+		SortedList<int, List<Entity>> tick_ents = new SortedList<int, List<Entity>>();
 
 		public Layer(World world, int z) {
 			this.world = world;
@@ -79,7 +80,7 @@ namespace Play {
 			}
 			grid.Load(d);
 			if (world.view != null && world.param.layer == z) {
-				world.view.OnLoadGrid (g, grid);
+				world.view.OnGridLoad (g, grid);
 			}
 			return grid;
 		}
@@ -110,7 +111,7 @@ namespace Play {
 						Coord g = pair.Key;
 						Grid grid = pair.Value;
 						if (world.view != null && world.param.layer == z) {
-							world.view.OnUnloadGrid (g);
+							world.view.OnGridUnload (g);
 						}
 						world.file.SaveGrid (z, g, grid);
 						grid.Unload ();
@@ -129,7 +130,7 @@ namespace Play {
 				Coord g = pair.Key;
 				Grid grid = pair.Value;
 				if (world.view != null && world.param.layer == z) {
-					world.view.OnUnloadGrid(g);
+					world.view.OnGridUnload(g);
 				}
 				world.file.SaveGrid(z, g, grid);
 				grid.Unload();
@@ -154,19 +155,23 @@ namespace Play {
 				Anchor(pos.c);
 			} else {
 				entities.Add(ent.id, ent);
+				int next_tick = ent.NextTick();
+				if (next_tick < int.MaxValue) {
+					AddTick(next_tick, ent);
+				}
 				Coord to = pos.c.Grid();
 				Grid tg = FindGrid(to);
 				tg.MoveIn(ent);
 			}
 			ent.layer = this;
 			if (world.view != null && world.param.layer == z) {
-				world.view.OnAddEntity (ent);
+				world.view.OnEntityAdd (ent);
 			}
 		}
 
 		public void DelEntity (Entity ent) {
 			if (world.view != null && world.param.layer == z) {
-				world.view.OnDelEntity (ent);
+				world.view.OnEntityDel (ent);
 			}
 			Assert.AreEqual (ent.layer, this);
 			if (ent.isPlayer) {
@@ -205,19 +210,41 @@ namespace Play {
 			}
 		}
 
+		public void AddTick(int time, Entity ent) {
+			List<Entity> list = null;
+			if (!tick_ents.TryGetValue(time, out list)) {
+				list = new List<Entity>();
+				tick_ents.Add(time, list);
+			}
+			list.Add(ent);
+		}
+
 		public void Tick (int time) {
-			int i = 0;
-			while (i < entities.Count) {
-				WUID id = entities.Keys[i];
-				Entity ent = entities.Values[i];
-				ent.Tick (time);
-				while (i < entities.Count && entities.Keys[i] < id) {
+			while (tick_ents.Count > 0) {
+				int tick = tick_ents.Keys[0];
+				if (tick > time)
+					break;
+				List<Entity> ents = tick_ents.Values[0];
+				int i = 0;
+				while (i < ents.Count) {
+					Entity ent = ents[i];
+					WUID id = ent.id;
+					if (entities.ContainsKey(id)) {
+						ent.Tick(time);
+						if (entities.ContainsKey(id)) {
+							if (world.view != null && world.param.layer == z) {
+								world.view.OnEntityUpdate(ent);
+							}
+							int next_tick = ent.NextTick();
+							AddTick(next_tick, ent);
+						}
+					}
+					while (i < ents.Count && ents[i].id < id) {
+						i++;
+					}
 					i++;
 				}
-				i++;
-			}
-			foreach (KeyValuePair<Coord, Grid> pair in grids) {
-				pair.Value.Update (time);
+				tick_ents.Remove(tick);
 			}
 		}
 
@@ -238,7 +265,9 @@ namespace Play {
 			Grid tg = FindGrid (to.Grid ());
 			if (tg == null)
 				return null;
-			return tg.FindEntity (to);
+			Entity ent = tg.FindEntity (to);
+			AddTick(world.param.time, ent);
+			return ent;
 		}
 	}
 }

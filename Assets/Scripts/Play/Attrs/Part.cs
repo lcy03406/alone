@@ -56,12 +56,13 @@ namespace Play.Attrs {
 		}
 
 		public Dictionary<ID, PartItem> items;
+		int next_tick = int.MaxValue;
 
 		public Part() {
 			items = new Dictionary<ID, PartItem>();
 		}
 
-		public Part(Attrs.Part b) {
+		public Part(Part b) {
 			items = new Dictionary<ID, PartItem>();
 			foreach (KeyValuePair<ID, PartItem> pair in b.items) {
 				items.Add(pair.Key, new PartItem(pair.Value));
@@ -70,9 +71,12 @@ namespace Play.Attrs {
 
 		public override void OnBorn() {
 			base.OnBorn();
+			next_tick = int.MaxValue;
 			int time = ent.layer.world.param.time;
 			foreach (PartItem part in items.Values) {
 				part.grow_time += time;
+				if (part.grow_time < next_tick)
+					next_tick = part.grow_time;
 			}
 		}
 
@@ -91,7 +95,14 @@ namespace Play.Attrs {
 			items[id].count = count;
 		}
 
+		public int NextTick() {
+			return next_tick;
+		}
+
 		public void Tick(int time) {
+			if (time < next_tick)
+				return;
+			next_tick = int.MaxValue;
 			foreach (PartItem part in items.Values) {
 				if (part.grow_time + part.grow_span <= time) {
 					int count = part.count + part.grow_count;
@@ -101,6 +112,8 @@ namespace Play.Attrs {
 						count = part.cap;
 					part.count = count;
 					part.grow_time = time;
+					if (next_tick > part.grow_time)
+						next_tick = part.grow_time;
 				}
 			}
         }

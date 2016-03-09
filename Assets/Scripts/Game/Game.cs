@@ -44,7 +44,7 @@ public class Game : MonoBehaviour, World.View {
 		return new Vector3 (c.x - offset.x, c.y - offset.y, 0);
 	}
 
-	void World.View.OnLoadGrid (Coord g, Grid grid) {
+	void World.View.OnGridLoad (Coord g, Grid grid) {
 		string gname = string.Format("Layer_{0}_Grid_{1}", world.param.layer, g);
 		GameObject go = GameObject.Find (gname);
 		if (go == null) {
@@ -65,7 +65,7 @@ public class Game : MonoBehaviour, World.View {
 		}
 	}
 
-	void World.View.OnUnloadGrid (Coord g) {
+	void World.View.OnGridUnload (Coord g) {
 		string gname = string.Format("Layer_{0}_Grid_{1}", world.param.layer, g);
 		GameObject go = GameObject.Find (gname);
 		if (go != null) {
@@ -73,48 +73,76 @@ public class Game : MonoBehaviour, World.View {
 		}
 	}
 
-	void World.View.OnAddEntity (Entity ent) {
+	void World.View.OnEntityAdd (Entity ent) {
 		if (ent.isPlayer) {
 			player = ent;
-			GameObject go = Instantiate(playerPrefab);
-			go.name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
-			GameObject.Find("Main Camera").transform.SetParent(go.transform);
-			GameEntity ge = go.GetComponent<GameEntity>();
-			ge.Init(this, ent);
+			GameObject o = Instantiate(playerPrefab);
+			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
+			GameObject.Find("Main Camera").transform.SetParent(o.transform);
+			UpdateEntity(o, ent);
 		} else {
 			ulong g = ent.id.value / 1024;
-			string gname = string.Format("Layer_{0}_EntityGroup_{1}", world.param.layer, g);
+			string gname = string.Format("Layer_{0}_EntityGroup_{1}", ent.layer.z, g);
 			GameObject go = GameObject.Find(gname);
 			if (go == null) {
 				go = new GameObject(gname);
 				go.transform.SetParent(root);
 			}
 			GameObject o = Instantiate(playerPrefab);
-			o.name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
+			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			o.transform.SetParent(go.transform);
-			GameEntity ge = o.GetComponent<GameEntity>();
-			ge.Init(this, ent);
+			UpdateEntity(o, ent);
 		}
 	}
 
-	void World.View.OnDelEntity (Entity ent) {
+	void World.View.OnEntityDel (Entity ent) {
 		if (ent.isPlayer) {
 			GameObject.Find("Main Camera").transform.SetParent(root.transform);
-			string name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
+			string name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			GameObject o = GameObject.Find(name);
 			Destroy(o);
 			player = null;
 		} else {
 			ulong g = ent.id.value / 1024;
-			string gname = string.Format("Layer_{0}_EntityGroup_{1}", world.param.layer, g);
+			string gname = string.Format("Layer_{0}_EntityGroup_{1}", ent.layer.z, g);
 			GameObject go = GameObject.Find(gname);
 			if (go == null)
 				return;
-			string name = string.Format("Layer_{0}_Entity_{1}", world.param.layer, ent.id);
+			string name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			GameObject o = GameObject.Find(name);
 			Destroy(o);
 			if (go.transform.childCount == 0)
 				Destroy(go);
 		}
+	}
+
+	void World.View.OnEntityUpdate(Entity ent) {
+		if (ent == null)
+			return;
+		if (ent.layer == null)
+			return;
+		string name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
+		GameObject o = GameObject.Find(name);
+		Assert.IsNotNull(o);
+		if (o == null) {
+			return;
+		}
+		UpdateEntity(o, ent);
+	}
+
+	static void UpdateEntity(GameObject o, Entity ent) {
+		Play.Attrs.Pos pos = ent.GetAttr<Play.Attrs.Pos>();
+		o.transform.localPosition = game.Pos(pos.c);
+		Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)pos.dir);
+		o.transform.FindChild("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(dirs).s.sprite;
+		if (ent.isPlayer) {
+			//TODO
+			o.GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(Schema.SpriteID.c_human_strong).s.sprite;
+			return;
+		}
+		Play.Attrs.Core show = ent.GetAttr<Play.Attrs.Core>();
+		if (show == null)
+			return;
+		o.GetComponent<SpriteRenderer>().sprite = show.GetSprite().s.sprite;
 	}
 }
