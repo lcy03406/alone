@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using Debug = UnityEngine.Debug;
 
 namespace Play {
 	public class Layer {
@@ -31,7 +32,12 @@ namespace Play {
 			this.z = z;
 		}
 
+		public void Log(Coord c, string info) {
+			Debug.Log(string.Format("layer {0} at {1} : {2}", z, c, info));
+		}
+
 		public void Load() {
+			Log(new Coord(), "Load");
 			param = world.file.LoadLayerParam(z);
 			if (param == null) {
 				Init();
@@ -39,6 +45,7 @@ namespace Play {
 		}
 
 		public void Init() {
+			Log(new Coord(), "Init");
 			param = new Param();
 			//TODO
 			if (z < 0) {
@@ -50,9 +57,13 @@ namespace Play {
 		}
 
 		public void Save () {
+			Log(new Coord(), "Save");
 			world.file.SaveLayerParam(z, param);
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
-				world.file.SaveGrid (z, pair.Key, pair.Value);
+				Coord g = pair.Key;
+				Grid grid = pair.Value;
+				Log(g, "Save grid");
+				world.file.SaveGrid (z, g, grid);
 			}
 		}
 
@@ -72,6 +83,7 @@ namespace Play {
 		}
 
 		Grid LoadGrid (Coord g) {
+			Log(g, "Load grid");
 			Grid grid = new Grid (this, g);
 			grids.Add (g, grid);
 			Grid.Data d = world.file.LoadGrid (z, g);
@@ -86,6 +98,7 @@ namespace Play {
 		}
 
 		Grid.Data CreateGrid (Coord g) {
+			Log(g, "Create grid");
 			Ctx ctx = new Ctx(this, g);
 			Schema.Grid.ID id = z >= 0 ? Schema.Grid.ID.Plain : Schema.Grid.ID.Cave;
 			LayerCreate cre = Schema.Grid.GetA(id).s.cre;
@@ -129,6 +142,7 @@ namespace Play {
 			foreach (KeyValuePair<Coord, Grid> pair in grids) {
 				Coord g = pair.Key;
 				Grid grid = pair.Value;
+				Log(g, "Save and unload grid");
 				if (world.view != null && world.param.layer == z) {
 					world.view.OnGridUnload(g);
 				}
@@ -151,14 +165,12 @@ namespace Play {
 
 		public void AddEntity (Entity ent) {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			Log(pos.c, "AddEntity " + ent.id);
 			if (ent.isPlayer) {
 				Anchor(pos.c);
 			} else {
 				entities.Add(ent.id, ent);
-				int next_tick = ent.NextTick();
-				if (next_tick < int.MaxValue) {
-					AddTick(next_tick, ent);
-				}
+				AddTick(ent);
 				Coord to = pos.c.Grid();
 				Grid tg = FindGrid(to);
 				tg.MoveIn(ent);
@@ -170,6 +182,8 @@ namespace Play {
 		}
 
 		public void DelEntity (Entity ent) {
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			Log(pos.c, "DelEntity " + ent.id);
 			if (world.view != null && world.param.layer == z) {
 				world.view.OnEntityDel (ent);
 			}
@@ -177,7 +191,6 @@ namespace Play {
 			if (ent.isPlayer) {
 				UnloadAllGrids();
 			} else {
-				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 				Coord from = pos.c.Grid();
 				Grid fg = FindGrid(from);
 				fg.MoveOut(ent);
@@ -210,7 +223,17 @@ namespace Play {
 			}
 		}
 
+		public void AddTick(Entity ent) {
+			int next_tick = ent.NextTick();
+			AddTick(next_tick, ent);
+		}
+
 		public void AddTick(int time, Entity ent) {
+			Assert.IsFalse(time <= 0 || time >= int.MaxValue);
+            if (time <= 0 || time >= int.MaxValue)
+				return;
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			Log(pos.c, "AddTick " + ent.id + " time " + time);
 			List<Entity> list = null;
 			if (!tick_ents.TryGetValue(time, out list)) {
 				list = new List<Entity>();
@@ -230,13 +253,14 @@ namespace Play {
 					Entity ent = ents[i];
 					WUID id = ent.id;
 					if (entities.ContainsKey(id)) {
+						Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+						Log(pos.c, "Tick " + ent.id);
 						ent.Tick(time);
 						if (entities.ContainsKey(id)) {
 							if (world.view != null && world.param.layer == z) {
 								world.view.OnEntityUpdate(ent);
 							}
-							int next_tick = ent.NextTick();
-							AddTick(next_tick, ent);
+							AddTick(ent);
 						}
 					}
 					while (i < ents.Count && ents[i].id < id) {
