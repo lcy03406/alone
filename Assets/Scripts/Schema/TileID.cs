@@ -1,0 +1,27 @@
+namespace Schema {
+	public enum TileID {
+		a_dirt = 0,
+		a_farm_01 = 1,
+		a_farm_02 = 2,
+		a_farm_03 = 3,
+		a_farm_04 = 4,
+		a_farm_05 = 5,
+		a_grass = 6,
+		a_hill = 7,
+		a_hill_snow = 8,
+		a_ice = 9,
+		a_lava = 10,
+		a_magma = 11,
+		a_marsh_01 = 12,
+		a_marsh_02 = 13,
+		a_marsh_03 = 14,
+		a_ocean = 15,
+		a_pave_01 = 16,
+		a_pave_02 = 17,
+		a_road = 18,
+		a_rock = 19,
+		a_sand = 20,
+		a_snow = 21,
+		a_water = 22,
+	}
+}

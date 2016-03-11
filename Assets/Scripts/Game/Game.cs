@@ -9,7 +9,7 @@ using Play;
 public class Game : MonoBehaviour, World.View {
 
 	public GameObject playerPrefab;
-	public GameObject tilePrefab;
+	public GameObject gridPrefab;
 
 	public static Game game;
 
@@ -48,20 +48,13 @@ public class Game : MonoBehaviour, World.View {
 		string gname = string.Format("Layer_{0}_Grid_{1}", world.param.layer, g);
 		GameObject go = GameObject.Find (gname);
 		if (go == null) {
-			go = new GameObject (gname);
+			go = Instantiate(gridPrefab);
+			go.name = gname;
 			Transform got = go.transform;
 			got.SetParent (root);
-			got.localPosition = Pos (g);
-			for (int x = 0; x < grid.d.tiles.GetLength(0); ++x) {
-				for (int y = 0; y < grid.d.tiles.GetLength(1); ++y) {
-					Schema.Floor.A t = grid.d.tiles[x,y];
-					GameObject o = Instantiate(tilePrefab);
-					o.name = string.Format ("Layer_{0}_Tile_{1}_{2}", world.param.layer, g.x + x, g.y + y);
-                    o.GetComponent<SpriteRenderer> ().sprite = t.s.sprite.s.sprite;
-					o.transform.SetParent(got);
-					o.transform.localPosition = new Vector3(x, y, 0);
-				}
-			}
+			got.localPosition = Pos (g) + new Vector3(-0.5f, -0.5f, 1);
+			MeshFilter mf = go.GetComponent<MeshFilter>();
+			mf.mesh.uv = GenerateUV(grid.d.tiles);
 		}
 	}
 
@@ -144,5 +137,28 @@ public class Game : MonoBehaviour, World.View {
 		if (show == null)
 			return;
 		o.GetComponent<SpriteRenderer>().sprite = show.GetSprite().s.sprite;
+	}
+
+	public static Vector2[] GenerateUV(Schema.Floor.A[,] tiles) {
+		Assert.AreEqual(tiles.GetLength(0), World.GRID_SIZE);
+		Assert.AreEqual(tiles.GetLength(1), World.GRID_SIZE);
+		int xSize = World.GRID_SIZE;
+		int ySize = World.GRID_SIZE;
+		int v = 0;
+		Vector2[] uv = new Vector2[xSize * ySize * 4];
+		for (int y = 0; y < ySize; y++) {
+			for (int x = 0; x < xSize; x++) {
+				Schema.Floor.A t = tiles[x, y];
+				Sprite sp = t.s.sprite.s.sprite;
+				UnityEngine.Rect rect = sp.textureRect;
+				float width = sp.texture.width;
+				float height = sp.texture.height;
+				uv[v++] = new Vector2(rect.xMin / width, rect.yMin / height);
+				uv[v++] = new Vector2(rect.xMin / width, rect.yMax / height);
+				uv[v++] = new Vector2(rect.xMax / width, rect.yMin / height);
+				uv[v++] = new Vector2(rect.xMax / width, rect.yMax / height);
+			}
+		}
+		return uv;
 	}
 }

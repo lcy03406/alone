@@ -25,7 +25,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 438800}
   - 212: {fileID: 21220502}
-  - 114: {fileID: 11481622}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -58,17 +57,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 438800}
   m_RootOrder: 0
---- !u!114 &11481622
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 174554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b127eeed7948e5488d11dcacd0618ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &21220502
 SpriteRenderer:
   m_ObjectHideFlags: 1
