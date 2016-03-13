@@ -6,15 +6,15 @@ namespace Schema {
 	public static class Ef {
 		public static Play.Effect Rest(int sta) {
 			return new Play.Eff.IncStat(new Play.Calcs.Src(),
-					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta));
+					StatID.Stamina, new Play.Calcs.Const<int>(sta));
 		}
 
 		public static Play.Effect Attack(int sta, Play.Calc<int> damage) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.DecStat(new Play.Calcs.Dst(),
-					StatID.Creature_HitPoint, damage),
+					StatID.HitPoint, damage),
 			};
 			return new Play.Eff.Multi(eff);
 		}
@@ -22,7 +22,7 @@ namespace Schema {
 		public static Play.Effect Travel(int sta, int to) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.GoLayer(new Play.Calcs.Src(), to),
 			};
 			return new Play.Eff.Multi(eff);
@@ -35,7 +35,7 @@ namespace Schema {
 					value: new Play.Calcs.Const<int>(count)
 				),
 				new Play.Eff.DecStat(ent: new Play.Calcs.Src(),
-					id: StatID.Creature_Stamina,
+					id: StatID.Stamina,
 					value: new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
 					cre: new Play.Calcs.ItemCount(
@@ -49,13 +49,13 @@ namespace Schema {
 			};
 			return new Play.Eff.Multi(eff);
 		}
-
+/*
 		public static Play.Effect Butcher(int sta, Schema.PartID part, int count) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.UseItem(ent: new Play.Calcs.Src(),
 					sel: new Play.Calcs.Const<Play.ItemSelect>(
 						new Play.ItemSelect(
-							a: Schema.Item.GetA(Schema.Item.ID.Knife),
+							a: Schema.Item.GetA(Schema.ItemID.Knife),
 							count: 1
 						)
 					)
@@ -79,7 +79,7 @@ namespace Schema {
 			};
 			return new Play.Eff.Multi(eff);
 		}
-
+*/
 		public static Play.Effect Make(int sta,
 			Play.ItemSelect[] tools,
 			Play.ItemSelect[] reagents,
@@ -88,7 +88,7 @@ namespace Schema {
 			List<Play.Effect> eff = new List<Play.Effect>();
 			if (sta > 0) {
 				eff.Add(new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Creature_Stamina, new Play.Calcs.Const<int>(sta)));
+					StatID.Stamina, new Play.Calcs.Const<int>(sta)));
 			}
 			if (tools != null) {
 				foreach (Play.ItemSelect sel in tools) {

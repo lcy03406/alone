@@ -1,5 +1,5 @@
 //utf-8。
-
+/*
 namespace Schema {
 	public sealed partial class Iact : SchemaBase<Iact.ID, Iact> {
 		public enum ID {
@@ -105,10 +105,10 @@ namespace Schema {
 				tools: new Play.ItemSelect[] {
 				},
 				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 2)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Branch), count: 2)
 				},
 				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Cross),
+					new Play.ItemCreate(a: Item.GetA(ItemID.Cross),
 					q_base: 0,
 					q_from: new int[] {0},
 					q_rand: 1,
@@ -122,13 +122,13 @@ namespace Schema {
 				time2: 0,
 				sta: 3,
 				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Stone), count: 1)
 				},
 				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Stone), count: 1)
 				},
 				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
+					new Play.ItemCreate(a: Item.GetA(ItemID.Knife),
 					q_base: 0,
 					q_from: new int[] {0, 1},
 					q_rand: 1,
@@ -142,14 +142,14 @@ namespace Schema {
 				time2: 0,
 				sta: 3,
 				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Knife), count: 1)
 				},
 				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Stone), count: 1),
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Stone), count: 1),
+					new Play.ItemSelect(a: Item.GetA(ItemID.Branch), count: 1)
 				},
 				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Axe),
+					new Play.ItemCreate(a: Item.GetA(ItemID.Axe),
 					q_base: 0,
 					q_from: new int[] {0, 1},
 					q_rand: 1,
@@ -163,14 +163,14 @@ namespace Schema {
 				time2: 0,
 				sta: 3,
 				tools: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Knife), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Knife), count: 1)
 				},
 				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Bone), count: 1),
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 1)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Bone), count: 1),
+					new Play.ItemSelect(a: Item.GetA(ItemID.Branch), count: 1)
 				},
 				products: new Play.ItemCreate[] {
-					new Play.ItemCreate(a: Item.GetA(Item.ID.Knife),
+					new Play.ItemCreate(a: Item.GetA(ItemID.Knife),
 					q_base: 10,
 					q_from: new int[] {0, 1},
 					q_rand: 1,
@@ -189,11 +189,12 @@ namespace Schema {
 				tools: new Play.ItemSelect[] {
 				},
 				reagents: new Play.ItemSelect[] {
-					new Play.ItemSelect(a: Item.GetA(Item.ID.Branch), count: 5)
+					new Play.ItemSelect(a: Item.GetA(ItemID.Branch), count: 5)
 				},
 				products: null,
-				build: Entity.GetA(Entity.ID.Workshop_Campfire)
+				build: Entity.GetA(EntityID.Workshop_Campfire)
 			));
 		}
 	}
 }
+*/

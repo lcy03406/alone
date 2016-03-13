@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Play {
 	public static class EntityCreate {
-		public static Entity CreateEntity(this Schema.Entity.A a, Ctx ctx) {
+		public static Entity CreateEntity(this Schema.Entity.A a, Ctx ctx, bool player = false) {
 			if (a.s == null)
 				return null;
 			Entity ent = new Entity();
@@ -31,6 +31,12 @@ namespace Play {
 			if (s.attr != null) {
 				s.attr.Create(ctx, ent);
 			}
+			ent.isPlayer = player;
+			if (player) {
+				ent.SetAttr(new Attrs.Ctrl());
+			}
+			ent.OnBorn();
+			ctx.layer.AddEntity(ent);
 			return ent;
 		}
 	}

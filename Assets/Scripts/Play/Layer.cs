@@ -88,22 +88,23 @@ namespace Play {
 			grids.Add (g, grid);
 			Grid.Data d = world.file.LoadGrid (z, g);
 			if (d == null) {
-				d = CreateGrid (g);
+				CreateGrid(grid);
+			} else {
+				grid.Load(d);
 			}
-			grid.Load(d);
 			if (world.view != null && world.param.layer == z) {
 				world.view.OnGridLoad (g, grid);
 			}
 			return grid;
 		}
 
-		Grid.Data CreateGrid (Coord g) {
+		void CreateGrid (Grid grid) {
+			Coord g = grid.c;
 			Log(g, "Create grid");
 			Ctx ctx = new Ctx(this, g);
-			Schema.Grid.ID id = z >= 0 ? Schema.Grid.ID.Plain : Schema.Grid.ID.Cave;
-			LayerCreate cre = Schema.Grid.GetA(id).s.cre;
-			Grid.Data grid = cre.Create(ctx, g);
-			return grid;
+			Schema.BiomeID id = z >= 0 ? Schema.BiomeID.Plain : Schema.BiomeID.Cave;
+			LayerCreate cre = Schema.Biome.GetA(id).s.cre;
+			cre.Create(ctx, grid);
 		}
 
 		void Anchor (Coord anchor) {
@@ -165,7 +166,7 @@ namespace Play {
 
 		public void AddEntity (Entity ent) {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-			Log(pos.c, "AddEntity " + ent.id);
+			//Log(pos.c, "AddEntity " + ent.id);
 			if (ent.isPlayer) {
 				Anchor(pos.c);
 			} else {
@@ -183,7 +184,7 @@ namespace Play {
 
 		public void DelEntity (Entity ent) {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-			Log(pos.c, "DelEntity " + ent.id);
+			//Log(pos.c, "DelEntity " + ent.id);
 			if (world.view != null && world.param.layer == z) {
 				world.view.OnEntityDel (ent);
 			}
@@ -224,13 +225,14 @@ namespace Play {
 		}
 
 		public void AddTick(Entity ent) {
-			int next_tick = ent.NextTick();
+			int next_tick = ent.GetNextTick();
 			AddTick(next_tick, ent);
 		}
 
 		public void AddTick(int time, Entity ent) {
-			Assert.IsFalse(time <= 0 || time >= int.MaxValue);
             if (time <= 0 || time >= int.MaxValue)
+				return;
+			if (ent.isPlayer)
 				return;
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			Log(pos.c, "AddTick " + ent.id + " time " + time);
@@ -239,7 +241,9 @@ namespace Play {
 				list = new List<Entity>();
 				tick_ents.Add(time, list);
 			}
-			list.Add(ent);
+			if (!list.Contains(ent)) {
+				list.Add(ent);
+			}
 		}
 
 		public void Tick (int time) {

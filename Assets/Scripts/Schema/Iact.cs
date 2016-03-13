@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 
 namespace Schema {
-	public sealed partial class Iact : SchemaBase<Iact.ID, Iact> {
+	public sealed class Iact : SchemaBase<ActionID, Iact> {
 		public readonly string name;
 		public readonly int time1;
 		public readonly int time2;
@@ -69,7 +69,7 @@ namespace Schema {
 				ef: Ef.Pick(sta, part, count)
 			);
 		}
-
+/*
 		public static Iact Butcher(string name, int time1, int time2, int sta,
 			Schema.PartID part, int count) {
 			return new Iact(
@@ -81,7 +81,7 @@ namespace Schema {
 				ef: Ef.Butcher(sta, part, count)
 			);
 		}
-
+*/
 		public static Iact Make(string name, int time1, int time2, int sta,
 			Play.ItemSelect[] tools,
 			Play.ItemSelect[] reagents,

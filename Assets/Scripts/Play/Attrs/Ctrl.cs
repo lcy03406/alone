@@ -15,6 +15,10 @@ namespace Play.Attrs {
 			return next.Dequeue ();
 		}
 
+		public void Enque(Act act) {
+			next.Enqueue(act);
+		}
+
 		public bool CmdMove (Direction to) {
 			if (to == Direction.None || to == Direction.Center) {
 				return false;
@@ -25,8 +29,10 @@ namespace Play.Attrs {
 				act = new ActMove (to);
 			} else {
 				act = new ActDir (to);
+				Enque(act);
+				act = new ActMove(to);
 			}
-			next.Enqueue (act);
+			Enque(act);
 			return true;
 		}
 
@@ -36,18 +42,18 @@ namespace Play.Attrs {
 				return false;
 			}
 			//TODO
-			Schema.Iact.A atk = Schema.Iact.GetA (Schema.Iact.ID.Attack_Punch);
+			Schema.Iact.A atk = Schema.Iact.GetA (Schema.ActionID.Attack_Punch);
 			Entity dst = ent.layer.SearchEntity (pos.c.Step (pos.dir));
 			if (dst == null)
 				return false;
 			Act act = new ActIact (atk, dst.id);
-			next.Enqueue (act);
+			Enque(act);
 			return true;
 		}
 
 		public bool CmdIact (Schema.Iact.A iact, WUID dst) {
 			Act act = new ActIact (iact, dst);
-			next.Enqueue (act);
+			Enque(act);
 			return true;
 		}
 

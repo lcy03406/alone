@@ -45,7 +45,7 @@ namespace Play.Acts {
 				pos.dir = to;
 			}
 			int Act.Step.Time (Entity ent) {
-				return 5;
+				return 0;
 			}
 		}
 		private class Step2 : Act.Step {
@@ -60,7 +60,7 @@ namespace Play.Acts {
 				}
 			}
 			int Act.Step.Time (Entity ent) {
-				return 5;
+				return 1;
 			}
 		}
 		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };

@@ -31,9 +31,7 @@ namespace Play.Eff {
 		public override void Do(Ctx ctx) {
 			//TODO
 			Schema.Entity.A cre = c_cre.Get(ctx);
-			Entity e = cre.CreateEntity(ctx);
-			ctx.layer.AddEntity(e);
-			e.OnBorn();
+			cre.CreateEntity(ctx);
 		}
 	}
 

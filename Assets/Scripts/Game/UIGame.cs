@@ -96,7 +96,7 @@ public class UIGame : MonoBehaviour {
 	public void Rest() {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
-			Schema.Iact.A iact = Schema.Iact.GetA(Schema.Iact.ID.Rest);
+			Schema.Iact.A iact = Schema.Iact.GetA(Schema.ActionID.Rest);
 			ctrl.CmdIact(iact, WUID.None);
 		}
 	}

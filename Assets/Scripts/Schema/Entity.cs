@@ -40,11 +40,11 @@ namespace Schema {
 		}
 	}
 
-	public sealed class Entity : SchemaBase<Entity.ID, Entity> {
+	public sealed partial class Entity : SchemaBase<EntityID, Entity> {
 		public readonly Sprite.A sprite;
 		public readonly string name;
 		public readonly Stages stages;
-        public readonly Stage.A start_stage;
+		public readonly Stage.A start_stage;
 		public readonly Play.Attrs.Stat stat;
 		public readonly Play.Attrs.Part part;
 		public readonly Play.AttrCreate attr;
@@ -52,7 +52,7 @@ namespace Schema {
 		Entity(SpriteID sprite,
 			string name,
 			Stages stages,
-            Stage.A start_stage,
+			Stage.A start_stage,
 			Play.Attrs.Stat stat,
 			Play.Attrs.Part part,
 			Play.AttrCreate attr) {
@@ -64,7 +64,9 @@ namespace Schema {
 			this.part = part;
 			this.attr = attr;
 		}
-
+	}
+}
+/*
 		public enum ID {
 			Human,
 			Boulder,
@@ -94,16 +96,16 @@ namespace Schema {
 					)
 				}
 			};
-            Add(ID.Boulder, new Entity(
+			Add(ID.Boulder, new Entity(
 				sprite: SpriteID.b_mountain,
 				name: "boulder",
 				stages: boulder_stages,
-                start_stage: Stage.GetA(Stage.ID.Boulder_Static),
+				start_stage: Stage.GetA(Stage.ID.Boulder_Static),
 				stat: null,
 				part: new Play.Attrs.Part() {
 					items = {
 						{ PartID.Boulder_Stone, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.Stone),
+							a: Item.GetA(ItemID.Stone),
 							count: 100,
 							cap: 100,
 							q: 10,
@@ -129,9 +131,9 @@ namespace Schema {
 						iact_dst: tree_iact,
 						make: null,
 						usage: null
-                    )
+					)
 				},
-                {
+				{
 					Stage.ID.Tree_Grown,
 					new EntityStage(
 						iact_src: null,
@@ -157,7 +159,7 @@ namespace Schema {
 				part: new Play.Attrs.Part() {
 					items = {
 						{ PartID.Tree_Branch, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.Branch),
+							a: Item.GetA(ItemID.Branch),
 							count: 10,
 							cap: 10,
 							q: 10,
@@ -192,7 +194,7 @@ namespace Schema {
 				part: new Play.Attrs.Part() {
 					items = {
 						{ PartID.Tree_Branch, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.Branch),
+							a: Item.GetA(ItemID.Branch),
 							count: 10,
 							cap: 10,
 							q: 10,
@@ -200,7 +202,7 @@ namespace Schema {
 							grow_count: 1
 						)},
 						{ PartID.Tree_Fruit, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.OakNut),
+							a: Item.GetA(ItemID.OakNut),
 							count: 10,
 							cap: 10,
 							q: 10,
@@ -259,7 +261,7 @@ namespace Schema {
 						usage: null
 					)
 				}
- 			};
+			};
 			Add(ID.Human, new Entity(
 				sprite: SpriteID.c_human_young,
 				name: "human",
@@ -284,7 +286,7 @@ namespace Schema {
 				part: new Play.Attrs.Part() {
 					items = {
 						{ PartID.Creature_Bone, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.Bone),
+							a: Item.GetA(ItemID.Bone),
 							count: 10,
 							cap: 10,
 							q: 10,
@@ -292,7 +294,7 @@ namespace Schema {
 							grow_count: 0
 						)},
 						{ PartID.Creature_Meat, new Play.Attrs.Part.PartItem(
-							a: Item.GetA(Item.ID.Meat),
+							a: Item.GetA(ItemID.Meat),
 							count: 10,
 							cap: 10,
 							q: 10,
@@ -301,7 +303,7 @@ namespace Schema {
 						)},
 					}
 				},
-                attr: new Play.Ents.Creature(
+				attr: new Play.Ents.Creature(
 				)
 			));
 		}
@@ -319,7 +321,7 @@ namespace Schema {
 						usage: null
 					)
 				},
- 			};
+			};
 			Stages campfire_stages = new Stages {
 				{
 					Stage.ID.Workshop_Off,
@@ -346,7 +348,7 @@ namespace Schema {
 						}
 					)
 				},
- 			};
+			};
 			Add(ID.Workshop_Mine, new Entity(
 				sprite: SpriteID.b_volcano_dead,
 				name: "mine entrance",
@@ -368,6 +370,7 @@ namespace Schema {
 		}
 	}
 }
+*/
 
 /*
 //TODO

@@ -126,17 +126,13 @@ public class Game : MonoBehaviour, World.View {
 	static void UpdateEntity(GameObject o, Entity ent) {
 		Play.Attrs.Pos pos = ent.GetAttr<Play.Attrs.Pos>();
 		o.transform.localPosition = game.Pos(pos.c);
-		Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)pos.dir);
-		o.transform.FindChild("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(dirs).s.sprite;
-		if (ent.isPlayer) {
-			//TODO
-			o.GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(Schema.SpriteID.c_human_strong).s.sprite;
-			return;
-		}
+		//Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)pos.dir);
+		//o.transform.FindChild("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(dirs).s.sprite;
 		Play.Attrs.Core show = ent.GetAttr<Play.Attrs.Core>();
 		if (show == null)
 			return;
-		o.GetComponent<SpriteRenderer>().sprite = show.GetSprite().s.sprite;
+		Sprite sprite = show.GetSprite().s.sprite;
+		o.GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 
 	public static Vector2[] GenerateUV(Schema.Floor.A[,] tiles) {
@@ -149,6 +145,7 @@ public class Game : MonoBehaviour, World.View {
 		for (int y = 0; y < ySize; y++) {
 			for (int x = 0; x < xSize; x++) {
 				Schema.Floor.A t = tiles[x, y];
+				Assert.IsNotNull(t, string.Format("tile is null in {0},{1}", x, y));
 				Sprite sp = t.s.sprite.s.sprite;
 				UnityEngine.Rect rect = sp.textureRect;
 				float width = sp.texture.width;

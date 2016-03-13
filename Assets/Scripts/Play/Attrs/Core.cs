@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace Play.Attrs {
 	[Serializable]
@@ -46,6 +47,7 @@ namespace Play.Attrs {
 				}
 			}
 #endif
+			Assert.IsNotNull(a.s.sprite, string.Format("{0} is null!", a.id));
 			return a.s.sprite;
 		}
 

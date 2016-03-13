@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 20f83ea5093b16946997b3c7de0b62d4
-timeCreated: 1443278305
+timeCreated: 1457872884
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -58,10 +58,27 @@ TextureImporter:
     21300102: tileset_51
     21300104: tileset_52
     21300106: tileset_53
+    21300108: block00
+    21300110: block01
+    21300112: block02
+    21300114: block03
+    21300116: block04
+    21300118: block05
+    21300120: chest01
+    21300122: crate01
+    21300124: entrance01
+    21300126: exit01
+    21300128: exit02
+    21300130: tent01
+    21300132: crafter
+    21300134: mage
+    21300136: miner
+    21300138: shooter
+    21300140: soldier
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -71,9 +88,9 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
@@ -91,558 +108,293 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: tileset_0
+    - name: block00
       rect:
         serializedVersion: 2
-        x: 1
-        y: 479
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_1
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: block01
       rect:
         serializedVersion: 2
-        x: 35
-        y: 479
-        width: 32
-        height: 32
+        x: 0
+        y: 66
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_2
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: block02
       rect:
         serializedVersion: 2
-        x: 69
-        y: 479
-        width: 32
-        height: 32
+        x: 0
+        y: 132
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_3
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: block03
       rect:
         serializedVersion: 2
-        x: 103
-        y: 479
-        width: 32
-        height: 32
+        x: 66
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_4
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: block04
       rect:
         serializedVersion: 2
-        x: 137
-        y: 479
-        width: 32
-        height: 32
+        x: 66
+        y: 66
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_5
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: block05
       rect:
         serializedVersion: 2
-        x: 171
-        y: 479
-        width: 32
-        height: 32
+        x: 66
+        y: 132
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_6
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: chest01
       rect:
         serializedVersion: 2
-        x: 205
-        y: 479
-        width: 32
-        height: 32
+        x: 132
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_7
+      outline:
+      - - {x: -32, y: 31}
+        - {x: -32, y: -31}
+        - {x: 32, y: -31}
+        - {x: 32, y: 31}
+    - name: crate01
       rect:
         serializedVersion: 2
-        x: 239
-        y: 479
-        width: 32
-        height: 32
+        x: 132
+        y: 66
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_8
+      outline:
+      - - {x: -31, y: 32}
+        - {x: -32, y: 30}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 26}
+        - {x: 28, y: 32}
+    - name: entrance01
       rect:
         serializedVersion: 2
-        x: 273
-        y: 479
-        width: 32
-        height: 32
+        x: 132
+        y: 132
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_9
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: exit01
       rect:
         serializedVersion: 2
-        x: 307
-        y: 479
-        width: 32
-        height: 32
+        x: 198
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_10
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: exit02
       rect:
         serializedVersion: 2
-        x: 341
-        y: 479
-        width: 32
-        height: 32
+        x: 198
+        y: 66
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_11
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: tent01
       rect:
         serializedVersion: 2
-        x: 375
-        y: 479
-        width: 32
-        height: 32
+        x: 198
+        y: 132
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_12
+      outline:
+      - - {x: -14, y: 32}
+        - {x: -32, y: 9}
+        - {x: -32, y: -32}
+        - {x: 31, y: -32}
+        - {x: 32, y: -29}
+        - {x: 32, y: 22}
+        - {x: 12, y: 32}
+    - name: crafter
       rect:
         serializedVersion: 2
-        x: 409
-        y: 479
-        width: 32
-        height: 32
+        x: 264
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_13
+      outline:
+      - - {x: -14, y: 23}
+        - {x: -26, y: 3}
+        - {x: -26, y: -32}
+        - {x: 23, y: -32}
+        - {x: 23, y: 3}
+        - {x: 19, y: 23}
+    - name: mage
       rect:
         serializedVersion: 2
-        x: 443
-        y: 479
-        width: 32
-        height: 32
+        x: 330
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_14
+      outline:
+      - - {x: 14, y: 32}
+        - {x: -5, y: 32}
+        - {x: -25, y: 25}
+        - {x: -25, y: -32}
+        - {x: 25, y: -32}
+        - {x: 25, y: -3}
+        - {x: 18, y: 16}
+    - name: miner
       rect:
         serializedVersion: 2
-        x: 477
-        y: 479
-        width: 32
-        height: 32
+        x: 396
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_15
+      outline:
+      - - {x: -25, y: 28}
+        - {x: -26, y: 23}
+        - {x: -26, y: -32}
+        - {x: 24, y: -32}
+        - {x: 24, y: 28}
+    - name: shooter
       rect:
         serializedVersion: 2
-        x: 1
-        y: 445
-        width: 32
-        height: 32
+        x: 264
+        y: 66
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_16
+      outline:
+      - - {x: -18, y: 28}
+        - {x: -25, y: 19}
+        - {x: -26, y: 6}
+        - {x: -26, y: -30}
+        - {x: -20, y: -32}
+        - {x: 23, y: -32}
+        - {x: 23, y: 28}
+    - name: soldier
       rect:
         serializedVersion: 2
-        x: 35
-        y: 445
-        width: 32
-        height: 32
+        x: 264
+        y: 132
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_17
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_18
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_19
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_20
-      rect:
-        serializedVersion: 2
-        x: 171
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_21
-      rect:
-        serializedVersion: 2
-        x: 205
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_22
-      rect:
-        serializedVersion: 2
-        x: 239
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_23
-      rect:
-        serializedVersion: 2
-        x: 273
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_24
-      rect:
-        serializedVersion: 2
-        x: 307
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_25
-      rect:
-        serializedVersion: 2
-        x: 341
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_26
-      rect:
-        serializedVersion: 2
-        x: 375
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_27
-      rect:
-        serializedVersion: 2
-        x: 409
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_28
-      rect:
-        serializedVersion: 2
-        x: 443
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_29
-      rect:
-        serializedVersion: 2
-        x: 477
-        y: 445
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_30
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_31
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_32
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_33
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_34
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_35
-      rect:
-        serializedVersion: 2
-        x: 171
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_36
-      rect:
-        serializedVersion: 2
-        x: 205
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_37
-      rect:
-        serializedVersion: 2
-        x: 239
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_38
-      rect:
-        serializedVersion: 2
-        x: 273
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_39
-      rect:
-        serializedVersion: 2
-        x: 307
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_40
-      rect:
-        serializedVersion: 2
-        x: 341
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_41
-      rect:
-        serializedVersion: 2
-        x: 375
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_42
-      rect:
-        serializedVersion: 2
-        x: 409
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_43
-      rect:
-        serializedVersion: 2
-        x: 443
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_44
-      rect:
-        serializedVersion: 2
-        x: 477
-        y: 411
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_45
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_46
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_47
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_48
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_49
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_50
-      rect:
-        serializedVersion: 2
-        x: 171
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_51
-      rect:
-        serializedVersion: 2
-        x: 205
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_52
-      rect:
-        serializedVersion: 2
-        x: 239
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_53
-      rect:
-        serializedVersion: 2
-        x: 273
-        y: 377
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 32}
+        - {x: -17, y: 32}
+        - {x: -26, y: 4}
+        - {x: -26, y: -32}
+        - {x: 22, y: -32}
+        - {x: 25, y: -30}
+        - {x: 26, y: -28}
+        - {x: 26, y: 13}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

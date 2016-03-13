@@ -5,32 +5,45 @@ namespace Play.Attrs {
 	[Serializable]
 	public class Actor : Attrib {
 		public int acstep = 0;
-		public int actime = 0;
 		public Act act = null;
 
-		public virtual int NextTick () {
-			return actime;
+		public override void OnBorn() {
+			base.OnBorn();
 		}
-		public virtual void Tick (int time) {
-			while (time >= actime) {
-				AI ai = ent.GetAttr<AI>();
-				if (act == null && ai != null) {
-					Act t = ai.NextAct();
-					if (t != null && t.Can(ent)) {
-						this.act = t;
-						acstep = -1;
-					}
+
+		public override int GetNextTick() {
+			if (next_tick > 0)
+				return next_tick;
+			AI ai = ent.GetAttr<AI>();
+			if (act == null && ai != null) {
+				Act t = ai.NextAct();
+				if (t != null) {
+					act = t;
+					acstep = -1;
+					SetNextTick(ent.layer.world.param.time);
 				}
-				if (act == null)
-					break;
-				acstep++;
-				Act.Step step = act.GetStep(acstep);
-				if (step == null) {
-					act = null;
-				} else {
-					actime = time + step.Time(ent);
-					step.Do(ent);
+			}
+			return next_tick;
+		}
+
+		public override void Tick (int time) {
+			AI ai = ent.GetAttr<AI>();
+			if (act == null && ai != null) {
+				Act t = ai.NextAct();
+				if (t != null && t.Can(ent)) {
+					act = t;
+					acstep = -1;
 				}
+			}
+			if (act == null)
+				return;
+			acstep++;
+			Act.Step step = act.GetStep(acstep);
+			if (step == null) {
+				act = null;
+			} else {
+				SetNextTick(time + step.Time(ent));
+				step.Do(ent);
 			}
 		}
 	}

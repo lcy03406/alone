@@ -28,8 +28,8 @@ namespace Play {
 		public class Param {
 			public int seed = (int)DateTime.Now.Ticks;
 			public WUID maxid;
-			public int time;
-			public int layer;
+			public int time = 1;
+			public int layer = -1; //TODO
 		};
 		public Param param;
 
@@ -53,14 +53,14 @@ namespace Play {
 			Entity e = file.LoadPlayer();
 			if (e == null) {
 				Ctx ctx = new Ctx(layer, layer.param.entr);
-				Schema.Entity.A human = Schema.Entity.GetA(Schema.Entity.ID.Human);
-				e = human.CreateEntity(ctx);
-				e.SetAttr(new Attrs.Ctrl());
+				Schema.Entity.A human = Schema.Entity.GetA(Schema.EntityID.Dwarf);
+				e = human.CreateEntity(ctx, true);
+			} else {
+				e.isPlayer = true;
+				layer.AddEntity(e);
+				e.OnLoad();
 			}
-			e.isPlayer = true;
 			player = e;
-			e.OnLoad();
-			layer.AddEntity(e);
 		}
 
 		public void SaveWorld() {
@@ -78,13 +78,12 @@ namespace Play {
 		}
 
 		public void Update() {
-			player.Tick(param.time);
-			if (view != null && param.layer == player.layer.z) {
-				view.OnEntityUpdate(player);
-			}
-			if (param.time < player.NextTick()) {
-				param.time++;
+			int tick_time = player.GetAttr<Attrs.Actor>().GetNextTick();
+			if (tick_time > 0) {
 				player.Tick(param.time);
+				if (view != null && param.layer == player.layer.z) {
+					view.OnEntityUpdate(player);
+				}
 				int i = 0;
 				while (i < layers.Count) {
 					int id = layers.Keys[i];
@@ -95,6 +94,7 @@ namespace Play {
 					}
 					i++;
 				}
+				param.time++;
 			}
 		}
 

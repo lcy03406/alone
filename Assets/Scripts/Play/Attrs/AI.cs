@@ -13,7 +13,7 @@ namespace Play.Attrs {
 		public override Act NextAct () {
 			Direction r = (Direction)random.Next (9);
 			if (r == Direction.None || r == Direction.Center)
-				return new Acts.ActIact(Schema.Iact.GetA(Schema.Iact.ID.Rest), WUID.None);
+				return new Acts.ActIact(Schema.Iact.GetA(Schema.ActionID.Rest), WUID.None);
 			return new Acts.ActMove (r);
 			//TODO
 		}

@@ -1,0 +1,85 @@
+{
+  "floors": [
+    {
+      "name": "",
+      "id": "Dirt",
+      "sprite": "block00"
+    }
+  ],
+  "biomes": [
+    {
+      "name": "",
+      "id": "Cave",
+      "floor": "Dirt",
+      "entr": "Entr",
+      "exit": "Exit",
+      "block": "Boulder",
+      "border": "Border"
+    }
+  ],
+  "boulders": [
+    {
+      "name": "",
+      "id": "Boulder",
+      "sprite": "block02",
+      "item": "Stone",
+      "hp": 10,
+      "defence": 0
+    },
+    {
+      "name": "",
+      "id": "Border",
+      "sprite": "block05",
+      "item": "Stone",
+      "hp": 10,
+      "defence": 1000
+    },
+    {
+      "name": "",
+      "id": "Entr",
+      "sprite": "entrance01",
+      "item": "Stone",
+      "hp": 10,
+      "defence": 1000
+    },
+    {
+      "name": "",
+      "id": "Exit",
+      "sprite": "exit01",
+      "item": "Stone",
+      "hp": 10,
+      "defence": 1000
+    }
+  ],
+  "creatures": [
+    {
+      "name": "",
+      "id": "Dwarf",
+      "sprite": "tent01",
+      "hp": 10,
+      "stamina": 10,
+      "attack": 10,
+      "defence": 10
+    }
+  ],
+  "items": [
+    {
+      "name": "stone",
+      "id": "Stone",
+      "sprite": "block04",
+      "desc": ""
+    },
+    {
+      "name": "bone",
+      "id": "Bone",
+      "sprite": "block03",
+      "desc": ""
+    },
+    {
+      "name": "meat",
+      "id": "Meat",
+      "sprite": "crate01",
+      "desc": ""
+    }
+  ]
+}

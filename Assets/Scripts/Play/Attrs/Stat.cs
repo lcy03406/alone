@@ -47,7 +47,6 @@ namespace Play.Attrs {
 		}
 
 		public Dictionary<ID, St> ints = new Dictionary<ID, St>();
-		int next_tick = int.MaxValue;
 
 		public Stat() {
 		}
@@ -115,8 +114,7 @@ namespace Play.Attrs {
 					st.bufs.Add(bid, buf);
 				}
 			}
-			if (next_tick > end_time)
-				next_tick = end_time;
+			SetNextTick(end_time);
 		}
 
 		public void DelBuf(Schema.BufID bid) {
@@ -131,13 +129,7 @@ namespace Play.Attrs {
 			}
 		}
 
-		public int NextTick() {
-			return next_tick;
-		}
-
-		public void Tick(int time) {
-			if (time < next_tick)
-				return;
+		public sealed override void Tick(int time) {
 			List<Schema.BufID> del = new List<Schema.BufID>();
 			foreach (KeyValuePair<ID, St> pair in ints) {
 				ID id = pair.Key;

@@ -93,8 +93,14 @@ namespace Play {
 			return new Rect (this - dist, this + dist);
 		}
 
-		public bool In (Rect rc) {
-			return x >= rc.bl.x && y >= rc.bl.y && x <= rc.tr.x && y <= rc.tr.y;
+		public bool In(Rect rc) {
+			return x >= rc.bl.x && x <= rc.tr.x && y >= rc.bl.y && y <= rc.tr.y;
+		}
+
+		public bool On(Rect rc) {
+			bool onx = x >= rc.bl.x && x <= rc.tr.x && (y == rc.bl.y || y == rc.tr.y);
+			bool ony = (x == rc.bl.x || x == rc.tr.x) && y >= rc.bl.y && y <= rc.tr.y;
+			return onx || ony;
 		}
 
 		public Coord Step (Direction dir) {

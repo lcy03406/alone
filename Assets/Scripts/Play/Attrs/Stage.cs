@@ -9,7 +9,6 @@ namespace Play.Attrs {
 		public Schema.Stage.A a;
 		public int start_time = 0;
 		public int tick_time = 0;
-		public int next_tick = int.MaxValue;
 		public void Transit(Schema.Stage.A to) {
 			if (ent != null && ent.layer != null) {
 				Ctx ctx = new Ctx(ent.layer, ent);
@@ -27,12 +26,7 @@ namespace Play.Attrs {
 			}
 		}
 
-		public int NextTick() {
-			return next_tick;
-		}
-
-		public void Tick(int time) {
-			next_tick = int.MaxValue;
+		public sealed override void Tick(int time) {
             tick_time = time;
 			Ctx ctx = new Ctx(ent.layer, ent);
 			Effect ef = a.s.tick_ef;

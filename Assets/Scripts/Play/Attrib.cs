@@ -8,11 +8,25 @@ namespace Play {
 	public abstract class Attrib {
 		[NonSerialized]
 		public Entity ent;
+		protected int next_tick;
 
 		public virtual void OnBorn() { }
 		public virtual void OnAttach() { }
 		public virtual void OnDetach() { }
 		public virtual void OnLoad() { }
+
+		public virtual void Tick(int time) { }
+		public void ClrNextTick() {
+			next_tick = 0;
+		}
+		public void SetNextTick(int time) {
+			if (next_tick == 0 || next_tick > time && time > 0) {
+				next_tick = time;
+			}
+		}
+		public virtual int GetNextTick() {
+			return next_tick;
+		}
 
 		public static Type AttribClass(Type cls) {
 			Assert.IsTrue(cls.IsSubclassOf(typeof(Attrib)));

@@ -29,35 +29,37 @@ namespace Play {
 			}
 		}
 
+		static Type[] TickAttr = {
+			typeof(Attrs.Actor),
+			typeof(Attrs.Stat),
+			typeof(Attrs.Part),
+			typeof(Attrs.Stage),
+		};
+
 		public void Tick (int time) {
-			Attrs.Actor actor = GetAttr<Attrs.Actor>();
-			if (actor != null)
-				actor.Tick(time);
-			Attrs.Stat stat = GetAttr<Attrs.Stat>();
-			if (stat != null)
-				stat.Tick(time);
-			Attrs.Part part = GetAttr<Attrs.Part>();
-			if (part != null)
-				part.Tick(time);
-			Attrs.Stage stage = GetAttr<Attrs.Stage>();
-			if (stage != null)
-				stage.Tick(time);
+			foreach (Type t in TickAttr) {
+				Attrib a = GetAttr(t);
+				if (a != null) {
+					int next_tick = a.GetNextTick();
+					if (next_tick == 0 || next_tick > time)
+						continue;
+					a.ClrNextTick();
+					a.Tick(time);
+				}
+			}
 		}
 
-		public int NextTick() {
-			int next = int.MaxValue;
-			Attrs.Actor actor = GetAttr<Attrs.Actor>();
-			int t = (actor == null) ? int.MaxValue : actor.NextTick();
-			if (t < next) next = t;
-			Attrs.Stat stat = GetAttr<Attrs.Stat >();
-			t = (stat == null) ? int.MaxValue : stat.NextTick();
-			if (t < next) next = t;
-			Attrs.Part part = GetAttr<Attrs.Part>();
-			t = (part == null) ? int.MaxValue : part.NextTick();
-			if (t < next) next = t;
-			Attrs.Stage stage = GetAttr<Attrs.Stage>();
-			t = (stage == null) ? int.MaxValue : stage.NextTick();
-			if (t < next) next = t;
+		public int GetNextTick() {
+			int next = 0;
+			foreach (Type t in TickAttr) {
+				Attrib a = GetAttr(t);
+				if (a != null) {
+					int next_tick = a.GetNextTick();
+					if (next == 0 || next_tick != 0 && next_tick < next) {
+						next = next_tick;
+					}
+				}
+			}
 			return next;
 		}
 
@@ -84,11 +86,15 @@ namespace Play {
 		}
 
 		public T GetAttr<T> () where T : Attrib {
-			Type cls = Attrib.AttribClass(typeof(T));
+			Type t = Attrib.AttribClass(typeof(T));
+			return GetAttr(t) as T;
+		}
+
+		private Attrib GetAttr(Type t) {
 			Attrib a;
-			if (!attr.TryGetValue(cls, out a))
+			if (!attr.TryGetValue(t, out a))
 				return null;
-			return a as T;
+			return a;
 		}
 	}
 }

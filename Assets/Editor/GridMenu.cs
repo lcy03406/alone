@@ -3,8 +3,8 @@ using UnityEditor;
 
 using Play;
 
-public class Grid {
-	//[MenuItem("Assets/CreateGrid")]
+public class GridMenu {
+	[MenuItem("Revenge/Reset Grid", priority = 100)]
 	private static void CreateGrid() {
 		string prefabPath = "Assets/Prefabs/Grid.prefab";
 		GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
@@ -67,11 +67,5 @@ public class Grid {
 		}
 		return uv;
 	}
-}
-
-[CreateAssetMenu]
-public class ToySchema : ScriptableObject {
-	public string name;
-	public Coord c;
 }
 

@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace Play {
 	public abstract class LayerCreate {
-		public abstract Grid.Data Create(Ctx ctx, Coord g);
+		public abstract void Create(Ctx ctx, Grid grid);
 	}
 }
 
@@ -19,12 +20,18 @@ namespace Play.Layers {
 			this.entities = entities;
 		}
 
-		public override Grid.Data Create(Ctx ctx, Coord g) {
-			Schema.Entity.A exit = Schema.Entity.GetA(Schema.Entity.ID.Workshop_Mine);
-			Grid.Data grid = new Grid.Data();
+		public override void Create(Ctx ctx, Grid grid) {
+			Coord g = grid.c;
+			Schema.Entity.A exit = Schema.Entity.GetA(Schema.EntityID.Exit);
+			Grid.Data d = new Grid.Data();
 			for (int x = 0; x < World.GRID_SIZE; ++x) {
 				for (int y = 0; y < World.GRID_SIZE; ++y) {
-					grid.tiles[x, y] = floors.Get(ctx);
+					d.tiles[x, y] = floors.Get(ctx);
+				}
+			}
+			grid.d = d;
+			for (int x = 0; x < World.GRID_SIZE; ++x) {
+				for (int y = 0; y < World.GRID_SIZE; ++y) {
 					Coord c = g.Add(x, y);
 					ctx.dstc = c;
 					Schema.Entity.A a = null;
@@ -34,52 +41,65 @@ namespace Play.Layers {
 						a = entities.Get(ctx);
 					}
 					if (a != null) {
-						Entity e = a.CreateEntity(ctx);
-						if (e != null) {
-							grid.entities.Add(e);
-						}
+						a.CreateEntity(ctx);
 					}
 				}
 			}
-			return grid;
 		}
 	}
 
 	public class Cave : LayerCreate {
-		public override Grid.Data Create(Ctx ctx, Coord g) {
-			Schema.Entity.A border = Schema.Entity.GetA(Schema.Entity.ID.Workshop_Campfire);
-			Schema.Entity.A stone = Schema.Entity.GetA(Schema.Entity.ID.Boulder);
-			Schema.Entity.A exit = Schema.Entity.GetA(Schema.Entity.ID.Workshop_Mine);
-			Schema.Floor.A floor = Schema.Floor.GetA(Schema.Floor.ID.Dirt);
+		private Schema.Floor.A floor;
+		private Schema.Entity.A entr;
+		private Schema.Entity.A exit;
+		private Schema.Entity.A block;
+		private Schema.Entity.A border;
+
+		public Cave(Schema.EditBiomeCave edit) {
+			this.floor = Schema.Floor.GetA(edit.floor);
+			this.entr = Schema.Entity.GetA(edit.entr);
+			this.exit = Schema.Entity.GetA(edit.exit);
+			this.block = Schema.Entity.GetA(edit.block);
+			this.border = Schema.Entity.GetA(edit.border);
+		}
+		public override void Create(Ctx ctx, Grid grid) {
+			Stopwatch watch = new Stopwatch();
+			watch.Start();
+			Coord g = grid.c;
 			int z = ctx.layer.z;
 			int s = ctx.layer.world.param.seed;
 			Rect rect = ctx.layer.param.rect;
-			Grid.Data grid = new Grid.Data();
+			Grid.Data d = new Grid.Data();
 			for (int x = 0; x < World.GRID_SIZE; ++x) {
 				for (int y = 0; y < World.GRID_SIZE; ++y) {
-					grid.tiles[x, y] = floor;
+					d.tiles[x, y] = floor;
+				}
+			}
+			grid.d = d;
+			for (int x = 0; x < World.GRID_SIZE; ++x) {
+				for (int y = 0; y < World.GRID_SIZE; ++y) {
 					Coord c = g.Add(x, y);
 					ctx.dstc = c;
-					Schema.Entity.A a = null;
+					Schema.Entity.A aent = null;
 					if (c == ctx.layer.param.exit) {
-						a = exit;
+						aent = exit;
+					} else if (c.On(rect)) {
+						aent = border;
 					} else if (!c.In(rect)) {
-						a = border;
+						aent = null;
 					} else {
 						int room = Rand.BigCave(x + s, y + s, z + s);
 						if (room > 0) {
-							a = stone;
+							aent = block; //TODO
 						}
 					}
-					if (a != null) {
-						Entity e = a.CreateEntity(ctx);
-						if (e != null) {
-							grid.entities.Add(e);
-						}
+					if (aent != null) {
+						aent.CreateEntity(ctx);
 					}
 				}
 			}
-			return grid;
+			watch.Stop();
+			Debug.Log(string.Format("create grid time {0}", watch.Elapsed));
 		}
 	}
 }

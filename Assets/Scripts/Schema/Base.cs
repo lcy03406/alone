@@ -26,7 +26,7 @@ namespace Schema {
 
 		[Serializable]
 		public class A {
-			public readonly ID id;
+			public ID id;
 			[NonSerialized]
 			private Data data;
 			
