@@ -47,6 +47,14 @@ namespace Play {
 			this.cap_from = cap_from;
 			this.count = count;
 		}
+		public ItemCreate(Schema.Item.A a, int count) {
+			this.a = a;
+			this.q_base = 0;
+			this.q_from = null;
+			this.q_rand = 0;
+			this.cap_from = null;
+			this.count = count;
+		}
 		public override string ToString() {
 			return Display();
 		}

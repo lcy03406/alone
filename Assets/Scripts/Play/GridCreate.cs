@@ -22,7 +22,7 @@ namespace Play.Layers {
 
 		public override void Create(Ctx ctx, Grid grid) {
 			Coord g = grid.c;
-			Schema.Entity.A exit = Schema.Entity.GetA(Schema.EntityID.Exit);
+			Schema.Entity.A exit = Schema.Entity.GetA(Schema.EntityID.WorkshopExit);
 			Grid.Data d = new Grid.Data();
 			for (int x = 0; x < World.GRID_SIZE; ++x) {
 				for (int y = 0; y < World.GRID_SIZE; ++y) {

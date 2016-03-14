@@ -42,7 +42,7 @@ namespace Play.Attrs {
 				return false;
 			}
 			//TODO
-			Schema.Iact.A atk = Schema.Iact.GetA (Schema.ActionID.Attack_Punch);
+			Schema.Iact.A atk = Schema.Iact.GetA (Schema.ActionID.AttackPunch);
 			Entity dst = ent.layer.SearchEntity (pos.c.Step (pos.dir));
 			if (dst == null)
 				return false;

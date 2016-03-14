@@ -36,6 +36,42 @@ namespace Schema {
 				));
 			}
 		}
+		public static void AddAll(List<EditIactBuild> edits) {
+			foreach (EditIactBuild edit in edits) {
+				Add(edit.id, new Iact(
+					name: edit.name,
+					time1: edit.time,
+					time2: 0,
+					has_dst: false,
+					distance: 0,
+					ef: Ef.Build(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, null), Entity.GetA(edit.build))
+				));
+			}
+		}
+		public static void AddAll(List<EditIactMake> edits) {
+			foreach (EditIactMake edit in edits) {
+				Add(edit.id, new Iact(
+					name: edit.name,
+					time1: edit.time,
+					time2: 0,
+					has_dst: false,
+					distance: 0,
+					ef: Ef.Make(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.products))
+				));
+			}
+		}
+		public static void AddAll(List<EditIactPick> edits) {
+			foreach (EditIactPick edit in edits) {
+				Add(edit.id, new Iact(
+					name: edit.name,
+					time1: edit.time,
+					time2: 0,
+					has_dst: true,
+					distance: 1,
+					ef: Ef.Pick(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.byproducts), edit.part, 1)
+				));
+			}
+		}
 		public static void AddAll(List<EditIactRest> edits) {
 			foreach (EditIactRest edit in edits) {
 				Add(edit.id, new Iact(
@@ -54,74 +90,11 @@ namespace Schema {
 					name: edit.name,
 					time1: edit.time,
 					time2: 0,
-					has_dst: false,
-					distance: 0,
+					has_dst: true,
+					distance: 1,
 					ef: Ef.Travel(edit.stamina, edit.to)
 				));
 			}
 		}
-		/*
-				public static Iact Attack(string name, int time1, int time2, int sta,
-					Play.Calc<int> damage) {
-					return new Iact(
-						name: name,
-						time1: time1,
-						time2: time2,
-						has_dst: true,
-						distance: 1,
-						ef: Ef.Attack(sta, damage)
-					);
-				}
-
-				public static Iact Travel(string name, int time1, int time2, int sta, int to) {
-					return new Iact(
-						name: name,
-						time1: time1,
-						time2: time2,
-						has_dst: true,
-						distance: 1,
-						ef: Ef.Travel(sta, to)
-					);
-				}
-
-				public static Iact Pick(string name, int time1, int time2, int sta,
-					Schema.PartID part, int count) {
-					return new Iact(
-						name: name,
-						time1: time1,
-						time2: time2,
-						has_dst: true,
-						distance: 1,
-						ef: Ef.Pick(sta, part, count)
-					);
-				}
-
-				public static Iact Butcher(string name, int time1, int time2, int sta,
-					Schema.PartID part, int count) {
-					return new Iact(
-						name: name,
-						time1: time1,
-						time2: time2,
-						has_dst: true,
-						distance: 1,
-						ef: Ef.Butcher(sta, part, count)
-					);
-				}
-		
-		public static Iact Make(string name, int time1, int time2, int sta,
-			Play.ItemSelect[] tools,
-			Play.ItemSelect[] reagents,
-			Play.ItemCreate[] products,
-			Schema.Entity.A build) {
-			return new Iact(
-				name: name,
-				time1: time1,
-				time2: time2,
-				has_dst: false,
-				distance: 0,
-				ef: Ef.Make(sta, tools, reagents, products, build)
-			);
-		}
-		*/
 	}
 }

@@ -55,7 +55,7 @@ public class SpriteMenu {
 		enun.values = names;
 		EnumText text = new EnumText();
 		text.all.Add(enun);
-		string[] lines = text.Save();
+		string[] lines = text.SaveEnums();
 		const string textPath = "/Scripts/Schema/SpriteID.cs";
 		File.WriteAllLines(Application.dataPath + textPath, lines);
 

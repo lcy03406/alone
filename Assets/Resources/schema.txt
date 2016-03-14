@@ -1,60 +1,45 @@
 {
-  "floors": [
+  "biome": [
     {
-      "name": "",
-      "id": "Dirt",
-      "sprite": "block00"
-    }
-  ],
-  "biomes": [
-    {
-      "name": "",
+      "name": "cave",
       "id": "Cave",
       "floor": "Dirt",
-      "entr": "Entr",
-      "exit": "Exit",
-      "block": "Boulder",
-      "border": "Border"
+      "entr": "BoulderEntr",
+      "exit": "WorkshopExit",
+      "block": "BoulderStone",
+      "border": "BoulderBorder"
     }
   ],
-  "boulders": [
+  "boulder": [
     {
-      "name": "",
-      "id": "Boulder",
+      "name": "stone",
+      "id": "BoulderStone",
       "sprite": "block02",
       "item": "Stone",
       "hp": 10,
       "defence": 0
     },
     {
-      "name": "",
-      "id": "Border",
+      "name": "border",
+      "id": "BoulderBorder",
       "sprite": "block05",
       "item": "Stone",
       "hp": 10,
       "defence": 1000
     },
     {
-      "name": "",
-      "id": "Entr",
+      "name": "entrance",
+      "id": "BoulderEntr",
       "sprite": "entrance01",
-      "item": "Stone",
-      "hp": 10,
-      "defence": 1000
-    },
-    {
-      "name": "",
-      "id": "Exit",
-      "sprite": "exit01",
       "item": "Stone",
       "hp": 10,
       "defence": 1000
     }
   ],
-  "creatures": [
+  "creature": [
     {
       "name": "",
-      "id": "Dwarf",
+      "id": "CreatureMiner",
       "sprite": "tent01",
       "hp": 10,
       "stamina": 10,
@@ -62,7 +47,39 @@
       "defence": 10
     }
   ],
-  "items": [
+  "trees": [],
+  "workshop": [
+    {
+      "name": "working bench",
+      "id": "WorkshopBench",
+      "sprite": "crate01",
+      "actions": [
+        "Make_Knife_Stone"
+      ]
+    },
+    {
+      "name": "exit",
+      "id": "WorkshopExit",
+      "sprite": "exit01",
+      "actions": [
+        "Travel_Down"
+      ]
+    }
+  ],
+  "floor": [
+    {
+      "name": "dirt",
+      "id": "Dirt",
+      "sprite": "block00"
+    }
+  ],
+  "attack": [],
+  "build": [],
+  "make": [],
+  "pick": [],
+  "rest": [],
+  "travel": [],
+  "item": [
     {
       "name": "stone",
       "id": "Stone",

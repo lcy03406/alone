@@ -28,63 +28,27 @@ namespace Schema {
 			return new Play.Eff.Multi(eff);
 		}
 
-		public static Play.Effect Pick(int sta, Schema.PartID part, int count) {
-			Play.Effect[] eff = new Play.Effect[] {
-				new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
-					id: part,
-					value: new Play.Calcs.Const<int>(count)
-				),
-				new Play.Eff.DecStat(ent: new Play.Calcs.Src(),
-					id: StatID.Stamina,
-					value: new Play.Calcs.Const<int>(sta)),
-				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
-					cre: new Play.Calcs.ItemCount(
-						cre: new Play.Calcs.Part(
-							ent: new Play.Calcs.Dst(),
-							id: part
-						),
-						count: new Play.Calcs.Const<int>(count)
-					)
-				)
-			};
-			return new Play.Eff.Multi(eff);
+		public static Play.ItemSelect[] SomeItemSelect(List<SomeItem> some) {
+			List<Play.ItemSelect> list = new List<Play.ItemSelect>();
+			foreach (SomeItem one in some) {
+				list.Add(new Play.ItemSelect(Item.GetA(one.id), one.count));
+			}
+			return list.ToArray();
 		}
-/*
-		public static Play.Effect Butcher(int sta, Schema.PartID part, int count) {
-			Play.Effect[] eff = new Play.Effect[] {
-				new Play.Eff.UseItem(ent: new Play.Calcs.Src(),
-					sel: new Play.Calcs.Const<Play.ItemSelect>(
-						new Play.ItemSelect(
-							a: Schema.Item.GetA(Schema.ItemID.Knife),
-							count: 1
-						)
-					)
-				),
-				new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
-					id: part,
-					value: new Play.Calcs.Const<int>(count)
-				),
-				new Play.Eff.DecStat(ent: new Play.Calcs.Src(),
-					id: StatID.Creature_Stamina,
-					value: new Play.Calcs.Const<int>(sta)),
-				new Play.Eff.AddItem ( ent: new Play.Calcs.Src(),
-					cre: new Play.Calcs.ItemCount(
-						cre: new Play.Calcs.Part(
-							ent: new Play.Calcs.Dst(),
-							id: part
-						),
-						count: new Play.Calcs.Const<int>(count)
-					)
-				)
-			};
-			return new Play.Eff.Multi(eff);
+
+		public static Play.ItemCreate[] SomeItemCreate(List<SomeItem> some) {
+			List<Play.ItemCreate> list = new List<Play.ItemCreate>();
+			foreach (SomeItem one in some) {
+				list.Add(new Play.ItemCreate(Item.GetA(one.id), one.count));
+			}
+			return list.ToArray();
 		}
-*/
-		public static Play.Effect Make(int sta,
+
+		public static List<Play.Effect> MakeCommon(int sta,
 			Play.ItemSelect[] tools,
 			Play.ItemSelect[] reagents,
-			Play.ItemCreate[] products,
-			Schema.Entity.A build) {
+			Play.ItemCreate[] products)
+		{
 			List<Play.Effect> eff = new List<Play.Effect>();
 			if (sta > 0) {
 				eff.Add(new Play.Eff.DecStat(new Play.Calcs.Src(),
@@ -108,9 +72,40 @@ namespace Schema {
 						new Play.Calcs.Const<Play.ItemCreate>(cre)));
 				}
 			}
-			if (build != null) {
-				eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Schema.Entity.A>(build)));
-			}
+			return eff;
+		}
+
+		public static List<Play.Effect> MakeCommon(int sta,
+			List<SomeItem> tools,
+			List<SomeItem> reagents,
+			List<SomeItem> products)
+		{
+			return MakeCommon(sta, SomeItemSelect(tools), SomeItemSelect(reagents), SomeItemCreate(products));
+		}
+
+		public static Play.Effect Build(List<Play.Effect> eff, Schema.Entity.A build) {
+			eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Schema.Entity.A>(build)));
+			return new Play.Eff.Multi(eff.ToArray());
+		}
+
+		public static Play.Effect Make(List<Play.Effect> eff) {
+			return new Play.Eff.Multi(eff.ToArray());
+		}
+
+		public static Play.Effect Pick(List<Play.Effect> eff, Schema.PartID part, int count) {
+			eff.Add(new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
+				id: part,
+				value: new Play.Calcs.Const<int>(count)
+			));
+			eff.Add(new Play.Eff.AddItem(ent: new Play.Calcs.Src(),
+				cre: new Play.Calcs.ItemCount(
+					cre: new Play.Calcs.Part(
+						ent: new Play.Calcs.Dst(),
+						id: part
+					),
+					count: new Play.Calcs.Const<int>(count)
+				)
+			));
 			return new Play.Eff.Multi(eff.ToArray());
 		}
 

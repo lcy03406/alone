@@ -8,30 +8,28 @@ namespace Schema {
 	public sealed partial class Entity : SchemaBase<EntityID, Entity> {
 		public static void AddAll(List<EditEntityCreature> edits) {
 			Iact.A[] human_make = new Iact.A[] {
-				Iact.GetA(ActionID.Make_Cross),
-				Iact.GetA(ActionID.Make_Knife_Stone),
-				Iact.GetA(ActionID.Make_Axe_Stone),
-				Iact.GetA(ActionID.Make_Knife_Bone),
-				Iact.GetA(ActionID.Build_Campfire),
+				Iact.GetA(ActionID.BuildCampfire),
+				Iact.GetA(ActionID.MakeStoneKnife),
+				Iact.GetA(ActionID.MakeStoneAxe),
+				Iact.GetA(ActionID.MakeBoneKnife),
 			};
 			Iact.A[] human_iact_src = new Iact.A[] {
+				Iact.GetA(ActionID.AttackPunch),
+				Iact.GetA(ActionID.BuildCampfire),
+				Iact.GetA(ActionID.MakeStoneKnife),
+				Iact.GetA(ActionID.MakeStoneAxe),
+				Iact.GetA(ActionID.MakeBoneKnife),
+				Iact.GetA(ActionID.PickBoulderStone),
+				Iact.GetA(ActionID.PickTreeBranch),
+				Iact.GetA(ActionID.PickTreeFruit),
+				Iact.GetA(ActionID.PickCreatureMeat),
+				Iact.GetA(ActionID.PickCreatureBone),
 				Iact.GetA(ActionID.Rest),
-				Iact.GetA(ActionID.Attack_Punch),
-				Iact.GetA(ActionID.Travel_Down),
-				Iact.GetA(ActionID.Chip_Stone),
-				Iact.GetA(ActionID.Tree_PickBranch),
-				Iact.GetA(ActionID.Tree_PickFruit),
-				Iact.GetA(ActionID.Butcher_Meat),
-				Iact.GetA(ActionID.Butcher_Bone),
-				Iact.GetA(ActionID.Make_Cross),
-				Iact.GetA(ActionID.Make_Knife_Stone),
-				Iact.GetA(ActionID.Make_Axe_Stone),
-				Iact.GetA(ActionID.Make_Knife_Bone),
-				Iact.GetA(ActionID.Build_Campfire),
+				Iact.GetA(ActionID.TravelDown),
 			};
 			Iact.A[] creature_iact_dst = new Iact.A[] {
-				Iact.GetA(ActionID.Butcher_Meat),
-				Iact.GetA(ActionID.Butcher_Bone),
+				Iact.GetA(ActionID.PickCreatureMeat),
+				Iact.GetA(ActionID.PickCreatureBone),
 			};
 			Stages human_stages = new Stages {
 				{

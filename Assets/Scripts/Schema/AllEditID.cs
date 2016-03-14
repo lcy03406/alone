@@ -14,25 +14,26 @@ namespace Schema {
 		Branch,
 	}
 	public enum EntityID {
-		Dwarf,
-		Boulder,
-		Border,
-		Entr,
-		Exit
+		BoulderStone,
+		BoulderBorder,
+		BoulderEntr,
+		CreatureMiner,
+		CreatureWarrior,
+		WorkshopBench,
+		WorkshopExit
 	}
 	public enum ActionID {
+		AttackPunch,
+		BuildCampfire,
+		MakeStoneKnife,
+		MakeStoneAxe,
+		MakeBoneKnife,
+		PickBoulderStone,
+		PickCreatureMeat,
+		PickCreatureBone,
+		PickTreeBranch,
+		PickTreeFruit,
 		Rest,
-		Attack_Punch,
-		Travel_Down,
-		Chip_Stone,
-		Tree_PickBranch,
-		Tree_PickFruit,
-		Butcher_Meat,
-		Butcher_Bone,
-		Make_Cross,
-		Make_Knife_Stone,
-		Make_Axe_Stone,
-		Make_Knife_Bone,
-		Build_Campfire,
+		TravelDown,
 	}
 }

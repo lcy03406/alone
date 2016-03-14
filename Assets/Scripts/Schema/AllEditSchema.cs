@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Schema {
 	[Serializable]
@@ -72,6 +72,45 @@ namespace Schema {
 		public int time1;
 		public int time2;
 	}
+	[Serializable]
+	public class SomeItem {
+		public ItemID id;
+		public int count;
+	}
+
+	[Serializable]
+	public class EditIactBuild {
+		public string name;
+		public ActionID id;
+		public int stamina;
+		public int time;
+		public List<SomeItem> tools;
+		public List<SomeItem> reagents;
+		public EntityID build;
+	}
+
+	[Serializable]
+	public class EditIactMake {
+		public string name;
+		public ActionID id;
+		public int stamina;
+		public int time;
+		public List<SomeItem> tools;
+		public List<SomeItem> reagents;
+		public List<SomeItem> products;
+	}
+
+	[Serializable]
+	public class EditIactPick {
+		public string name;
+		public ActionID id;
+		public int stamina;
+		public int time;
+		public List<SomeItem> tools;
+		public List<SomeItem> reagents;
+		public List<SomeItem> byproducts;
+		public PartID part;
+	}
 
 	[Serializable]
 	public class EditIactRest {
@@ -101,24 +140,34 @@ namespace Schema {
 
 	[Serializable]
 	public class EditAll {
-		public List<EditBiomeCave> biome;
-		public List<EditEntityBoulder> boulder;
-		public List<EditEntityCreature> creature;
-		public List<EditEntityTree> trees;
-		public List<EditEntityWorkshop> workshop;
-		public List<EditFloor> floor;
-		public List<EditIactAttack> attack;
-		public List<EditIactRest> rest;
-		public List<EditIactTravel> travel;
-		public List<EditItem> item;
+		public List<EditBiomeCave> biome = new List<EditBiomeCave>();
+		public List<EditEntityBoulder> boulder = new List<EditEntityBoulder>();
+		public List<EditEntityCreature> creature = new List<EditEntityCreature>();
+		public List<EditEntityTree> trees = new List<EditEntityTree>();
+		public List<EditEntityWorkshop> workshop = new List<EditEntityWorkshop>();
+		public List<EditFloor> floor = new List<EditFloor>();
+		public List<EditIactAttack> attack = new List<EditIactAttack>();
+		public List<EditIactBuild> build = new List<EditIactBuild>();
+		public List<EditIactMake> make = new List<EditIactMake>();
+		public List<EditIactPick> pick = new List<EditIactPick>();
+		public List<EditIactRest> rest = new List<EditIactRest>();
+		public List<EditIactTravel> travel = new List<EditIactTravel>();
+		public List<EditItem> item = new List<EditItem>();
 
 		public static JsonSerializer Ser() {
 			JsonSerializer ser = new JsonSerializer();
 			ser.Converters.Add(new StringEnumConverter());
+			ser.MissingMemberHandling = MissingMemberHandling.Error;
 			ser.TypeNameHandling = TypeNameHandling.Auto;
 			ser.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
 			ser.Formatting = Formatting.Indented;
+			ser.Error += Ser_Error;
 			return ser;
+		}
+
+		private static void Ser_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) {
+			Assert.IsTrue(false, string.Format("JSON ERROR {0} : {1}", e.CurrentObject.ToString(), e.ErrorContext.Error.Message));
+			throw e.ErrorContext.Error;
 		}
 	}
 }

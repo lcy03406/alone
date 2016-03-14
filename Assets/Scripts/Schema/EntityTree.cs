@@ -8,8 +8,8 @@ namespace Schema {
 	public sealed partial class Entity : SchemaBase<EntityID, Entity> {
 		public static void AddAll(List<EditEntityTree> edits) {
 			Iact.A[] tree_iact = new Iact.A[] {
-				Iact.GetA (ActionID.Tree_PickBranch),
-				Iact.GetA (ActionID.Tree_PickFruit),
+				Iact.GetA (ActionID.PickTreeBranch),
+				Iact.GetA (ActionID.PickTreeFruit),
 			};
 			Stages tree_stages = new Stages {
 				{

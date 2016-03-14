@@ -53,7 +53,7 @@ namespace Play {
 			Entity e = file.LoadPlayer();
 			if (e == null) {
 				Ctx ctx = new Ctx(layer, layer.param.entr);
-				Schema.Entity.A human = Schema.Entity.GetA(Schema.EntityID.Dwarf);
+				Schema.Entity.A human = Schema.Entity.GetA(Schema.EntityID.CreatureMiner);
 				e = human.CreateEntity(ctx, true);
 			} else {
 				e.isPlayer = true;

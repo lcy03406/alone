@@ -8,15 +8,8 @@ namespace Schema {
 	public class All {
 		static public void Init() {
 			Sprite.Init();
-			LoadAll();
-			/*
-			Floor.Init();
-			Item.Init();
-			Iact.Init();
 			Stage.Init();
-			Entity.Init();
-			Grid.Init();
-			*/
+			LoadAll();
 		}
 
 		static public void LoadAll() {
@@ -42,6 +35,9 @@ namespace Schema {
 			Entity.AddAll(all.workshop);
 			Floor.AddAll(all.floor);
 			Iact.AddAll(all.attack);
+			Iact.AddAll(all.build);
+			Iact.AddAll(all.make);
+			Iact.AddAll(all.pick);
 			Iact.AddAll(all.rest);
 			Iact.AddAll(all.travel);
 			Item.AddAll(all.item);

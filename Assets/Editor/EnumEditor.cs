@@ -13,7 +13,7 @@ public class EditEnum {
 }
 
 public class EnumText {
-	public List<EditEnum> all = new List<EditEnum>();
+	public List<EditEnum> all;
 
 	const string header = "//generated. do not edit.";
 	const string ns = "namespace Schema {";
@@ -22,11 +22,18 @@ public class EnumText {
 	const string end = "\t}";
 	const string ens = "}";
 
-	public void Clear() {
+	public EnumText() {
+		this.all = new List<EditEnum>();
+	}
+	public EnumText(List<EditEnum> all) {
+		this.all = all;
+	}
+
+	public void ClearEnums() {
 		all.Clear();
 	}
 
-	public void Load(string[] lines) {
+	public void LoadEnums(string[] lines) {
 		if (lines == null || lines.Length == 0) {
 			return;
 		}
@@ -60,7 +67,7 @@ public class EnumText {
 		}
 	}
 
-	public string[] Save() {
+	public string[] SaveEnums() {
 		List<string> lines = new List<string>();
 		lines.Add(header);
 		lines.Add(ns);
@@ -76,31 +83,22 @@ public class EnumText {
 	}
 }
 
-public class EnumEditor : ScriptableWizard {
-	EnumText data = new EnumText();
-	[MenuItem("Revenge/Edit Schema ID", priority = 2)]
-	static void ShowEditSchemaID() {
-		DisplayWizard<EnumEditor>("Schema", "Save&Close", "Save").Load("/Scripts/Schema/AllEditID.cs");
-	}
-
-	[MenuItem("Revenge/Edit Enum", priority = 1)]
-	static void ShowEditEnum() {
-		DisplayWizard<EnumEditor>("Enum", "Save&Close", "Save").Load("/Scripts/Schema/AllEnum.cs");
-	}
+public class BaseEnumEditor : ScriptableWizard {
+	public List<EditEnum> all = new List<EditEnum>();
 
 	private string path;
 
-	void Load(string path) {
+	protected void Load(string path) {
 		this.path = path;
-		data.Clear();
+		all.Clear();
 		AssetDatabase.Refresh();
 		TextAsset text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets" + path);
 		string[] lines = text.text.Split('\n');
-		data.Load(lines);
+		new EnumText(all).LoadEnums(lines);
 	}
 
 	void Save() {
-		string[] lines = data.Save();
+		string[] lines = new EnumText(all).SaveEnums();
 		File.WriteAllLines(Application.dataPath + path, lines);
 		AssetDatabase.Refresh();
 	}
@@ -113,4 +111,18 @@ public class EnumEditor : ScriptableWizard {
 		Save();
 	}
 }
+
+public class EnumEditor : BaseEnumEditor {
+	[MenuItem("Revenge/Edit Enum", priority = 1)]
+	static void ShowEditEnum() {
+		DisplayWizard<EnumEditor>("Edit Enum", "Save&Close", "Save").Load("/Scripts/Schema/AllEditEnum.cs");
+	}
+}
+public class IDEditor : BaseEnumEditor {
+	[MenuItem("Revenge/Edit Schema ID", priority = 2)]
+	static void ShowEditSchemaID() {
+		DisplayWizard<IDEditor>("Edit Schema ID", "Save&Close", "Save").Load("/Scripts/Schema/AllEditID.cs");
+	}
+}
+
 

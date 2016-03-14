@@ -15,17 +15,29 @@ public class SchemaEditor : ScriptableWizard {
 	}
 
 	static JsonSerializer ser = Schema.EditAll.Ser();
+
+	bool loaded = false;
+
 	void Load() {
+		loaded = false;
 		AssetDatabase.Refresh();
 		TextAsset text = Resources.Load<TextAsset>("schema");
 		using (StringReader sr = new StringReader(text.text))
 		using (JsonReader r = new JsonTextReader(sr)) {
-			all = ser.Deserialize<Schema.EditAll>(r);
+			try {
+				all = ser.Deserialize<Schema.EditAll>(r);
+				loaded = true;
+			} catch (Exception) {
+				loaded = false;
+				Close();
+			}
 		}
 	}
 
 	const string path = "/Resources/schema.txt";
 	void Save() {
+		if (!loaded)
+			return;
 		using (StringWriter sw = new StringWriter())
 		using (JsonWriter w = new JsonTextWriter(sw)) {
 			ser.Serialize(w, all);

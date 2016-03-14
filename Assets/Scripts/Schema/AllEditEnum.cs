@@ -11,4 +11,14 @@ namespace Schema {
 		Food,
 		Drink,
 	}
+	public enum PartID {
+		Boulder_Stone,
+		Tree_Branch,
+		Tree_Bough,
+		Tree_Fruit,
+		Tree_Bark,
+		Creature_Skin,
+		Creature_Meat,
+		Creature_Bone,
+	}
 }
