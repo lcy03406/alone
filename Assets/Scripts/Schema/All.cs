@@ -35,13 +35,16 @@ namespace Schema {
 			watch.Reset();
 
 			watch.Start();
-			Floor.AddAll(all.floors);
-			Biome.AddAll(all.biomes);
-			Entity.AddAll(all.boulders);
-			Entity.AddAll(all.creatures);
+			Biome.AddAll(all.biome);
+			Entity.AddAll(all.boulder);
+			Entity.AddAll(all.creature);
 			Entity.AddAll(all.trees);
-			Entity.AddAll(all.workshops);
-			Item.AddAll(all.items);
+			Entity.AddAll(all.workshop);
+			Floor.AddAll(all.floor);
+			Iact.AddAll(all.attack);
+			Iact.AddAll(all.rest);
+			Iact.AddAll(all.travel);
+			Item.AddAll(all.item);
 			watch.Stop();
 			Debug.Log(string.Format("load schema data time {0}", watch.Elapsed));
 		}

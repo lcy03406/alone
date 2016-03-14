@@ -7,7 +7,7 @@ namespace Schema {
 	using Stages = SortedList<Stage.ID, EntityStage>;
 	public sealed partial class Entity : SchemaBase<EntityID, Entity> {
 		public static void AddAll(List<EditEntityWorkshop> edits) {
-			Stages campfire_stages = new Stages {
+			/*Stages campfire_stages = new Stages {
 				{
 					Stage.ID.Workshop_Off,
 					new EntityStage(
@@ -24,16 +24,16 @@ namespace Schema {
 						iact_dst: null,
 						make: null,
 						usage: new Play.Attrs.Stat() {
-						/*	ints = {
+							ints = {
 								{ StatID.Workshop_Cookfire, new Play.Attrs.Stat.St(
 									value: 1,
 									cap: 0
 								)},
-							}*/
+							}
 						}
 					)
 				},
-			};
+			};*/
 			foreach (EditEntityWorkshop edit in edits) {
 				List<Iact.A> iact_dst = new List<Iact.A>();
 				foreach (ActionID act in edit.actions) {

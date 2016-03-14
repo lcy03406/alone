@@ -12,21 +12,6 @@ namespace Schema {
 				Add(edit.id, new Floor(edit.sprite));
 			}
 		}
-/*
-		[Serializable]
-		public enum ID {
-			None,
-			Grass,
-			Dirt,
-			Ocean,
-		}
-
-		static public void Init () {
-			Add (ID.Grass, new Floor (Schema.SpriteID.a_grass));
-			Add (ID.Dirt,  new Floor (Schema.SpriteID.a_dirt));
-			Add (ID.Ocean, new Floor (Schema.SpriteID.a_ocean));
-		}
-*/
 	}
 }
 
