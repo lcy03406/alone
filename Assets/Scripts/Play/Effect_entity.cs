@@ -59,6 +59,42 @@ namespace Play.Eff {
 		}
 	}
 
+	public class Move : Effect {
+		public readonly Calc<Entity> c_ent;
+
+		public Move(Calc<Entity> ent) {
+			c_ent = ent;
+		}
+
+		public override string Display() {
+			string disp = c_ent.Display() + ": ";
+			disp += "move forward";
+			return disp + ".\n";
+		}
+
+		public override bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			if (pos.dir == Direction.None || pos.dir == Direction.Center)
+				return false;
+			Coord tc = pos.c.Step(pos.dir);
+			Layer layer = ent.layer;
+			return layer.CanMoveTo(tc);
+		}
+
+		public override void Do(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			Coord tc = pos.c.Step(pos.dir);
+			Layer layer = ent.layer;
+			if (layer.CanMoveTo(tc)) {
+				layer.MoveEntity(ent, tc);
+			}
+		}
+	}
+
 	public class GoLayer : Effect {
 		public readonly Calc<Entity> c_ent;
 		public readonly int to;

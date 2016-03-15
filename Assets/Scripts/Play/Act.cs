@@ -26,50 +26,6 @@ namespace Play {
 namespace Play.Acts {
 
 	[Serializable]
-	public class ActMove : Act {
-		public Direction to;
-		public ActMove (Direction to) {
-			this.to = to;
-		}
-		public override bool Can (Entity ent) {
-			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-			if (pos == null)
-				return false;
-			return ent.layer.CanMoveTo (pos.c.Step (to));
-		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-				ActMove act = (ActMove) Act.EntAct (ent);
-				Direction to = act.to;
-				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-				pos.dir = to;
-			}
-			int Act.Step.Time (Entity ent) {
-				return 0;
-			}
-		}
-		private class Step2 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-				ActMove act = (ActMove) Act.EntAct (ent);
-				Direction to = act.to;
-				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-				Coord tc = pos.c.Step (to);
-				Layer layer = ent.layer;
-				if (layer.CanMoveTo (tc)) {
-					layer.MoveEntity (ent, tc);
-				}
-			}
-			int Act.Step.Time (Entity ent) {
-				return 1;
-			}
-		}
-		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };
-		public override Act.Step GetStep (int i) {
-			return GetStep (i, steps);
-		}
-	}
-
-	[Serializable]
 	public class ActDir : Act {
 		public Direction to;
 		public ActDir (Direction to) {

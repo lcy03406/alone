@@ -7,16 +7,7 @@ namespace Play.Attrs {
 	[Serializable]
 	public class Ctrl : AI {
 
-		Queue<Act> next = new Queue<Act> ();
-
-		public override Act NextAct () {
-			if (next.Count <= 0)
-				return null;
-			return next.Dequeue ();
-		}
-
-		public void Enque(Act act) {
-			next.Enqueue(act);
+		public override void NextAct() {
 		}
 
 		public bool CmdMove (Direction to) {
@@ -24,15 +15,10 @@ namespace Play.Attrs {
 				return false;
 			}
 			Pos pos = ent.GetAttr<Pos>();
-			Act act;
-			if (to == pos.dir) {
-				act = new ActMove (to);
-			} else {
-				act = new ActDir (to);
-				Enque(act);
-				act = new ActMove(to);
+			if (to != pos.dir) {
+				Enque( new ActDir (to));
 			}
-			Enque(act);
+			Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
 			return true;
 		}
 

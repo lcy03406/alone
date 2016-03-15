@@ -9,12 +9,21 @@ namespace Schema {
 					StatID.Stamina, new Play.Calcs.Const<int>(sta));
 		}
 
-		public static Play.Effect Attack(int sta, Play.Calc<int> damage) {
+		public static Play.Effect Move(int sta) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.DecStat(new Play.Calcs.Src(),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
+				new Play.Eff.Move(new Play.Calcs.Src()),
+			};
+			return new Play.Eff.Multi(eff);
+		}
+
+		public static Play.Effect Attack(int sta, int mulDamage, int addDamage) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
 					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
 				new Play.Eff.DecStat(new Play.Calcs.Dst(),
-					StatID.HitPoint, damage),
+					StatID.HitPoint, new Play.Calcs.Damage(new Play.Calcs.Src(), StatID.Attack, mulDamage, addDamage))
 			};
 			return new Play.Eff.Multi(eff);
 		}

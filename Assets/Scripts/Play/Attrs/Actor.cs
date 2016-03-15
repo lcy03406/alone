@@ -16,7 +16,7 @@ namespace Play.Attrs {
 				return next_tick;
 			AI ai = ent.GetAttr<AI>();
 			if (act == null && ai != null) {
-				Act t = ai.NextAct();
+				Act t = ai.Deque();
 				if (t != null) {
 					act = t;
 					acstep = -1;
@@ -29,7 +29,7 @@ namespace Play.Attrs {
 		public override void Tick (int time) {
 			AI ai = ent.GetAttr<AI>();
 			if (act == null && ai != null) {
-				Act t = ai.NextAct();
+				Act t = ai.Deque();
 				if (t != null && t.Can(ent)) {
 					act = t;
 					acstep = -1;

@@ -24,6 +24,18 @@ namespace Schema {
 			this.ef =ef;
 		}
 
+		public static void AddAll(List<EditIactMove> edits) {
+			foreach (EditIactMove edit in edits) {
+				Add(edit.id, new Iact(
+					name: edit.name,
+					time1: edit.time1,
+					time2: edit.time2,
+					has_dst: true,
+					distance: 1,
+					ef: Ef.Move(edit.stamina)
+				));
+			}
+		}
 		public static void AddAll(List<EditIactAttack> edits) {
 			foreach (EditIactAttack edit in edits) {
 				Add(edit.id, new Iact(
@@ -32,7 +44,7 @@ namespace Schema {
 					time2: edit.time2,
 					has_dst: true,
 					distance: 1,
-					ef: Ef.Attack(edit.stamina, new Play.Calcs.GetStat(new Play.Calcs.Src(), StatID.Attack)) //TODO
+					ef: Ef.Attack(edit.stamina, edit.mulDamage, edit.addDamage) //TODO
 				));
 			}
 		}

@@ -65,13 +65,25 @@ namespace Schema {
 	}
 
 	[Serializable]
-	public class EditIactAttack {
+	public class EditIactMove {
 		public string name;
 		public ActionID id;
 		public int stamina;
 		public int time1;
 		public int time2;
 	}
+
+	[Serializable]
+	public class EditIactAttack {
+		public string name;
+		public ActionID id;
+		public int stamina;
+		public int time1;
+		public int time2;
+		public int mulDamage;
+		public int addDamage;
+	}
+
 	[Serializable]
 	public class SomeItem {
 		public ItemID id;
@@ -146,6 +158,7 @@ namespace Schema {
 		public List<EditEntityTree> trees = new List<EditEntityTree>();
 		public List<EditEntityWorkshop> workshop = new List<EditEntityWorkshop>();
 		public List<EditFloor> floor = new List<EditFloor>();
+		public List<EditIactMove> move = new List<EditIactMove>();
 		public List<EditIactAttack> attack = new List<EditIactAttack>();
 		public List<EditIactBuild> build = new List<EditIactBuild>();
 		public List<EditIactMake> make = new List<EditIactMake>();

@@ -23,6 +23,7 @@ namespace Schema {
 		WorkshopExit
 	}
 	public enum ActionID {
+		Move,
 		AttackPunch,
 		BuildCampfire,
 		MakeStoneKnife,

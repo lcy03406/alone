@@ -34,6 +34,7 @@ namespace Schema {
 			Entity.AddAll(all.trees);
 			Entity.AddAll(all.workshop);
 			Floor.AddAll(all.floor);
+			Iact.AddAll(all.move);
 			Iact.AddAll(all.attack);
 			Iact.AddAll(all.build);
 			Iact.AddAll(all.make);

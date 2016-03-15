@@ -54,7 +54,7 @@
       "id": "WorkshopBench",
       "sprite": "crate01",
       "actions": [
-        "Make_Knife_Stone"
+        "MakeStoneKnife"
       ]
     },
     {
@@ -62,7 +62,7 @@
       "id": "WorkshopExit",
       "sprite": "exit01",
       "actions": [
-        "Travel_Down"
+        "TravelDown"
       ]
     }
   ],
@@ -73,7 +73,15 @@
       "sprite": "block00"
     }
   ],
-  "attack": [],
+  "attack": [
+    {
+      "name": "punch",
+      "id": "AttackPunch",
+      "stamina": 1,
+      "time1": 3,
+      "time2": 3
+    }
+  ],
   "build": [],
   "make": [],
   "pick": [],
