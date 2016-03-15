@@ -64,24 +64,12 @@ namespace Schema {
 			this.part = part;
 			this.attr = attr;
 		}
+		static public void Init() {
+			InitItem();
+		}
 	}
 }
 /*
-		public enum ID {
-			Human,
-			Boulder,
-			Tree_Pine,
-			Tree_Oak,
-			Workshop_Mine,
-			Workshop_Campfire,
-		}
-		static public void Init() {
-			InitBoulder();
-			InitTree();
-			InitCreature();
-			InitWorkshop();
-		}
-
 		static void InitTree() {
 			Iact.A[] tree_iact = new Iact.A[] {
 				Iact.GetA (Iact.ID.Tree_PickBranch),

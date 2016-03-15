@@ -11,6 +11,8 @@ namespace Play.Attrs {
 		public Act Deque() {
 			if (next.Count == 0)
 				NextAct();
+			if (next.Count == 0)
+				return null;
 			return next.Dequeue();
 		}
 

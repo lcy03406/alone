@@ -14,6 +14,7 @@ namespace Schema {
 				Iact.GetA(ActionID.MakeBoneKnife),
 			};
 			Iact.A[] human_iact_src = new Iact.A[] {
+				Iact.GetA(ActionID.Move),
 				Iact.GetA(ActionID.AttackPunch),
 				Iact.GetA(ActionID.BuildCampfire),
 				Iact.GetA(ActionID.MakeStoneKnife),
@@ -27,7 +28,10 @@ namespace Schema {
 				Iact.GetA(ActionID.Rest),
 				Iact.GetA(ActionID.TravelDown),
 			};
-			Iact.A[] creature_iact_dst = new Iact.A[] {
+			Iact.A[] creature_alive_iact_dst = new Iact.A[] {
+				Iact.GetA(ActionID.AttackPunch),
+			};
+			Iact.A[] creature_dead_iact_dst = new Iact.A[] {
 				Iact.GetA(ActionID.PickCreatureMeat),
 				Iact.GetA(ActionID.PickCreatureBone),
 			};
@@ -36,7 +40,7 @@ namespace Schema {
 					Stage.ID.Creature_Alive,
 					new EntityStage(
 						iact_src: human_iact_src,
-						iact_dst: null,
+						iact_dst: creature_alive_iact_dst,
 						make: human_make,
 						usage: null
 					)
@@ -45,7 +49,7 @@ namespace Schema {
 					Stage.ID.Creature_Dead,
 					new EntityStage(
 						iact_src: null,
-						iact_dst: creature_iact_dst,
+						iact_dst: creature_dead_iact_dst,
 						make: null,
 						usage: null
 					)

@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using Schema;
 using UnityEngine.Assertions;
 
 namespace Play.Attrs {
@@ -22,7 +23,7 @@ namespace Play.Attrs {
 			return estage;
 		}
 
-		public Schema.Sprite.A GetSprite() {
+		public virtual Schema.Sprite.A GetSprite() {
 			//TODO
 #if false
 			if (stat.hp <= 0) {
@@ -77,6 +78,21 @@ namespace Play.Attrs {
 				}
 			}
 			return list;
+		}
+	}
+
+	public class CoreItem : Core {
+		public CoreItem(Schema.Entity.A a) : base(a) {
+		}
+		public override SchemaBase<SpriteID, Sprite>.A GetSprite() {
+			Part grow = ent.GetAttr<Part>();
+			if (grow != null) {
+				Part.PartItem part = grow.Get(PartID.Item);
+				if (part != null) {
+					return part.a.s.sprite;
+				}
+			}
+			return base.GetSprite();
 		}
 	}
 }

@@ -30,8 +30,8 @@ namespace Schema {
 					name: edit.name,
 					time1: edit.time1,
 					time2: edit.time2,
-					has_dst: true,
-					distance: 1,
+					has_dst: false,
+					distance: 0,
 					ef: Ef.Move(edit.stamina)
 				));
 			}

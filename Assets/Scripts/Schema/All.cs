@@ -9,6 +9,7 @@ namespace Schema {
 		static public void Init() {
 			Sprite.Init();
 			Stage.Init();
+			Entity.Init();
 			LoadAll();
 		}
 

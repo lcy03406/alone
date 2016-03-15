@@ -13,6 +13,7 @@ namespace Schema {
 					new EntityStage(
 						iact_src: null,
 						iact_dst: new Iact.A[] {
+							Iact.GetA(ActionID.AttackPunch),
 							Iact.GetA (ActionID.PickBoulderStone),
 						},
 						make: null,

@@ -16,6 +16,8 @@ namespace Schema {
 		}
 
 		public enum ID {
+			GoDie,
+			Item_Static,
 			Boulder_Static,
 			Tree_Young,
 			Tree_Grown,
@@ -25,9 +27,25 @@ namespace Schema {
 			Workshop_On,
 		}
 		static public void Init () {
-			Add(ID.Boulder_Static, new Stage(name: "static",
+			Add(ID.GoDie, new Stage(name: "go_die",
+				start_ef: new Play.Eff.Multi(new Play.Effect[] {
+					new Play.Eff.DropAllPart(new Play.Calcs.Src()),
+					new Play.Eff.DelEntity(new Play.Calcs.Src()),
+				}),
+				tick_ef: null,
+				finish_ef: null
+			));
+			Add(ID.Item_Static, new Stage(name: "item",
 				start_ef: null,
-				tick_ef: Ef.DelOnZeroPart(new PartID[] { PartID.Boulder_Stone }),
+				tick_ef: Ef.DelOnZeroPart(new PartID[] { PartID.Item }),
+				finish_ef: null
+			));
+			Add(ID.Boulder_Static, new Stage(name: "boulder",
+				start_ef: null,
+				tick_ef: new Play.Eff.One(new Play.Effect[] {
+					Ef.DelOnZeroPart(new PartID[] { PartID.Boulder_Stone }),
+					Ef.DieOnZeroStat(new StatID[] { StatID.HitPoint }, GetA(ID.GoDie)),
+				}),
 				finish_ef: null
 			));
 			PartID[] tree_part = new PartID[] {
@@ -36,14 +54,18 @@ namespace Schema {
 				PartID.Tree_Fruit,
 				//PartID.Tree_Bark,
 			};
+			Play.Effect tree_tick = new Play.Eff.One(new Play.Effect[] {
+					Ef.DelOnZeroPart(tree_part),
+					Ef.DieOnZeroStat(new StatID[] { StatID.HitPoint }, GetA(ID.GoDie)),
+				});
             Add(ID.Tree_Young, new Stage(name: "young",
 				start_ef: null,
-				tick_ef: Ef.DelOnZeroPart(tree_part), //TODO
+				tick_ef: tree_tick,
 				finish_ef: null
 			));
 			Add(ID.Tree_Grown, new Stage(name: "grown",
 				start_ef: null,
-				tick_ef: Ef.DelOnZeroPart(tree_part),
+				tick_ef: tree_tick,
 				finish_ef: null
 			));
 			PartID[] creature_part = new PartID[] {

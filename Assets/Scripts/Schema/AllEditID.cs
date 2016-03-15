@@ -20,6 +20,7 @@ namespace Schema {
 		RoastedMeat,
 	}
 	public enum EntityID {
+		Item,
 		BoulderStone,
 		BoulderBorder,
 		BoulderEntr,
@@ -37,6 +38,7 @@ namespace Schema {
 		MakeStoneKnife,
 		MakeStoneAxe,
 		MakeBoneKnife,
+		PickItem,
 		PickBoulderStone,
 		PickCreatureMeat,
 		PickCreatureBone,

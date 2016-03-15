@@ -56,13 +56,49 @@ namespace Play.Eff {
 			return disp;
 		}
 		public override bool Can(Ctx ctx) {
-			return true;
+			foreach (Effect ef in eff) {
+				if (ef.Can(ctx)) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public override void Do(Ctx ctx) {
 			foreach (Effect ef in eff) {
 				if (ef.Can(ctx))
 					ef.Do(ctx);
+			}
+		}
+	}
+
+	public class One : Effect {
+		public Effect[] eff;
+		public One(Effect[] eff) {
+			this.eff = eff;
+		}
+		public override string Display() {
+			string disp = "one of: \n";
+			foreach (Effect ef in eff) {
+				disp += ef.Display();
+			}
+			return disp;
+		}
+		public override bool Can(Ctx ctx) {
+			foreach (Effect ef in eff) {
+				if (ef.Can(ctx)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public override void Do(Ctx ctx) {
+			foreach (Effect ef in eff) {
+				if (ef.Can(ctx)) {
+					ef.Do(ctx);
+					return;
+				}
 			}
 		}
 	}

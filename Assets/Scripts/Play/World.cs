@@ -78,8 +78,11 @@ namespace Play {
 		}
 
 		public void Update() {
-			int tick_time = player.GetAttr<Attrs.Actor>().GetNextTick();
-			if (tick_time > 0) {
+			for (int t = 0; t < 10; t++) {
+				int tick_time = player.GetAttr<Attrs.Actor>().GetNextTick();
+				if (tick_time == 0) {
+					return;
+				}
 				player.Tick(param.time);
 				if (view != null && param.layer == player.layer.z) {
 					view.OnEntityUpdate(player);

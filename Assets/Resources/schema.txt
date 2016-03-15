@@ -41,8 +41,8 @@
       "name": "",
       "id": "CreatureMiner",
       "sprite": "tent01",
-      "hp": 10,
-      "stamina": 10,
+      "hp": 100,
+      "stamina": 100,
       "attack": 10,
       "defence": 10
     }
@@ -172,6 +172,16 @@
   ],
   "pick": [
     {
+      "name": "pick up item",
+      "id": "PickItem",
+      "stamina": 0,
+      "time": 1,
+      "tools": [],
+      "reagents": [],
+      "byproducts": [],
+      "part": "Item"
+    },
+    {
       "name": "chip stone",
       "id": "PickBoulderStone",
       "stamina": 20,
@@ -193,7 +203,7 @@
   "travel": [
     {
       "name": "going down",
-      "id": "Move",
+      "id": "TravelDown",
       "stamina": 10,
       "time": 10,
       "to": -1

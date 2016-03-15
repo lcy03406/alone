@@ -102,11 +102,13 @@ namespace Play.Eff {
 		public readonly Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
+		bool must;
 
-		public DecStat(Calc<Entity> ent, StatID id, Calc<int> value) {
+		public DecStat(Calc<Entity> ent, StatID id, Calc<int> value, bool must) {
 			c_ent = ent;
 			this.id = id;
 			this.c_value = value;
+			this.must = must;
 		}
 
 		public override string Display() {
@@ -125,9 +127,11 @@ namespace Play.Eff {
 				return false;
 			if (!c_value.Can(ctx))
 				return false;
-			int value = c_value.Get(ctx);
-			if (value > 0 && stat.Get(id) < value)
-				return false;
+			if (must) {
+				int value = c_value.Get(ctx);
+				if (value > 0 && stat.Get(id) < value)
+					return false;
+			}
 			return true;
 		}
 
@@ -135,8 +139,12 @@ namespace Play.Eff {
 			Entity ent = c_ent.Get(ctx);
 			Stat stat = ent.GetAttr<Stat>();
 			int value = c_value.Get(ctx);
-			if (value > 0) {
-				stat.Set(id, stat.Get(id) - value);
+            if (value > 0) {
+				int oldvalue = stat.Get(id);
+				int newvalue = oldvalue - value;
+				if (newvalue < 0)
+					newvalue = 0;
+				stat.Set(id, newvalue);
 			}
 		}
 	}

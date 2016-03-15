@@ -41,7 +41,7 @@ namespace Play {
 				Attrib a = GetAttr(t);
 				if (a != null) {
 					int next_tick = a.GetNextTick();
-					if (next_tick == 0 || next_tick > time)
+					if (next_tick > time)
 						continue;
 					a.ClrNextTick();
 					a.Tick(time);

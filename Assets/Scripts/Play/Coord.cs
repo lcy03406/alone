@@ -98,8 +98,8 @@ namespace Play {
 		}
 
 		public bool On(Rect rc) {
-			bool onx = x >= rc.bl.x && x <= rc.tr.x && (y == rc.bl.y || y == rc.tr.y);
-			bool ony = (x == rc.bl.x || x == rc.tr.x) && y >= rc.bl.y && y <= rc.tr.y;
+			bool onx = x >= rc.bl.x && x <= rc.tr.x && (y == rc.bl.y-1 || y == rc.tr.y+1);
+			bool ony = (x == rc.bl.x-1 || x == rc.tr.x+1) && y >= rc.bl.y && y <= rc.tr.y;
 			return onx || ony;
 		}
 

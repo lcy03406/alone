@@ -12,7 +12,7 @@ namespace Schema {
 		public static Play.Effect Move(int sta) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta), true),
 				new Play.Eff.Move(new Play.Calcs.Src()),
 			};
 			return new Play.Eff.Multi(eff);
@@ -21,9 +21,11 @@ namespace Schema {
 		public static Play.Effect Attack(int sta, int mulDamage, int addDamage) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta), true),
 				new Play.Eff.DecStat(new Play.Calcs.Dst(),
-					StatID.HitPoint, new Play.Calcs.Damage(new Play.Calcs.Src(), StatID.Attack, mulDamage, addDamage))
+					StatID.HitPoint,
+					new Play.Calcs.Damage(new Play.Calcs.Src(), StatID.Attack, mulDamage, addDamage),
+					false)
 			};
 			return new Play.Eff.Multi(eff);
 		}
@@ -31,13 +33,15 @@ namespace Schema {
 		public static Play.Effect Travel(int sta, int to) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Stamina, new Play.Calcs.Const<int>(sta)),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta), true),
 				new Play.Eff.GoLayer(new Play.Calcs.Src(), to),
 			};
 			return new Play.Eff.Multi(eff);
 		}
 
 		public static Play.ItemSelect[] MakeItemSelect(List<SomeItem> some) {
+			if (some == null)
+				return null;
 			List<Play.ItemSelect> list = new List<Play.ItemSelect>();
 			foreach (SomeItem one in some) {
 				list.Add(new Play.ItemSelect(Item.GetA(one.id), one.count));
@@ -46,6 +50,8 @@ namespace Schema {
 		}
 
 		public static Play.ItemSelect[] MakeItemSelect(List<SomeItemSelect> some) {
+			if (some == null)
+				return null;
 			List<Play.ItemSelect> list = new List<Play.ItemSelect>();
 			foreach (SomeItemSelect one in some) {
 				List<Item.A> items = new List<SchemaBase<ItemID, Item>.A>();
@@ -62,6 +68,8 @@ namespace Schema {
 		}
 
 		public static Play.ItemCreate[] MakeItemCreate(List<SomeItem> some) {
+			if (some == null)
+				return null;
 			List<Play.ItemCreate> list = new List<Play.ItemCreate>();
 			foreach (SomeItem one in some) {
 				list.Add(new Play.ItemCreate(Item.GetA(one.id), one.count));
@@ -77,7 +85,7 @@ namespace Schema {
 			List<Play.Effect> eff = new List<Play.Effect>();
 			if (sta > 0) {
 				eff.Add(new Play.Eff.DecStat(new Play.Calcs.Src(),
-					StatID.Stamina, new Play.Calcs.Const<int>(sta)));
+					StatID.Stamina, new Play.Calcs.Const<int>(sta), true));
 			}
 			if (tools != null) {
 				foreach (Play.ItemSelect sel in tools) {
@@ -126,7 +134,8 @@ namespace Schema {
 		public static Play.Effect Pick(List<Play.Effect> eff, Schema.PartID part, int count) {
 			eff.Add(new Play.Eff.DecPart(ent: new Play.Calcs.Dst(),
 				id: part,
-				value: new Play.Calcs.Const<int>(count)
+				value: new Play.Calcs.Const<int>(count),
+				must: true
 			));
 			eff.Add(new Play.Eff.AddItem(ent: new Play.Calcs.Src(),
 				cre: new Play.Calcs.ItemCount(

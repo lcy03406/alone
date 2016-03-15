@@ -92,6 +92,11 @@ namespace Play.Attrs {
 			items[id].count = count;
 		}
 
+		public void AddPart(ID id, PartItem part) {
+			items.Add(id, part);
+			SetNextTick(part.grow_time);
+        }
+
 		public sealed override void Tick(int time) {
 			foreach (PartItem part in items.Values) {
 				if (part.grow_time + part.grow_span <= time) {

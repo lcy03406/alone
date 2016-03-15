@@ -47,6 +47,12 @@ namespace Play {
 }
 
 namespace Play.Ents {
+	public class Item : AttrCreate {
+		public override void Create(Ctx ctx, Entity ent) {
+			Attrs.Core core = ent.GetAttr<Attrs.Core>();
+			ent.SetAttr(new Attrs.CoreItem(core.a));
+		}
+	}
 	public class Creature : AttrCreate {
 		public override void Create(Ctx ctx, Entity ent) {
 			ent.SetAttr(new Attrs.Actor());

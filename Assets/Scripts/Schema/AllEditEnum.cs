@@ -12,6 +12,7 @@ namespace Schema {
 		Drink,
 	}
 	public enum PartID {
+		Item,
 		Boulder_Stone,
 		Tree_Branch,
 		Tree_Bough,

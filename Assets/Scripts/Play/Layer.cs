@@ -235,7 +235,7 @@ namespace Play {
 			if (ent.isPlayer)
 				return;
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-			Log(pos.c, "AddTick " + ent.id + " time " + time);
+			//Log(pos.c, "AddTick " + ent.id + " time " + time);
 			List<Entity> list = null;
 			if (!tick_ents.TryGetValue(time, out list)) {
 				list = new List<Entity>();
@@ -258,7 +258,7 @@ namespace Play {
 					WUID id = ent.id;
 					if (entities.ContainsKey(id)) {
 						Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-						Log(pos.c, "Tick " + ent.id);
+						//Log(pos.c, "Tick " + ent.id);
 						ent.Tick(time);
 						if (entities.ContainsKey(id)) {
 							if (world.view != null && world.param.layer == z) {
