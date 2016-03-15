@@ -12,6 +12,12 @@ namespace Schema {
 		Bone,
 		Meat,
 		Branch,
+		Handle,
+		StoneKnife,
+		StoneAxe,
+		StonePickaxe,
+		BoneKnife,
+		RoastedMeat,
 	}
 	public enum EntityID {
 		BoulderStone,
@@ -19,12 +25,14 @@ namespace Schema {
 		BoulderEntr,
 		CreatureMiner,
 		CreatureWarrior,
+		FurnaceCampfire,
 		WorkshopBench,
-		WorkshopExit
+		WorkshopExit,
 	}
 	public enum ActionID {
 		Move,
 		AttackPunch,
+		BuildBench,
 		BuildCampfire,
 		MakeStoneKnife,
 		MakeStoneAxe,

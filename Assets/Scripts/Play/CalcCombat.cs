@@ -21,9 +21,9 @@ namespace Play.Calcs {
 			if (mul == 0)
 				return add.ToString();
 			if (add == 0)
-				return string.Format("{0} x {1})", mul, id);
+				return string.Format("{0}% {1}", mul, id);
 			else
-				return string.Format("{0} x {1} + {2})", mul, id, add);
+				return string.Format("{0}% {1} + {2}", mul, id, add);
 		}
 		public override bool Can(Ctx ctx) {
 			Entity ent = c_ent.Get(ctx);

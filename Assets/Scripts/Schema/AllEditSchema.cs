@@ -85,8 +85,24 @@ namespace Schema {
 	}
 
 	[Serializable]
+	public class SomeUsage {
+		public string name;
+		public UsageID id;
+		public int level;
+	}
+
+	[Serializable]
 	public class SomeItem {
+		public string name;
 		public ItemID id;
+		public int count;
+	}
+
+	[Serializable]
+	public class SomeItemSelect {
+		public string name;
+		public List<ItemID> items;
+		public List<SomeUsage> usages;
 		public int count;
 	}
 
@@ -96,8 +112,8 @@ namespace Schema {
 		public ActionID id;
 		public int stamina;
 		public int time;
-		public List<SomeItem> tools;
-		public List<SomeItem> reagents;
+		public List<SomeItemSelect> tools;
+		public List<SomeItemSelect> reagents;
 		public EntityID build;
 	}
 
@@ -107,8 +123,8 @@ namespace Schema {
 		public ActionID id;
 		public int stamina;
 		public int time;
-		public List<SomeItem> tools;
-		public List<SomeItem> reagents;
+		public List<SomeItemSelect> tools;
+		public List<SomeItemSelect> reagents;
 		public List<SomeItem> products;
 	}
 
@@ -118,8 +134,8 @@ namespace Schema {
 		public ActionID id;
 		public int stamina;
 		public int time;
-		public List<SomeItem> tools;
-		public List<SomeItem> reagents;
+		public List<SomeItemSelect> tools;
+		public List<SomeItemSelect> reagents;
 		public List<SomeItem> byproducts;
 		public PartID part;
 	}
@@ -141,13 +157,13 @@ namespace Schema {
 		public int to;
 	}
 
-
 	[Serializable]
 	public class EditItem {
 		public string name;
 		public ItemID id;
 		public SpriteID sprite;
 		public string desc;
+		public List<SomeUsage> usages;
 	}
 
 	[Serializable]
@@ -155,7 +171,7 @@ namespace Schema {
 		public List<EditBiomeCave> biome = new List<EditBiomeCave>();
 		public List<EditEntityBoulder> boulder = new List<EditEntityBoulder>();
 		public List<EditEntityCreature> creature = new List<EditEntityCreature>();
-		public List<EditEntityTree> trees = new List<EditEntityTree>();
+		public List<EditEntityTree> tree = new List<EditEntityTree>();
 		public List<EditEntityWorkshop> workshop = new List<EditEntityWorkshop>();
 		public List<EditFloor> floor = new List<EditFloor>();
 		public List<EditIactMove> move = new List<EditIactMove>();

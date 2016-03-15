@@ -47,14 +47,14 @@
       "defence": 10
     }
   ],
-  "trees": [],
+  "tree": [],
   "workshop": [
     {
       "name": "working bench",
       "id": "WorkshopBench",
       "sprite": "crate01",
       "actions": [
-        "MakeStoneKnife"
+      	"MakeStoneKnife"
       ]
     },
     {
@@ -73,38 +73,153 @@
       "sprite": "block00"
     }
   ],
+  "move": [
+    {
+      "name": "move",
+      "id": "Move",
+      "stamina": 0,
+      "time1": 5,
+      "time2": 5
+    }
+  ],
   "attack": [
     {
       "name": "punch",
       "id": "AttackPunch",
       "stamina": 1,
       "time1": 3,
-      "time2": 3
+      "time2": 3,
+      "mulDamage": 50,
+      "addDamage": 1
     }
   ],
-  "build": [],
-  "make": [],
-  "pick": [],
-  "rest": [],
-  "travel": [],
+  "build": [
+    {
+      "name": "build a working bench",
+      "id": "BuildBench",
+      "stamina": 10,
+      "time": 10,
+      "tools": [],
+      "reagents": [
+        {
+          "name": "stone x3",
+          "items": [
+            "Stone"
+          ],
+          "usages": [],
+          "count": 3
+        }
+      ],
+      "build": "WorkshopBench"
+    },
+    {
+      "name": "build a campfire",
+      "id": "BuildCampfire",
+      "stamina": 10,
+      "time": 10,
+      "tools": [],
+      "reagents": [
+        {
+          "name": "stone x4",
+          "items": [
+            "Stone"
+          ],
+          "usages": [],
+          "count": 4
+        }
+      ],
+      "build": "FurnaceCampfire"
+    }
+  ],
+  "make": [
+    {
+      "name": "make a stone knife",
+      "id": "MakeStoneKnife",
+      "stamina": 10,
+      "time": 10,
+      "tools": [
+        {
+          "name": "hard tool",
+          "items": [],
+          "usages": [
+            {
+              "name": "hard tool",
+              "id": "HardTool",
+              "level": 1
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "reagents": [
+        {
+          "name": "stone",
+          "items": [
+            "Stone"
+          ],
+          "usages": [],
+          "count": 1
+        }
+      ],
+      "products": [
+        {
+          "name": "stone knife",
+          "id": "StoneKnife",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "pick": [
+    {
+      "name": "chip stone",
+      "id": "PickBoulderStone",
+      "stamina": 20,
+      "time": 10,
+      "tools": [],
+      "reagents": [],
+      "byproducts": [],
+      "part": "Boulder_Stone"
+    }
+  ],
+  "rest": [
+    {
+      "name": "rest",
+      "id": "Rest",
+      "stamina": 5,
+      "time": 1
+    }
+  ],
+  "travel": [
+    {
+      "name": "going down",
+      "id": "Move",
+      "stamina": 10,
+      "time": 10,
+      "to": -1
+    }
+  ],
   "item": [
     {
       "name": "stone",
       "id": "Stone",
       "sprite": "block04",
-      "desc": ""
+      "desc": "",
+      "usages": []
     },
     {
       "name": "bone",
       "id": "Bone",
       "sprite": "block03",
-      "desc": ""
+      "desc": "",
+      "usages": []
     },
     {
       "name": "meat",
       "id": "Meat",
       "sprite": "crate01",
-      "desc": ""
+      "desc": "",
+      "usages": []
     }
   ]
 }

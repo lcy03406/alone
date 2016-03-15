@@ -21,4 +21,10 @@ namespace Schema {
 		Creature_Meat,
 		Creature_Bone,
 	}
+	public enum UsageID {
+		HardTool,
+		BladeTool,
+		Knife,
+		Axe,
+	}
 }

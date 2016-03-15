@@ -11,25 +11,79 @@ namespace Play {
 			this.a = a;
 			this.q = q;
 		}
+
+		public int GetUsage(Schema.UsageID id) {
+			int value = 0;
+			a.s.usages.TryGetValue(id, out value);
+			return value;
+		}
     }
+
 	public class ItemSelect {
-		public Schema.Item.A a;
+		public List<Schema.Item.A> items;
+		public Dictionary<Schema.UsageID, int> usages;
 		public int count;
-		public ItemSelect(Schema.Item.A a, int count) {
-			this.a = a;
+		public ItemSelect(List<Schema.Item.A> items, Dictionary<Schema.UsageID, int> usages, int count) {
+			this.items = items;
+			this.usages = usages;
+			this.count = count;
+		}
+		public ItemSelect(Schema.Item.A item, int count) {
+			this.items = new List<Schema.SchemaBase<Schema.ItemID, Schema.Item>.A>() { item };
+			this.usages = new Dictionary<Schema.UsageID, int>();
 			this.count = count;
 		}
 		public override string ToString() {
 			return Display();
 		}
 		public string Display() {
-			if (count == 0)
-				return a.s.name;
-			else
-				return a.s.name + " x" + count;
+			string disp = "";
+			if (items.Count == 0) {
+				if (usages.Count == 0) {
+					disp += "any item";
+				} else {
+					disp += "any";
+				}
+			} else {
+				disp += items[0].s.name;
+				if (items.Count > 1) {
+					disp += " etc";
+				}
+				if (usages.Count > 0) {
+					disp += " of";
+				}
+			}
+			if (usages.Count > 0) {
+				foreach (KeyValuePair<Schema.UsageID, int> pair in usages) {
+					Schema.UsageID id = pair.Key;
+					int value = pair.Value;
+					if (value > 1) {
+						disp += " level " + value;
+					}
+					disp += " " + id;
+				}
+			}
+			if (count > 0) {
+				disp += " x" + count;
+			}
+			return disp;
 		}
 		public bool Select(Item item) {
-			return item.a == a;
+			if (items.Count > 0) {
+				if (!items.Contains(item.a)) {
+					return false;
+				}
+			}
+			if (usages.Count > 0) {
+				foreach (KeyValuePair<Schema.UsageID, int> pair in usages) {
+					Schema.UsageID id = pair.Key;
+					int value = pair.Value;
+					if (item.GetUsage(id) < value) {
+						return false;
+					}
+				}
+			}
+			return true;
 		}
 	}
 	public class ItemCreate {

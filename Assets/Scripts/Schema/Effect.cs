@@ -37,7 +37,7 @@ namespace Schema {
 			return new Play.Eff.Multi(eff);
 		}
 
-		public static Play.ItemSelect[] SomeItemSelect(List<SomeItem> some) {
+		public static Play.ItemSelect[] MakeItemSelect(List<SomeItem> some) {
 			List<Play.ItemSelect> list = new List<Play.ItemSelect>();
 			foreach (SomeItem one in some) {
 				list.Add(new Play.ItemSelect(Item.GetA(one.id), one.count));
@@ -45,7 +45,23 @@ namespace Schema {
 			return list.ToArray();
 		}
 
-		public static Play.ItemCreate[] SomeItemCreate(List<SomeItem> some) {
+		public static Play.ItemSelect[] MakeItemSelect(List<SomeItemSelect> some) {
+			List<Play.ItemSelect> list = new List<Play.ItemSelect>();
+			foreach (SomeItemSelect one in some) {
+				List<Item.A> items = new List<SchemaBase<ItemID, Item>.A>();
+				foreach (ItemID item in one.items) {
+					items.Add(Item.GetA(item));
+				}
+				Dictionary<UsageID, int> usages = new Dictionary<UsageID, int>();
+				foreach (SomeUsage usage in one.usages) {
+					usages.Add(usage.id, usage.level);
+				}
+				list.Add(new Play.ItemSelect(items, usages, one.count));
+			}
+			return list.ToArray();
+		}
+
+		public static Play.ItemCreate[] MakeItemCreate(List<SomeItem> some) {
 			List<Play.ItemCreate> list = new List<Play.ItemCreate>();
 			foreach (SomeItem one in some) {
 				list.Add(new Play.ItemCreate(Item.GetA(one.id), one.count));
@@ -85,12 +101,18 @@ namespace Schema {
 		}
 
 		public static List<Play.Effect> MakeCommon(int sta,
-			List<SomeItem> tools,
-			List<SomeItem> reagents,
-			List<SomeItem> products)
-		{
-			return MakeCommon(sta, SomeItemSelect(tools), SomeItemSelect(reagents), SomeItemCreate(products));
+				List<SomeItem> tools,
+				List<SomeItem> reagents,
+				List<SomeItem> products) {
+			return MakeCommon(sta, MakeItemSelect(tools), MakeItemSelect(reagents), MakeItemCreate(products));
 		}
+		public static List<Play.Effect> MakeCommon(int sta,
+				List<SomeItemSelect> tools,
+				List<SomeItemSelect> reagents,
+				List<SomeItem> products) {
+			return MakeCommon(sta, MakeItemSelect(tools), MakeItemSelect(reagents), MakeItemCreate(products));
+		}
+
 
 		public static Play.Effect Build(List<Play.Effect> eff, Schema.Entity.A build) {
 			eff.Add(new Play.Eff.AddEntity(new Play.Calcs.Const<Schema.Entity.A>(build)));

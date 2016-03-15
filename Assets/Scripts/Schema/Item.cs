@@ -6,15 +6,21 @@ namespace Schema {
 		public readonly Sprite.A sprite;
 		public readonly string name;
 		public readonly string desc;
-		private Item (SpriteID spid, string name, string desc) {
+		public readonly Dictionary<UsageID, int> usages;
+		private Item (SpriteID spid, string name, string desc, Dictionary<UsageID, int> usages) {
 			this.sprite = Sprite.GetA (spid);
 			this.name = name;
 			this.desc = desc;
+			this.usages = usages;
 		}
 
 		public static void AddAll(List<EditItem> edits) {
 			foreach (EditItem edit in edits) {
-				Add(edit.id, new Item(edit.sprite, edit.name, edit.desc));
+				Dictionary<UsageID, int> usages = new Dictionary<UsageID, int>();
+				foreach (SomeUsage usage in edit.usages) {
+					usages.Add(usage.id, usage.level);
+				}
+				Add(edit.id, new Item(edit.sprite, edit.name, edit.desc, usages));
 			}
 		}
 		/*

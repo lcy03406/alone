@@ -31,7 +31,7 @@ namespace Schema {
 			Biome.AddAll(all.biome);
 			Entity.AddAll(all.boulder);
 			Entity.AddAll(all.creature);
-			Entity.AddAll(all.trees);
+			Entity.AddAll(all.tree);
 			Entity.AddAll(all.workshop);
 			Floor.AddAll(all.floor);
 			Iact.AddAll(all.move);
