@@ -8,10 +8,11 @@ namespace Schema {
 	public sealed partial class Entity : SchemaBase<EntityID, Entity> {
 		public static void AddAll(List<EditEntityCreature> edits) {
 			Iact.A[] human_make = new Iact.A[] {
-				Iact.GetA(ActionID.BuildCampfire),
-				Iact.GetA(ActionID.MakeStoneKnife),
-				Iact.GetA(ActionID.MakeStoneAxe),
-				Iact.GetA(ActionID.MakeBoneKnife),
+				//Iact.GetA(ActionID.BuildCampfire),
+				Iact.GetA(ActionID.BuildBench),
+				//Iact.GetA(ActionID.MakeStoneKnife),
+				//Iact.GetA(ActionID.MakeStoneAxe),
+				//Iact.GetA(ActionID.MakeBoneKnife),
 			};
 			ActionCategoryID[] human_iact_src = new ActionCategoryID[] {
 				ActionCategoryID.Move,

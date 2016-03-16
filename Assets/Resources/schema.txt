@@ -54,7 +54,7 @@
       "id": "WorkshopBench",
       "sprite": "crate01",
       "actions": [
-        "MakeStoneKnife"
+        "MakeStoneAxe"
       ]
     },
     {
@@ -140,8 +140,8 @@
   ],
   "make": [
     {
-      "name": "make a stone knife",
-      "id": "MakeStoneKnife",
+      "name": "make a stone axe",
+      "id": "MakeStoneAxe",
       "stamina": 10,
       "time": 10,
       "tools": [
@@ -170,8 +170,8 @@
       ],
       "products": [
         {
-          "name": "stone knife",
-          "id": "StoneKnife",
+          "name": "stone axe",
+          "id": "StoneAxe",
           "count": 1
         }
       ]
@@ -222,7 +222,13 @@
       "id": "Stone",
       "sprite": "block04",
       "desc": "",
-      "usages": []
+      "usages": [
+        {
+          "name": "hard tool",
+          "id": "HardTool",
+          "level": 1
+        }
+      ]
     },
     {
       "name": "bone",
@@ -237,6 +243,19 @@
       "sprite": "crate01",
       "desc": "",
       "usages": []
+    },
+    {
+      "name": "stone axe",
+      "id": "StoneAxe",
+      "sprite": "soldier",
+      "desc": "",
+      "usages": [
+        {
+          "name": "hard tool",
+          "id": "HardTool",
+          "level": 1
+        }
+      ]
     }
   ]
 }

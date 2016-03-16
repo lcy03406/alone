@@ -118,7 +118,12 @@ public class UIGame : MonoBehaviour {
 			}
 		}
 		public void Open() {
-			List<string> opts = makes.ConvertAll(make => make.s.name);
+			List<string> opts = new List<string>();
+			foreach (Schema.Iact.A make in makes) {
+				if (make.s != null) {
+					opts.Add(make.s.name);
+				}
+			}
 			menu.Open(opts.ToArray(), MenuCall);
 		}
 	}

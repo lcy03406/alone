@@ -75,7 +75,9 @@ public class Game : MonoBehaviour, World.View {
 			player = ent;
 			GameObject o = Instantiate(playerPrefab);
 			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
-			GameObject.Find("Main Camera").transform.SetParent(o.transform);
+			Transform cama = GameObject.Find("Main Camera").transform;
+			cama.SetParent(o.transform);
+			cama.localPosition = new Vector3(0, 0, cama.localPosition.z);
 			UpdateEntity(o, ent);
 		} else {
 			ulong g = ent.id.value / 1024;
