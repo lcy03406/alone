@@ -80,11 +80,11 @@ namespace Play {
 			return param.maxid;
 		}
 
-		public void Update() {
+		public bool Update() {
 			for (int t = 0; t < 10; t++) {
 				int tick_time = player.GetAttr<Attrs.Actor>().GetNextTick();
 				if (tick_time == 0) {
-					return;
+					return t > 0;
 				}
 				player.Tick(param.time, logs);
 				if (view != null && param.layer == player.layer.z) {
@@ -102,6 +102,7 @@ namespace Play {
 				}
 				param.time++;
 			}
+			return true;
 		}
 
 		public void GoLayer(Entity ent, int to) {

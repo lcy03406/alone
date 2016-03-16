@@ -54,7 +54,7 @@
       "id": "WorkshopBench",
       "sprite": "crate01",
       "actions": [
-      	"MakeStoneKnife"
+        "MakeStoneKnife"
       ]
     },
     {
@@ -75,7 +75,7 @@
   ],
   "move": [
     {
-      "name": "turn direction",
+      "name": "change direction",
       "id": "Dir",
       "stamina": 0,
       "time1": 0,

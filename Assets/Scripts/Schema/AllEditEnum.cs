@@ -28,4 +28,13 @@ namespace Schema {
 		Knife,
 		Axe,
 	}
+	public enum ActionCategoryID {
+		Move,
+		Attack,
+		Build,
+		Make,
+		Pick,
+		Rest,
+		Travel,
+	}
 }

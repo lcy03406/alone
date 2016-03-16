@@ -15,10 +15,20 @@ namespace Play.Attrs {
 				return false;
 			}
 			Pos pos = ent.GetAttr<Pos>();
+			Coord toc = pos.c.Step(to);
 			if (to != pos.dir) {
-				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), pos.c.Step(to)));
+				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), toc));
 			}
-			Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
+			Entity dst = ent.layer.SearchEntity(toc);
+			if (dst == null) {
+				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
+			} else {
+				Core tocore = dst.GetAttr<Core>();
+				Schema.Iact.A iact = tocore.GetIactAuto(ent);
+				if (iact != null) {
+					Enque(new ActIact(iact, dst.id));
+				}
+			}
 			return true;
 		}
 

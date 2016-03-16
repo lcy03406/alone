@@ -13,21 +13,14 @@ namespace Schema {
 				Iact.GetA(ActionID.MakeStoneAxe),
 				Iact.GetA(ActionID.MakeBoneKnife),
 			};
-			Iact.A[] human_iact_src = new Iact.A[] {
-				Iact.GetA(ActionID.Dir),
-				Iact.GetA(ActionID.Move),
-				Iact.GetA(ActionID.AttackPunch),
-				Iact.GetA(ActionID.BuildCampfire),
-				Iact.GetA(ActionID.MakeStoneKnife),
-				Iact.GetA(ActionID.MakeStoneAxe),
-				Iact.GetA(ActionID.MakeBoneKnife),
-				Iact.GetA(ActionID.PickBoulderStone),
-				Iact.GetA(ActionID.PickTreeBranch),
-				Iact.GetA(ActionID.PickTreeFruit),
-				Iact.GetA(ActionID.PickCreatureMeat),
-				Iact.GetA(ActionID.PickCreatureBone),
-				Iact.GetA(ActionID.Rest),
-				Iact.GetA(ActionID.TravelDown),
+			ActionCategoryID[] human_iact_src = new ActionCategoryID[] {
+				ActionCategoryID.Move,
+				ActionCategoryID.Attack,
+				ActionCategoryID.Build,
+				ActionCategoryID.Make,
+				ActionCategoryID.Pick,
+				ActionCategoryID.Rest,
+				ActionCategoryID.Travel,
 			};
 			Iact.A[] creature_alive_iact_dst = new Iact.A[] {
 				Iact.GetA(ActionID.AttackPunch),
@@ -42,6 +35,7 @@ namespace Schema {
 					new EntityStage(
 						iact_src: human_iact_src,
 						iact_dst: creature_alive_iact_dst,
+						iact_auto: Iact.GetA(ActionID.AttackPunch),
 						make: human_make,
 						usage: null
 					)
@@ -51,6 +45,7 @@ namespace Schema {
 					new EntityStage(
 						iact_src: null,
 						iact_dst: creature_dead_iact_dst,
+						iact_auto: null,
 						make: null,
 						usage: null
 					)

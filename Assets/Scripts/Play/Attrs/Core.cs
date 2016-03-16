@@ -58,6 +58,18 @@ namespace Play.Attrs {
 			}
 			return list;
 		}
+
+		public Schema.Iact.A GetIactAuto(Entity src) {
+			Schema.EntityStage es = GetStage();
+			if (es == null || es.iact_auto == null)
+				return null;
+			Schema.Iact.A a = es.iact_auto;
+			Ctx ctx = new Ctx(src.layer, src, ent);
+			if (a.Can(ctx)) {
+				return a;
+			}
+			return null;
+		}
 	}
 
 	[Serializable]

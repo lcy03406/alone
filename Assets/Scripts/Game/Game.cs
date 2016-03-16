@@ -19,6 +19,8 @@ public class Game : MonoBehaviour, World.View {
 	public Entity player;
 	[HideInInspector]
 	public Transform root;
+	[HideInInspector]
+	public int world_update_time;
 
 	Coord offset = new Coord();
 
@@ -37,7 +39,9 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void FixedUpdate () {
-		world.Update ();
+		if (world.Update()) {
+			world_update_time = world.param.time;
+		}
 	}
 
 	public Vector3 Pos (Coord c) {

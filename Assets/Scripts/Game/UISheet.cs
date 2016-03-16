@@ -19,13 +19,13 @@ public class UISheet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (update_time < Game.game.world.param.time) {
+		if (update_time < Game.game.world_update_time) {
 			Menu();
 		}
 	}
 
 	public void Menu() {
-		update_time = Game.game.world.param.time;
+		update_time = Game.game.world_update_time;
 		int cur_tab = dropdown.value;
         switch (cur_tab) {
 			case 0:

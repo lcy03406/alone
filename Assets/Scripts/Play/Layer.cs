@@ -45,11 +45,16 @@ namespace Play {
 			param = new Param();
 			//TODO
 			if (z < 0) {
-				int r = 10 + z;
+				int r = 10 - z;
 				param.rect = new Rect(new Coord(-r, -r), new Coord(r - 1, r - 1));
+				int x1 = world.rand.Next(-r, r);
+				int y1 = world.rand.Next(-r, r);
+				int x2 = world.rand.Next(-r, r);
+				int y2 = world.rand.Next(-r, r);
+				param.entr = new Coord(x1, y1);
+				param.exit = new Coord(x2, y2);
+			} else {
 			}
-			param.entr = new Coord(2, 1);
-			param.exit = new Coord(1, 1);
 		}
 
 		public void Save () {
@@ -229,7 +234,7 @@ namespace Play {
 		public void AddTick(int time, Entity ent) {
             if (time <= 0 || time >= int.MaxValue)
 				return;
-			if (ent.isPlayer)
+			if (ent == null || ent.isPlayer)
 				return;
 			//Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			//Log(pos.c, "AddTick " + ent.id + " time " + time);

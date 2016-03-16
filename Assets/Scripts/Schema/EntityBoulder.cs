@@ -16,6 +16,7 @@ namespace Schema {
 							Iact.GetA(ActionID.AttackPunch),
 							Iact.GetA (ActionID.PickBoulderStone),
 						},
+						iact_auto: Iact.GetA(ActionID.AttackPunch),
 						make: null,
 						usage: null
 					)

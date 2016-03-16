@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Schema {
 	public sealed partial class Iact : SchemaBase<ActionID, Iact> {
 		public readonly string name;
+		public readonly ActionCategoryID cat;
 		public readonly int time1;
 		public readonly int time2;
 		public readonly bool has_dst;
@@ -15,8 +16,10 @@ namespace Schema {
 			return Play.Iact.Display(this);
 		}
 
-		private Iact(string name, int time1, int time2, bool has_dst, int distance, Play.Effect ef) {
+		private Iact(string name, ActionCategoryID cat, int time1, int time2,
+				bool has_dst, int distance, Play.Effect ef) {
 			this.name = name;
+			this.cat = cat;
 			this.time1 = time1;
 			this.time2 = time2;
 			this.has_dst = has_dst;
@@ -36,6 +39,7 @@ namespace Schema {
 				}
                 Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Move,
 					time1: edit.time1,
 					time2: edit.time2,
 					has_dst: false,
@@ -49,6 +53,7 @@ namespace Schema {
 			foreach (EditIactAttack edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Attack,
 					time1: edit.time1,
 					time2: edit.time2,
 					has_dst: true,
@@ -61,6 +66,7 @@ namespace Schema {
 			foreach (EditIactBuild edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Build,
 					time1: edit.time,
 					time2: 0,
 					has_dst: false,
@@ -73,6 +79,7 @@ namespace Schema {
 			foreach (EditIactMake edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Make,
 					time1: edit.time,
 					time2: 0,
 					has_dst: false,
@@ -85,6 +92,7 @@ namespace Schema {
 			foreach (EditIactPick edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Pick,
 					time1: edit.time,
 					time2: 0,
 					has_dst: true,
@@ -97,6 +105,7 @@ namespace Schema {
 			foreach (EditIactRest edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Rest,
 					time1: edit.time,
 					time2: 0,
 					has_dst: false,
@@ -109,6 +118,7 @@ namespace Schema {
 			foreach (EditIactTravel edit in edits) {
 				Add(edit.id, new Iact(
 					name: edit.name,
+					cat: ActionCategoryID.Travel,
 					time1: edit.time,
 					time2: 0,
 					has_dst: true,

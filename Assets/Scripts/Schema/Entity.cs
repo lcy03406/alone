@@ -6,15 +6,17 @@ using System.Collections.Generic;
 namespace Schema {
 	using Stages = SortedList<Stage.ID, EntityStage>;
 	public class EntityStage {
-		public readonly Iact.A[] iact_src;
+		public readonly ActionCategoryID[] iact_src;
 		public readonly Iact.A[] iact_dst;
+		public readonly Iact.A iact_auto;
 		public readonly Iact.A[] make;
 		public readonly Play.Attrs.Stat usage;
 
-		public EntityStage(Iact.A[] iact_src, Iact.A[] iact_dst,
-			Iact.A[] make, Play.Attrs.Stat usage) {
+		public EntityStage(ActionCategoryID[] iact_src, Iact.A[] iact_dst,
+			Iact.A iact_auto, Iact.A[] make, Play.Attrs.Stat usage) {
 			this.iact_src = iact_src;
 			this.iact_dst = iact_dst;
+			this.iact_auto = iact_auto;
 			this.make = make;
 			this.usage = usage;
 		}
@@ -30,7 +32,13 @@ namespace Schema {
 		}
 
 		public bool HasIactSrc(Iact.A a) {
-			return HasIact(iact_src, a);
+			if (iact_src == null)
+				return false;
+			foreach (ActionCategoryID i in iact_src) {
+				if (i == a.s.cat)
+					return true;
+			}
+			return false;
 		}
 		public bool HasIactDst(Iact.A a) {
 			return HasIact(iact_dst, a);

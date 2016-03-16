@@ -41,7 +41,7 @@ namespace Play {
 			}
 		}
 		public static string GameLog(this Schema.Iact.A a, Ctx ctx) {
-			string log = "";
+			string log = ">>> ";
 			if (ctx.src == null) {
 				log += "layer " + ctx.layer.z;
 			} else {

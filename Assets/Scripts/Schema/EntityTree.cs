@@ -17,6 +17,7 @@ namespace Schema {
 					new EntityStage(
 						iact_src: null,
 						iact_dst: tree_iact,
+						iact_auto: null,
 						make: null,
 						usage: null
 					)
@@ -26,6 +27,7 @@ namespace Schema {
 					new EntityStage(
 						iact_src: null,
 						iact_dst: tree_iact,
+						iact_auto: null,
 						make: null,
 						usage: null
 					)

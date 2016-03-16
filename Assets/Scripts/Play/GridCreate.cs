@@ -81,14 +81,16 @@ namespace Play.Layers {
 					Coord c = g.Add(x, y);
 					ctx.dstc = c;
 					Schema.Entity.A aent = null;
-					if (c == ctx.layer.param.exit) {
+					if (!c.In(rect)) {
+						if (c.On(rect)) {
+							aent = border;
+						} else {
+							aent = null;
+						}
+					} else if (c == ctx.layer.param.exit) {
 						aent = exit;
 					} else if (c == ctx.layer.param.entr) {
 						aent = entr;
-					} else if (c.On(rect)) {
-						aent = border;
-					} else if (!c.In(rect)) {
-						aent = null;
 					} else if (c.Manhattan(ctx.layer.param.entr) <= 2) {
 						aent = null;
 					} else {

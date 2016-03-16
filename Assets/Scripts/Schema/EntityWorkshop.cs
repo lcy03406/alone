@@ -45,6 +45,7 @@ namespace Schema {
 						new EntityStage(
 							iact_src: null,
 							iact_dst: iact_dst.ToArray(),
+							iact_auto: iact_dst.Count == 1 ? iact_dst[0] : null,
 							make: null,
 							usage: null
 						)

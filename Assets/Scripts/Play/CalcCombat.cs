@@ -39,7 +39,7 @@ namespace Play.Calcs {
 			Entity ent = c_ent.Get(ctx);
 			Stat stat = ent.GetAttr<Stat>();
 			int st = stat.Get(id);
-			return st * mul + add;
+			return st * mul / 100 + add;
 		}
 	}
 }

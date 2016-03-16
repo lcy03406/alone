@@ -15,6 +15,7 @@ namespace Schema {
 						iact_dst: new Iact.A[] {
 							Iact.GetA (ActionID.PickItem),
 						},
+						iact_auto: Iact.GetA(ActionID.PickItem),
 						make: null,
 						usage: null
 					)
