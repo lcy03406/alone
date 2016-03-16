@@ -14,6 +14,12 @@ namespace Play {
 		[NonSerialized]
 		public bool isPlayer = false;
 
+		public void Log(string info) {
+			Attrs.Pos pos = GetAttr<Attrs.Pos>();
+			Coord c = pos == null ? Coord.O : pos.c;
+			layer.Log(c, info);
+		}
+
 		public void OnLoad() {
 			foreach (Attrib a in attr.Values) {
 				a.ent = this;

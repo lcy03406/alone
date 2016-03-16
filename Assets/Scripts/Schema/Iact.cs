@@ -1,5 +1,5 @@
 //utf-8。
-
+using System;
 using System.Collections.Generic;
 
 namespace Schema {
@@ -21,21 +21,30 @@ namespace Schema {
 			this.time2 = time2;
 			this.has_dst = has_dst;
 			this.distance = distance;
-			this.ef =ef;
+			this.ef = ef;
 		}
 
 		public static void AddAll(List<EditIactMove> edits) {
 			foreach (EditIactMove edit in edits) {
-				Add(edit.id, new Iact(
+				Play.Effect ef;
+				if (edit.id == ActionID.Dir) {
+					ef = Ef.Dir(edit.stamina);
+				} else if (edit.id == ActionID.Move) {
+					ef = Ef.Move(edit.stamina);
+				} else {
+					throw new ArgumentException("invalid moving action id");
+				}
+                Add(edit.id, new Iact(
 					name: edit.name,
 					time1: edit.time1,
 					time2: edit.time2,
 					has_dst: false,
 					distance: 0,
-					ef: Ef.Move(edit.stamina)
+					ef: ef
 				));
 			}
 		}
+
 		public static void AddAll(List<EditIactAttack> edits) {
 			foreach (EditIactAttack edit in edits) {
 				Add(edit.id, new Iact(

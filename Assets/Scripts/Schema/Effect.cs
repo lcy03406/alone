@@ -9,6 +9,15 @@ namespace Schema {
 					StatID.Stamina, new Play.Calcs.Const<int>(sta));
 		}
 
+		public static Play.Effect Dir(int sta) {
+			Play.Effect[] eff = new Play.Effect[] {
+				new Play.Eff.DecStat(new Play.Calcs.Src(),
+					StatID.Stamina, new Play.Calcs.Const<int>(sta), true),
+				new Play.Eff.Dir(new Play.Calcs.Src()),
+			};
+			return new Play.Eff.Multi(eff);
+		}
+
 		public static Play.Effect Move(int sta) {
 			Play.Effect[] eff = new Play.Effect[] {
 				new Play.Eff.DecStat(new Play.Calcs.Src(),

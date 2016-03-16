@@ -33,7 +33,7 @@ namespace Play {
 		}
 
 		public void Log(Coord c, string info) {
-			Debug.Log(string.Format("layer {0} at {1} : {2}", z, c, info));
+			Debug.Log(string.Format("{0} {1} {2}: {3}", world.param.time, z, c, info));
 		}
 
 		public void Load() {

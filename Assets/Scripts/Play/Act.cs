@@ -9,6 +9,7 @@ namespace Play {
 			void Do(Entity ent);
 			int Time(Entity ent);
 		}
+		public abstract string GetName();
 		public abstract bool Can(Entity ent);
 		public abstract Step GetStep(int i);
 		static protected Step GetStep(int i, Step[] steps) {
@@ -24,43 +25,34 @@ namespace Play {
 }
 
 namespace Play.Acts {
-
-	[Serializable]
-	public class ActDir : Act {
-		public Direction to;
-		public ActDir (Direction to) {
-			this.to = to;
-		}
-		public override bool Can (Entity ent) {
-			return true;
-		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent) {
-				ActDir act = (ActDir) Act.EntAct (ent);
-				Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
-				pos.dir = act.to;
-			}
-			int Act.Step.Time (Entity ent) {
-				return 0;
-			}
-		}
-		private static Step[] steps = new Step[] { new Step1 () };
-		public override Act.Step GetStep (int i) {
-			return GetStep (i, steps);
-		}
-	}
-
 	[Serializable]
 	public class ActIact : Act {
 		public Schema.Iact.A a;
 		public WUID dst;
+		public Coord dstc;
 		public ActIact (Schema.Iact.A iact, WUID dst) {
 			this.a = iact;
 			this.dst = dst;
 		}
-		public override bool Can (Entity ent) {
+		public ActIact(Schema.Iact.A iact, Coord dstc) {
+			this.a = iact;
+			this.dstc = dstc;
+		}
+		public override string GetName() {
+			return a.s.name;
+		}
+		private Ctx GetCtx(Entity ent) {
+			Ctx ctx = null;
 			Entity ent_dst = ent.layer.FindEntity(dst);
-			Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
+			if (ent_dst == null) {
+				ctx = new Ctx(ent.layer, ent, null, dstc);
+			} else {
+				ctx = new Ctx(ent.layer, ent, ent_dst);
+			}
+			return ctx;
+		}
+        public override bool Can (Entity ent) {
+			Ctx ctx = GetCtx(ent);
 			return a.Can (ctx);
 		}
 		private class Step1 : Act.Step {
@@ -74,8 +66,7 @@ namespace Play.Acts {
 		private class Step2 : Act.Step {
 			void Act.Step.Do (Entity ent) {
 				ActIact act = (ActIact) Act.EntAct (ent);
-				Entity ent_dst = ent.layer.FindEntity(act.dst);
-				Ctx ctx = new Ctx(ent.layer, ent, ent_dst);
+				Ctx ctx = act.GetCtx(ent);
 				act.a.Do (ctx);
 			}
 			int Act.Step.Time (Entity ent) {

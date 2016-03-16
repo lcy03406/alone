@@ -75,6 +75,13 @@
   ],
   "move": [
     {
+      "name": "turn direction",
+      "id": "Dir",
+      "stamina": 0,
+      "time1": 0,
+      "time2": 0
+    },
+    {
       "name": "move",
       "id": "Move",
       "stamina": 0,

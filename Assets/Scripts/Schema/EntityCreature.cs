@@ -14,6 +14,7 @@ namespace Schema {
 				Iact.GetA(ActionID.MakeBoneKnife),
 			};
 			Iact.A[] human_iact_src = new Iact.A[] {
+				Iact.GetA(ActionID.Dir),
 				Iact.GetA(ActionID.Move),
 				Iact.GetA(ActionID.AttackPunch),
 				Iact.GetA(ActionID.BuildCampfire),

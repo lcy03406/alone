@@ -16,7 +16,7 @@ namespace Play.Attrs {
 			}
 			Pos pos = ent.GetAttr<Pos>();
 			if (to != pos.dir) {
-				Enque( new ActDir (to));
+				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), pos.c.Step(to)));
 			}
 			Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
 			return true;

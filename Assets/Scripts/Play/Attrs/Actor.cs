@@ -43,6 +43,7 @@ namespace Play.Attrs {
 				act = null;
 			} else {
 				SetNextTick(time + step.Time(ent));
+				ent.Log(string.Format("act {0} step {1}", act.GetName(), acstep));
 				step.Do(ent);
 			}
 		}

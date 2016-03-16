@@ -31,6 +31,7 @@ namespace Schema {
 		WorkshopExit,
 	}
 	public enum ActionID {
+		Dir,
 		Move,
 		AttackPunch,
 		BuildBench,

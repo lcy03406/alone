@@ -59,6 +59,39 @@ namespace Play.Eff {
 		}
 	}
 
+	public class Dir : Effect {
+		public readonly Calc<Entity> c_ent;
+
+		public Dir(Calc<Entity> ent) {
+			c_ent = ent;
+		}
+
+		public override string Display() {
+			string disp = c_ent.Display() + ": change direction.\n";
+			return disp;
+		}
+
+		public override bool Can(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			if (ent == null)
+				return false;
+			Pos pos = ent.GetAttr<Pos>();
+			Direction dir = ctx.dstc.Sub(pos.c).ToDirection();
+			if (dir == Direction.None || dir == Direction.Center)
+				return false;
+			if (dir == pos.dir)
+				return false;
+			return true;
+		}
+
+		public override void Do(Ctx ctx) {
+			Entity ent = c_ent.Get(ctx);
+			Pos pos = ent.GetAttr<Pos>();
+			Direction dir = ctx.dstc.Sub(pos.c).ToDirection();
+			pos.dir = dir;
+		}
+	}
+
 	public class Move : Effect {
 		public readonly Calc<Entity> c_ent;
 

@@ -87,6 +87,8 @@ namespace Play.Layers {
 						aent = border;
 					} else if (!c.In(rect)) {
 						aent = null;
+					} else if (c.Manhattan(ctx.layer.param.entr) <= 2) {
+						aent = null;
 					} else {
 						int room = Rand.BigCave(x + s, y + s, z + s);
 						if (room > 0) {

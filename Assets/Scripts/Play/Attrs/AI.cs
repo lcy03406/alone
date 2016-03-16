@@ -1,6 +1,7 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
+using Play.Acts;
 
 namespace Play.Attrs {
 	[Serializable]
@@ -29,9 +30,10 @@ namespace Play.Attrs {
 			if (r == Direction.None || r == Direction.Center) {
 				Enque(new Acts.ActIact(Schema.Iact.GetA(Schema.ActionID.Rest), WUID.None));
 			} else {
-				if (r != ent.GetAttr<Pos>().dir)
-					Enque(new Acts.ActDir(r));
-				Enque(new Acts.ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
+				Pos pos = ent.GetAttr<Pos>();
+                if (r != pos.dir)
+					Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), pos.c.Step(r)));
+				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
 			}
 		}
 	}

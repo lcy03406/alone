@@ -21,6 +21,8 @@ namespace Play {
 		public readonly int x;
 		public readonly int y;
 
+		public static Coord O = new Coord(0, 0);
+
 		public Coord (int x, int y) {
 			this.x = x;
 			this.y = y;
