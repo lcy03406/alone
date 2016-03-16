@@ -10,7 +10,7 @@ namespace Schema {
 			Iact.A[] human_make = new Iact.A[] {
 				//Iact.GetA(ActionID.BuildCampfire),
 				Iact.GetA(ActionID.BuildBench),
-				//Iact.GetA(ActionID.MakeStoneKnife),
+				Iact.GetA(ActionID.MakeStoneKnife),
 				//Iact.GetA(ActionID.MakeStoneAxe),
 				//Iact.GetA(ActionID.MakeBoneKnife),
 			};

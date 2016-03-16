@@ -52,7 +52,9 @@ namespace Play.Attrs {
 			List<Schema.Iact.A> list = new List<Schema.Iact.A>();
 			foreach (Schema.Iact.A a in es.iact_dst) {
 				Ctx ctx = new Ctx(src.layer, src, ent);
-				if (a.Can(ctx)) {
+				if (a.s.cat == Schema.ActionCategoryID.Make 
+					|| a.s.cat == Schema.ActionCategoryID.Build 
+					|| a.Can(ctx)) {
 					list.Add(a);
 				}
 			}

@@ -106,7 +106,7 @@ public class UIGame : MonoBehaviour {
 		int idx;
 		public void MenuCall(int idx, string name) {
 			this.idx = idx;
-			Schema.Iact.A make = makes[idx];
+            Schema.Iact.A make = makes[idx];
 			Ctx ctx = new Ctx(Game.game.player.layer, Game.game.player);
 			UIMsg.Style st = make.Can(ctx) ? UIMsg.Style.OkCancel : UIMsg.Style.Cancel;
 			msg.Open(make.Display(), st, MsgCall);
@@ -127,7 +127,7 @@ public class UIGame : MonoBehaviour {
 			menu.Open(opts.ToArray(), MenuCall);
 		}
 	}
-	
+
 	public void Make() {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
@@ -136,6 +136,18 @@ public class UIGame : MonoBehaviour {
 			makeMenu.Open();
 		}
 	}
+
+	public void OpenIact(Schema.Iact.A iact, WUID dst) {
+		if (iact.s.cat == Schema.ActionCategoryID.Make || iact.s.cat == Schema.ActionCategoryID.Build) {
+			MakeMenu makeMenu = new MakeMenu();
+			makeMenu.makes = new List<Schema.Iact.A>() { iact };
+			makeMenu.MenuCall(0, null);
+		} else {
+			Play.Attrs.Ctrl ctrl = GetCtrl();
+			ctrl.CmdIact(iact, dst);
+		}
+	}
+
 	public void Interact() {
 		Play.Attrs.Ctrl ctrl = GetCtrl();
 		if (!menu.isActiveAndEnabled) {
@@ -146,7 +158,7 @@ public class UIGame : MonoBehaviour {
 			List<string> opts = iacts.ConvertAll(iact => iact.s.name);
 			menu.Open(opts.ToArray(), delegate (int idx, string name) {
 				Schema.Iact.A iact = iacts[idx];
-				ctrl.CmdIact(iact, dst.id);
+				OpenIact(iact, dst.id);
 			});
 		}
 	}
@@ -176,6 +188,18 @@ public class UIGame : MonoBehaviour {
 			}
 			if (dx != 0 || dy != 0) {
 				Direction to = new Coord(dx, dy).ToDirection();
+				if (to == ctrl.ent.GetAttr<Play.Attrs.Pos>().dir) {
+					Play.Entity dst = ctrl.ListDst();
+					if (dst != null) {
+						Schema.Iact.A auto = dst.GetAttr<Play.Attrs.Core>().GetIactAuto(ctrl.ent);
+						if (auto == null) {
+							Interact();
+						} else {
+							OpenIact(auto, dst.id);
+						}
+						return;
+					}
+				}
 				ctrl.CmdMove(to);
 			}
 		}
