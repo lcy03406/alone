@@ -1,5 +1,6 @@
 //utf-8。
 using System;
+using System.Collections.Generic;
 
 namespace Play.Attrs {
 	[Serializable]
@@ -26,7 +27,7 @@ namespace Play.Attrs {
 			return next_tick;
 		}
 
-		public override void Tick (int time) {
+		public override void Tick (int time, List<string> logs) {
 			AI ai = ent.GetAttr<AI>();
 			if (act == null && ai != null) {
 				Act t = ai.Deque();
@@ -43,8 +44,7 @@ namespace Play.Attrs {
 				act = null;
 			} else {
 				SetNextTick(time + step.Time(ent));
-				ent.Log(string.Format("act {0} step {1}", act.GetName(), acstep));
-				step.Do(ent);
+				step.Do(ent, logs);
 			}
 		}
 	}

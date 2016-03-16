@@ -36,7 +36,7 @@ namespace Play.Eff {
 			invx.use.AddRange(to);
 			return true;
 		}
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 
@@ -73,7 +73,7 @@ namespace Play.Eff {
 			invx.del.AddRange(to);
 			return true;
 		}
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 
@@ -107,12 +107,15 @@ namespace Play.Eff {
 				return false;
 			return true;
 		}
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Inv inv = ent.GetAttr<Inv>();
 			ItemCreate cre = c_cre.Get(ctx);
 			List<Item> to = cre.Create(ctx);
 			inv.AddItem(to);
+			if (logs != null) {
+				logs.Add(ent.GetName() + " get " + cre.a.s.name);
+			}
 		}
 	}
 }

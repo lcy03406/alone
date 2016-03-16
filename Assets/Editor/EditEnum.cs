@@ -7,13 +7,13 @@ using UnityEditor;
 using System.Text;
 
 [Serializable]
-public class EditEnum {
+public class EditEnumText {
 	public string name;
 	public List<string> values = new List<string>();
 }
 
-public class EnumText {
-	public List<EditEnum> all;
+public class EditEnumFile {
+	public List<EditEnumText> all;
 
 	const string header = "//generated. do not edit.";
 	const string ns = "namespace Schema {";
@@ -22,10 +22,10 @@ public class EnumText {
 	const string end = "\t}";
 	const string ens = "}";
 
-	public EnumText() {
-		this.all = new List<EditEnum>();
+	public EditEnumFile() {
+		this.all = new List<EditEnumText>();
 	}
-	public EnumText(List<EditEnum> all) {
+	public EditEnumFile(List<EditEnumText> all) {
 		this.all = all;
 	}
 
@@ -41,14 +41,14 @@ public class EnumText {
 		if (lines[0] != header) {
 			return;
 		}
-		EditEnum e = null;
+		EditEnumText e = null;
 		foreach (string line in lines) {
 			if (line.StartsWith("//")) {
 				continue;
 			} else if (line == ns) {
 				continue;
 			} else if (line.StartsWith(start)) {
-				e = new EditEnum();
+				e = new EditEnumText();
 				e.name = line.TrimEnd('{', ' ').Substring(start.Length);
 			} else if (line.StartsWith(va)) {
 				string value = line.TrimEnd(',', ' ').Substring(va.Length);
@@ -71,7 +71,7 @@ public class EnumText {
 		List<string> lines = new List<string>();
 		lines.Add(header);
 		lines.Add(ns);
-		foreach (EditEnum e in all) {
+		foreach (EditEnumText e in all) {
 			lines.Add(start + e.name + "{");
 			foreach (string value in e.values) {
 				lines.Add(va + value + ",");
@@ -83,8 +83,8 @@ public class EnumText {
 	}
 }
 
-public class BaseEnumEditor : ScriptableWizard {
-	public List<EditEnum> all = new List<EditEnum>();
+public class EditEnumBase : ScriptableWizard {
+	public List<EditEnumText> all = new List<EditEnumText>();
 
 	private string path;
 
@@ -94,11 +94,11 @@ public class BaseEnumEditor : ScriptableWizard {
 		AssetDatabase.Refresh();
 		TextAsset text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets" + path);
 		string[] lines = text.text.Split('\n');
-		new EnumText(all).LoadEnums(lines);
+		new EditEnumFile(all).LoadEnums(lines);
 	}
 
 	void Save() {
-		string[] lines = new EnumText(all).SaveEnums();
+		string[] lines = new EditEnumFile(all).SaveEnums();
 		File.WriteAllLines(Application.dataPath + path, lines);
 		AssetDatabase.Refresh();
 	}
@@ -112,16 +112,16 @@ public class BaseEnumEditor : ScriptableWizard {
 	}
 }
 
-public class EnumEditor : BaseEnumEditor {
+public class EditEnumEnum : EditEnumBase {
 	[MenuItem("Revenge/Edit Enum", priority = 1)]
 	static void ShowEditEnum() {
-		DisplayWizard<EnumEditor>("Edit Enum", "Save&Close", "Save").Load("/Scripts/Schema/AllEditEnum.cs");
+		DisplayWizard<EditEnumEnum>("Edit Enum", "Save&Close", "Save").Load("/Scripts/Schema/AllEditEnum.cs");
 	}
 }
-public class IDEditor : BaseEnumEditor {
+public class EditEnumID : EditEnumBase {
 	[MenuItem("Revenge/Edit Schema ID", priority = 2)]
 	static void ShowEditSchemaID() {
-		DisplayWizard<IDEditor>("Edit Schema ID", "Save&Close", "Save").Load("/Scripts/Schema/AllEditID.cs");
+		DisplayWizard<EditEnumID>("Edit Schema ID", "Save&Close", "Save").Load("/Scripts/Schema/AllEditID.cs");
 	}
 }
 

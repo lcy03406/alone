@@ -9,12 +9,12 @@ namespace Play.Attrs {
 		public Schema.Stage.A a;
 		public int start_time = 0;
 		public int tick_time = 0;
-		public void Transit(Schema.Stage.A to) {
+		public void Transit(Schema.Stage.A to, List<string> logs) {
 			if (ent != null && ent.layer != null) {
 				Ctx ctx = new Ctx(ent.layer, ent);
 				Effect ef = a.s.finish_ef;
 				if (ef != null && ef.Can(ctx))
-					ef.Do(ctx);
+					ef.Do(ctx, logs);
 			}
 			a = to;
 			start_time = tick_time;
@@ -22,16 +22,16 @@ namespace Play.Attrs {
 				Ctx ctx = new Ctx(ent.layer, ent);
 				Effect ef = a.s.start_ef;
 				if (ef != null && ef.Can(ctx))
-					ef.Do(ctx);
+					ef.Do(ctx, logs);
 			}
 		}
 
-		public sealed override void Tick(int time) {
-            tick_time = time;
+		public sealed override void Tick(int time, List<string> logs) {
+			tick_time = time;
 			Ctx ctx = new Ctx(ent.layer, ent);
 			Effect ef = a.s.tick_ef;
 			if (ef != null && ef.Can(ctx))
-				ef.Do(ctx);
+				ef.Do(ctx, logs);
 		}
 	}
 }

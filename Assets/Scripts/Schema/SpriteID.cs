@@ -8,15 +8,15 @@ namespace Schema {
 		block04,
 		block05,
 		chest01,
+		crafter,
 		crate01,
 		entrance01,
 		exit01,
 		exit02,
-		tent01,
-		crafter,
 		mage,
 		miner,
 		shooter,
 		soldier,
+		tent01,
 	}
 }

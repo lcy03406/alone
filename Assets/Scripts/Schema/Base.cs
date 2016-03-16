@@ -9,7 +9,7 @@ namespace Schema {
 		}
 		static private Data Get (ID id) {
 			Data datum = null;
-			bool ret = data.TryGetValue (id, out datum);
+			data.TryGetValue (id, out datum);
 			return datum;
 		}
 
@@ -20,7 +20,6 @@ namespace Schema {
 
 		public static A GetA(ID id) {
 			A a = new A(id);
-			Data _ = a.s;
 			return a;
 		}
 

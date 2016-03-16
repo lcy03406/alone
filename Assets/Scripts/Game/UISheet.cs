@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 
 using Stat = Play.Attrs.Stat;
+using System.Text;
 
 public class UISheet : MonoBehaviour {
 	public Dropdown dropdown;
@@ -40,6 +41,9 @@ public class UISheet : MonoBehaviour {
 				ShowChar();
 				break;
 			case 4:
+				ShowLog();
+				break;
+			case 5:
 				ShowInventory();
 				dropdown.value = show_tab;
                 return;
@@ -79,6 +83,18 @@ I = Inventory
 			t += "\n";
 		}
         text.text = t;
+		gameObject.SetActive(true);
+	}
+	public void ShowLog() {
+		List<string> logs = Game.game.world.logs;
+		int begin = logs.Count - 10;
+		if (begin < 0)
+			begin = 0;
+		StringBuilder sb = new StringBuilder();
+		for (int i = begin; i < logs.Count; ++i) {
+			sb.AppendLine(logs[i]);
+		}
+		text.text = sb.ToString();
 		gameObject.SetActive(true);
 	}
 	public void ShowInventory() {

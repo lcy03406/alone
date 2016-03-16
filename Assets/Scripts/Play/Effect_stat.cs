@@ -56,7 +56,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 
@@ -90,11 +90,15 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Stat stat = ent.GetAttr<Stat>();
 			int value = c_value.Get(ctx);
 			stat.Set(id, stat.Get(id) + value);
+			if (logs != null) {
+				int newvalue = stat.Get(id);
+				logs.Add(string.Format("{0}'s {1} increase to {2}.", ent.GetName(), id, newvalue));
+			}
 		}
 	}
 
@@ -135,7 +139,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Stat stat = ent.GetAttr<Stat>();
 			int value = c_value.Get(ctx);
@@ -145,6 +149,9 @@ namespace Play.Eff {
 				if (newvalue < 0)
 					newvalue = 0;
 				stat.Set(id, newvalue);
+				if (logs != null) {
+					logs.Add(string.Format("{0}'s {1} decrease to {2}.", ent.GetName(), id, newvalue));
+				}
 			}
 		}
 	}

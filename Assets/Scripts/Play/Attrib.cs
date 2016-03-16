@@ -15,7 +15,7 @@ namespace Play {
 		public virtual void OnDetach() { }
 		public virtual void OnLoad() { }
 
-		public virtual void Tick(int time) { }
+		public virtual void Tick(int time, List<string> logs) { }
 		public void ClrNextTick() {
 			next_tick = 0;
 		}

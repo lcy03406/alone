@@ -97,9 +97,9 @@ namespace Play.Attrs {
 			SetNextTick(part.grow_time);
         }
 
-		public sealed override void Tick(int time) {
+		public sealed override void Tick(int time, List<string> logs) {
 			foreach (PartItem part in items.Values) {
-				if (part.grow_time + part.grow_span <= time) {
+				if (part.grow_span > 0 && part.grow_time + part.grow_span <= time) {
 					int count = part.count + part.grow_count;
 					if (count < 0)
 						count = 0;

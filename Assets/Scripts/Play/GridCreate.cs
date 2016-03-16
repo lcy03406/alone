@@ -83,6 +83,8 @@ namespace Play.Layers {
 					Schema.Entity.A aent = null;
 					if (c == ctx.layer.param.exit) {
 						aent = exit;
+					} else if (c == ctx.layer.param.entr) {
+						aent = entr;
 					} else if (c.On(rect)) {
 						aent = border;
 					} else if (!c.In(rect)) {

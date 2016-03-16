@@ -57,7 +57,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 
@@ -101,7 +101,7 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Part grow = ent.GetAttr<Part>();
 			Part.PartItem part = grow.Get(id);
@@ -111,6 +111,9 @@ namespace Play.Eff {
 				if (newvalue < 0)
 					newvalue = 0;
 				grow.Set(id, newvalue);
+				if (logs != null) {
+					logs.Add(string.Format("{0}'s {1} decrease to {2}.", ent.GetName(), id, newvalue));
+				}
 			}
 		}
 	}
@@ -150,19 +153,26 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Part grow = ent.GetAttr<Part>();
 			Part.PartItem part = grow.Get(id);
 			int value = c_value.Get(ctx);
 			if (value > 0) {
-				grow.Set(id, part.count - value);
+				int newvalue = part.count - value;
+				if (newvalue < 0)
+					newvalue = 0;
+				value = newvalue - part.count;
+				grow.Set(id, newvalue);
+				if (logs != null) {
+					logs.Add(string.Format("{0}'s {1} decrease to {2}.", ent.GetName(), id, newvalue));
+				}
 			}
-			Schema.Entity.A cre = Schema.Entity.GetA(Schema.EntityID.Item);
-			Entity cent = cre.CreateEntity(ctx);
-			Part.PartItem cpart = new Part.PartItem(part.a, value, 0, part.q, 0, 0);
-			Part cgrow = cent.GetAttr<Part>();
-			cgrow.AddPart(Schema.PartID.Item, cpart);
+			if (value > 0) {
+				Schema.Entity.A cre = Schema.Entity.GetA(Schema.EntityID.Item);
+				Part.PartItem cpart = new Part.PartItem(part.a, value, value, part.q, 0, 0);
+				cre.CreateEntity(ctx, false, cpart);
+			}
 		}
 	}
 
@@ -188,16 +198,19 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Part grow = ent.GetAttr<Part>();
 			foreach (Part.PartItem part in grow.items.Values) {
-				Schema.Entity.A cre = Schema.Entity.GetA(Schema.EntityID.Item);
-				Entity cent = cre.CreateEntity(ctx);
-				Part.PartItem cpart = new Part.PartItem(part.a, part.count, 0, part.q, 0, 0);
-				Part cgrow = cent.GetAttr<Part>();
-				cgrow.AddPart(Schema.PartID.Item, cpart);
-				part.count = 0;
+				if (part.count > 0) {
+					Schema.Entity.A cre = Schema.Entity.GetA(Schema.EntityID.Item);
+					Part.PartItem cpart = new Part.PartItem(part.a, part.count, part.count, part.q, 0, 0);
+					cre.CreateEntity(ctx, false, cpart);
+					part.count = 0;
+				}
+			}
+			if (logs != null) {
+				logs.Add(ent.GetName() + " collapse.");
 			}
 		}
 	}

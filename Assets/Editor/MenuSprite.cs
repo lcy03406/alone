@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class SpriteMenu {
+public class MenuSprite {
 	static string[] tilePaths = {
 		"TexturePacker/Blocks/",
 		"TexturePacker/Characters/",
@@ -50,10 +50,11 @@ public class SpriteMenu {
 		imp.spritePixelsPerUnit = rects[0].width * all.width;
 		AssetDatabase.ImportAsset("Assets" + tilesetPath, ImportAssetOptions.ForceUpdate);
 
-		EditEnum enun = new EditEnum();
+		names.Sort();
+		EditEnumText enun = new EditEnumText();
 		enun.name = "SpriteID";
 		enun.values = names;
-		EnumText text = new EnumText();
+		EditEnumFile text = new EditEnumFile();
 		text.all.Add(enun);
 		string[] lines = text.SaveEnums();
 		const string textPath = "/Scripts/Schema/SpriteID.cs";

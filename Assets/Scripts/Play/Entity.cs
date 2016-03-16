@@ -14,16 +14,12 @@ namespace Play {
 		[NonSerialized]
 		public bool isPlayer = false;
 
-		public void Log(string info) {
-			Attrs.Pos pos = GetAttr<Attrs.Pos>();
-			Coord c = pos == null ? Coord.O : pos.c;
-			layer.Log(c, info);
-		}
-
-		public void OnLoad() {
+		public void Load() {
 			foreach (Attrib a in attr.Values) {
 				a.ent = this;
 			}
+		}
+		public void OnLoad() {
 			foreach (Attrib a in attr.Values) {
 				a.OnLoad();
 			}
@@ -42,7 +38,7 @@ namespace Play {
 			typeof(Attrs.Stage),
 		};
 
-		public void Tick (int time) {
+		public void Tick (int time, List<string> logs) {
 			foreach (Type t in TickAttr) {
 				Attrib a = GetAttr(t);
 				if (a != null) {
@@ -50,7 +46,7 @@ namespace Play {
 					if (next_tick > time)
 						continue;
 					a.ClrNextTick();
-					a.Tick(time);
+					a.Tick(time, logs);
 				}
 			}
 		}
@@ -101,6 +97,19 @@ namespace Play {
 			if (!attr.TryGetValue(t, out a))
 				return null;
 			return a;
+		}
+
+		public void Log(string info) {
+			Attrs.Pos pos = GetAttr<Attrs.Pos>();
+			Coord c = pos == null ? Coord.O : pos.c;
+			layer.Log(c, info);
+		}
+
+		public string GetName() {
+			Attrs.Core core = GetAttr<Attrs.Core>();
+			if (core != null)
+				return core.GetName();
+			return "someone";
 		}
 	}
 }

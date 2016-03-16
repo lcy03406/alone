@@ -937,6 +937,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Char
       m_Image: {fileID: 0}
+    - m_Text: Log
+      m_Image: {fileID: 0}
     - m_Text: Inventory
       m_Image: {fileID: 0}
   m_OnValueChanged:

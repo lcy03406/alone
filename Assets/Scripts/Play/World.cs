@@ -23,6 +23,7 @@ namespace Play {
 		public Random rand;
 		SortedList<int, Layer> layers = new SortedList<int, Layer>();
 		Entity player;
+		public List<string> logs;
 
 		[Serializable]
 		public class Param {
@@ -38,6 +39,7 @@ namespace Play {
 		}
 
 		public void LoadWorld(string path, string name) {
+			logs = new List<string>();
 			Schema.All.Init();
 			rand = new Random();
 			layers.Clear();
@@ -57,6 +59,7 @@ namespace Play {
 				e = human.CreateEntity(ctx, true);
 			} else {
 				e.isPlayer = true;
+				e.Load();
 				layer.AddEntity(e);
 				e.OnLoad();
 			}
@@ -83,7 +86,7 @@ namespace Play {
 				if (tick_time == 0) {
 					return;
 				}
-				player.Tick(param.time);
+				player.Tick(param.time, logs);
 				if (view != null && param.layer == player.layer.z) {
 					view.OnEntityUpdate(player);
 				}
@@ -91,7 +94,7 @@ namespace Play {
 				while (i < layers.Count) {
 					int id = layers.Keys[i];
 					Layer layer = layers.Values[i];
-					layer.Tick(param.time);
+					layer.Tick(param.time, logs);
 					while (i < layers.Count && layers.Keys[i] < id) {
 						i++;
 					}

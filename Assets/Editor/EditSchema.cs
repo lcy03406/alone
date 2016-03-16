@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-public class SchemaEditor : ScriptableWizard {
+public class EditSchema : ScriptableWizard {
 	public Schema.EditAll all;
 	[MenuItem("Revenge/Edit Schema", priority = 3)]
 	static void ShowWindow() {
-		DisplayWizard<SchemaEditor>("Schema", "Save&Close", "Save").Load();
+		DisplayWizard<EditSchema>("Schema", "Save&Close", "Save").Load();
 	}
 
 	static JsonSerializer ser = Schema.EditAll.Ser();

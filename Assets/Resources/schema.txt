@@ -38,9 +38,9 @@
   ],
   "creature": [
     {
-      "name": "",
+      "name": "miner",
       "id": "CreatureMiner",
-      "sprite": "tent01",
+      "sprite": "miner",
       "hp": 100,
       "stamina": 100,
       "attack": 10,

@@ -7,7 +7,7 @@ namespace Play {
 	public abstract class Effect {
 		public abstract string Display();
 		public abstract bool Can(Ctx ctx);
-		public abstract void Do(Ctx ctx);
+		public abstract void Do(Ctx ctx, List<string> logs);
 
 		public override string ToString() {
 			return Display();
@@ -36,9 +36,9 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			foreach (Effect ef in eff) {
-				ef.Do(ctx);
+				ef.Do(ctx, logs);
 			}
 		}
 	}
@@ -64,10 +64,10 @@ namespace Play.Eff {
 			return false;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			foreach (Effect ef in eff) {
 				if (ef.Can(ctx))
-					ef.Do(ctx);
+					ef.Do(ctx, logs);
 			}
 		}
 	}
@@ -93,11 +93,10 @@ namespace Play.Eff {
 			return false;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			foreach (Effect ef in eff) {
 				if (ef.Can(ctx)) {
-					ef.Do(ctx);
-					return;
+					ef.Do(ctx, logs);
 				}
 			}
 		}
@@ -117,7 +116,7 @@ namespace Play.Eff {
 			return cond.Can(ctx);
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 }

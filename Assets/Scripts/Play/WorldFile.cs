@@ -42,6 +42,7 @@ namespace Play {
 		}
 
 		private void Ser_Error (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) {
+			Assert.IsTrue(false, string.Format("JSON ERROR {0} : {1}", e.CurrentObject.ToString(), e.ErrorContext.Error.Message));
 			throw e.ErrorContext.Error;
 		}
 

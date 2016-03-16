@@ -10,7 +10,7 @@ namespace Play {
 		public static string Display(this Schema.Iact.A a) {
 			return a.s.Display();
 		}
-		public static bool Can (this Schema.Iact.A a, Ctx ctx) {
+		public static bool Can(this Schema.Iact.A a, Ctx ctx) {
 			if (a.s.has_dst) {
 				if (ctx.dst == null)
 					return false;
@@ -31,11 +31,30 @@ namespace Play {
 				return false;
 			return a.s.ef.Can(ctx);
 		}
-		public static void Do (this Schema.Iact.A a, Ctx ctx) {
+		public static void Do(this Schema.Iact.A a, Ctx ctx, List<string> logs) {
 			if (a.Can(ctx)) {
-				a.s.ef.Do(ctx);
+				if (logs != null) {
+					logs.Add(GameLog(a, ctx));
+				}
+				a.s.ef.Do(ctx, logs);
 				ctx.Do();
 			}
+		}
+		public static string GameLog(this Schema.Iact.A a, Ctx ctx) {
+			string log = "";
+			if (ctx.src == null) {
+				log += "layer " + ctx.layer.z;
+			} else {
+				log += ctx.src.GetName();
+			}
+			log += " ";
+			log += a.s.name;
+			if (ctx.dst != null) {
+				log += " ";
+				log += ctx.dst.GetName();
+			}
+			log += ".";
+			return log;
 		}
 	}
 }

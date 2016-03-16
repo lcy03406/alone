@@ -1,12 +1,13 @@
 //utf-8。
 using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace Play {
 	[Serializable]
 	public abstract class Act {
 		public interface Step {
-			void Do(Entity ent);
+			void Do(Entity ent, List<string> logs);
 			int Time(Entity ent);
 		}
 		public abstract string GetName();
@@ -56,7 +57,7 @@ namespace Play.Acts {
 			return a.Can (ctx);
 		}
 		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent) {
+			void Act.Step.Do (Entity ent, List<string> logs) {
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);
@@ -64,10 +65,10 @@ namespace Play.Acts {
 			}
 		}
 		private class Step2 : Act.Step {
-			void Act.Step.Do (Entity ent) {
+			void Act.Step.Do (Entity ent, List<string> logs) {
 				ActIact act = (ActIact) Act.EntAct (ent);
 				Ctx ctx = act.GetCtx(ent);
-				act.a.Do (ctx);
+				act.a.Do (ctx, logs);
 			}
 			int Act.Step.Time (Entity ent) {
 				ActIact act = (ActIact)Act.EntAct(ent);

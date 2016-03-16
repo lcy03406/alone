@@ -1,7 +1,6 @@
 //utf-8。
 using System;
 using System.Collections.Generic;
-using Schema;
 using UnityEngine.Assertions;
 
 namespace Play.Attrs {
@@ -23,31 +22,11 @@ namespace Play.Attrs {
 			return estage;
 		}
 
+		public virtual string GetName() {
+			return a.s.name;
+		}
+
 		public virtual Schema.Sprite.A GetSprite() {
-			//TODO
-#if false
-			if (stat.hp <= 0) {
-				return Schema.Sprite.GetA(Schema.SpriteID.d_shovel);
-			}
-			Actor actor = ent.GetAttr<Actor>();
-			if (actor != null) {
-				Act act = actor.act;
-				if (act != null) {
-					//TODO
-					if (act is Acts.ActMove) {
-						return Schema.Sprite.GetA(Schema.SpriteID.d_boots);
-					} else if (act is Acts.ActIact) {
-						//TODO
-						Acts.ActIact iact = (Acts.ActIact)act;
-						if (iact.a.id == Schema.Iact.ID.Attack_Punch) {
-							return Schema.Sprite.GetA(Schema.SpriteID.d_gauntlets);
-						}
-					} else {
-						//return Schema.Sprite.GetA(Schema.SpriteID.d_helm);
-					}
-				}
-			}
-#endif
 			Assert.IsNotNull(a.s.sprite, string.Format("{0} is null!", a.id));
 			return a.s.sprite;
 		}
@@ -81,18 +60,31 @@ namespace Play.Attrs {
 		}
 	}
 
+	[Serializable]
 	public class CoreItem : Core {
 		public CoreItem(Schema.Entity.A a) : base(a) {
 		}
-		public override SchemaBase<SpriteID, Sprite>.A GetSprite() {
+		private Schema.Item.A GetItem() {
 			Part grow = ent.GetAttr<Part>();
 			if (grow != null) {
-				Part.PartItem part = grow.Get(PartID.Item);
+				Part.PartItem part = grow.Get(Schema.PartID.Item);
 				if (part != null) {
-					return part.a.s.sprite;
+					return part.a;
 				}
 			}
-			return base.GetSprite();
+			return null;
+		}
+		public override string GetName() {
+			Schema.Item.A a = GetItem();
+			if (a == null)
+				return base.GetName();
+			return GetItem().s.name;
+		}
+		public override Schema.Sprite.A GetSprite() {
+			Schema.Item.A a = GetItem();
+			if (a == null)
+				return base.GetSprite();
+			return a.s.sprite;
 		}
 	}
 }

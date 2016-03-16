@@ -32,10 +32,6 @@ namespace Play {
 			this.z = z;
 		}
 
-		public void Log(Coord c, string info) {
-			Debug.Log(string.Format("{0} {1} {2}: {3}", world.param.time, z, c, info));
-		}
-
 		public void Load() {
 			Log(new Coord(), "Load");
 			param = world.file.LoadLayerParam(z);
@@ -159,6 +155,7 @@ namespace Play {
 		public Entity FindEntity (WUID id) {
 			Entity ent;
 			if (entities.TryGetValue (id, out ent)) {
+				AddTick(world.param.time, ent);
 				return ent;
 			}
 			return null;
@@ -234,7 +231,7 @@ namespace Play {
 				return;
 			if (ent.isPlayer)
 				return;
-			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+			//Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			//Log(pos.c, "AddTick " + ent.id + " time " + time);
 			List<Entity> list = null;
 			if (!tick_ents.TryGetValue(time, out list)) {
@@ -246,7 +243,7 @@ namespace Play {
 			}
 		}
 
-		public void Tick (int time) {
+		public void Tick (int time, List<string> logs) {
 			while (tick_ents.Count > 0) {
 				int tick = tick_ents.Keys[0];
 				if (tick > time)
@@ -257,9 +254,9 @@ namespace Play {
 					Entity ent = ents[i];
 					WUID id = ent.id;
 					if (entities.ContainsKey(id)) {
-						Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
+						//Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 						//Log(pos.c, "Tick " + ent.id);
-						ent.Tick(time);
+						ent.Tick(time, logs);
 						if (entities.ContainsKey(id)) {
 							if (world.view != null && world.param.layer == z) {
 								world.view.OnEntityUpdate(ent);
@@ -276,6 +273,10 @@ namespace Play {
 			}
 		}
 
+		public void Log(Coord c, string info) {
+			Debug.Log(string.Format("{0} {1} {2}: {3}", world.param.time, z, c, info));
+		}
+
 		public void MoveCrossGrid (Entity entity, Coord from, Coord to) {
 			Grid fg = FindGrid (from);
 			Grid tg = FindGrid (to);
@@ -289,6 +290,7 @@ namespace Play {
 				return false;
 			return tg.FindEntity (to) == null;
 		}
+
 		public Entity SearchEntity (Coord to) {
 			Grid tg = FindGrid (to.Grid ());
 			if (tg == null)

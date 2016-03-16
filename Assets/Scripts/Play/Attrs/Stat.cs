@@ -118,9 +118,7 @@ namespace Play.Attrs {
 		}
 
 		public void DelBuf(Schema.BufID bid) {
-			foreach (KeyValuePair<ID, St> pair in ints) {
-				ID id = pair.Key;
-				St st = pair.Value;
+			foreach (St st in ints.Values) {
 				Buf buf = null;
 				if (st.bufs.TryGetValue(bid, out buf)) {
 					st.buf -= buf.value;
@@ -129,11 +127,9 @@ namespace Play.Attrs {
 			}
 		}
 
-		public sealed override void Tick(int time) {
+		public sealed override void Tick(int time, List<string> logs) {
 			List<Schema.BufID> del = new List<Schema.BufID>();
-			foreach (KeyValuePair<ID, St> pair in ints) {
-				ID id = pair.Key;
-				St st = pair.Value;
+			foreach (St st in ints.Values) {
 				foreach (KeyValuePair<Schema.BufID, Buf> bpair in st.bufs) {
 					Schema.BufID bid = bpair.Key;
 					Buf buf = bpair.Value;

@@ -28,10 +28,12 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
-			//TODO
+		public override void Do(Ctx ctx, List<string> logs) {
 			Schema.Entity.A cre = c_cre.Get(ctx);
-			cre.CreateEntity(ctx);
+			Entity cent = cre.CreateEntity(ctx);
+			if (logs != null) {
+				logs.Add(cent.GetName() + " arise.");
+			}
 		}
 	}
 
@@ -53,8 +55,11 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
+			if (logs != null) {
+				logs.Add(ent.GetName() + " no longer exist.");
+			}
 			ctx.layer.DelEntity(ent);
 		}
 	}
@@ -84,11 +89,14 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Pos pos = ent.GetAttr<Pos>();
 			Direction dir = ctx.dstc.Sub(pos.c).ToDirection();
 			pos.dir = dir;
+			if (logs != null) {
+				logs.Add(ent.GetName() + " turn " + dir + ".");
+			}
 		}
 	}
 
@@ -117,13 +125,14 @@ namespace Play.Eff {
 			return layer.CanMoveTo(tc);
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			Coord tc = pos.c.Step(pos.dir);
 			Layer layer = ent.layer;
-			if (layer.CanMoveTo(tc)) {
-				layer.MoveEntity(ent, tc);
+			layer.MoveEntity(ent, tc);
+			if (logs != null) {
+				logs.Add(ent.GetName() + " go to " + tc + ".");
 			}
 		}
 	}
@@ -157,9 +166,12 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			ctx.layer.world.GoLayer(ent, to);
+			if (logs != null) {
+				logs.Add(ent.GetName() + " go to layer " + ent.layer.z);
+			}
 		}
 	}
 
@@ -188,10 +200,13 @@ namespace Play.Eff {
 			return true;
 		}
 
-		public override void Do(Ctx ctx) {
+		public override void Do(Ctx ctx, List<string> logs) {
 			Entity ent = c_ent.Get(ctx);
 			Stage stage = ent.GetAttr<Stage>();
-			stage.Transit(to);
+			if (logs != null) {
+				logs.Add(ent.GetName() + " become " + to.s.name);
+			}
+			stage.Transit(to, logs);
 		}
 	}
 }

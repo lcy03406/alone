@@ -3,8 +3,8 @@ using UnityEditor;
 
 using Play;
 
-public class GridMenu {
-	[MenuItem("Revenge/Reset Grid", priority = 100)]
+public class MenuGrid {
+	[MenuItem("Revenge/Reset Grid", priority = 101)]
 	private static void CreateGrid() {
 		string prefabPath = "Assets/Prefabs/Grid.prefab";
 		GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);

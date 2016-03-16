@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Play {
 	public static class EntityCreate {
-		public static Entity CreateEntity(this Schema.Entity.A a, Ctx ctx, bool player = false) {
+		public static Entity CreateEntity(this Schema.Entity.A a, Ctx ctx, bool player = false, Attrs.Part.PartItem item = null) {
 			if (a.s == null)
 				return null;
 			Entity ent = new Entity();
@@ -21,7 +21,11 @@ namespace Play {
 				ent.SetAttr(new Attrs.Stat(s.stat));
 			}
 			if (s.part != null) {
-				ent.SetAttr(new Attrs.Part(s.part));
+				Attrs.Part part = new Attrs.Part(s.part);
+				ent.SetAttr(part);
+				if (item != null) {
+					part.AddPart(Schema.PartID.Item, item);
+				}
 			}
 			if (s.start_stage != null) {
 				Attrs.Stage stage = new Attrs.Stage();
