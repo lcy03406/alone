@@ -142,10 +142,13 @@ public class UIGame : MonoBehaviour {
 				return;
 			}
 		}
-		MenuIact mn = new MenuIact();
-		mn.iacts = dstcore.ListIact(ctrl.ent);
-		mn.dst = dst;
-		mn.Open();
+		List<Schema.Iact.A> iacts = dstcore.ListIact(ctrl.ent);
+		if (iacts.Count > 0) {
+			MenuIact mn = new MenuIact();
+			mn.iacts = iacts;
+            mn.dst = dst;
+			mn.Open();
+		}
 	}
 
 	private class MenuIact {
@@ -233,10 +236,23 @@ public class UIGame : MonoBehaviour {
 				Play.Attrs.Pos pos = ctrl.ent.GetAttr<Play.Attrs.Pos>();
 				if (to != pos.dir) {
 					ctrl.CmdDir(to);
-				} else if (ctrl.ent.layer.CanMoveTo(pos.c.Step(to))) {
-					ctrl.CmdMove(to);
 				} else {
-					OpenMenuDst(true);
+					if (ctrl.ent.layer.CanMoveTo(pos.c.Step(to))) {
+						//auto pick
+						List<Entity> dsts = ctrl.ListDst();
+						foreach (Entity dst in dsts) {
+							Play.Attrs.Core dstcore = dst.GetAttr<Play.Attrs.Core>();
+							Schema.Iact.A aact = dstcore.GetIactAuto(ctrl.ent);
+							if (aact != null) {
+								if (aact.s.cat == Schema.ActionCategoryID.Pick && aact.s.time1 + aact.s.time2 == 0) {
+									ctrl.CmdIact(aact, dst.id);
+								}
+							}
+						}
+						ctrl.CmdMove(to);
+					} else {
+						OpenMenuDst(true);
+					}
 				}
 			}
 		}

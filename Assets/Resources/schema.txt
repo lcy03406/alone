@@ -220,7 +220,7 @@
       "name": "pick up item",
       "id": "PickItem",
       "stamina": 0,
-      "time": 1,
+      "time": 0,
       "tools": [],
       "reagents": [],
       "byproducts": [],

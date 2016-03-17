@@ -43,7 +43,7 @@ namespace Schema {
 			));
 			Add(ID.Item_Static, new Stage(name: "item",
 				render_order: RenderOrderID.Item,
-				blockade: true, //TODO
+				blockade: false, //TODO
 				start_ef: null,
 				tick_ef: Ef.DelOnZeroPart(new PartID[] { PartID.Item }),
 				finish_ef: null
