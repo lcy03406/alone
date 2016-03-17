@@ -41,9 +41,6 @@ public class UISheet : MonoBehaviour {
 				ShowChar();
 				break;
 			case 4:
-				ShowLog();
-				break;
-			case 5:
 				ShowInventory();
 				dropdown.value = show_tab;
                 return;
