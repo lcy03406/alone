@@ -157,15 +157,6 @@ namespace Play {
 			}
 		}
 
-		public Entity FindEntity (WUID id) {
-			Entity ent;
-			if (entities.TryGetValue (id, out ent)) {
-				AddTick(world.param.time, ent);
-				return ent;
-			}
-			return null;
-		}
-
 		public void AddEntity (Entity ent) {
 			Attrs.Pos pos = ent.GetAttr<Attrs.Pos>();
 			//Log(pos.c, "AddEntity " + ent.id);
@@ -173,7 +164,6 @@ namespace Play {
 				Anchor(pos.c);
 			} else {
 				entities.Add(ent.id, ent);
-				AddTick(ent);
 				Coord to = pos.c.Grid();
 				Grid tg = FindGrid(to);
 				tg.MoveIn(ent);
@@ -200,6 +190,22 @@ namespace Play {
 				entities.Remove(ent.id);
 			}
 			ent.layer = null;
+		}
+
+		public Entity FindEntity(WUID id) {
+			Entity ent;
+			if (entities.TryGetValue(id, out ent)) {
+				return ent;
+			}
+			return null;
+		}
+
+		public List<Entity> SearchEntity(Coord c, EntitySelect sel) {
+			Grid tg = FindGrid(c.Grid());
+			if (tg == null)
+				return null;
+			List<Entity> list = tg.FindEntity(c, sel);
+			return list;
 		}
 
 		public void MoveIn(Entity ent) {
@@ -289,20 +295,12 @@ namespace Play {
 			tg.MoveIn (entity);
 		}
 
+		static EntitySelect SelectBlockade = new EntitySelect() { blockade = 1 };
 		public bool CanMoveTo (Coord to) {
 			Grid tg = FindGrid (to.Grid ());
 			if (tg == null)
 				return false;
-			return tg.FindEntity (to) == null;
-		}
-
-		public Entity SearchEntity (Coord to) {
-			Grid tg = FindGrid (to.Grid ());
-			if (tg == null)
-				return null;
-			Entity ent = tg.FindEntity (to);
-			AddTick(world.param.time, ent);
-			return ent;
+			return tg.FindEntity (to, SelectBlockade).Count == 0;
 		}
 	}
 }

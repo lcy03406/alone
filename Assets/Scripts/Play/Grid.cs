@@ -28,12 +28,15 @@ namespace Play {
 
 		public void Load(Data d) {
 			this.d = d;
-			foreach (Entity e in d.entities) {
-				Assert.AreEqual (c, e.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, e.GetAttr<Attrs.Pos>().c));
-				e.layer = layer;
-				e.Load();
-				layer.AddEntity (e);
-				e.OnLoad();
+			foreach (Entity ent in d.entities) {
+				Assert.AreEqual (c, ent.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, ent.GetAttr<Attrs.Pos>().c));
+				ent.layer = layer;
+				ent.Load();
+				layer.AddEntity (ent);
+				ent.OnLoad();
+				if (ent.layer != null) {
+					ent.layer.AddTick(ent);
+				}
 			}
 			d.entities.Clear ();
 		}
@@ -63,13 +66,16 @@ namespace Play {
 			entities.Add (e);
 		}
 
-		public Entity FindEntity (Coord c) {
+		public List<Entity> FindEntity (Coord c, EntitySelect sel) {
+			List<Entity> list = new List<Entity>();
 			foreach (Entity e in entities) {
 				if (e.GetAttr<Attrs.Pos>().c == c) {
-					return e;
+					if (sel == null || sel.Select(e)) {
+						list.Add(e);
+					}
 				}
 			}
-			return null;
+			return list;
 		}
 	}
 }

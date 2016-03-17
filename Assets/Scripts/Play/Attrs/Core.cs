@@ -31,6 +31,20 @@ namespace Play.Attrs {
 			return a.s.sprite;
 		}
 
+		public bool GetBlockade() {
+			Stage stage = ent.GetAttr<Stage>();
+			if (stage == null)
+				return true;
+			return stage.a.s.blockade;
+		}
+
+		public Schema.RenderOrderID GetRenderOrder() {
+			Stage stage = ent.GetAttr<Stage>();
+			if (stage == null)
+				return 0;
+			return stage.a.s.render_order;
+		}
+
 		public List<Schema.Iact.A> ListMake() {
 			Schema.EntityStage es = GetStage();
 			if (es == null || es.make == null)

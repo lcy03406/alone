@@ -39,8 +39,11 @@ namespace Play {
 			if (player) {
 				ent.SetAttr(new Attrs.Ctrl());
 			}
-			ent.OnBorn();
 			ctx.layer.AddEntity(ent);
+			ent.OnBorn();
+			if (ent.layer != null) {
+				ent.layer.AddTick(ent);
+			}
 			return ent;
 		}
 	}

@@ -138,7 +138,9 @@ public class Game : MonoBehaviour, World.View {
 		if (show == null)
 			return;
 		Sprite sprite = show.GetSprite().s.sprite;
-		o.GetComponent<SpriteRenderer>().sprite = sprite;
+		SpriteRenderer render = o.GetComponent<SpriteRenderer>();
+		render.sprite = sprite;
+		render.sortingOrder = (int) show.GetRenderOrder();
 	}
 
 	public static Vector2[] GenerateUV(Schema.Floor.A[,] tiles) {

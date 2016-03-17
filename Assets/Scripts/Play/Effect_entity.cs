@@ -15,12 +15,13 @@ namespace Play.Eff {
 			return "build " + c_cre.Display() + ".\n";
 		}
 
+		static EntitySelect SelectBlockade = new EntitySelect() { blockade = 1 };
 		public override bool Can(Ctx ctx) {
 			Pos pos = ctx.src.GetAttr<Pos>();
 			if (pos == null)
 				return false;
 			Coord c = pos.c.Step(pos.dir);
-			if (ctx.layer.SearchEntity(c) != null)
+			if (ctx.layer.SearchEntity(c, SelectBlockade).Count > 0)
 				return false;
 			ctx.dstc = c; //TODO
 			if (!c_cre.Can(ctx))

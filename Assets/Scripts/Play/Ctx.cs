@@ -48,6 +48,9 @@ namespace Play {
 			foreach (KeyValuePair<Inv, Invx> pair in invs) {
 				pair.Key.DelItem(pair.Value.del);
 			}
+			if (dst != null && dst.layer != null) {
+				dst.layer.AddTick(dst.layer.world.param.time, dst);
+			}
         }
 	}
 }

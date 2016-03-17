@@ -1,5 +1,14 @@
 //generated. do not edit.
 namespace Schema {
+	public enum RenderOrderID {
+		Background,
+		Boulder,
+		Building,
+		Tree,
+		Corpse,
+		Item,
+		Creature,
+	}
 	public enum StatID {
 		HitPoint,
 		Stamina,
