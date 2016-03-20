@@ -14,7 +14,7 @@
     {
       "name": "stone",
       "id": "BoulderStone",
-      "sprite": "block02",
+      "sprite": "block_block02",
       "item": "Stone",
       "hp": 10,
       "defence": 0
@@ -22,7 +22,7 @@
     {
       "name": "border",
       "id": "BoulderBorder",
-      "sprite": "block05",
+      "sprite": "block_block05",
       "item": "Stone",
       "hp": 10,
       "defence": 1000
@@ -30,7 +30,7 @@
     {
       "name": "entrance",
       "id": "BoulderEntr",
-      "sprite": "entrance01",
+      "sprite": "block_entrance01",
       "item": "Stone",
       "hp": 10,
       "defence": 1000
@@ -40,7 +40,7 @@
     {
       "name": "miner",
       "id": "CreatureMiner",
-      "sprite": "miner",
+      "sprite": "char_miner",
       "hp": 100,
       "stamina": 100,
       "attack": 10,
@@ -52,7 +52,7 @@
     {
       "name": "working bench",
       "id": "WorkshopBench",
-      "sprite": "crate01",
+      "sprite": "block_crate01",
       "actions": [
         "MakeStoneAxe",
         "MakeStoneKnife"
@@ -61,7 +61,7 @@
     {
       "name": "exit",
       "id": "WorkshopExit",
-      "sprite": "exit01",
+      "sprite": "block_exit01",
       "actions": [
         "TravelDown"
       ]
@@ -71,7 +71,7 @@
     {
       "name": "dirt",
       "id": "Dirt",
-      "sprite": "block00"
+      "sprite": "block_block00"
     }
   ],
   "move": [
@@ -258,7 +258,7 @@
     {
       "name": "stone",
       "id": "Stone",
-      "sprite": "block04",
+      "sprite": "block_block04",
       "desc": "",
       "usages": [
         {
@@ -271,21 +271,21 @@
     {
       "name": "bone",
       "id": "Bone",
-      "sprite": "block03",
+      "sprite": "block_block03",
       "desc": "",
       "usages": []
     },
     {
       "name": "meat",
       "id": "Meat",
-      "sprite": "crate01",
+      "sprite": "block_crate01",
       "desc": "",
       "usages": []
     },
     {
       "name": "stone axe",
       "id": "StoneAxe",
-      "sprite": "soldier",
+      "sprite": "char_soldier",
       "desc": "",
       "usages": [
         {
@@ -298,7 +298,7 @@
     {
       "name": "stone knife",
       "id": "StoneKnife",
-      "sprite": "soldier",
+      "sprite": "char_soldier",
       "desc": "",
       "usages": [
         {

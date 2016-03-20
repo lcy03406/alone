@@ -22,7 +22,7 @@ namespace Schema {
 				}
 			};
 			Add(EntityID.Item, new Entity(
-				sprite: SpriteID.crate01,
+				sprite: SpriteID.block_crate01,
 				name: null,
 				stages: item_stages,
 				start_stage: Stage.GetA(Stage.ID.Item_Static),
