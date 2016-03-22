@@ -37,6 +37,15 @@ namespace Schema {
 		Knife,
 		Axe,
 	}
+	public enum EquipSlotID {
+		RightHand,
+		LeftHand,
+		Head,
+		Body,
+		Arm,
+		Leg,
+		Foot,
+	}
 	public enum ActionCategoryID {
 		Move,
 		Attack,

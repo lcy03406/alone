@@ -127,13 +127,35 @@ namespace Play.Attrs {
 			}
 		}
 
+		public void AddEquip(Dictionary<ID, int> stats) {
+			foreach (KeyValuePair<ID, int> pair in stats) {
+				ID id = pair.Key;
+				int value = pair.Value;
+				St st = null;
+				if (!ints.TryGetValue(id, out st))
+					continue;
+				st.buf += value;
+			}
+		}
+
+		public void DelEquip(Dictionary<ID, int> stats) {
+			foreach (KeyValuePair<ID, int> pair in stats) {
+				ID id = pair.Key;
+				int value = pair.Value;
+				St st = null;
+				if (!ints.TryGetValue(id, out st))
+					continue;
+				st.buf -= value;
+			}
+		}
+
 		public sealed override void Tick(int time, List<string> logs) {
 			List<Schema.BufID> del = new List<Schema.BufID>();
 			foreach (St st in ints.Values) {
 				foreach (KeyValuePair<Schema.BufID, Buf> bpair in st.bufs) {
 					Schema.BufID bid = bpair.Key;
 					Buf buf = bpair.Value;
-					if (buf.end_time <= time) {
+					if (buf.end_time > 0 && buf.end_time <= time) {
 						st.buf -= buf.value;
 						del.Add(bid);
 					}

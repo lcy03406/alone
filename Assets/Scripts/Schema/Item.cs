@@ -7,12 +7,16 @@ namespace Schema {
 		public readonly string name;
 		public readonly string desc;
 		public readonly Dictionary<UsageID, int> usages;
-		private Item (SpriteID spid, string name, string desc, Dictionary<UsageID, int> usages) {
+		public readonly List<ItemEquip> equip;
+		private Item (SpriteID spid, string name, string desc,
+				Dictionary<UsageID, int> usages,
+				List<ItemEquip> equip) {
 			this.sprite = Sprite.GetA (spid);
 			this.name = name;
 			this.desc = desc;
 			this.usages = usages;
-		}
+			this.equip = equip;
+        }
 
 		public static void AddAll(List<EditItem> edits) {
 			foreach (EditItem edit in edits) {
@@ -20,7 +24,7 @@ namespace Schema {
 				foreach (SomeUsage usage in edit.usages) {
 					usages.Add(usage.id, usage.level);
 				}
-				Add(edit.id, new Item(edit.sprite, edit.name, edit.desc, usages));
+				Add(edit.id, new Item(edit.sprite, edit.name, edit.desc, usages, null));
 			}
 		}
 		/*

@@ -158,12 +158,19 @@ namespace Schema {
 	}
 
 	[Serializable]
+	public class ItemEquip {
+		public List<EquipSlotID> slots;
+		public Dictionary<StatID, int> stats;
+	}
+
+	[Serializable]
 	public class EditItem {
 		public string name;
 		public ItemID id;
 		public SpriteID sprite;
 		public string desc;
 		public List<SomeUsage> usages;
+		public List<ItemEquip> equip;
 	}
 
 	[Serializable]
