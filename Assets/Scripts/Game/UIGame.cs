@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Play;
+using Play.Acts;
+using Play.Attrs;
 
 public class UIGame : MonoBehaviour {
 	public static UIGame ui;
@@ -46,7 +48,7 @@ public class UIGame : MonoBehaviour {
 	}
 
 	public void OnKeyDown(KeyCode key) {
-		if (GetCtrl() == null)
+		if (Game.game.player == null)
 			return;
 		if (key == KeyCode.Escape) {
 			if (msg.isActiveAndEnabled)
@@ -83,25 +85,29 @@ public class UIGame : MonoBehaviour {
 		}
 	}
 
-	private Play.Attrs.Ctrl GetCtrl() {
+	private void EnqueAct(Act act) {
 		Entity player = Game.game.player;
-		if (player == null)
-			return null;
-		Play.Attrs.Ctrl ctrl = player.GetAttr<Play.Attrs.Ctrl>();
-		return ctrl;
+		Ctrl ctrl = player.GetAttr<Ctrl>();
+		ctrl.Enque(act);
 	}
 
-	public void Rest() {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
+	static EntitySelect SelectDst = new EntitySelect() { iact_dst = 1 };
+	public List<Entity> ListDst() {
+		Entity player = Game.game.player;
+		Pos pos = player.GetAttr<Pos>();
+		Coord c = pos.c.Step(pos.dir);
+		return player.layer.SearchEntity(c, SelectDst);
+	}
+
+	private void Rest() {
 		if (!menu.isActiveAndEnabled) {
 			Schema.Iact.A iact = Schema.Iact.GetA(Schema.ActionID.Rest);
-			ctrl.CmdIact(iact, WUID.None);
+			EnqueAct(new ActIact(iact, WUID.None));
 		}
 	}
 
 	private void OpenMenuDst(bool auto) {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
-		List<Entity> dsts = ctrl.ListDst();
+		List<Entity> dsts = ListDst();
 		if (dsts.Count == 0)
 			return;
 		if (dsts.Count == 1) {
@@ -133,16 +139,16 @@ public class UIGame : MonoBehaviour {
 	}
 
 	private void OpenMenuIact(Entity dst, bool auto) {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
+		Entity player = Game.game.player;
 		Play.Attrs.Core dstcore = dst.GetAttr<Play.Attrs.Core>();
 		if (auto) {
-			Schema.Iact.A aact = dstcore.GetIactAuto(ctrl.ent);
+			Schema.Iact.A aact = dstcore.GetIactAuto(player);
 			if (aact != null) {
 				OpenMsgIact(aact, dst);
 				return;
 			}
 		}
-		List<Schema.Iact.A> iacts = dstcore.ListIact(ctrl.ent);
+		List<Schema.Iact.A> iacts = dstcore.ListIact(player);
 		if (iacts.Count > 0) {
 			MenuIact mn = new MenuIact();
 			mn.iacts = iacts;
@@ -178,8 +184,7 @@ public class UIGame : MonoBehaviour {
 			m.dst = dst == null ? WUID.None : dst.id;
 			m.Open();
 		} else {
-			Play.Attrs.Ctrl ctrl = GetCtrl();
-			ctrl.CmdIact(iact, dst.id);
+			EnqueAct(new ActIact(iact, dst.id));
 		}
 	}
 
@@ -188,7 +193,7 @@ public class UIGame : MonoBehaviour {
 		public WUID dst;
 		private void MsgCall(bool yes) {
 			if (yes) {
-				ui.GetCtrl().CmdIact(iact, dst);
+				ui.EnqueAct(new ActIact(iact, dst));
 			}
 		}
 		public void Open() {
@@ -198,24 +203,24 @@ public class UIGame : MonoBehaviour {
 		}
 	}
 
-	public void Make() {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
+	private void Make() {
+		Entity player = Game.game.player;
 		if (!menu.isActiveAndEnabled) {
 			MenuIact mn = new MenuIact();
-			mn.iacts = ctrl.ListMake();
+			Core core = player.GetAttr<Core>();
+			mn.iacts = core.ListMake();
 			mn.Open();
 		}
 	}
 
-	public void Interact() {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
+	private void Interact() {
 		if (!menu.isActiveAndEnabled) {
 			OpenMenuDst(false);
 		}
 	}
 
-	public void Move(KeyCode key) {
-		Play.Attrs.Ctrl ctrl = GetCtrl();
+	private void Move(KeyCode key) {
+		Entity player = Game.game.player;
 		if (!menu.isActiveAndEnabled) {
 			int dx = 0;
 			int dy = 0;
@@ -233,23 +238,24 @@ public class UIGame : MonoBehaviour {
 			}
 			if (dx != 0 || dy != 0) {
 				Direction to = new Coord(dx, dy).ToDirection();
-				Play.Attrs.Pos pos = ctrl.ent.GetAttr<Play.Attrs.Pos>();
+				Pos pos = player.GetAttr<Pos>();
+				Coord toc = pos.c.Step(to);
 				if (to != pos.dir) {
-					ctrl.CmdDir(to);
+					EnqueAct(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), toc));
 				} else {
-					if (ctrl.ent.layer.CanMoveTo(pos.c.Step(to))) {
+					if (player.layer.CanMoveTo(toc)) {
 						//auto pick
-						List<Entity> dsts = ctrl.ListDst();
+						List<Entity> dsts = ListDst();
 						foreach (Entity dst in dsts) {
-							Play.Attrs.Core dstcore = dst.GetAttr<Play.Attrs.Core>();
-							Schema.Iact.A aact = dstcore.GetIactAuto(ctrl.ent);
+							Core dstcore = dst.GetAttr<Core>();
+							Schema.Iact.A aact = dstcore.GetIactAuto(player);
 							if (aact != null) {
 								if (aact.s.cat == Schema.ActionCategoryID.Pick && aact.s.time1 + aact.s.time2 == 0) {
-									ctrl.CmdIact(aact, dst.id);
+									EnqueAct(new ActIact(aact, dst.id));
 								}
 							}
 						}
-						ctrl.CmdMove(to);
+						EnqueAct(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), toc));
 					} else {
 						OpenMenuDst(true);
 					}
