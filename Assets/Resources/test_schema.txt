@@ -1,0 +1,84 @@
+{
+  "testData": {
+    "_tag": 1,
+    "test1": {
+      "test_data1": 0,
+      "test_data": 0
+    },
+    "test2": {
+      "test_data2": "",
+      "test1_data": {
+        "test_data1": 0,
+        "test_data": 0
+      },
+      "testdata_data": [
+        {
+          "_tag": 1,
+          "test1": {
+            "test_data1": 0,
+            "test_data": 0
+          },
+          "test2": {
+            "test_data2": "",
+            "test1_data": {
+              "test_data1": 0,
+              "test_data": 0
+            },
+            "testdata_data": [
+              {
+                "_tag": 0,
+                "test1": {
+                  "test_data1": 0,
+                  "test_data": 0
+                },
+                "test2": {
+                  "test_data2": "",
+                  "test1_data": {
+                    "test_data1": 0,
+                    "test_data": 0
+                  },
+                  "testdata_data": [],
+                  "test_data": 0
+                }
+              },
+              {
+                "_tag": 1,
+                "test1": {
+                  "test_data1": 0,
+                  "test_data": 0
+                },
+                "test2": {
+                  "test_data2": "",
+                  "test1_data": {
+                    "test_data1": 0,
+                    "test_data": 0
+                  },
+                  "testdata_data": [],
+                  "test_data": 0
+                }
+              },
+              {
+                "_tag": 0,
+                "test1": {
+                  "test_data1": 0,
+                  "test_data": 0
+                },
+                "test2": {
+                  "test_data2": "",
+                  "test1_data": {
+                    "test_data1": 0,
+                    "test_data": 0
+                  },
+                  "testdata_data": [],
+                  "test_data": 0
+                }
+              }
+            ],
+            "test_data": 0
+          }
+        }
+      ],
+      "test_data": 0
+    }
+  }
+}

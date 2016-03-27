@@ -54,3 +54,22 @@ namespace Play {
         }
 	}
 }
+
+namespace BrainHole {
+	namespace Schema {
+		public class Spell {
+			public int id;
+			public List<Step> steps;
+		}
+		public class Step {
+			int time;
+			EntitySelect dst_sel;
+			Effect src_ef;
+			Effect dst_ef;
+		}
+		public class EntitySelect {
+		}
+		public class Effect {
+		}
+	}
+}
