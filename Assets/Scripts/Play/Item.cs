@@ -5,9 +5,11 @@ using System.Collections.Generic;
 namespace Play {
 	[Serializable]
 	public class Item {
+		public WUID id;
 		public Schema.Item.A a;
 		public int q;
-		public Item(Schema.Item.A a, int q) {
+		public Item(WUID id, Schema.Item.A a, int q) {
+			this.id = id;
 			this.a = a;
 			this.q = q;
 		}
@@ -122,7 +124,7 @@ namespace Play {
 			List<Item> to = new List<Item>();
 			for (int i = 0; i < count; ++i) {
 				//TODO
-				Item item = new Item(a, q_base);
+				Item item = new Item(ctx.layer.world.NextWUID(), a, q_base);
 				to.Add(item);
 			}
             return to;

@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace Play.Attrs {
 	[Serializable]
 	public class Equip : Attrib{
-		private Dictionary<Schema.EquipSlotID, Item> slots;
+		private Dictionary<Schema.EquipSlotID, WUID> slots;
 		private Dictionary<Item, int> items;
 
 		public bool CanEquip(Item item, int style = 0) {
@@ -21,6 +21,9 @@ namespace Play.Attrs {
 				if (!slots.ContainsKey(slot)) {
 					return false;
 				}
+				if (slots[slot] != WUID.None) {
+					return false;
+				}
 			}
 			return true;
 		}
@@ -31,7 +34,7 @@ namespace Play.Attrs {
 			}
 			Schema.ItemEquip eq = item.a.s.equip[style];
 			foreach (Schema.EquipSlotID slot in eq.slots) {
-				slots.Add(slot, item);
+				slots.Add(slot, item.id);
 			}
 			items.Add(item, style);
 			Stat st = ent.GetAttr<Stat>();
@@ -52,8 +55,8 @@ namespace Play.Attrs {
 			}
 			Schema.ItemEquip eq = eqlist[style];
 			foreach (Schema.EquipSlotID slot in eq.slots) {
-				Assert.AreEqual(slots[slot], item);
-				slots[slot] = null;
+				Assert.AreEqual(slots[slot], item.id);
+				slots[slot] = WUID.None;
 			}
 			Stat st = ent.GetAttr<Stat>();
 			if (st != null) {
