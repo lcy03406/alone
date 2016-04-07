@@ -8,7 +8,7 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 
-public static class EditorHelper {
+public static class Helper {
 	public static object GetTargetObjectOfProperty(SerializedProperty prop) {
 		var path = prop.propertyPath.Replace(".Array.data[", "[");
 		object obj = prop.serializedObject.targetObject;

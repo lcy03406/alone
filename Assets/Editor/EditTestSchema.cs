@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
+using Vexe.Runtime.Types;
+using Vexe.Editor.Editors;
 
 public enum TestTag {
 	Test1,
@@ -16,7 +18,7 @@ public enum TestTag {
 }
 
 [Serializable]
-public class Test {
+public abstract class Test {
 	public int test_data;
 }
 
@@ -28,22 +30,21 @@ public class Test1 : Test {
 public class Test2 : Test {
 	public string test_data2;
 	public Test1 test1_data;
-	public TestData[] testdata_data;
+	public Test test;
 }
 
 [Serializable]
 public class TestData {
 	public int _tag;
+	public Test test;
 	public Test1 test1;
 	public Test2 test2;
-}
 
-[Serializable]
-public class TestEdit {
-	[JsonIgnore]
-	public TestData _edit;
-	public Test test;
+	public TestData() {
+		_tag = 101;
+	}
 }
+/*
 [CustomPropertyDrawer(typeof(TestData))]
 public class TestDataDrawer : PropertyDrawer {
 	string[] options = null;
@@ -69,7 +70,7 @@ public class TestDataDrawer : PropertyDrawer {
 		EditorGUI.EndProperty();
 	}
 	private void BuildOptions(SerializedProperty property) {
-		Type tp = EditorHelper.GetTargetObjectOfProperty(property).GetType();
+		Type tp = Helper.GetTargetObjectOfProperty(property).GetType();
 		FieldInfo[] props = tp.GetFields();
 		List<string> list = new List<string>();
 		foreach (FieldInfo prop in props) {
@@ -82,11 +83,11 @@ public class TestDataDrawer : PropertyDrawer {
 	}
 }
 
+
 [Serializable]
 public class TestAll {
 	public TestData testData;
 }
-
 public class EditTestSchema : ScriptableWizard {
 	public TestAll all;
 	[MenuItem("Revenge/Edit Test Schema", priority = 3)]
@@ -132,6 +133,91 @@ public class EditTestSchema : ScriptableWizard {
 
 	void OnWizardOtherButton() {
 		Save();
+	}
+}
+*/
+
+
+[Serializable]
+public class TestAll : BaseScriptableObject {
+	public TestData testData;
+}
+/*
+public class EditTestSchema : EditorWindow {
+	TestAll all;
+	Editor editor;
+	[MenuItem("Revenge/Edit Test Schema", priority = 3)]
+	static void ShowWindow() {
+		GetWindow<EditTestSchema>().Show();
+	}
+
+	void OnEnable() {
+		Load();
+		editor = Editor.CreateEditor(all);
+	}
+
+	void OnGUI() {
+		if (editor) {
+			editor.OnInspectorGUI();
+		}
+	}
+}
+*/
+public class EditTestSchema : ScriptableWizard {
+	TestAll all;
+	Editor editor;
+	[MenuItem("Revenge/Edit Test Schema", priority = 3)]
+	static void ShowWindow() {
+		DisplayWizard<EditTestSchema>("Schema", "Save&Close", "Save").Load();
+	}
+
+	static JsonSerializer ser = Schema.EditAll.Ser();
+
+	bool loaded = false;
+
+	void Load() {
+		loaded = false;
+		AssetDatabase.Refresh();
+		TextAsset text = Resources.Load<TextAsset>("test_schema");
+		using (StringReader sr = new StringReader(text.text))
+		using (JsonReader r = new JsonTextReader(sr)) {
+			try {
+				all = CreateInstance<TestAll>();
+				all.testData = ser.Deserialize<TestData>(r);
+				editor = Editor.CreateEditor(all);
+				BaseEditor b = editor as BaseEditor;
+				b.ShowScriptHeader = false;
+				loaded = true;
+			} catch (Exception) {
+				loaded = false;
+				Close();
+			}
+		}
+	}
+
+	const string path = "/Resources/test_schema.txt";
+	void Save() {
+		if (!loaded)
+			return;
+		using (StringWriter sw = new StringWriter())
+		using (JsonWriter w = new JsonTextWriter(sw)) {
+			ser.Serialize(w, all.testData);
+			File.WriteAllText(Application.dataPath + path, sw.ToString());
+		}
+		AssetDatabase.Refresh();
+	}
+
+	void OnWizardCreate() {
+		Save();
+	}
+
+	void OnWizardOtherButton() {
+		Save();
+	}
+
+	protected override bool DrawWizardGUI() {
+		editor.OnInspectorGUI();
+		return false;
 	}
 }
 
