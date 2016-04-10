@@ -13,10 +13,35 @@ public class UIMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
-	
+
+	private static KeyCode[] keys = {
+		KeyCode.Alpha1,
+		KeyCode.Alpha2,
+		KeyCode.Alpha3,
+		KeyCode.Alpha4,
+		KeyCode.Alpha5,
+		KeyCode.Alpha6,
+		KeyCode.Alpha7,
+		KeyCode.Alpha8,
+		KeyCode.Alpha9,
+	};
+
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.anyKeyDown) {
+			for (int i = 0; i < keys.Length; ++i) {
+				if (Input.GetKeyDown(keys[i])) {
+					OnKeyDown(i);
+				}
+			}
+		}
+	}
+
+	void OnKeyDown(int index) {
+		if (index < buttons.Count) {
+			Button button = buttons[index].GetComponent<Button>();
+			button.onClick.Invoke();
+		}
 	}
 
 	public Button AddButton (string text) {

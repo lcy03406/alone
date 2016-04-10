@@ -28,7 +28,9 @@ public class UIGame : MonoBehaviour {
 		msg.gameObject.SetActive(false);
 	}
 
-	private static KeyCode[] keys = { KeyCode.Escape, KeyCode.Return, KeyCode.I, KeyCode.M,
+	private static KeyCode[] keys = {
+		KeyCode.Escape, KeyCode.Return, KeyCode.Tab,
+		KeyCode.I, KeyCode.M,
 		KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
 		KeyCode.Period, KeyCode.LeftControl };
 
@@ -106,10 +108,11 @@ public class UIGame : MonoBehaviour {
 		}
 	}
 
-	private void OpenMenuDst(bool auto) {
+	private bool OpenMenuDst(bool auto) {
 		List<Entity> dsts = ListDst();
-		if (dsts.Count == 0)
-			return;
+		if (dsts.Count == 0) {
+			return false;
+		}
 		if (dsts.Count == 1) {
 			OpenMenuIact(dsts[0], auto);
 		} else {
@@ -118,6 +121,7 @@ public class UIGame : MonoBehaviour {
 			mn.auto = auto;
 			mn.Open();
 		}
+		return true;
 	}
 
 	private class MenuDst {
@@ -215,7 +219,9 @@ public class UIGame : MonoBehaviour {
 
 	private void Interact() {
 		if (!menu.isActiveAndEnabled) {
-			OpenMenuDst(false);
+			if (!OpenMenuDst(false)) {
+				Make();
+			}
 		}
 	}
 
