@@ -220,4 +220,44 @@ public class EditTestSchema : ScriptableWizard {
 		return false;
 	}
 }
+[Serializable]
+public class CsvAll : BaseScriptableObject {
+	public List<DropTable> dropTable = new List<DropTable>();
+}
+[Serializable]
+public class DropTable {
+	public int ID;
+	public string Name;
+	public string ItemName;
+	public string ItemDes;
+	[Serializable]
+	public struct DropItem {
+		public int ID;
+		public int Num;
+	}
+	public List<DropItem> Item;
+}
 
+public class CsvTest : ScriptableWizard {
+	public CsvAll all;
+	Editor editor;
+	[MenuItem("Revenge/Test Csv Loader", priority = 199)]
+	static void TestCsv() {
+		DisplayWizard<CsvTest>("Test", "Save&Close", "Save").Load();
+	}
+	private void Load() {
+		TextAsset text = Resources.Load<TextAsset>("test_csv");
+		using (StringReader reader = new StringReader(text.text))
+		using (Utility.CsvParser parser = new Utility.CsvParser(reader)) {
+			all = CreateInstance<CsvAll>();
+			Utility.Table.Load(parser, all.dropTable);
+			editor = Editor.CreateEditor(all);
+			BaseEditor b = editor as BaseEditor;
+			b.ShowScriptHeader = false;
+		}
+	}
+	protected override bool DrawWizardGUI() {
+		editor.OnInspectorGUI();
+		return false;
+	}
+}

@@ -1,5 +1,6 @@
 //utf-8。
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -8,6 +9,16 @@ using System.Text;
 namespace Utility {
 
 	public class Table {
+		public static void Load<T>(CsvParser parser, List<T> list) {
+			Header header = LoadHeader(parser);
+			T t;
+			while (true) {
+				t = (T) LoadRecord(parser, header, typeof(T));
+				if (t == null)
+					return;
+				list.Add(t);
+            }
+        }
 		private class Header {
 			public List<string> name;
 			public List<string> comment;
@@ -24,59 +35,96 @@ namespace Utility {
 			header.type = parser.ReadRecord();
 			return header;
 		}
-		private static void LoadRecord(CsvParser parser, Header header, object record) {
+		private static object LoadRecord(CsvParser parser, Header header, Type type) {
 			List<string> row = parser.ReadRecord();
-			for (int i = 0; i < header.name.Count; i++) {
-				LoadField(row[i], record, header.xpath[i], header.type[i]);
+			if (row == null)
+				return null;
+			if (row.Count != header.name.Count) {
+				throw new InvalidDataException(string.Format("field count {0} != {1} in line {2}", row.Count, header.name.Count, parser.Line));
 			}
+			object record = Activator.CreateInstance(type);
+			for (int i = 0; i < header.name.Count; i++) {
+				string text = row[i];
+				if (text != "" && header.cs[i].Contains("s")) {
+					LoadField(text, record, header.xpath[i], parser.Line, i + 1);
+				}
+			}
+			return record;
 		}
-		private static void LoadField(string text, object record, string xpath, string type) {
-			object value = Activator.CreateInstance(record.GetType().Assembly.FullName, type);
-			string[] elements = xpath.Split('.');
-			foreach (string element in elements) {
-				int index = element.IndexOf('[');
+		private static void LoadField(string text, object record, string xpath, int line, int column) {
+			object parent = record;
+			string[] paths = xpath.Split('.');
+			for (int i = 0; i < paths.Length; i++) {
+				string path = paths[i];
+				FieldInfo finfo;
+				int index = path.IndexOf('[');
 				if (index >= 0) {
-					var elementName = element.Substring(0, index);
-					var pos = element.Substring(index + 1, element.Length - index - 2);
-					var i = System.Convert.ToInt32(pos);
-					obj = GetValue_Imp(obj, elementName, i);
+					string elementName = path.Substring(0, index);
+					string posName = path.Substring(index + 1, path.Length - index - 2);
+					int pos = Convert.ToInt32(posName);
+					finfo = GetField(parent.GetType(), elementName);
+					if (finfo == null) {
+						throw new InvalidDataException("no such field in " + xpath);
+					}
+					Type fieldType = finfo.FieldType;
+                    if (fieldType.GetGenericTypeDefinition() != typeof(List<>)) {
+						throw new InvalidDataException("type mismatch in " + xpath);
+					}
+					Type elementType = fieldType.GetGenericArguments()[0];
+                    object field = finfo.GetValue(parent);
+					if (field == null) {
+						field = Activator.CreateInstance(fieldType);
+						finfo.SetValue(parent, field);
+                    }
+                    IList list = field as IList;
+					while (list.Count <= pos) {
+						object newElement = Activator.CreateInstance(elementType);
+						list.Add(newElement);
+                    }
+					if (i < paths.Length - 1) {
+						parent = list[pos];
+					} else {
+						list[pos] = ConvertType(text, elementType, line, column);
+                    }
 				} else {
-					obj = GetValue_Imp(obj, element);
+					finfo = GetField(parent.GetType(), path);
+					if (finfo == null) {
+						throw new InvalidDataException("no such field in " + xpath);
+					}
+					Type fieldType = finfo.FieldType;
+					if (i < paths.Length - 1) {
+						object field = finfo.GetValue(parent);
+						if (field == null) {
+							field = Activator.CreateInstance(fieldType);
+							finfo.SetValue(parent, field);
+                        }
+						parent = field;
+					} else {
+						object value = ConvertType(text, fieldType, line, column);
+						finfo.SetValue(parent, value);
+					}
 				}
 			}
 		}
 
-		private static object GetValue_Imp(object source, string name) {
-			if (source == null)
-				return null;
-			var type = source.GetType();
-
+		private static FieldInfo GetField(Type type, string name) {
 			while (type != null) {
-				var f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				FieldInfo f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 				if (f != null)
-					return f.GetValue(source);
-
-				var p = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-				if (p != null)
-					return p.GetValue(source, null);
-
+					return f;
 				type = type.BaseType;
 			}
 			return null;
 		}
 
-		private static object GetValue_Imp(object source, string name, int index) {
-			var enumerable = GetValue_Imp(source, name) as System.Collections.IEnumerable;
-			if (enumerable == null) return null;
-			var enm = enumerable.GetEnumerator();
-			//while (index-- >= 0)
-			//    enm.MoveNext();
-			//return enm.Current;
-
-			for (int i = 0; i <= index; i++) {
-				if (!enm.MoveNext()) return null;
+		private static object ConvertType(string text, Type type, int line, int column) {
+			try {
+				return Convert.ChangeType(text, type);
+			} catch (Exception e) {
+				throw new InvalidDataException(string.Format("connot convert \"{0}\" to type {1} in line {2}, column {3}", text, type, line, column), e);
 			}
-			return enm.Current;
+			throw new NotImplementedException();
 		}
+
 	}
 }
