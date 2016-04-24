@@ -1,0 +1,5988 @@
+fileFormatVersion: 2
+guid: fb9f8af13785bab47846b761f6ff61fe
+timeCreated: 1461508474
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: body_white_nomouth
+    21300002: body_white_withmouth
+    21300004: body_yellow_nomouth
+    21300006: body_yellow_withmouth
+    21300008: body_brown_nomouth
+    21300010: body_brown_withmouth
+    21300012: body_green_nomouth
+    21300014: body_green_withmouth
+    21300016: allchar_0
+    21300018: allchar_1
+    21300020: white_nomouth
+    21300022: white_withmouth
+    21300024: yellow_nomouth
+    21300026: yellow_withmouth
+    21300028: brown_nomouth
+    21300030: brown_withmouth
+    21300032: green_nomouth
+    21300034: green_withmouth
+    21300036: pants_black
+    21300038: pants_brown
+    21300040: pants_white
+    21300042: pants_yellow
+    21300044: pants_red
+    21300046: pants_blue
+    21300048: pants_pink
+    21300050: pants_green
+    21300052: shoes_black
+    21300054: shoes_brown
+    21300056: shoes_white
+    21300058: shoes_yellow
+    21300060: shoes_red
+    21300062: shoes_blue
+    21300064: shoes_purple
+    21300066: shoes_green
+    21300068: bigshoes_green
+    21300070: bigshoes_red
+    21300072: bigshoes_brown
+    21300074: bigshoes_purple
+    21300076: shirt0
+    21300078: shirt1
+    21300080: shirt2
+    21300082: shirt3
+    21300084: shirt4
+    21300086: shirt5
+    21300088: shirt6
+    21300090: shirt7
+    21300092: shirt8
+    21300094: shirt9
+    21300096: shirt10
+    21300098: shirt11
+    21300100: shirt12
+    21300102: shirt13
+    21300104: shirt14
+    21300106: shirt15
+    21300108: shirt16
+    21300110: shirt17
+    21300112: shirt18
+    21300114: shirt19
+    21300116: shirt20
+    21300118: shirt21
+    21300120: shirt22
+    21300122: shirt23
+    21300124: shirt24
+    21300126: shirt25
+    21300128: shirt26
+    21300130: shirt27
+    21300132: shirt28
+    21300134: shirt29
+    21300136: shirt30
+    21300138: shirt31
+    21300140: shirt32
+    21300142: shirt33
+    21300144: shirt34
+    21300146: shirt35
+    21300148: shirt36
+    21300150: shirt37
+    21300152: shirt38
+    21300154: shirt39
+    21300156: shirt40
+    21300158: shirt41
+    21300160: shirt42
+    21300162: shirt43
+    21300164: shirt44
+    21300166: shirt45
+    21300168: shirt46
+    21300170: shirt47
+    21300172: shirt48
+    21300174: shirt49
+    21300176: shirt50
+    21300178: shirt51
+    21300180: shirt52
+    21300182: shirt53
+    21300184: shirt54
+    21300186: shirt55
+    21300188: shirt56
+    21300190: shirt57
+    21300192: shirt58
+    21300194: shirt59
+    21300196: shirt60
+    21300198: shirt61
+    21300200: shirt62
+    21300202: shirt63
+    21300204: shirt64
+    21300206: shirt65
+    21300208: shirt66
+    21300210: shirt67
+    21300212: shirt68
+    21300214: shirt69
+    21300216: shirt70
+    21300218: shirt71
+    21300220: shirt72
+    21300222: shirt73
+    21300224: shirt74
+    21300226: shirt75
+    21300228: shirt76
+    21300230: shirt77
+    21300232: shirt78
+    21300234: shirt79
+    21300236: shirt80
+    21300238: shirt81
+    21300240: shirt82
+    21300242: shirt83
+    21300244: shirt84
+    21300246: shirt85
+    21300248: shirt86
+    21300250: shirt87
+    21300252: shirt88
+    21300254: shirt89
+    21300256: shirt90
+    21300258: shirt91
+    21300260: shirt92
+    21300262: shirt93
+    21300264: shirt94
+    21300266: shirt95
+    21300268: shirt96
+    21300270: shirt97
+    21300272: shirt98
+    21300274: shirt99
+    21300276: shirt100
+    21300278: shirt101
+    21300280: shirt102
+    21300282: shirt103
+    21300284: shirt104
+    21300286: shirt105
+    21300288: shirt106
+    21300290: shirt107
+    21300292: shirt108
+    21300294: shirt109
+    21300296: shirt110
+    21300298: shirt111
+    21300300: shirt112
+    21300302: shirt113
+    21300304: shirt114
+    21300306: shirt115
+    21300308: shirt116
+    21300310: shirt117
+    21300312: shirt118
+    21300314: shirt119
+    21300316: hair0
+    21300318: hair1
+    21300320: hair2
+    21300322: hair3
+    21300324: hair4
+    21300326: hair5
+    21300328: hair6
+    21300330: hair7
+    21300332: hair8
+    21300334: hair9
+    21300336: hair10
+    21300338: hair11
+    21300340: hair12
+    21300342: hair13
+    21300344: hair14
+    21300346: hair15
+    21300348: hair16
+    21300350: hair17
+    21300352: hair18
+    21300354: hair19
+    21300356: hair20
+    21300358: hair21
+    21300360: hair22
+    21300362: hair23
+    21300364: hair24
+    21300366: hair25
+    21300368: hair26
+    21300370: hair27
+    21300372: hair28
+    21300374: hair29
+    21300376: hair30
+    21300378: hair31
+    21300380: hair32
+    21300382: hair33
+    21300384: hair34
+    21300386: hair35
+    21300388: hair36
+    21300390: hair37
+    21300392: hair38
+    21300394: hair39
+    21300396: hair40
+    21300398: hair41
+    21300400: hair42
+    21300402: hair43
+    21300404: hair44
+    21300406: hair45
+    21300408: hair46
+    21300410: hair47
+    21300412: hair48
+    21300414: hair49
+    21300416: hair50
+    21300418: hair51
+    21300420: hair52
+    21300422: hair53
+    21300424: hair54
+    21300426: hair55
+    21300428: hair56
+    21300430: hair57
+    21300432: hair58
+    21300434: hair59
+    21300436: beard0
+    21300438: beard1
+    21300440: beard2
+    21300442: beard3
+    21300444: beard4
+    21300446: beard5
+    21300448: beard6
+    21300450: beard7
+    21300452: beard8
+    21300454: beard9
+    21300456: beard10
+    21300458: beard11
+    21300460: beard12
+    21300462: beard13
+    21300464: beard14
+    21300466: beard15
+    21300468: hat0
+    21300470: hat1
+    21300472: hat2
+    21300474: hat3
+    21300476: hat4
+    21300478: hat5
+    21300480: hat6
+    21300482: hat7
+    21300484: hat8
+    21300486: hat9
+    21300488: hat10
+    21300490: hat11
+    21300492: hat12
+    21300494: hat13
+    21300496: hat14
+    21300498: hat15
+    21300500: hat16
+    21300502: hat17
+    21300504: hat18
+    21300506: hat19
+    21300508: hat20
+    21300510: hat21
+    21300512: hat22
+    21300514: hat23
+    21300516: hat24
+    21300518: hat25
+    21300520: hat26
+    21300522: hat27
+    21300524: hat28
+    21300526: hat29
+    21300528: hat30
+    21300530: hat31
+    21300532: hat32
+    21300534: hat33
+    21300536: hat34
+    21300538: hat35
+    21300540: prefix0
+    21300542: prefix0
+    21300544: prefix0
+    21300546: prefix0
+    21300548: prefix0
+    21300550: prefix0
+    21300552: prefix0
+    21300554: prefix0
+    21300556: prefix0
+    21300558: prefix0
+    21300560: prefix0
+    21300562: prefix0
+    21300564: prefix0
+    21300566: prefix0
+    21300568: prefix0
+    21300570: prefix0
+    21300572: prefix0
+    21300574: prefix0
+    21300576: prefix0
+    21300578: prefix0
+    21300580: prefix0
+    21300582: prefix0
+    21300584: prefix0
+    21300586: prefix0
+    21300588: prefix0
+    21300590: prefix0
+    21300592: prefix0
+    21300594: prefix0
+    21300596: prefix0
+    21300598: prefix0
+    21300600: prefix0
+    21300602: prefix0
+    21300604: prefix0
+    21300606: prefix0
+    21300608: prefix0
+    21300610: prefix0
+    21300612: prefix0
+    21300614: prefix0
+    21300616: prefix0
+    21300618: prefix0
+    21300620: prefix0
+    21300622: prefix0
+    21300624: prefix0
+    21300626: prefix0
+    21300628: prefix0
+    21300630: prefix0
+    21300632: prefix0
+    21300634: prefix0
+    21300636: prefix0
+    21300638: prefix0
+    21300640: prefix0
+    21300642: prefix0
+    21300644: prefix0
+    21300646: prefix0
+    21300648: prefix0
+    21300650: prefix0
+    21300652: prefix0
+    21300654: prefix0
+    21300656: prefix0
+    21300658: prefix0
+    21300660: prefix0
+    21300662: prefix0
+    21300664: prefix0
+    21300666: prefix0
+    21300668: prefix0
+    21300670: prefix0
+    21300672: prefix0
+    21300674: prefix0
+    21300676: prefix0
+    21300678: prefix0
+    21300680: prefix0
+    21300682: prefix0
+    21300684: prefix0
+    21300686: prefix0
+    21300688: prefix0
+    21300690: prefix0
+    21300692: prefix0
+    21300694: prefix0
+    21300696: prefix0
+    21300698: prefix0
+    21300700: prefix0
+    21300702: prefix0
+    21300704: prefix0
+    21300706: prefix0
+    21300708: prefix0
+    21300710: prefix0
+    21300712: prefix0
+    21300714: prefix0
+    21300716: prefix0
+    21300718: prefix0
+    21300720: prefix0
+    21300722: prefix0
+    21300724: prefix0
+    21300726: prefix0
+    21300728: prefix0
+    21300730: prefix0
+    21300732: prefix0
+    21300734: prefix0
+    21300736: prefix0
+    21300738: prefix0
+    21300740: prefix0
+    21300742: prefix0
+    21300744: prefix0
+    21300746: prefix0
+    21300748: prefix0
+    21300750: prefix0
+    21300752: prefix0
+    21300754: prefix0
+    21300756: prefix0
+    21300758: prefix0
+    21300760: prefix0
+    21300762: prefix0
+    21300764: prefix0
+    21300766: prefix0
+    21300768: prefix0
+    21300770: prefix0
+    21300772: prefix0
+    21300774: prefix0
+    21300776: prefix0
+    21300778: prefix0
+    21300780: prefix0
+    21300782: prefix0
+    21300784: prefix0
+    21300786: prefix0
+    21300788: prefix0
+    21300790: prefix0
+    21300792: prefix0
+    21300794: prefix0
+    21300796: prefix0
+    21300798: prefix0
+    21300800: prefix0
+    21300802: prefix0
+    21300804: prefix0
+    21300806: prefix0
+    21300808: prefix0
+    21300810: prefix0
+    21300812: prefix0
+    21300814: prefix0
+    21300816: prefix0
+    21300818: prefix0
+    21300820: prefix0
+    21300822: prefix0
+    21300824: prefix0
+    21300826: prefix0
+    21300828: prefix0
+    21300830: prefix0
+    21300832: prefix0
+    21300834: prefix0
+    21300836: prefix0
+    21300838: prefix0
+    21300840: prefix0
+    21300842: prefix0
+    21300844: prefix0
+    21300846: prefix0
+    21300848: prefix0
+    21300850: prefix0
+    21300852: prefix0
+    21300854: prefix0
+    21300856: prefix0
+    21300858: prefix0
+    21300860: prefix0
+    21300862: prefix0
+    21300864: prefix0
+    21300866: prefix0
+    21300868: prefix0
+    21300870: prefix0
+    21300872: prefix0
+    21300874: prefix0
+    21300876: prefix0
+    21300878: prefix0
+    21300880: prefix0
+    21300882: prefix0
+    21300884: prefix0
+    21300886: prefix0
+    21300888: prefix0
+    21300890: prefix0
+    21300892: prefix0
+    21300894: prefix0
+    21300896: prefix0
+    21300898: prefix0
+    21300900: prefix0
+    21300902: prefix0
+    21300904: prefix0
+    21300906: prefix0
+    21300908: prefix0
+    21300910: prefix0
+    21300912: prefix0
+    21300914: prefix0
+    21300916: prefix0
+    21300918: prefix0
+    21300920: prefix0
+    21300922: prefix0
+    21300924: prefix0
+    21300926: prefix0
+    21300928: prefix0
+    21300930: prefix0
+    21300932: prefix0
+    21300934: prefix0
+    21300936: prefix0
+    21300938: prefix0
+    21300940: prefix0
+    21300942: prefix0
+    21300944: prefix0
+    21300946: prefix0
+    21300948: prefix0
+    21300950: prefix0
+    21300952: prefix0
+    21300954: prefix0
+    21300956: prefix0
+    21300958: prefix0
+    21300960: prefix0
+    21300962: prefix0
+    21300964: prefix0
+    21300966: prefix0
+    21300968: prefix0
+    21300970: prefix0
+    21300972: prefix0
+    21300974: prefix0
+    21300976: prefix0
+    21300978: prefix0
+    21300980: prefix0
+    21300982: prefix0
+    21300984: prefix0
+    21300986: prefix0
+    21300988: prefix0
+    21300990: prefix0
+    21300992: prefix0
+    21300994: prefix0
+    21300996: prefix0
+    21300998: prefix0
+    21301000: prefix0
+    21301002: prefix0
+    21301004: prefix0
+    21301006: prefix0
+    21301008: prefix0
+    21301010: prefix0
+    21301012: prefix0
+    21301014: prefix0
+    21301016: prefix0
+    21301018: prefix0
+    21301020: prefix0
+    21301022: prefix0
+    21301024: prefix0
+    21301026: prefix0
+    21301028: prefix0
+    21301030: prefix0
+    21301032: prefix0
+    21301034: prefix0
+    21301036: prefix0
+    21301038: prefix0
+    21301040: prefix0
+    21301042: prefix0
+    21301044: prefix0
+    21301046: prefix0
+    21301048: prefix0
+    21301050: prefix0
+    21301052: prefix0
+    21301054: prefix0
+    21301056: prefix0
+    21301058: prefix0
+    21301060: prefix0
+    21301062: prefix0
+    21301064: prefix0
+    21301066: prefix0
+    21301068: prefix0
+    21301070: prefix0
+    21301072: prefix0
+    21301074: prefix0
+    21301076: prefix0
+    21301078: prefix0
+    21301080: prefix0
+    21301082: prefix0
+    21301084: prefix0
+    21301086: prefix0
+    21301088: prefix0
+    21301090: prefix0
+    21301092: prefix0
+    21301094: prefix0
+    21301096: prefix0
+    21301098: prefix0
+    21301100: prefix0
+    21301102: prefix0
+    21301104: prefix0
+    21301106: prefix0
+    21301108: prefix0
+    21301110: prefix0
+    21301112: prefix0
+    21301114: prefix0
+    21301116: prefix0
+    21301118: prefix0
+    21301120: prefix0
+    21301122: prefix0
+    21301124: prefix0
+    21301126: prefix0
+    21301128: prefix0
+    21301130: prefix0
+    21301132: prefix0
+    21301134: prefix0
+    21301136: prefix0
+    21301138: prefix0
+    21301140: prefix0
+    21301142: prefix0
+    21301144: prefix0
+    21301146: prefix0
+    21301148: prefix0
+    21301150: prefix0
+    21301152: prefix0
+    21301154: prefix0
+    21301156: prefix0
+    21301158: prefix0
+    21301160: prefix0
+    21301162: prefix0
+    21301164: prefix0
+    21301166: prefix0
+    21301168: prefix0
+    21301170: prefix0
+    21301172: prefix0
+    21301174: prefix0
+    21301176: prefix0
+    21301178: prefix0
+    21301180: prefix0
+    21301182: prefix0
+    21301184: prefix0
+    21301186: prefix0
+    21301188: prefix0
+    21301190: prefix0
+    21301192: prefix0
+    21301194: prefix0
+    21301196: prefix0
+    21301198: prefix0
+    21301200: prefix0
+    21301202: prefix0
+    21301204: prefix0
+    21301206: prefix0
+    21301208: prefix0
+    21301210: prefix0
+    21301212: prefix0
+    21301214: prefix0
+    21301216: prefix0
+    21301218: prefix0
+    21301220: prefix0
+    21301222: prefix0
+    21301224: prefix0
+    21301226: prefix0
+    21301228: prefix0
+    21301230: prefix0
+    21301232: prefix0
+    21301234: prefix0
+    21301236: prefix0
+    21301238: prefix0
+    21301240: prefix0
+    21301242: prefix0
+    21301244: prefix0
+    21301246: prefix0
+    21301248: prefix0
+    21301250: prefix0
+    21301252: prefix0
+    21301254: prefix0
+    21301256: prefix0
+    21301258: prefix0
+    21301260: prefix0
+    21301262: prefix0
+    21301264: prefix0
+    21301266: prefix0
+    21301268: prefix0
+    21301270: prefix0
+    21301272: prefix0
+    21301274: prefix0
+    21301276: prefix0
+    21301278: prefix0
+    21301280: prefix0
+    21301282: prefix0
+    21301284: prefix0
+    21301286: prefix0
+    21301288: prefix0
+    21301290: prefix0
+    21301292: prefix0
+    21301294: prefix0
+    21301296: prefix0
+    21301298: prefix0
+    21301300: prefix0
+    21301302: prefix0
+    21301304: prefix0
+    21301306: prefix0
+    21301308: prefix0
+    21301310: prefix0
+    21301312: prefix0
+    21301314: prefix0
+    21301316: prefix0
+    21301318: prefix0
+    21301320: prefix0
+    21301322: prefix0
+    21301324: prefix0
+    21301326: prefix0
+    21301328: prefix0
+    21301330: prefix0
+    21301332: prefix0
+    21301334: prefix0
+    21301336: prefix0
+    21301338: prefix0
+    21301340: prefix0
+    21301342: prefix0
+    21301344: prefix0
+    21301346: prefix0
+    21301348: prefix0
+    21301350: prefix0
+    21301352: prefix0
+    21301354: prefix0
+    21301356: prefix0
+    21301358: prefix0
+    21301360: prefix0
+    21301362: prefix0
+    21301364: prefix0
+    21301366: prefix0
+    21301368: prefix0
+    21301370: prefix0
+    21301372: prefix0
+    21301374: prefix0
+    21301376: prefix0
+    21301378: prefix0
+    21301380: prefix0
+    21301382: prefix0
+    21301384: prefix0
+    21301386: prefix0
+    21301388: prefix0
+    21301390: prefix0
+    21301392: prefix0
+    21301394: prefix0
+    21301396: prefix0
+    21301398: prefix0
+    21301400: prefix0
+    21301402: prefix0
+    21301404: prefix0
+    21301406: prefix0
+    21301408: prefix0
+    21301410: prefix0
+    21301412: prefix0
+    21301414: prefix0
+    21301416: prefix0
+    21301418: prefix0
+    21301420: prefix0
+    21301422: prefix0
+    21301424: prefix0
+    21301426: prefix0
+    21301428: prefix0
+    21301430: prefix0
+    21301432: prefix0
+    21301434: prefix0
+    21301436: prefix0
+    21301438: prefix0
+    21301440: prefix0
+    21301442: prefix0
+    21301444: prefix0
+    21301446: prefix0
+    21301448: prefix0
+    21301450: prefix0
+    21301452: prefix0
+    21301454: prefix0
+    21301456: prefix0
+    21301458: prefix0
+    21301460: prefix0
+    21301462: prefix0
+    21301464: prefix0
+    21301466: prefix0
+    21301468: prefix0
+    21301470: prefix0
+    21301472: prefix0
+    21301474: prefix0
+    21301476: prefix0
+    21301478: prefix0
+    21301480: prefix0
+    21301482: prefix0
+    21301484: prefix0
+    21301486: prefix0
+    21301488: prefix0
+    21301490: prefix0
+    21301492: prefix0
+    21301494: prefix0
+    21301496: prefix0
+    21301498: prefix0
+    21301500: prefix0
+    21301502: prefix0
+    21301504: prefix0
+    21301506: prefix0
+    21301508: prefix0
+    21301510: prefix0
+    21301512: prefix0
+    21301514: prefix0
+    21301516: prefix0
+    21301518: prefix0
+    21301520: prefix0
+    21301522: prefix0
+    21301524: prefix0
+    21301526: prefix0
+    21301528: prefix0
+    21301530: prefix0
+    21301532: prefix0
+    21301534: prefix0
+    21301536: prefix0
+    21301538: prefix0
+    21301540: prefix0
+    21301542: prefix0
+    21301544: prefix0
+    21301546: prefix0
+    21301548: prefix0
+    21301550: prefix0
+    21301552: prefix0
+    21301554: prefix0
+    21301556: prefix0
+    21301558: prefix0
+    21301560: prefix0
+    21301562: prefix0
+    21301564: pants0
+    21301566: pants0
+    21301568: pants0
+    21301570: pants0
+    21301572: pants0
+    21301574: pants0
+    21301576: pants0
+    21301578: pants0
+    21301580: pants0
+    21301582: pants0
+    21301584: pants0
+    21301586: pants0
+    21301588: pants0
+    21301590: pants0
+    21301592: pants0
+    21301594: pants0
+    21301596: pants0
+    21301598: pants0
+    21301600: pants0
+    21301602: pants0
+    21301604: shirt0
+    21301606: shirt0
+    21301608: shirt0
+    21301610: shirt0
+    21301612: shirt0
+    21301614: shirt0
+    21301616: shirt0
+    21301618: shirt0
+    21301620: shirt0
+    21301622: shirt0
+    21301624: shirt0
+    21301626: shirt0
+    21301628: shirt0
+    21301630: shirt0
+    21301632: shirt0
+    21301634: shirt0
+    21301636: shirt0
+    21301638: shirt0
+    21301640: shirt0
+    21301642: shirt0
+    21301644: shirt0
+    21301646: shirt0
+    21301648: shirt0
+    21301650: shirt0
+    21301652: shirt0
+    21301654: shirt0
+    21301656: shirt0
+    21301658: shirt0
+    21301660: shirt0
+    21301662: shirt0
+    21301664: shirt0
+    21301666: shirt0
+    21301668: shirt0
+    21301670: shirt0
+    21301672: shirt0
+    21301674: shirt0
+    21301676: shirt0
+    21301678: shirt0
+    21301680: shirt0
+    21301682: shirt0
+    21301684: shirt0
+    21301686: shirt0
+    21301688: shirt0
+    21301690: shirt0
+    21301692: shirt0
+    21301694: shirt0
+    21301696: shirt0
+    21301698: shirt0
+    21301700: shirt0
+    21301702: shirt0
+    21301704: shirt0
+    21301706: shirt0
+    21301708: shirt0
+    21301710: shirt0
+    21301712: shirt0
+    21301714: shirt0
+    21301716: shirt0
+    21301718: shirt0
+    21301720: shirt0
+    21301722: shirt0
+    21301724: shirt0
+    21301726: shirt0
+    21301728: shirt0
+    21301730: shirt0
+    21301732: shirt0
+    21301734: shirt0
+    21301736: shirt0
+    21301738: shirt0
+    21301740: shirt0
+    21301742: shirt0
+    21301744: shirt0
+    21301746: shirt0
+    21301748: shirt0
+    21301750: shirt0
+    21301752: shirt0
+    21301754: shirt0
+    21301756: shirt0
+    21301758: shirt0
+    21301760: shirt0
+    21301762: shirt0
+    21301764: shirt0
+    21301766: shirt0
+    21301768: shirt0
+    21301770: shirt0
+    21301772: shirt0
+    21301774: shirt0
+    21301776: shirt0
+    21301778: shirt0
+    21301780: shirt0
+    21301782: shirt0
+    21301784: shirt0
+    21301786: shirt0
+    21301788: shirt0
+    21301790: shirt0
+    21301792: shirt0
+    21301794: shirt0
+    21301796: shirt0
+    21301798: shirt0
+    21301800: shirt0
+    21301802: shirt0
+    21301804: shirt0
+    21301806: shirt0
+    21301808: shirt0
+    21301810: shirt0
+    21301812: shirt0
+    21301814: shirt0
+    21301816: shirt0
+    21301818: shirt0
+    21301820: shirt0
+    21301822: shirt0
+    21301824: shirt0
+    21301826: shirt0
+    21301828: shirt0
+    21301830: shirt0
+    21301832: shirt0
+    21301834: shirt0
+    21301836: shirt0
+    21301838: shirt0
+    21301840: shirt0
+    21301842: hair0
+    21301844: hair0
+    21301846: hair0
+    21301848: hair0
+    21301850: hair0
+    21301852: hair0
+    21301854: hair0
+    21301856: hair0
+    21301858: hair0
+    21301860: hair0
+    21301862: hair0
+    21301864: hair0
+    21301866: hair0
+    21301868: hair0
+    21301870: hair0
+    21301872: hair0
+    21301874: hair0
+    21301876: hair0
+    21301878: hair0
+    21301880: hair0
+    21301882: hair0
+    21301884: hair0
+    21301886: hair0
+    21301888: hair0
+    21301890: hair0
+    21301892: hair0
+    21301894: hair0
+    21301896: hair0
+    21301898: hair0
+    21301900: hair0
+    21301902: hair0
+    21301904: hair0
+    21301906: hair0
+    21301908: hair0
+    21301910: hair0
+    21301912: hair0
+    21301914: hair0
+    21301916: hair0
+    21301918: hair0
+    21301920: hair0
+    21301922: hair0
+    21301924: hair0
+    21301926: hair0
+    21301928: hair0
+    21301930: hair0
+    21301932: hair0
+    21301934: hair0
+    21301936: hair0
+    21301938: hair0
+    21301940: hair0
+    21301942: hair0
+    21301944: hair0
+    21301946: hair0
+    21301948: hair0
+    21301950: hair0
+    21301952: hair0
+    21301954: hair0
+    21301956: hair0
+    21301958: hair0
+    21301960: beard0
+    21301962: beard0
+    21301964: beard0
+    21301966: beard0
+    21301968: beard0
+    21301970: beard0
+    21301972: beard0
+    21301974: beard0
+    21301976: beard0
+    21301978: beard0
+    21301980: beard0
+    21301982: beard0
+    21301984: beard0
+    21301986: beard0
+    21301988: beard0
+    21301990: beard0
+    21301992: beard0
+    21301994: beard0
+    21301996: beard0
+    21301998: beard0
+    21302000: beard0
+    21302002: beard0
+    21302004: beard0
+    21302006: beard0
+    21302008: beard0
+    21302010: beard0
+    21302012: beard0
+    21302014: beard0
+    21302016: beard0
+    21302018: beard0
+    21302020: beard0
+    21302022: beard0
+    21302024: beard0
+    21302026: beard0
+    21302028: beard0
+    21302030: beard0
+    21302032: beard0
+    21302034: beard0
+    21302036: beard0
+    21302038: beard0
+    21302040: beard0
+    21302042: beard0
+    21302044: beard0
+    21302046: beard0
+    21302048: beard0
+    21302050: beard0
+    21302052: beard0
+    21302054: beard0
+    21302056: beard0
+    21302058: beard0
+    21302060: beard0
+    21302062: shield0
+    21302064: shield0
+    21302066: shield0
+    21302068: shield0
+    21302070: shield0
+    21302072: shield0
+    21302074: shield0
+    21302076: shield0
+    21302078: shield0
+    21302080: shield0
+    21302082: shield0
+    21302084: shield0
+    21302086: shield0
+    21302088: shield0
+    21302090: shield0
+    21302092: shield0
+    21302094: shield0
+    21302096: shield0
+    21302098: shield0
+    21302100: shield0
+    21302102: shield0
+    21302104: shield0
+    21302106: shield0
+    21302108: shield0
+    21302110: shield0
+    21302112: shield0
+    21302114: shield0
+    21302116: shield0
+    21302118: shield0
+    21302120: shield0
+    21302122: shield0
+    21302124: shield0
+    21302126: shield0
+    21302128: shield0
+    21302130: shield0
+    21302132: shield0
+    21302134: shield0
+    21302136: shield0
+    21302138: shield0
+    21302140: shield0
+    21302142: shield0
+    21302144: shield0
+    21302146: shield0
+    21302148: shield0
+    21302150: shield0
+    21302152: shield0
+    21302154: shield0
+    21302156: shield0
+    21302158: shield0
+    21302160: shield0
+    21302162: shield0
+    21302164: shield0
+    21302166: shield0
+    21302168: shield0
+    21302170: shield0
+    21302172: shield0
+    21302174: shield0
+    21302176: shield0
+    21302178: shield0
+    21302180: shield0
+    21302182: melee0
+    21302184: melee0
+    21302186: melee0
+    21302188: melee0
+    21302190: melee0
+    21302192: melee0
+    21302194: melee0
+    21302196: melee0
+    21302198: melee0
+    21302200: melee0
+    21302202: melee0
+    21302204: melee0
+    21302206: melee0
+    21302208: melee0
+    21302210: melee0
+    21302212: melee0
+    21302214: melee0
+    21302216: melee0
+    21302218: melee0
+    21302220: melee0
+    21302222: melee0
+    21302224: melee0
+    21302226: melee0
+    21302228: melee0
+    21302230: melee0
+    21302232: melee0
+    21302234: melee0
+    21302236: melee0
+    21302238: melee0
+    21302240: melee0
+    21302242: melee0
+    21302244: melee0
+    21302246: melee0
+    21302248: melee0
+    21302250: melee0
+    21302252: melee0
+    21302254: melee0
+    21302256: melee0
+    21302258: melee0
+    21302260: melee0
+    21302262: melee0
+    21302264: melee0
+    21302266: melee0
+    21302268: melee0
+    21302270: melee0
+    21302272: melee0
+    21302274: melee0
+    21302276: melee0
+    21302278: melee0
+    21302280: melee0
+    21302282: melee0
+    21302284: melee0
+    21302286: melee0
+    21302288: melee0
+    21302290: melee0
+    21302292: melee0
+    21302294: melee0
+    21302296: melee0
+    21302298: melee0
+    21302300: melee0
+    21302302: melee0
+    21302304: melee0
+    21302306: melee0
+    21302308: melee0
+    21302310: melee0
+    21302312: melee0
+    21302314: melee0
+    21302316: melee0
+    21302318: melee0
+    21302320: melee0
+    21302322: melee0
+    21302324: melee0
+    21302326: melee0
+    21302328: melee0
+    21302330: melee0
+    21302332: melee0
+    21302334: melee0
+    21302336: melee0
+    21302338: melee0
+    21302340: melee0
+    21302342: melee0
+    21302344: melee0
+    21302346: melee0
+    21302348: melee0
+    21302350: melee0
+    21302352: melee0
+    21302354: melee0
+    21302356: melee0
+    21302358: melee0
+    21302360: melee0
+    21302362: melee0
+    21302364: melee0
+    21302366: melee0
+    21302368: melee0
+    21302370: melee0
+    21302372: melee0
+    21302374: melee0
+    21302376: melee0
+    21302378: melee0
+    21302380: melee0
+    21302382: bow0
+    21302384: bow0
+    21302386: bow0
+    21302388: bow0
+    21302390: bow0
+    21302392: bow0
+    21302394: bow0
+    21302396: bow0
+    21302398: bow0
+    21302400: bow0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 16
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: body_white_nomouth
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_white_withmouth
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_yellow_nomouth
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_yellow_withmouth
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_brown_nomouth
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_brown_withmouth
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_green_nomouth
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: body_green_withmouth
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pants0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shirt0
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hair0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: beard0
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: shield0
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 51
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: melee0
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 34
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: bow0
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
