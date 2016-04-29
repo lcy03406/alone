@@ -78,7 +78,7 @@ public class Game : MonoBehaviour, World.View {
 			Transform cama = GameObject.Find("Main Camera").transform;
 			cama.SetParent(o.transform);
 			cama.localPosition = new Vector3(0, 0, cama.localPosition.z);
-			UpdateEntity(o, ent);
+			InitEntity(o, ent);
 		} else {
 			ulong g = ent.id.value / 1024;
 			string gname = string.Format("Layer_{0}_EntityGroup_{1}", ent.layer.z, g);
@@ -90,7 +90,7 @@ public class Game : MonoBehaviour, World.View {
 			GameObject o = Instantiate(playerPrefab);
 			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			o.transform.SetParent(go.transform);
-			UpdateEntity(o, ent);
+			InitEntity(o, ent);
 		}
 	}
 
@@ -116,31 +116,50 @@ public class Game : MonoBehaviour, World.View {
 	}
 
 	void World.View.OnEntityUpdate(Entity ent) {
+		GameObject o = FindEntity(ent);
+		Play.Attrs.Pos pos = ent.GetAttr<Play.Attrs.Pos>();
+		o.transform.localPosition = game.Pos(pos.c);
+	}
+
+	void World.View.OnEntityAct(Entity ent) {
+		GameObject o = FindEntity(ent);
+		Play.Attrs.Actor actor = ent.GetAttr<Play.Attrs.Actor>();
+		if (actor != null && actor.act as Play.Acts.ActIact != null) {
+			Play.Acts.ActIact iact = (Play.Acts.ActIact)actor.act;
+			int ani = iact.a.s.ani_state;
+			if (ani > 0) {
+				Animator animator = o.GetComponent<Animator>();
+				animator.SetInteger("state", ani);
+				int once = iact.a.s.ani_once;
+				if (once == 1) {
+					//TODO animator.speed = actor.GetNextTick
+				}
+			}
+		}
+	}
+
+	static void InitEntity(GameObject o, Entity ent) {
+		Play.Attrs.Pos pos = ent.GetAttr<Play.Attrs.Pos>();
+		o.transform.localPosition = game.Pos(pos.c);
+		Play.Attrs.Core core = ent.GetAttr<Play.Attrs.Core>();
+		if (core == null)
+			return;
+		Sprite sprite = core.GetSprite().s.sprite;
+		SpriteRenderer render = o.GetComponent<SpriteRenderer>();
+		render.sprite = sprite;
+		//render.sortingLayerID = (int) show.GetRenderLayer();
+		//render.sortingOrder = (int) core.GetRenderLayer();
+	}
+
+	static GameObject FindEntity(Entity ent) {
 		if (ent == null)
-			return;
+			return null;
 		if (ent.layer == null)
-			return;
+			return null;
 		string name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 		GameObject o = GameObject.Find(name);
 		Assert.IsNotNull(o);
-		if (o == null) {
-			return;
-		}
-		UpdateEntity(o, ent);
-	}
-
-	static void UpdateEntity(GameObject o, Entity ent) {
-		Play.Attrs.Pos pos = ent.GetAttr<Play.Attrs.Pos>();
-		o.transform.localPosition = game.Pos(pos.c);
-		//Schema.SpriteID dirs = (Schema.SpriteID)((int)Schema.SpriteID.u_dir0 + (int)pos.dir);
-		//o.transform.FindChild("Direction").GetComponent<SpriteRenderer>().sprite = Schema.Sprite.GetA(dirs).s.sprite;
-		Play.Attrs.Core show = ent.GetAttr<Play.Attrs.Core>();
-		if (show == null)
-			return;
-		Sprite sprite = show.GetSprite().s.sprite;
-		SpriteRenderer render = o.GetComponent<SpriteRenderer>();
-		render.sprite = sprite;
-		render.sortingOrder = (int) show.GetRenderOrder();
+		return o;
 	}
 
 	public static Vector2[] GenerateUV(Schema.Floor.A[,] tiles) {

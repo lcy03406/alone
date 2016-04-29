@@ -38,7 +38,7 @@ namespace Play.Attrs {
 			return stage.a.s.blockade;
 		}
 
-		public Schema.RenderOrderID GetRenderOrder() {
+		public Schema.RenderOrderID GetRenderLayer() {
 			Stage stage = ent.GetAttr<Stage>();
 			if (stage == null)
 				return 0;

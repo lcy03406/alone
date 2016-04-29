@@ -123,17 +123,33 @@ public class ImportHuman {
 	private static SpriteMetaData Def1(int y, int x, string name) {
 		return Def(y, x, name, 1);
 	}
+	private static SpriteMetaData DefL(int y, int x, string name) {
+		SpriteMetaData meta = Def(y, x, name, 1);
+		meta.alignment = 9;
+        meta.pivot = new Vector2(0.17f, 0.25f);
+		return meta;
+    }
 	private static void AddDef(List<SpriteMetaData> metas, string prefix, 
 		int x0, int y0, int n1, int x1, int y1, int n2, int x2) {
 		for (int i2 = 0, i = 0; i2 < n2; ++i2) {
-			for (int i1 = 0; i1 < n1; ++i1) {
+			for (int i1 = 0; i1 < n1; ++i1, ++i) {
 				int y = y0 + i1 / x1 + i2 / x2 * y1;
 				int x = x0 + i1 % x1 + i2 % x2 * x1;
 				metas.Add(Def1(y, x, prefix + i));
 			}
 		}
 	}
-	[MenuItem("Revenge/Import Human Sprites", priority = 200)]
+	private static void AddDefL(List<SpriteMetaData> metas, string prefix,
+		int x0, int y0, int n1, int x1, int y1, int n2, int x2) {
+		for (int i2 = 0, i = 0; i2 < n2; ++i2) {
+			for (int i1 = 0; i1 < n1; ++i1, ++i) {
+				int y = y0 + i1 / x1 + i2 / x2 * y1;
+				int x = x0 + i1 % x1 + i2 % x2 * x1;
+				metas.Add(DefL(y, x, prefix + i));
+			}
+		}
+	}
+    [MenuItem("Revenge/Import Human Sprites", priority = 200)]
 	private static void PackSprites() {
 		List<SpriteMetaData> metas = new List<SpriteMetaData>();
 		//naked
@@ -146,23 +162,23 @@ public class ImportHuman {
 		metas.Add(Def0(3, 0, "body_green_nomouth"));
 		metas.Add(Def0(3, 1, "body_green_withmouth"));
 		//pants
-		AddDef(metas, "pants", 3, 0, 4, 1, 4, 2, 1);
+		AddDef(metas, "pants", 3, 0, 4, 1, 5, 2, 1);
 		//shoes
-		AddDef(metas, "pants", 4, 0, 4, 1, 4, 2, 1);
+		AddDef(metas, "shoes", 4, 0, 4, 1, 5, 2, 1);
 		//bigshoes
-		AddDef(metas, "pants", 3, 4, 2, 2, 1, 2, 1);
+		AddDef(metas, "bigshoes", 3, 4, 2, 2, 5, 2, 1);
 		//shirt
 		AddDef(metas, "shirt", 6, 0, 20, 4, 5, 6, 3);
 		//hair
-		AddDef(metas, "hair", 19, 0, 12, 4, 3, 5, 2);
+		AddDef(metas, "hair", 19, 0, 12, 4, 4, 5, 2);
 		//beard
-		AddDef(metas, "beard", 19, 3, 4, 4, 1, 4, 2);
+		AddDef(metas, "beard", 19, 3, 4, 4, 4, 4, 2);
 		//hat
-		AddDef(metas, "beard", 28, 0, 36, 4, 9, 1, 1);
+		AddDef(metas, "hat", 28, 0, 36, 4, 9, 1, 1);
 		//shield
 		AddDef(metas, "shield", 33, 0, 10, 4, 3, 6, 2);
 		//melee
-		AddDef(metas, "melee", 42, 0, 10, 5, 2, 10, 2);
+		AddDefL(metas, "melee", 42, 0, 10, 5, 2, 10, 2);
 		//bow
 		AddDef(metas, "bow", 52, 0, 10, 2, 5, 1, 1);
 		TextureImporter imp = AssetImporter.GetAtPath("Assets" + tilesetPath) as TextureImporter;

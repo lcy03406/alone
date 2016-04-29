@@ -1,0 +1,17 @@
+基础物品id,模板名,奖励名称,奖励描述,物品id1,物品id1数量,物品id2,物品id2数量,物品id3,物品id3数量,物品id4,物品id4数量,物品id5,物品id5数量
+int,str（不读，策划自己标记）,str,str,int,int,int,int,int,int,int,int,int,int
+cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs
+ID,Name,ItemName,ItemDes,Item[0].ID,Item[0].Num,Item[1].ID,Item[1].Num,Item[2].ID,Item[2].Num,Item[3].ID,Item[3].Num,Item[4].ID,Item[4].Num
+int,string,string,string,int,int,int,int,int,int,int,int,int,int
+160000,加速*5,,,150002,5,,,,,,,,
+160001,金币*10000,,,150000,10000,,,,,,,,
+160002,钻石*20,,,150001,20,,,,,,,,
+160003,范爷青花瓷长裙图纸碎片,,,180000,50,,,,,,,,
+160004,范爷青花瓷长裙图纸碎片,,,180000,140,,,,,,,,
+160005,,,,,,,,,,,,,
+160006,,,,,,,,,,,,,
+160007,,,,,,,,,,,,,
+160008,,,,,,,,,,,,,
+160009,,,,,,,,,,,,,
+160010,,,,,,,,,,,,,
+160011,,,,,,,,,,,,,

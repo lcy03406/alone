@@ -47,12 +47,13 @@ namespace Schema {
 		Foot,
 	}
 	public enum ActionCategoryID {
+		None,
+		Rest,
 		Move,
 		Attack,
 		Build,
 		Make,
 		Pick,
-		Rest,
 		Travel,
 	}
 }

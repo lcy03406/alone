@@ -11,6 +11,7 @@ namespace Play {
 			void OnEntityAdd(Entity ent);
 			void OnEntityDel(Entity ent);
 			void OnEntityUpdate(Entity ent);
+			void OnEntityAct(Entity ent);
 		}
 		public const int GRID_SIZE = 32; //must be power of 2
 		public const int GRID_MASK = GRID_SIZE - 1;

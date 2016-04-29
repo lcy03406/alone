@@ -4,13 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
+using System.Runtime.Serialization.Formatters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Utility {
 
 	public class Table {
-		public static void Load<T>(CsvParser parser, List<T> list) {
-			Header header = LoadHeader(parser);
+		public static void Load<T>(TextReader text, List<T> list) {
+			CsvParser parser = new CsvParser(text);
+            Header header = LoadHeader(parser);
 			T t;
 			while (true) {
 				t = (T) LoadRecord(parser, header, typeof(T));
@@ -19,6 +22,21 @@ namespace Utility {
 				list.Add(t);
             }
         }
+		public static void Load(TextReader text, Type type, Action<object> action) {
+			CsvParser parser = new CsvParser(text);
+			Header header = LoadHeader(parser);
+			object t;
+			while (true) {
+				t = LoadRecord(parser, header, type);
+				if (t == null)
+					return;
+				try {
+					action(t);
+				} catch (Exception e) {
+					throw new InvalidDataException(string.Format("fail in line {0} : {1}", parser.Line, e));
+				}
+			}
+		}
 		private class Header {
 			public List<string> name;
 			public List<string> comment;
@@ -35,7 +53,7 @@ namespace Utility {
 			header.type = parser.ReadRecord();
 			return header;
 		}
-		private static object LoadRecord(CsvParser parser, Header header, Type type) {
+        private static object LoadRecord(CsvParser parser, Header header, Type type) {
 			List<string> row = parser.ReadRecord();
 			if (row == null)
 				return null;
@@ -118,13 +136,34 @@ namespace Utility {
 		}
 
 		private static object ConvertType(string text, Type type, int line, int column) {
-			try {
-				return Convert.ChangeType(text, type);
+			if (type == typeof(string)) {
+				return text;
+			}
+            try {
+				using (StringReader sr = new StringReader(text))
+				using (JsonTextReader reader = new JsonTextReader(sr)) {
+					return Ser().Deserialize(reader, type);
+				}
+				//return Convert.ChangeType(text, type);
 			} catch (Exception e) {
 				throw new InvalidDataException(string.Format("connot convert \"{0}\" to type {1} in line {2}, column {3}", text, type, line, column), e);
 			}
 			throw new NotImplementedException();
 		}
 
+		public static JsonSerializer Ser() {
+			JsonSerializer ser = new JsonSerializer();
+			ser.Converters.Add(new StringEnumConverter());
+			ser.MissingMemberHandling = MissingMemberHandling.Error;
+			ser.TypeNameHandling = TypeNameHandling.Auto;
+			ser.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+			ser.Formatting = Formatting.Indented;
+			//ser.Error += Ser_Error;
+			return ser;
+		}
+
+		//private static void Ser_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) {
+		//	throw e.ErrorContext.Error;
+		//}
 	}
 }

@@ -247,10 +247,9 @@ public class CsvTest : ScriptableWizard {
 	}
 	private void Load() {
 		TextAsset text = Resources.Load<TextAsset>("test_csv");
-		using (StringReader reader = new StringReader(text.text))
-		using (Utility.CsvParser parser = new Utility.CsvParser(reader)) {
+		using (StringReader reader = new StringReader(text.text)) {
 			all = CreateInstance<CsvAll>();
-			Utility.Table.Load(parser, all.dropTable);
+			Utility.Table.Load(reader, all.dropTable);
 			editor = Editor.CreateEditor(all);
 			BaseEditor b = editor as BaseEditor;
 			b.ShowScriptHeader = false;

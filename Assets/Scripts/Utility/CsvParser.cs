@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 
 namespace Utility {
-	public class CsvParser : IDisposable {
+	public class CsvParser {
 		private const int Comment = '#';
 		private const int Quote = '"';
 		private const int Delimiter = ',';
@@ -18,6 +18,10 @@ namespace Utility {
 
 		public CsvParser(TextReader reader) {
 			this.reader = reader;
+		}
+
+		public bool IsEnd() {
+			return reader.Peek() == -1;
 		}
 
 		public List<string> ReadRecord() {
@@ -111,10 +115,6 @@ namespace Utility {
 
 		private string Where() {
 			return string.Format("line {0}, column {1}", line + 1, column + 1);
-		}
-
-		public void Dispose() {
-			((IDisposable)this.reader).Dispose();
 		}
 	}
 }

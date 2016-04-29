@@ -11,13 +11,16 @@ namespace Schema {
 		public readonly bool has_dst;
 		public readonly int distance;
 		public readonly Play.Effect ef;
+		public readonly int ani_state;
+		public readonly int ani_once;
 
 		public override string ToString() {
 			return Play.Iact.Display(this);
 		}
 
 		private Iact(string name, ActionCategoryID cat, int time1, int time2,
-				bool has_dst, int distance, Play.Effect ef) {
+				bool has_dst, int distance, Play.Effect ef,
+				int ani_state, int ani_once) {
 			this.name = name;
 			this.cat = cat;
 			this.time1 = time1;
@@ -25,6 +28,8 @@ namespace Schema {
 			this.has_dst = has_dst;
 			this.distance = distance;
 			this.ef = ef;
+			this.ani_state = ani_state;
+			this.ani_once = ani_once;
 		}
 
 		public static void AddAll(List<EditIactMove> edits) {
@@ -44,7 +49,9 @@ namespace Schema {
 					time2: edit.time2,
 					has_dst: false,
 					distance: 0,
-					ef: ef
+					ef: ef,
+					ani_state: 2,
+					ani_once: 0
 				));
 			}
 		}
@@ -58,7 +65,9 @@ namespace Schema {
 					time2: edit.time2,
 					has_dst: true,
 					distance: 1,
-					ef: Ef.Attack(edit.stamina, edit.mulDamage, edit.addDamage) //TODO
+					ef: Ef.Attack(edit.stamina, edit.mulDamage, edit.addDamage),
+					ani_state: 3,
+					ani_once: 1
 				));
 			}
 		}
@@ -71,7 +80,9 @@ namespace Schema {
 					time2: 0,
 					has_dst: false,
 					distance: 0,
-					ef: Ef.Build(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, null), Entity.GetA(edit.build))
+					ef: Ef.Build(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, null), Entity.GetA(edit.build)),
+					ani_state: 3,
+					ani_once: 0
 				));
 			}
 		}
@@ -84,7 +95,9 @@ namespace Schema {
 					time2: 0,
 					has_dst: false,
 					distance: 0,
-					ef: Ef.Make(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.products))
+					ef: Ef.Make(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.products)),
+					ani_state: 3,
+					ani_once: 0
 				));
 			}
 		}
@@ -97,7 +110,9 @@ namespace Schema {
 					time2: 0,
 					has_dst: true,
 					distance: 1,
-					ef: Ef.Pick(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.byproducts), edit.part, 1)
+					ef: Ef.Pick(Ef.MakeCommon(edit.stamina, edit.tools, edit.reagents, edit.byproducts), edit.part, 1),
+					ani_state: 3,
+					ani_once: 1
 				));
 			}
 		}
@@ -110,7 +125,9 @@ namespace Schema {
 					time2: 0,
 					has_dst: false,
 					distance: 0,
-					ef: Ef.Rest(edit.stamina)
+					ef: Ef.Rest(edit.stamina),
+					ani_state: 1,
+					ani_once: 0
 				));
 			}
 		}
@@ -123,7 +140,9 @@ namespace Schema {
 					time2: 0,
 					has_dst: true,
 					distance: 1,
-					ef: Ef.Travel(edit.stamina, edit.to)
+					ef: Ef.Travel(edit.stamina, edit.to),
+					ani_state: 2,
+					ani_once: 0
 				));
 			}
 		}

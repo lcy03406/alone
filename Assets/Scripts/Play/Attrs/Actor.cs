@@ -39,7 +39,8 @@ namespace Play.Attrs {
 			if (act == null)
 				return;
 			acstep++;
-			Act.Step step = act.GetStep(acstep);
+			ent.layer.world.view.OnEntityAct(ent);
+            Act.Step step = act.GetStep(acstep);
 			if (step == null) {
 				act = null;
 			} else {

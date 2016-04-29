@@ -86,8 +86,8 @@
       "name": "move",
       "id": "Move",
       "stamina": 0,
-      "time1": 5,
-      "time2": 5
+      "time1": 100,
+      "time2": 100
     }
   ],
   "attack": [
@@ -266,21 +266,24 @@
           "id": "HardTool",
           "level": 1
         }
-      ]
+      ],
+      "equip": []
     },
     {
       "name": "bone",
       "id": "Bone",
       "sprite": "block_block03",
       "desc": "",
-      "usages": []
+      "usages": [],
+      "equip": []
     },
     {
       "name": "meat",
       "id": "Meat",
       "sprite": "block_crate01",
       "desc": "",
-      "usages": []
+      "usages": [],
+      "equip": []
     },
     {
       "name": "stone axe",
@@ -293,7 +296,8 @@
           "id": "HardTool",
           "level": 1
         }
-      ]
+      ],
+      "equip": []
     },
     {
       "name": "stone knife",
@@ -306,7 +310,8 @@
           "id": "HardTool",
           "level": 1
         }
-      ]
+      ],
+      "equip": []
     }
   ]
 }
