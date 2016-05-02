@@ -1,76 +1,23 @@
 using System;
 using System.IO;
-using UnityEngine;
-using Newtonsoft.Json;
-using Stopwatch = System.Diagnostics.Stopwatch;
 using System.Collections.Generic;
+using UnityEngine;
 using Utility;
 
-namespace Schema {
+namespace Edit {
+	public abstract class Data {
+		public int ID;
+	}
+
 	public class All : Table.Loader {
-		static public void Init() {
-			Sprite.Init();
-			Stage.Init();
-			Entity.Init();
-			LoadAll();
-			new All().LoadFiles();
-        }
-
-		static public void LoadAll() {
-			Stopwatch watch = new Stopwatch();
-			watch.Start();
-			EditAll all;
-			JsonSerializer ser = EditAll.Ser();
-			TextAsset text = Resources.Load<TextAsset>("schema");
-			using (StringReader sr = new StringReader(text.text))
-			using (JsonReader r = new JsonTextReader(sr)) {
-				all = ser.Deserialize<EditAll>(r);
-			}
-			Resources.UnloadAsset(text);
-			watch.Stop();
-			Debug.Log(string.Format("load schema json time {0}", watch.Elapsed));
-			watch.Reset();
-
-			watch.Start();
-			Biome.AddAll(all.biome);
-			Entity.AddAll(all.boulder);
-			Entity.AddAll(all.creature);
-			Entity.AddAll(all.tree);
-			Entity.AddAll(all.workshop);
-			Floor.AddAll(all.floor);
-			Iact.AddAll(all.move);
-			Iact.AddAll(all.attack);
-			Iact.AddAll(all.build);
-			Iact.AddAll(all.make);
-			Iact.AddAll(all.pick);
-			Iact.AddAll(all.rest);
-			Iact.AddAll(all.travel);
-			Item.AddAll(all.item);
-			watch.Stop();
-			Debug.Log(string.Format("load schema data time {0}", watch.Elapsed));
-		}
-
-		public abstract class Data {
-			public int ID { get; set; }
-
-			public void LoadTo(All all) {
-				all.Add(this);
-			}
-		}
-
-		public static All all;
+		public static All all = null;
 
 		private SortedList<int, Data> data = new SortedList<int, Data>();
 		private HashSet<int> empty = new HashSet<int>();
 
 		private All() {
-			all = this;
-		}
-
-		public void Add(Data d) {
-			int id = d.ID;
-			if (id > 0) {
-				data.Add(id, d);
+			if (all != null) {
+				throw new Exception("Should not new All twice!");
 			}
 		}
 
@@ -105,6 +52,17 @@ namespace Schema {
 			if (!type.IsAssignableFrom(value.GetType()))
 				return null;
 			return value;
+		}
+
+		public static void Init() {
+			all = new All();
+			Tile.Init(all);
+			all.LoadFiles();
+		}
+
+		public void Add(int id, Data d) {
+			d.ID = id;
+			data.Add(d.ID, d);
 		}
 
 		public void LoadFiles() {
@@ -144,12 +102,13 @@ namespace Schema {
 			}
 		}
 	}
+
 	interface HasItemDes {
 		string ItemDes { get; set; }
 	}
-	public sealed class EditDropTable : All.Data, HasItemDes {
+	public sealed class EditDropTable : Data, HasItemDes {
 		public string Name;
-		public All.Data ItemName;
+		public Data ItemName;
 		public string ItemDes;
 		public struct DropItem {
 			public int ID;

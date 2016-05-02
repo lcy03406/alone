@@ -8,7 +8,7 @@ using Play;
 
 public class Game : MonoBehaviour, World.View {
 
-	public GameObject playerPrefab;
+	public GameObject entityPrefab;
 	public GameObject gridPrefab;
 
 	public static Game game;
@@ -73,7 +73,7 @@ public class Game : MonoBehaviour, World.View {
 	void World.View.OnEntityAdd (Entity ent) {
 		if (ent.isPlayer) {
 			player = ent;
-			GameObject o = Instantiate(playerPrefab);
+			GameObject o = Instantiate(entityPrefab);
 			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			Transform cama = GameObject.Find("Main Camera").transform;
 			cama.SetParent(o.transform);
@@ -87,7 +87,7 @@ public class Game : MonoBehaviour, World.View {
 				go = new GameObject(gname);
 				go.transform.SetParent(root);
 			}
-			GameObject o = Instantiate(playerPrefab);
+			GameObject o = Instantiate(entityPrefab);
 			o.name = string.Format("Layer_{0}_Entity_{1}", ent.layer.z, ent.id);
 			o.transform.SetParent(go.transform);
 			InitEntity(o, ent);

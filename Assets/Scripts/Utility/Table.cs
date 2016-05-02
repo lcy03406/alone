@@ -1,169 +1,122 @@
 //utf-8。
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace Utility {
 
 	public class Table {
-		public static void Load<T>(TextReader text, List<T> list) {
+		public interface Loader {
+			object Allocate(Type type, int id);
+		}
+
+		public static void Load(TextReader text, Type type, Loader loader) {
 			CsvParser parser = new CsvParser(text);
-            Header header = LoadHeader(parser);
-			T t;
+			Header header = LoadHeader(parser, type);
 			while (true) {
-				t = (T) LoadRecord(parser, header, typeof(T));
+				object t = LoadRecord(parser, header, type, loader);
 				if (t == null)
 					return;
-				list.Add(t);
-            }
-        }
-		public static void Load(TextReader text, Type type, Action<object> action) {
-			CsvParser parser = new CsvParser(text);
-			Header header = LoadHeader(parser);
-			object t;
-			while (true) {
-				t = LoadRecord(parser, header, type);
-				if (t == null)
-					return;
-				try {
-					action(t);
-				} catch (Exception e) {
-					throw new InvalidDataException(string.Format("fail in line {0} : {1}", parser.Line, e));
-				}
 			}
 		}
 		private class Header {
 			public List<string> name;
 			public List<string> comment;
 			public List<string> cs;
-			public List<string> xpath;
-			public List<string> type;
+			public List<PathField> xpath;
+			public List<Type> type;
+			public List<string> prefix;
 		}
-		private static Header LoadHeader(CsvParser parser) {
+		private static Header LoadHeader(CsvParser parser, Type type) {
 			Header header = new Header();
 			header.name = parser.ReadRecord();
 			header.comment = parser.ReadRecord();
 			header.cs = parser.ReadRecord();
-			header.xpath = parser.ReadRecord();
-			header.type = parser.ReadRecord();
+			List<string> pathstr = parser.ReadRecord();
+			List<string> typestr = parser.ReadRecord();
+			header.prefix = new List<string>();
+			int count = header.name.Count;
+			if (pathstr.Count != count) {
+				throw new InvalidDataException(string.Format("header path count {0} != {1}", pathstr.Count, count));
+			}
+			if (typestr.Count != count) {
+				throw new InvalidDataException(string.Format("header type count {0} != {1}", typestr.Count, count));
+			}
+			if (pathstr[0] != "ID" || typestr[0] != "int") {
+				throw new InvalidDataException(string.Format("header 1st column is not int ID but {0} {1}", pathstr[0], typestr[0]));
+			}
+			header.xpath = new List<PathField>();
+			try {
+				for (int i = 0; i < count; ++i) {
+					if (SkipColumn(header.name[i])) {
+						header.xpath.Add(null);
+						continue;
+					}
+					string spath = pathstr[i];
+					header.xpath.Add(new PathField(type, spath));
+				}
+			} catch (Exception e) {
+				throw new InvalidDataException(string.Format("fail parse header path column {0}", header.type.Count), e);
+			}
+			header.type = new List<Type>();
+			for (int i = 0; i < count; ++i) {
+				if (SkipColumn(header.name[i])) {
+					header.type.Add(null);
+					header.prefix.Add(null);
+					continue;
+				}
+				string stype = typestr[i];
+				PathField path = header.xpath[i];
+				Type fieldType = path.ValueType();
+				if (fieldType == typeof(Type)) {
+					header.type.Add(fieldType);
+					header.prefix.Add(stype);
+				} else {
+					Type headerType = TypeHelper.GetType(stype);
+					if (headerType == null) {
+						throw new InvalidDataException(string.Format("invalid type {0} in column {1}", stype, i));
+					}
+					if (!fieldType.IsAssignableFrom(headerType)) {
+						throw new InvalidDataException(string.Format("incompitable type {0} as {1} in column {2}", headerType, fieldType, i));
+					}
+					header.type.Add(headerType);
+					header.prefix.Add(null);
+				}
+			}
 			return header;
 		}
-        private static object LoadRecord(CsvParser parser, Header header, Type type) {
+        private static object LoadRecord(CsvParser parser, Header header, Type type, Loader loader) {
 			List<string> row = parser.ReadRecord();
 			if (row == null)
 				return null;
 			if (row.Count != header.name.Count) {
 				throw new InvalidDataException(string.Format("field count {0} != {1} in line {2}", row.Count, header.name.Count, parser.Line));
 			}
-			object record = Activator.CreateInstance(type);
-			for (int i = 0; i < header.name.Count; i++) {
-				string text = row[i];
-				if (text != "" && header.cs[i].Contains("s")) {
-					LoadField(text, record, header.xpath[i], parser.Line, i + 1);
+			int id = int.Parse(row[0]);
+			object record = loader.Allocate(type, id);
+			int i = 0;
+			try {
+				for (i = 0; i < header.name.Count; i++) {
+					string text = row[i];
+					if (SkipColumn(header.name[i]) || SkipColumn(text))
+						continue;
+					string prefix = header.prefix[i];
+					if (prefix != null)
+						text = prefix + text;
+					Field path = header.xpath[i];
+					Type valueType = path.ValueType();
+					Type headerType = header.type[i];
+					object value = JsonHelper.ReadObject(text, headerType);
+					path.Set(record, value);
 				}
+			} catch (Exception e) {
+				throw new InvalidDataException(string.Format("fail load {0} in line {1} column {2}", row[i], parser.Line, i+1), e);
 			}
 			return record;
 		}
-		private static void LoadField(string text, object record, string xpath, int line, int column) {
-			object parent = record;
-			string[] paths = xpath.Split('.');
-			for (int i = 0; i < paths.Length; i++) {
-				string path = paths[i];
-				FieldInfo finfo;
-				int index = path.IndexOf('[');
-				if (index >= 0) {
-					string elementName = path.Substring(0, index);
-					string posName = path.Substring(index + 1, path.Length - index - 2);
-					int pos = Convert.ToInt32(posName);
-					finfo = GetField(parent.GetType(), elementName);
-					if (finfo == null) {
-						throw new InvalidDataException("no such field in " + xpath);
-					}
-					Type fieldType = finfo.FieldType;
-                    if (fieldType.GetGenericTypeDefinition() != typeof(List<>)) {
-						throw new InvalidDataException("type mismatch in " + xpath);
-					}
-					Type elementType = fieldType.GetGenericArguments()[0];
-                    object field = finfo.GetValue(parent);
-					if (field == null) {
-						field = Activator.CreateInstance(fieldType);
-						finfo.SetValue(parent, field);
-                    }
-                    IList list = field as IList;
-					while (list.Count <= pos) {
-						object newElement = Activator.CreateInstance(elementType);
-						list.Add(newElement);
-                    }
-					if (i < paths.Length - 1) {
-						parent = list[pos];
-					} else {
-						list[pos] = ConvertType(text, elementType, line, column);
-                    }
-				} else {
-					finfo = GetField(parent.GetType(), path);
-					if (finfo == null) {
-						throw new InvalidDataException("no such field in " + xpath);
-					}
-					Type fieldType = finfo.FieldType;
-					if (i < paths.Length - 1) {
-						object field = finfo.GetValue(parent);
-						if (field == null) {
-							field = Activator.CreateInstance(fieldType);
-							finfo.SetValue(parent, field);
-                        }
-						parent = field;
-					} else {
-						object value = ConvertType(text, fieldType, line, column);
-						finfo.SetValue(parent, value);
-					}
-				}
-			}
-		}
 
-		private static FieldInfo GetField(Type type, string name) {
-			while (type != null) {
-				FieldInfo f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-				if (f != null)
-					return f;
-				type = type.BaseType;
-			}
-			return null;
+		private static bool SkipColumn(string v) {
+			return v == null || v == "" || v[0] == '~';
 		}
-
-		private static object ConvertType(string text, Type type, int line, int column) {
-			if (type == typeof(string)) {
-				return text;
-			}
-            try {
-				using (StringReader sr = new StringReader(text))
-				using (JsonTextReader reader = new JsonTextReader(sr)) {
-					return Ser().Deserialize(reader, type);
-				}
-				//return Convert.ChangeType(text, type);
-			} catch (Exception e) {
-				throw new InvalidDataException(string.Format("connot convert \"{0}\" to type {1} in line {2}, column {3}", text, type, line, column), e);
-			}
-			throw new NotImplementedException();
-		}
-
-		public static JsonSerializer Ser() {
-			JsonSerializer ser = new JsonSerializer();
-			ser.Converters.Add(new StringEnumConverter());
-			ser.MissingMemberHandling = MissingMemberHandling.Error;
-			ser.TypeNameHandling = TypeNameHandling.Auto;
-			ser.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
-			ser.Formatting = Formatting.Indented;
-			//ser.Error += Ser_Error;
-			return ser;
-		}
-
-		//private static void Ser_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) {
-		//	throw e.ErrorContext.Error;
-		//}
 	}
 }

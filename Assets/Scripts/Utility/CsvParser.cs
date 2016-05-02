@@ -81,6 +81,8 @@ namespace Utility {
 				if (ReadTo(sb, Quote) != Quote)
 					throw new InvalidDataException("unclosed quote in " + Where());
 				while (reader.Peek() == Quote) {
+					sb.Append((char)Quote);
+					reader.Read();
 					if (ReadTo(sb, Quote) != Quote)
 						throw new InvalidDataException("unclosed quote in " + Where());
 				}

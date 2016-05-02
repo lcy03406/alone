@@ -220,6 +220,8 @@ public class EditTestSchema : ScriptableWizard {
 		return false;
 	}
 }
+
+/*
 [Serializable]
 public class CsvAll : BaseScriptableObject {
 	public List<DropTable> dropTable = new List<DropTable>();
@@ -260,3 +262,4 @@ public class CsvTest : ScriptableWizard {
 		return false;
 	}
 }
+*/
