@@ -6,22 +6,9 @@ using UnityEngine.Assertions;
 namespace Play {
 	[Serializable]
 	public abstract class Act {
-		public interface Step {
-			void Do(Entity ent, List<string> logs);
-			int Time(Entity ent);
-		}
 		public abstract string GetName();
 		public abstract bool Can(Entity ent);
-		public abstract Step GetStep(int i);
-		static protected Step GetStep(int i, Step[] steps) {
-			if (i >= 0 && i < steps.Length)
-				return steps[i];
-			return null;
-		}
-		static public Act EntAct(Entity ent) {
-			Attrs.Actor actor = ent.GetAttr<Attrs.Actor>();
-			return actor.act;
-		}
+		public abstract int NextStep(Entity ent, List<string> logs);
 	}
 }
 
@@ -31,6 +18,7 @@ namespace Play.Acts {
 		public Schema.Iact.A a;
 		public WUID dst;
 		public Coord dstc;
+		public int istep = -1;
 		public ActIact (Schema.Iact.A iact, WUID dst) {
 			this.a = iact;
 			this.dst = dst;
@@ -56,28 +44,46 @@ namespace Play.Acts {
 			Ctx ctx = GetCtx(ent);
 			return a.Can (ctx);
 		}
-		private class Step1 : Act.Step {
-			void Act.Step.Do (Entity ent, List<string> logs) {
+		private interface Step {
+			void Do(Entity ent, List<string> logs);
+			int Time(Entity ent);
+		}
+		private class Step1 : Step {
+			void Step.Do (Entity ent, List<string> logs) {
 			}
-			int Act.Step.Time (Entity ent) {
-				ActIact act = (ActIact)Act.EntAct(ent);
+			int Step.Time (Entity ent) {
+				ActIact act = (ActIact)EntAct(ent);
 				return act.a.s.time1;
 			}
 		}
-		private class Step2 : Act.Step {
-			void Act.Step.Do (Entity ent, List<string> logs) {
-				ActIact act = (ActIact) Act.EntAct (ent);
+		private class Step2 : Step {
+			void Step.Do (Entity ent, List<string> logs) {
+				ActIact act = (ActIact) EntAct (ent);
 				Ctx ctx = act.GetCtx(ent);
 				act.a.Do (ctx, logs);
 			}
-			int Act.Step.Time (Entity ent) {
-				ActIact act = (ActIact)Act.EntAct(ent);
+			int Step.Time (Entity ent) {
+				ActIact act = (ActIact) EntAct(ent);
 				return act.a.s.time2;
 			}
 		}
 		private static Step[] steps = new Step[] { new Step1 (), new Step2 () };
-		public override Act.Step GetStep (int i) {
-			return GetStep (i, steps);
+		public override int NextStep (Entity ent, List<string> logs) {
+			istep++;
+			Step step = GetStep (istep, steps);
+			if (step == null)
+				return -1;
+			step.Do(ent, logs);
+			return step.Time(ent);
+		}
+		static private Step GetStep(int i, Step[] steps) {
+			if (i >= 0 && i < steps.Length)
+				return steps[i];
+			return null;
+		}
+		static public Act EntAct(Entity ent) {
+			Attrs.Actor actor = ent.GetAttr<Attrs.Actor>();
+			return actor.act;
 		}
 	}
 }

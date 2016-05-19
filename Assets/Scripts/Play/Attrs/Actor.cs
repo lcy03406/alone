@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace Play.Attrs {
 	[Serializable]
 	public class Actor : Attrib {
-		public int acstep = 0;
 		public Act act = null;
 
 		public override void OnBorn() {
@@ -20,7 +19,6 @@ namespace Play.Attrs {
 				Act t = ai.Deque();
 				if (t != null) {
 					act = t;
-					acstep = -1;
 					SetNextTick(ent.layer.world.param.time);
 				}
 			}
@@ -33,19 +31,17 @@ namespace Play.Attrs {
 				Act t = ai.Deque();
 				if (t != null && t.Can(ent)) {
 					act = t;
-					acstep = -1;
 				}
 			}
 			if (act == null)
 				return;
-			acstep++;
 			ent.layer.world.view.OnEntityAct(ent);
-            Act.Step step = act.GetStep(acstep);
-			if (step == null) {
+            int next_time = act.NextStep(ent, logs);
+			if (next_time < 0) {
+				ClrNextTick();
 				act = null;
 			} else {
-				SetNextTick(time + step.Time(ent));
-				step.Do(ent, logs);
+				SetNextTick(time + next_time);
 			}
 		}
 	}

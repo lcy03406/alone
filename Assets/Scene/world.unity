@@ -485,9 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69c74b02d1263e4d8861fe0f1435797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityPrefab: {fileID: 156346, guid: e295928ac84e8cb499fbf8283024cb18, type: 2}
+  entityPrefab: {fileID: 174554, guid: a31a8f5ca2fc6914bbc656eb8522ca72, type: 2}
   gridPrefab: {fileID: 124202, guid: 4bc691ddede1e3149a5a5882275731ab, type: 2}
-  so: {fileID: 0}
   player: {}
   root: {fileID: 0}
   world_update_time: 0
@@ -2246,6 +2245,10 @@ Prefab:
     - target: {fileID: 21247838, guid: e295928ac84e8cb499fbf8283024cb18, type: 2}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 156346, guid: e295928ac84e8cb499fbf8283024cb18, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e295928ac84e8cb499fbf8283024cb18, type: 2}

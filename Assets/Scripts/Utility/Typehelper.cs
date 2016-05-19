@@ -163,6 +163,32 @@ namespace Utility {
 		}
 	}
 
+	public class MethodField : Field {
+		public Type dataType;
+		public MethodInfo get;
+		public MethodInfo set;
+
+		public Type ValueType() {
+			return dataType != null ? dataType : get.ReturnType;
+		}
+
+		public object Get(object parent) {
+			
+			object value = get.Invoke(parent, null);
+			if (value == null) {
+				Type fieldType = ValueType();
+				value = Activator.CreateInstance(fieldType);
+				set.Invoke(parent, new object[] {value});
+				value = get.Invoke(parent, null);
+			}
+			return value;
+		}
+
+		public void Set(object parent, object value) {
+			set.Invoke(parent, new object[] { value });
+		}
+	}
+
 	public class TypeField : Field {
 		public Field field;
 
@@ -238,7 +264,13 @@ namespace Utility {
 							path.Add(new PropField() { dataType = dataType, pinfo = pinfo });
 							pathType = pinfo.PropertyType;
 						} else {
-							throw new InvalidDataException(string.Format("no field or property {0} in {1}", pathType, str));
+							MethodInfo get, set;
+							if (TypeHelper.GetMethod(pathType, field, out get, out set)) {
+								path.Add(new MethodField() { dataType = dataType, get = get, set = set });
+								pathType = pinfo.PropertyType;
+							} else {
+								throw new InvalidDataException(string.Format("no field {0} in {1}", pathType, str));
+							}
 						}
 					}
 				}
@@ -333,6 +365,29 @@ namespace Utility {
 				type = type.BaseType;
 			}
 			return null;
+		}
+
+		public static bool GetMethod(Type type, string name, out MethodInfo get, out MethodInfo set) {
+			for (; type != null; type = type.BaseType) {
+				get = type.GetMethod("Get" + name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+					null, Type.EmptyTypes, null);
+				if (get == null) {
+					continue;
+				}
+				Type ret = get.ReturnType;
+				if (ret == typeof(void)) {
+					continue;
+				}
+				set = type.GetMethod("Set" + name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+					null, new Type[] { ret }, null);
+				if (set == null) {
+					continue;
+				}
+				return true;
+			}
+			get = null;
+			set = null;
+			return false;
 		}
 
 		public static object CreateInstance(Type type) {

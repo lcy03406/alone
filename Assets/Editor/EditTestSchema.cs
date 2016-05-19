@@ -263,3 +263,33 @@ public class CsvTest : ScriptableWizard {
 	}
 }
 */
+namespace TestMethod {
+	//TODO
+	public abstract class EffectFunc {
+		public virtual int GetParam1() { return 0; }
+		public virtual void SetParam1() { }
+		public virtual int param1 { get { return p1; } set { p1 = value; } }
+		public int p1;
+		public virtual int param2 { get; set; }
+	}
+	class AddStat : EffectFunc {
+		public override int GetParam1() { return 1; }
+		public override void SetParam1() { }
+		public override int param1 { get { return stat; } set { stat = value; } }
+		int stat = 0;
+		[MenuItem("Revenge/Test Method", priority = 199)]
+		static void TestMethod() {
+			object obj = new AddStat();
+			Utility.PathField prop = new Utility.PathField(typeof(EffectFunc), "param1");
+			prop.Set(obj, 100);
+			Debug.LogFormat("get child prop1 = {0}", (obj as AddStat).param1);
+			Debug.LogFormat("get parent prop1 = {0}", (obj as EffectFunc).param1);
+			Debug.LogFormat("get child stat = {0}", (obj as AddStat).stat);
+			Debug.LogFormat("get parent p1 = {0}", (obj as EffectFunc).p1);
+			prop = new Utility.PathField(typeof(EffectFunc), "param2");
+			prop.Set(obj, 100);
+			Debug.LogFormat("get child prop2 = {0}", (obj as AddStat).param1);
+			Debug.LogFormat("get parent prop2 = {0}", (obj as EffectFunc).param1);
+		}
+	}
+}

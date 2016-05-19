@@ -26,5 +26,12 @@ namespace Edit {
 		public readonly Play.Effect tick_ef;
 		public readonly Play.Effect finish_ef;
 	}
+
+	public sealed class Stat : Data, HasName {
+		public Text name { get; set; }
+		public Text namepl { get; set; }
+		public bool hidden;
+		public Stat max;
+	}
 }
 

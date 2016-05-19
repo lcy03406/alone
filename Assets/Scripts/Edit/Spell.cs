@@ -4,20 +4,6 @@ using System.Collections.Generic;
 
 
 namespace Edit {
-	public enum Choose {
-		Self,
-		Pos,
-		Unit,
-	}
-	public enum AnimatStyle {
-		Once,
-		Repeat,
-		Freeze,
-	}
-	public struct Animat {
-		public int state;
-		public AnimatStyle style; 
-	}
 	public sealed class Spell : Data {
 		public Text name;
 		public Text verb2p;
@@ -29,19 +15,24 @@ namespace Edit {
 		public int time;
 		public List<Phase> phase;
 	}
+	/*
+	0 1 3 5
+	1 2 4 6
+	3 4 5 7
+	5 6 7 8
+	*/
+	public sealed class Shape : Data {
+		public Choose center;
+		public int min_range;
+		public int max_range;
+	}
 	public sealed class Phase : Data {
 		public int time;
-		public Choose center;
-		public int diameter;
-		public int angle;
+		public Shape shape;
 		public Buff phase_buff;
-		public List<Effect> effect;
+		public Effect effect;
 	}
 	public sealed class Effect : Data {
-		public EffectFunc func;
-		public List<int> param;
-	}
-	public sealed class EffectFunc : Data {
-		public Fun.EffectFunc fun;
+		public Fun.EffectFunc func;
 	}
 }

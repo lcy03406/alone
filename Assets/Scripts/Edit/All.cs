@@ -102,21 +102,5 @@ namespace Edit {
 			}
 		}
 	}
-
-	interface HasItemDes {
-		string ItemDes { get; set; }
-	}
-	public sealed class EditDropTable : Data, HasItemDes {
-		public string Name;
-		public Data ItemName;
-		public string ItemDes;
-		public struct DropItem {
-			public int ID;
-			public int Num;
-		}
-		public List<DropItem> Item;
-
-		string HasItemDes.ItemDes { get; set; }
-	}
 }
 
