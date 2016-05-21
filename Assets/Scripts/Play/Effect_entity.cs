@@ -5,10 +5,16 @@ using Play.Attrs;
 
 namespace Play.Eff {
 	public class AddEntity : Effect {
-		public readonly Calc<Schema.Entity.A> c_cre;
+		public Calc<Schema.Entity.A> c_cre;
 
-		public AddEntity(Calc<Schema.Entity.A> cre) {
-			c_cre = cre;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 1) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			int id = param[0];
+			//TODO
+			Schema.Entity.A a = Schema.Entity.GetA((Schema.EntityID)id);
+			c_cre = new Calcs.Const<Schema.Entity.A>(a);
 		}
 
 		public override string Display() {
@@ -39,10 +45,14 @@ namespace Play.Eff {
 	}
 
 	public class DelEntity : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 
-		public DelEntity(Calc<Entity> ent) {
-			c_ent = ent;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
 		}
 
 		public override string Display() {
@@ -66,10 +76,14 @@ namespace Play.Eff {
 	}
 
 	public class Dir : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 
-		public Dir(Calc<Entity> ent) {
-			c_ent = ent;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
 		}
 
 		public override string Display() {
@@ -102,10 +116,14 @@ namespace Play.Eff {
 	}
 
 	public class Move : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 
-		public Move(Calc<Entity> ent) {
-			c_ent = ent;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
 		}
 
 		public override string Display() {
@@ -139,12 +157,19 @@ namespace Play.Eff {
 	}
 
 	public class GoLayer : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly int to;
+		public Calc<Entity> c_ent;
+		public int to;
 
-		public GoLayer(Calc<Entity> ent, int to) {
-			c_ent = ent;
-			this.to = to;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 1) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			to = param[0];
 		}
 
 		public override string Display() {
@@ -177,12 +202,20 @@ namespace Play.Eff {
 	}
 
 	public class ToStage : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly Schema.Stage.A to;
+		public Calc<Entity> c_ent;
+		public Schema.Stage.A to;
 
-		public ToStage(Calc<Entity> ent, Schema.Stage.A to) {
-			c_ent = ent;
-			this.to = to;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 1) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			to = Schema.Stage.GetA((Schema.Stage.ID)param[0]);
 		}
 
 		public override string Display() {

@@ -5,16 +5,24 @@ using Play.Attrs;
 
 namespace Play.Eff {
 	public class UsePart : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		Schema.PartID id;
 		Calc<int> c_min;
 		Calc<int> c_max;
 
-		public UsePart(Calc<Entity> ent, Schema.PartID id, Calc<int> min, Calc<int> max) {
-			c_ent = ent;
-			this.id = id;
-			this.c_min = min;
-			this.c_max = max;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 3) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = (Schema.PartID)param[0];
+			c_min = new Calcs.Const<int>(param[1]);
+			c_max = new Calcs.Const<int>(param[2]);
 		}
 
 		public override string Display() {
@@ -62,16 +70,24 @@ namespace Play.Eff {
 	}
 
 	public class DecPart : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		Schema.PartID id;
 		Calc<int> c_value;
 		bool must;
 
-		public DecPart(Calc<Entity> ent, Schema.PartID id, Calc<int> value, bool must) {
-			c_ent = ent;
-			this.id = id;
-			this.c_value = value;
-			this.must = must;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 3) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = (Schema.PartID)param[0];
+			c_value = new Calcs.Const<int>(param[1]);
+			must = param[2] > 0;
 		}
 
 		public override string Display() {
@@ -119,15 +135,24 @@ namespace Play.Eff {
 	}
 
 	public class DropPart : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		Schema.PartID id;
 		Calc<int> c_value;
 
-		public DropPart(Calc<Entity> ent, Schema.PartID id, Calc<int> value) {
-			c_ent = ent;
-			this.id = id;
-			this.c_value = value;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 2) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = (Schema.PartID)param[0];
+			c_value = new Calcs.Const<int>(param[1]);
 		}
+
 
 		public override string Display() {
 			return c_ent.Display() + ": "
@@ -177,10 +202,14 @@ namespace Play.Eff {
 	}
 
 	public class DropAllPart : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 
-		public DropAllPart(Calc<Entity> ent) {
-			c_ent = ent;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
 		}
 
 		public override string Display() {

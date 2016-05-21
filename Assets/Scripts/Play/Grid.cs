@@ -29,10 +29,12 @@ namespace Play {
 		public void Load(Data d) {
 			this.d = d;
 			foreach (Entity ent in d.entities) {
-				Assert.AreEqual (c, ent.GetAttr<Attrs.Pos>().c.Grid (), string.Format ("c={0}, e={1}", c, ent.GetAttr<Attrs.Pos>().c));
+				Assert.AreEqual(c, ent.GetAttr<Attrs.Pos>().c.Grid(), string.Format("c={0}, e={1}", c, ent.GetAttr<Attrs.Pos>().c));
 				ent.layer = layer;
 				ent.Load();
-				layer.AddEntity (ent);
+				layer.AddEntity(ent);
+			}
+			foreach (Entity ent in d.entities) {
 				ent.OnLoad();
 				if (ent.layer != null) {
 					ent.layer.AddTick(ent);

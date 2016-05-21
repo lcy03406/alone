@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 namespace Edit {
-	public sealed class Text : Data {
+	public sealed class Text : Meta {
 		public string text;
 	}
 }

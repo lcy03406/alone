@@ -5,12 +5,22 @@ using Play.Attrs;
 
 namespace Play.Eff {
 	public class UseItem : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly Calc<ItemSelect> c_sel;
+		public Calc<Entity> c_ent;
+		public Calc<ItemSelect> c_sel;
 
-		public UseItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
-			c_ent = ent;
-			c_sel = sel;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 2) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			Schema.Item.A a = Schema.Item.GetA((Schema.ItemID)param[0]);
+			ItemSelect sel = new ItemSelect(a, param[1]);
+			c_sel = new Calcs.Const<ItemSelect>(sel);
 		}
 
 		public override string Display() {
@@ -41,12 +51,22 @@ namespace Play.Eff {
 	}
 
 	public class DelItem : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly Calc<ItemSelect> c_sel;
+		public Calc<Entity> c_ent;
+		public Calc<ItemSelect> c_sel;
 
-		public DelItem(Calc<Entity> ent, Calc<ItemSelect> sel) {
-			c_ent = ent;
-			c_sel = sel;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 2) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			Schema.Item.A a = Schema.Item.GetA((Schema.ItemID)param[0]);
+			ItemSelect sel = new ItemSelect(a, param[1]);
+			c_sel = new Calcs.Const<ItemSelect>(sel);
 		}
 
 		public override string Display() {
@@ -78,13 +98,24 @@ namespace Play.Eff {
 	}
 
 	public class AddItem : Effect {
-		public readonly Calc<Entity> c_ent;
-		public readonly Calc<ItemCreate> c_cre;
+		public Calc<Entity> c_ent;
+		public Calc<ItemCreate> c_cre;
 
-		public AddItem(Calc<Entity> ent, Calc<ItemCreate> cre) {
-			c_ent = ent;
-			c_cre = cre;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 2) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			Schema.Item.A a = Schema.Item.GetA((Schema.ItemID)param[0]);
+			ItemCreate cre = new ItemCreate(a, param[1]);
+			c_cre = new Calcs.Const<ItemCreate>(cre);
 		}
+
 
 		public override string Display() {
 			return c_ent.Display() + ": "

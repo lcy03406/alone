@@ -41,7 +41,7 @@ namespace Play {
 
 		public void LoadWorld(string path, string name) {
 			logs = new List<string>();
-			Schema.All.Init();
+			Edit.All.Init();
 			rand = new Random();
 			layers.Clear();
 			file = new WorldFile();

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Utility {
 
-	public class Table {
+	public class CsvTable {
 		public interface Loader {
 			object Allocate(Type type, int id);
 		}
@@ -21,8 +21,6 @@ namespace Utility {
 		}
 		private class Header {
 			public List<string> name;
-			public List<string> comment;
-			public List<string> cs;
 			public List<PathField> xpath;
 			public List<Type> type;
 			public List<string> prefix;
@@ -30,20 +28,18 @@ namespace Utility {
 		private static Header LoadHeader(CsvParser parser, Type type) {
 			Header header = new Header();
 			header.name = parser.ReadRecord();
-			header.comment = parser.ReadRecord();
-			header.cs = parser.ReadRecord();
 			List<string> pathstr = parser.ReadRecord();
 			List<string> typestr = parser.ReadRecord();
 			header.prefix = new List<string>();
 			int count = header.name.Count;
 			if (pathstr.Count != count) {
-				throw new InvalidDataException(string.Format("header path count {0} != {1}", pathstr.Count, count));
+				throw new GameResourceException(string.Format("header path count {0} != {1}", pathstr.Count, count));
 			}
 			if (typestr.Count != count) {
-				throw new InvalidDataException(string.Format("header type count {0} != {1}", typestr.Count, count));
+				throw new GameResourceException(string.Format("header type count {0} != {1}", typestr.Count, count));
 			}
 			if (pathstr[0] != "ID" || typestr[0] != "int") {
-				throw new InvalidDataException(string.Format("header 1st column is not int ID but {0} {1}", pathstr[0], typestr[0]));
+				throw new GameResourceException(string.Format("header 1st column is not int ID but {0} {1}", pathstr[0], typestr[0]));
 			}
 			header.xpath = new List<PathField>();
 			try {
@@ -74,10 +70,10 @@ namespace Utility {
 				} else {
 					Type headerType = TypeHelper.GetType(stype);
 					if (headerType == null) {
-						throw new InvalidDataException(string.Format("invalid type {0} in column {1}", stype, i));
+						throw new GameResourceException(string.Format("invalid type {0} in column {1}", stype, i));
 					}
 					if (!fieldType.IsAssignableFrom(headerType)) {
-						throw new InvalidDataException(string.Format("incompitable type {0} as {1} in column {2}", headerType, fieldType, i));
+						throw new GameResourceException(string.Format("incompitable type {0} as {1} in column {2}", headerType, fieldType, i));
 					}
 					header.type.Add(headerType);
 					header.prefix.Add(null);
@@ -90,7 +86,7 @@ namespace Utility {
 			if (row == null)
 				return null;
 			if (row.Count != header.name.Count) {
-				throw new InvalidDataException(string.Format("field count {0} != {1} in line {2}", row.Count, header.name.Count, parser.Line));
+				throw new GameResourceException(string.Format("field count {0} != {1} in line {2}", row.Count, header.name.Count, parser.Line));
 			}
 			int id = int.Parse(row[0]);
 			object record = loader.Allocate(type, id);
@@ -98,7 +94,7 @@ namespace Utility {
 			try {
 				for (i = 0; i < header.name.Count; i++) {
 					string text = row[i];
-					if (SkipColumn(header.name[i]) || SkipColumn(text))
+					if (SkipColumn(header.name[i]))
 						continue;
 					string prefix = header.prefix[i];
 					if (prefix != null)

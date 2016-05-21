@@ -14,11 +14,6 @@ namespace Play {
 			this.value = value;
 		}
 
-		//public static explicit operator WUID(ulong v)
-		//{
-		//	return new WUID(v);
-		//}
-
 		public WUID Next() {
 			return new WUID(value + 1);
 		}
@@ -66,7 +61,7 @@ namespace Play {
 			return a.value < b.value;
 		}
 
-		public static bool operator >(WUID a, WUID b) {
+		public static bool operator > (WUID a, WUID b) {
 			return a.value > b.value;
 		}
 	}

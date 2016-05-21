@@ -4,11 +4,6 @@ using System.Collections.Generic;
 
 
 namespace Edit {
-	public enum Choose {
-		Self,
-		Pos,
-		Unit,
-	}
 	public enum AnimatStyle {
 		Once,
 		Repeat,
@@ -24,7 +19,7 @@ namespace Edit {
 		Text namepl { get; set; }
 	}
 
-	public interface  HasVerb {
+	public interface HasVerb {
 		Text verb { get; set; }
 		Text verb2p { get; set; }
 		Text verb3p { get; set; }

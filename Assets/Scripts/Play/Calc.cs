@@ -49,13 +49,13 @@ namespace Play.Calcs {
 	}
 
 	public class RandConst<T> : Calc<T> {
-		public List<Choice<T>> choices;
-        public RandConst(List<Choice<T>> choices) {
+		public List<Fun.Choice<T>> choices;
+        public RandConst(List<Fun.Choice<T>> choices) {
 			this.choices = choices;
 		}
 		public override string Display() {
 			string disp = "any of { ";
-			foreach (Choice<T> choice in choices) {
+			foreach (Fun.Choice<T> choice in choices) {
 				disp += choice.value;
 				disp += ", ";
 			}
@@ -66,7 +66,7 @@ namespace Play.Calcs {
 			return true;
 		}
 		public override T Get(Ctx ctx) {
-			return Choice<T>.Choose(choices);
+			return Fun.Choice<T>.Choose(choices);
 		}
 	}
 
@@ -96,8 +96,8 @@ namespace Play.Calcs {
 
 	public class GetStat : Calc<int> {
 		public readonly Calc<Entity> c_ent;
-		public readonly Schema.StatID id;
-		public GetStat(Calc<Entity> ent, Schema.StatID id) {
+		public readonly Edit.AStat id;
+		public GetStat(Calc<Entity> ent, Edit.AStat id) {
 			this.c_ent = ent;
 			this.id = id;
 		}

@@ -173,12 +173,12 @@ namespace Utility {
 		}
 
 		public object Get(object parent) {
-			
+
 			object value = get.Invoke(parent, null);
 			if (value == null) {
 				Type fieldType = ValueType();
 				value = Activator.CreateInstance(fieldType);
-				set.Invoke(parent, new object[] {value});
+				set.Invoke(parent, new object[] { value });
 				value = get.Invoke(parent, null);
 			}
 			return value;
@@ -226,7 +226,7 @@ namespace Utility {
 					string typeName = field.Substring(index + 1);
 					dataType = Type.GetType(typeName);
 					if (dataType == null) {
-						throw new InvalidDataException(string.Format("no type {0} in {1}", typeName, str));
+						throw new GameResourceException(string.Format("no type {0} in {1}", typeName, str));
 					}
 					field = field.Substring(0, index);
 				}
@@ -237,7 +237,7 @@ namespace Utility {
 					string posName = field.Substring(index + 1, field.Length - index - 2);
 					finfo = TypeHelper.GetField(pathType, elementName);
 					if (finfo == null) {
-						throw new InvalidDataException(string.Format("no field {0} in {1}", elementName, str));
+						throw new GameResourceException(string.Format("no field {0} in {1}", elementName, str));
 					}
 					Type fieldType = finfo.FieldType;
 					Type genericType = fieldType.GetGenericTypeDefinition();
@@ -251,7 +251,7 @@ namespace Utility {
 						path.Add(new DictField() { dataType = dataType, finfo = finfo, key = key });
 						pathType = fieldType.GetGenericArguments()[1];
 					} else {
-						throw new InvalidDataException(string.Format("not support type {0} of {1} in {2}", fieldType, elementName, str));
+						throw new GameResourceException(string.Format("not support type {0} of {1} in {2}", fieldType, elementName, str));
 					}
 				} else {
 					finfo = TypeHelper.GetField(pathType, field);
@@ -269,7 +269,7 @@ namespace Utility {
 								path.Add(new MethodField() { dataType = dataType, get = get, set = set });
 								pathType = pinfo.PropertyType;
 							} else {
-								throw new InvalidDataException(string.Format("no field {0} in {1}", pathType, str));
+								throw new GameResourceException(string.Format("no field {0} in {1}", pathType, str));
 							}
 						}
 					}
@@ -307,6 +307,7 @@ namespace Utility {
 	}
 
 	public static class TypeHelper {
+		private static string[] TypePrefix = { "Edit.A", "Edit.", "" };
 		public static Type GetType(string name) {
 			switch (name) {
 				case "":
@@ -338,12 +339,11 @@ namespace Utility {
 				case "string":
 					return typeof(string);
 			}
-			Type type = Type.GetType(name);
-			if (type != null)
-				return type;
-			type = Type.GetType("Edit." + name);
-			if (type != null)
-				return type;
+			foreach (string prefix in TypePrefix) {
+				Type type = Type.GetType(prefix + name);
+				if (type != null)
+					return type;
+			}
 			return null;
 		}
 
@@ -392,6 +392,17 @@ namespace Utility {
 
 		public static object CreateInstance(Type type) {
 			return Activator.CreateInstance(type);
+		}
+
+		public static Type GetOriginType(Type child, Type ancestor) {
+			Type type = child;
+			while (type.BaseType != ancestor && type.BaseType != null) {
+				type = type.BaseType;
+			}
+			if (type == null) {
+				throw new GameScriptException(string.Format("type mismatch. {0} is not a descendent of {1}.", child, ancestor));
+			}
+			return type;
 		}
 	}
 }

@@ -122,8 +122,8 @@ namespace Play {
 				Rect saver = anchor.Area (SAVE_RADIUS).Grid ();
 				List<Coord> del = new List<Coord> ();
 				foreach (KeyValuePair<Coord, Grid> pair in grids) {
-					if (!pair.Key.In (saver)) {
-						Coord g = pair.Key;
+					Coord g = pair.Key;
+					if (!g.In (saver)) {
 						Grid grid = pair.Value;
 						if (world.view != null && world.param.layer == z) {
 							world.view.OnGridUnload (g);

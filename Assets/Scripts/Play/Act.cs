@@ -6,9 +6,10 @@ using UnityEngine.Assertions;
 namespace Play {
 	[Serializable]
 	public abstract class Act {
+		public virtual bool OnLoad(Entity ent) { return true; }
 		public abstract string GetName();
 		public abstract bool Can(Entity ent);
-		public abstract int NextStep(Entity ent, List<string> logs);
+		public abstract int NextStep(Entity ent, List<string> logs); //TODO
 	}
 }
 
@@ -16,29 +17,34 @@ namespace Play.Acts {
 	[Serializable]
 	public class ActIact : Act {
 		public Schema.Iact.A a;
-		public WUID dst;
-		public Coord dstc;
+		public WUID dst_id;
+		public Coord dst_c;
+		[NonSerialized]	public Entity dst_ent;
 		public int istep = -1;
-		public ActIact (Schema.Iact.A iact, WUID dst) {
+		public ActIact (Schema.Iact.A iact, Entity dst_ent) {
 			this.a = iact;
-			this.dst = dst;
+			if (dst_ent != null) {
+				this.dst_id = dst_ent.id;
+				this.dst_c = dst_ent.GetAttr<Attrs.Pos>().c;
+				this.dst_ent = dst_ent;
+			}
 		}
 		public ActIact(Schema.Iact.A iact, Coord dstc) {
 			this.a = iact;
-			this.dstc = dstc;
+			this.dst_c = dstc;
+		}
+		public override bool OnLoad(Entity ent) {
+			if (dst_id != WUID.None) {
+				this.dst_ent = ent.layer.FindEntity(dst_id);
+				return dst_ent != null;
+			}
+			return true;
 		}
 		public override string GetName() {
 			return a.s.name;
 		}
 		private Ctx GetCtx(Entity ent) {
-			Ctx ctx = null;
-			Entity ent_dst = ent.layer.FindEntity(dst);
-			if (ent_dst == null) {
-				ctx = new Ctx(ent.layer, ent, null, dstc);
-			} else {
-				ctx = new Ctx(ent.layer, ent, ent_dst);
-			}
-			return ctx;
+			return new Ctx(ent.layer, ent, dst_ent, dst_c);
 		}
         public override bool Can (Entity ent) {
 			Ctx ctx = GetCtx(ent);

@@ -28,12 +28,12 @@ namespace Play.Attrs {
 		public override void NextAct() {
 			Direction r = (Direction)random.Next (9);
 			if (r == Direction.None || r == Direction.Center) {
-				Enque(new Acts.ActIact(Schema.Iact.GetA(Schema.ActionID.Rest), WUID.None));
+				Enque(new Acts.ActIact(Schema.Iact.GetA(Schema.ActionID.Rest), null));
 			} else {
 				Pos pos = ent.GetAttr<Pos>();
                 if (r != pos.dir)
 					Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Dir), pos.c.Step(r)));
-				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), WUID.None));
+				Enque(new ActIact(Schema.Iact.GetA(Schema.ActionID.Move), null));
 			}
 		}
 	}

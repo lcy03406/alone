@@ -7,8 +7,12 @@ namespace Play.Attrs {
 	public class Actor : Attrib {
 		public Act act = null;
 
-		public override void OnBorn() {
-			base.OnBorn();
+		public override void OnLoad() {
+			if (act != null) {
+				if (!act.OnLoad(ent)) {
+					act = null;
+				}
+			}
 		}
 
 		public override int GetNextTick() {

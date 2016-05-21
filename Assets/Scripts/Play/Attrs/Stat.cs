@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-using ID = Schema.StatID;
+using ID = Edit.AStat;
 
 namespace Play.Attrs {
 	[Serializable]

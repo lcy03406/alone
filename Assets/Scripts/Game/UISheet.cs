@@ -69,10 +69,11 @@ I = Inventory
         text.text = string.Format(@"Time: {0}", param.time);
 		gameObject.SetActive(true);
 	}
+
 	public void ShowChar() {
 		string t = "";
 		Stat stat = Game.game.player.GetAttr<Stat>();
-		foreach (KeyValuePair<Schema.StatID, Stat.St> pair in stat.ints) {
+		foreach (KeyValuePair<Edit.AStat, Stat.St> pair in stat.ints) {
 			t += pair.Key.ToString() + ": " + pair.Value.value;
 			int cap = pair.Value.cap;
 			if (cap > 0)

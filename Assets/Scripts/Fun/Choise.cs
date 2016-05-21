@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace Play {
+namespace Fun {
 	public class Choice<T> {
 		public T value;
 		public int prob;

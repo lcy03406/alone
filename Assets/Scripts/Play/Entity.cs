@@ -2,17 +2,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using Play.Attrs;
 
 namespace Play {
 	[Serializable]
 	public sealed class Entity {
-		public WUID id;
-		Dictionary<Type, Attrib> attr = new Dictionary<Type, Attrib>();
-
 		[NonSerialized]
 		public Layer layer;
 		[NonSerialized]
 		public bool isPlayer = false;
+
+		public WUID id;
+		Dictionary<Type, Attrib> attr = new Dictionary<Type, Attrib>();
 
 		public void Load() {
 			foreach (Attrib a in attr.Values) {

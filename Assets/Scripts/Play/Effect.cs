@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using Play.Attrs;
+using Edit;
 
 namespace Play {
 	public abstract class Effect {
+		public abstract void AfterLoad(bool dst, List<int> param);
 		public abstract string Display();
 		public abstract bool Can(Ctx ctx);
 		public abstract void Do(Ctx ctx, List<string> logs);
@@ -17,47 +19,53 @@ namespace Play {
 
 namespace Play.Eff {
 	public class Multi : Effect {
-		public Effect[] eff;
-		public Multi(Effect[] eff) {
-			this.eff = eff;
+		public List<AEffect> eff;
+
+		public override void AfterLoad(bool dst, List<int> param) {
+			foreach (int id in param) {
+				eff.Add(All.all.Get<AEffect>(id));
+			}
 		}
 		public override string Display() {
 			string disp = "all of: \n";
-			foreach (Effect ef in eff) {
-				disp += ef.Display();
+			foreach (AEffect ef in eff) {
+				disp += ef.ef.Display();
 			}
 			return disp;
 		}
 		public override bool Can(Ctx ctx) {
-			foreach (Effect ef in eff) {
-				if (!ef.Can(ctx))
+			foreach (AEffect ef in eff) {
+				if (!ef.ef.Can(ctx))
 					return false;
 			}
 			return true;
 		}
 
 		public override void Do(Ctx ctx, List<string> logs) {
-			foreach (Effect ef in eff) {
-				ef.Do(ctx, logs);
+			foreach (AEffect ef in eff) {
+				ef.ef.Do(ctx, logs);
 			}
 		}
 	}
 
 	public class Any : Effect {
-		public Effect[] eff;
-		public Any(Effect[] eff) {
-			this.eff = eff;
+		public List<AEffect> eff;
+
+		public override void AfterLoad(bool dst, List<int> param) {
+			foreach (int id in param) {
+				eff.Add(All.all.Get<AEffect>(id));
+			}
 		}
 		public override string Display() {
 			string disp = "any of: \n";
-			foreach (Effect ef in eff) {
-				disp += ef.Display();
+			foreach (AEffect ef in eff) {
+				disp += ef.ef.Display();
 			}
 			return disp;
 		}
 		public override bool Can(Ctx ctx) {
-			foreach (Effect ef in eff) {
-				if (ef.Can(ctx)) {
+			foreach (AEffect ef in eff) {
+				if (ef.ef.Can(ctx)) {
 					return true;
 				}
 			}
@@ -65,28 +73,31 @@ namespace Play.Eff {
 		}
 
 		public override void Do(Ctx ctx, List<string> logs) {
-			foreach (Effect ef in eff) {
-				if (ef.Can(ctx))
-					ef.Do(ctx, logs);
+			foreach (AEffect ef in eff) {
+				if (ef.ef.Can(ctx))
+					ef.ef.Do(ctx, logs);
 			}
 		}
 	}
 
 	public class One : Effect {
-		public Effect[] eff;
-		public One(Effect[] eff) {
-			this.eff = eff;
+		public List<AEffect> eff;
+
+		public override void AfterLoad(bool dst, List<int> param) {
+			foreach (int id in param) {
+				eff.Add(All.all.Get<AEffect>(id));
+			}
 		}
 		public override string Display() {
 			string disp = "one of: \n";
-			foreach (Effect ef in eff) {
-				disp += ef.Display();
+			foreach (AEffect ef in eff) {
+				disp += ef.ef.Display();
 			}
 			return disp;
 		}
 		public override bool Can(Ctx ctx) {
-			foreach (Effect ef in eff) {
-				if (ef.Can(ctx)) {
+			foreach (AEffect ef in eff) {
+				if (ef.ef.Can(ctx)) {
 					return true;
 				}
 			}
@@ -94,29 +105,11 @@ namespace Play.Eff {
 		}
 
 		public override void Do(Ctx ctx, List<string> logs) {
-			foreach (Effect ef in eff) {
-				if (ef.Can(ctx)) {
-					ef.Do(ctx, logs);
+			foreach (AEffect ef in eff) {
+				if (ef.ef.Can(ctx)) {
+					ef.ef.Do(ctx, logs);
 				}
 			}
-		}
-	}
-
-	public class Must : Effect {
-		public readonly Calc<bool> cond;
-		public Must(Calc<bool> cond) {
-			this.cond = cond;
-		}
-
-		public override string Display() {
-			return "must: " + cond.Display() + ".\n";
-		}
-
-		public override bool Can(Ctx ctx) {
-			return cond.Can(ctx);
-		}
-
-		public override void Do(Ctx ctx, List<string> logs) {
 		}
 	}
 }

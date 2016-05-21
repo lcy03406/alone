@@ -104,7 +104,7 @@ public class UIGame : MonoBehaviour {
 	private void Rest() {
 		if (!menu.isActiveAndEnabled) {
 			Schema.Iact.A iact = Schema.Iact.GetA(Schema.ActionID.Rest);
-			EnqueAct(new ActIact(iact, WUID.None));
+			EnqueAct(new ActIact(iact, null));
 		}
 	}
 
@@ -185,16 +185,16 @@ public class UIGame : MonoBehaviour {
 		if (iact.s.cat == Schema.ActionCategoryID.Make || iact.s.cat == Schema.ActionCategoryID.Build) {
 			MsgIact m = new MsgIact();
 			m.iact = iact;
-			m.dst = dst == null ? WUID.None : dst.id;
+			m.dst = dst;
 			m.Open();
 		} else {
-			EnqueAct(new ActIact(iact, dst.id));
+			EnqueAct(new ActIact(iact, dst));
 		}
 	}
 
 	private class MsgIact {
 		public Schema.Iact.A iact;
-		public WUID dst;
+		public Play.Entity dst;
 		private void MsgCall(bool yes) {
 			if (yes) {
 				ui.EnqueAct(new ActIact(iact, dst));
@@ -257,7 +257,7 @@ public class UIGame : MonoBehaviour {
 							Schema.Iact.A aact = dstcore.GetIactAuto(player);
 							if (aact != null) {
 								if (aact.s.cat == Schema.ActionCategoryID.Pick && aact.s.time1 + aact.s.time2 == 0) {
-									EnqueAct(new ActIact(aact, dst.id));
+									EnqueAct(new ActIact(aact, dst));
 								}
 							}
 						}

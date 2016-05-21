@@ -8,6 +8,5 @@ namespace Play.Attrs {
 	public class Pos : Attrib{
 		public Coord c;
 		public Direction dir;
-
 	}
 }

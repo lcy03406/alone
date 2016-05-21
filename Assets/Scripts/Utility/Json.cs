@@ -32,7 +32,7 @@ namespace Utility {
 			JsonSerializer ser = new JsonSerializer();
 			ser.Converters.Add(new StringEnumConverter());
 			ser.Converters.Add(new StringTypeConverter());
-			ser.Converters.Add(new IntSchemaConverter());
+			ser.Converters.Add(new StringSchemaConverter());
 			ser.MissingMemberHandling = MissingMemberHandling.Error;
 			ser.TypeNameHandling = TypeNameHandling.Auto;
 			ser.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
@@ -51,7 +51,7 @@ namespace Utility {
 
 			public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
 				if (reader.TokenType != JsonToken.String) {
-					throw new InvalidDataException(string.Format("expect string, got {0} \"{1}\"", reader.TokenType, reader.Value));
+					throw new GameResourceException(string.Format("expect string, got {0} \"{1}\"", reader.TokenType, reader.Value));
 				}
 				string str = (string)reader.Value;
 				return TypeHelper.GetType(str);
@@ -64,24 +64,43 @@ namespace Utility {
 			}
 		}
 
-		public class IntSchemaConverter : JsonConverter {
+		public class StringSchemaConverter : JsonConverter {
 			public override bool CanRead { get { return true; } }
 			public override bool CanWrite { get { return true; } }
 
 			public override bool CanConvert(Type objectType) {
-				return typeof(Schema.All.Data).IsAssignableFrom(objectType);
+				return typeof(Edit.Meta).IsAssignableFrom(objectType);
 			}
 
 			public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-				if (reader.TokenType != JsonToken.Integer) {
-					throw new InvalidDataException(string.Format("expect integer, got {0} \"{1}\"", reader.TokenType, reader.Value));
+				Type valueType = objectType;
+				int value = 0;
+				if (reader.TokenType == JsonToken.String) {
+					string str = (string)reader.Value;
+					string[] part = str.Split('@');
+					if (part.Length > 2) {
+						throw new GameResourceException(string.Format("expect string with one '@', got \"{0}\"", reader.Value));
+					} else if (part.Length == 2) {
+						Type type = TypeHelper.GetType(part[1]);
+						if (!objectType.IsAssignableFrom(type)) {
+							throw new GameResourceException(string.Format("expect type string {0}, got \"{1}\"", objectType, reader.Value));
+						}
+						valueType = type;
+					}
+					value = (int)Convert.ChangeType(part[0], typeof(int));
+				} else if (reader.TokenType == JsonToken.Integer) {
+					value = (int)reader.Value;
+				} else {
+					throw new GameResourceException(string.Format("expect string or int, got {0} \"{1}\"", reader.TokenType, reader.Value));
 				}
-				int value = (int) Convert.ChangeType(reader.Value, typeof(int));
-				return Schema.All.all.GetOrAddEmpty(value, objectType);
+				if (value <= 0) {
+					throw new GameResourceException(string.Format("expect id, got \"{0}\"", reader.Value));
+				}
+				return Edit.All.all.GetOrAddEmpty(value, valueType);
 			}
 
 			public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-				Schema.All.Data v = (Schema.All.Data)value;
+				Edit.Meta v = (Edit.Meta)value;
 				JToken t = JToken.FromObject(v.ID);
 				t.WriteTo(writer);
 			}

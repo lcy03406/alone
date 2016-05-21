@@ -2,21 +2,30 @@
 using System;
 using System.Collections.Generic;
 using Play.Attrs;
+using Edit;
 
-using StatID = Schema.StatID;
+using StatID = Edit.AStat;
 
 namespace Play.Eff {
 	public class UseStat : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_min;
 		Calc<int> c_max;
 
-		public UseStat(Calc<Entity> ent, StatID id, Calc<int> min, Calc<int> max) {
-			c_ent = ent;
-			this.id = id;
-			this.c_min = min;
-			this.c_max = max;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 3) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = All.all.Get<AStat>(param[0]);
+			c_min = new Calcs.Const<int>(param[1]);
+			c_max = new Calcs.Const<int>(param[2]);
 		}
 
 		public override string Display() {
@@ -61,14 +70,22 @@ namespace Play.Eff {
 	}
 
 	public class IncStat : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
 
-		public IncStat(Calc<Entity> ent, StatID id, Calc<int> value) {
-			c_ent = ent;
-			this.id = id;
-			this.c_value = value;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 2) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = All.all.Get<AStat>(param[0]);
+			c_value = new Calcs.Const<int>(param[1]);
 		}
 
 		public override string Display() {
@@ -103,16 +120,24 @@ namespace Play.Eff {
 	}
 
 	public class DecStat : Effect {
-		public readonly Calc<Entity> c_ent;
+		public Calc<Entity> c_ent;
 		StatID id;
 		Calc<int> c_value;
 		bool must;
 
-		public DecStat(Calc<Entity> ent, StatID id, Calc<int> value, bool must) {
-			c_ent = ent;
-			this.id = id;
-			this.c_value = value;
-			this.must = must;
+		public override void AfterLoad(bool dst, List<int> param) {
+			if (param.Count < 3) {
+				throw new GameResourceException(string.Format("param count {0}", param.Count));
+			}
+			if (dst) {
+				c_ent = new Calcs.Dst();
+			} else {
+				c_ent = new Calcs.Src();
+			}
+			//TODO
+			id = All.all.Get<AStat>(param[0]);
+			c_value = new Calcs.Const<int>(param[1]);
+			must = param[2] > 0;
 		}
 
 		public override string Display() {

@@ -6,15 +6,15 @@ using UnityEngine.Assertions;
 namespace Play.Acts {
 	[Serializable]
 	internal class ActSpell : Act {
-		internal Edit.Spell spell;
+		internal Edit.ASpell spell;
 		public WUID dst;
 		public Coord dstc;
 		public int istep = -1;
-		public ActSpell (Edit.Spell spell, WUID dst) {
+		public ActSpell (Edit.ASpell spell, WUID dst) {
 			this.spell = spell;
 			this.dst = dst;
 		}
-		public ActSpell(Edit.Spell spell, Coord dstc) {
+		public ActSpell(Edit.ASpell spell, Coord dstc) {
 			this.spell = spell;
 			this.dstc = dstc;
 		}
@@ -35,10 +35,10 @@ namespace Play.Acts {
 			Ctx ctx = GetCtx(ent);
 			if (spell.phase.Count == 0)
 				return true;
-			Edit.Phase phase0 = spell.phase[0];
+			Edit.APhase phase0 = spell.phase[0];
 			if (phase0 == null)
 				return true;
-			bool can = phase0.effect.func.Can(ctx);
+			bool can = phase0.effect.ef.Can(ctx);
             return can;
 		}
 		public override int NextStep(Entity ent, List<string> logs) {
@@ -47,17 +47,17 @@ namespace Play.Acts {
 				return -1;
 			}
 			Ctx ctx = GetCtx(ent);
-			Edit.Phase phase = spell.phase[istep];
+			Edit.APhase phase = spell.phase[istep];
 			List<Entity> ents = DoShape(ctx, phase.shape);
 			DoPhase(phase, ents, logs);
 			return phase.time;
 		}
-		private List<Entity> DoShape(Ctx ctx, Edit.Shape shape) {
+		private List<Entity> DoShape(Ctx ctx, Edit.AShape shape) {
 			//TODO
 			return null;
 		}
 
-		private void DoPhase(Edit.Phase phase, List<Entity> ents, List<string> logs) {
+		private void DoPhase(Edit.APhase phase, List<Entity> ents, List<string> logs) {
 			//TODO
 		}
 	}

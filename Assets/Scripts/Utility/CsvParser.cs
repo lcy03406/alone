@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Utility {
 	public class CsvParser {
-		private const int Comment = '#';
+		private const string Comment = "#";
 		private const int Quote = '"';
 		private const int Delimiter = ',';
 
@@ -25,25 +25,29 @@ namespace Utility {
 		}
 
 		public List<string> ReadRecord() {
-			SkipBlankLines();
-			if (reader.Peek() == -1)
-				return null;
-			List<string> record = new List<string>();
 			while (true) {
-				string field = ReadField();
-				if (field == null)
-					break;
-				record.Add(field);
+				SkipBlankLines();
+				if (reader.Peek() == -1)
+					return null;
+				List<string> record = new List<string>();
+				while (true) {
+					string field = ReadField();
+					if (field == null)
+						break;
+					record.Add(field);
+				}
+				line++;
+				column = 0;
+				if (record.Count == 0 || record[0] == Comment)
+					continue;
+				return record;
 			}
-			line++;
-			column = 0;
-			return record;
 		}
 
 		private void SkipBlankLines() {
 			while (true) {
 				int a = reader.Peek();
-				if (a == Comment || a == '\n' || a == '\r')
+				if (a == '\n' || a == '\r')
 					reader.ReadLine();
 				else
 					return;
@@ -74,21 +78,21 @@ namespace Utility {
 				}
 			} else if (column > 0) {
 				//won't heppen
-				throw new InvalidDataException("no delimiter in " + Where());
+				throw new GameResourceException("no delimiter in " + Where());
 			}
 			reader.Read();
 			if (c == Quote) {
 				if (ReadTo(sb, Quote) != Quote)
-					throw new InvalidDataException("unclosed quote in " + Where());
+					throw new GameResourceException("unclosed quote in " + Where());
 				while (reader.Peek() == Quote) {
 					sb.Append((char)Quote);
 					reader.Read();
 					if (ReadTo(sb, Quote) != Quote)
-						throw new InvalidDataException("unclosed quote in " + Where());
+						throw new GameResourceException("unclosed quote in " + Where());
 				}
 				int fin = reader.Peek();
 				if (!FieldFinish(fin))
-                    throw new InvalidDataException("unquoted quote in " + Where());
+                    throw new GameResourceException("unquoted quote in " + Where());
 			} else {
 				sb.Append((char)c);
 				int next = -1;

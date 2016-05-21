@@ -40,7 +40,7 @@ namespace Play.Calcs {
 
 	public class HasStat : Calc<bool> {
 		public readonly Calc<Entity> c_ent;
-		public readonly Schema.StatID id;
+		public readonly Edit.AStat id;
 		public HasStat(Calc<Entity> ent, Schema.StatID id) {
 			this.c_ent = ent;
 			this.id = id;
